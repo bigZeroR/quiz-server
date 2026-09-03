@@ -1,4 +1,18 @@
-fastapi[standard]==0.104.1
-uvicorn[standard]==0.24.0
-jinja2==3.1.2
+# ═══════════════════════════════════════════
+# LPIC Quiz Server - Dependencies
+# ═══════════════════════════════════════════
+
+# Web Framework
+Flask==3.0.0
+
+# Template Engine (installed with Flask, but explicit for clarity)
+Jinja2==3.1.2
+
+# WSGI Server (for development)
+Werkzeug==3.0.1
+
+# For handling file uploads and form data
 python-multipart==0.0.6
+
+# For better JSON handling (optional but recommended)
+simplejson==3.19.2
