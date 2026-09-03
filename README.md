@@ -1,4 +1,3 @@
-# 📄 فایل `README.md` برای پروژه `quiz-server`
 
 #  Quiz Server
 
