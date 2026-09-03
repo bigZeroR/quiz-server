@@ -1,0 +1,706 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی نهایی",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه سوالات 601 تا 650",
+  "questions": [
+    {
+      "id": 601,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "برای یافتن فایل‌هایی که در ۷ روز گذشته تغییر کرده‌اند (Modified) و نمایش آن‌ها به‌صورت لیست کامل، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>find /path -type f -mtime -7 -ls</code>",
+        "<code>find /path -type f -mtime +7 -ls</code>",
+        "<code>find /path -type f -ctime -7 -ls</code>",
+        "<code>find /path -type f -atime -7 -ls</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>-mtime -7</code> یعنی فایل‌هایی که در ۷ روز گذشته تغییر کرده‌اند (کمتر از ۷ روز). <code>-mtime +7</code> یعنی بیش از ۷ روز پیش. <code>-ctime</code> برای تغییر متادیتا و <code>-atime</code> برای زمان دسترسی است. <code>-ls</code> نمایش کامل با جزئیات را انجام می‌دهد."
+    },
+    {
+      "id": 602,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "برای یافتن فایل‌هایی با حجم بین ۱۰ مگابایت و ۵۰ مگابایت و نمایش آن‌ها به‌صورت خوانا، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>find /path -type f -size +10M -size -50M -exec ls -lh {} \\; 2>/dev/null</code>",
+        "<code>find /path -type f -size 10M -size 50M -ls</code>",
+        "<code>find /path -type f -size +10M -size -50M -ls</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>-size +10M</code> (بزرگتر از ۱۰ مگابایت) و <code>-size -50M</code> (کوچکتر از ۵۰ مگابایت) ترکیب می‌شوند. <code>-exec ls -lh {} \\;</code> برای نمایش اندازه خوانا. <code>2>/dev/null</code> خطاهای دسترسی را نادیده می‌گیرد. <code>-ls</code> اندازه را به بایت نشان می‌دهد (خوانا نیست)."
+    },
+    {
+      "id": 603,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "برای یافتن فایل‌هایی که پس از یک فایل خاص ایجاد شده‌اند (Newer) و نمایش آن‌ها، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>find /path -type f -newer reference_file -ls</code>",
+        "<code>find /path -type f -cnewer reference_file -ls</code>",
+        "<code>find /path -type f -anewer reference_file -ls</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>-newer</code> فایل‌هایی که جدیدتر از فایل مرجع هستند (بر اساس mtime). <code>-cnewer</code> بر اساس ctime (تغییر متادیتا) و <code>-anewer</code> بر اساس atime (دسترسی). مثال: <code>find . -type f -newer /tmp/ref.txt</code>. برای یافتن فایل‌های ایجاد شده در یک بازه زمانی، از فایل مرجع استفاده می‌شود."
+    },
+    {
+      "id": 604,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "برای یافتن دایرکتوری‌های خالی (Empty) در یک مسیر و نمایش آن‌ها، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>find /path -type d -empty -ls</code>",
+        "<code>find /path -type f -empty -ls</code>",
+        "<code>find /path -type d -size 0 -ls</code>",
+        "هر دو گزینه اول و سوم"
+      ],
+      "correct": 3,
+      "explanation": "هر دو روش کار می‌کنند: <code>find /path -type d -empty -ls</code> (دایرکتوری‌های خالی) و <code>find /path -type d -size 0 -ls</code> (دایرکتوری‌هایی که اندازه ۰ دارند، که دایرکتوری‌های خالی هستند). <code>-type f</code> برای فایل‌هاست. <code>rmdir</code> نیز برای حذف دایرکتوری‌های خالی استفاده می‌شود."
+    },
+    {
+      "id": 605,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در KVM، برای تغییر مقدار RAM یک VM در حال اجرا (Live Resize) و همچنین تغییر RAM به‌صورت دائمی در پیکربندی VM، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>virsh setmem vm_name 2G</code> (موقت، بدون ذخیره) و <code>virsh edit vm_name</code> (تغییر <memory> در XML و ری‌استارت برای دائمی)",
+        "فقط <code>virsh setmem</code>",
+        "فقط <code>virsh edit</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای تغییر RAM در KVM: <code>virsh setmem vm_name 2G --live</code> (تغییر موقت در حال اجرا، بدون ذخیره). برای تغییر دائمی: <code>virsh edit vm_name</code> (فایل XML را ویرایش کرده، مقدار <code><memory></code> و <code><currentMemory></code> را تغییر می‌دهد) و سپس VM را ری‌استارت کنید (یا با <code>virsh setmem</code> + <code>--config</code> برای ذخیره در پیکربندی). همچنین <code>virsh setmem vm_name 2G --config</code> برای تغییر دائمی بدون ری‌استارت."
+    },
+    {
+      "id": 606,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در KVM، برای گرفتن یک Snapshot از یک VM در حال اجرا (با استفاده از قابلیت QEMU) و سپس بازگردانی به آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>virsh snapshot-create-as vm_name snapshot1</code> (ایجاد)، <code>virsh snapshot-list vm_name</code> (مشاهده)، <code>virsh snapshot-revert vm_name snapshot1</code> (بازگردانی)",
+        "فقط <code>virsh snapshot-create-as</code>",
+        "فقط <code>virsh snapshot-revert</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل Snapshot در KVM با virsh: <code>virsh snapshot-create-as vm_name snapshot1 --disk-only --atomic</code> (snapshot از دیسک)، <code>virsh snapshot-list vm_name</code> (لیست)، <code>virsh snapshot-revert vm_name snapshot1</code> (بازگردانی). همچنین <code>virsh snapshot-delete vm_name snapshot1</code> برای حذف. Snapshotها به فضای دیسک نیاز دارند و می‌توانند با فرمت qcow2 کار کنند. <code>--disk-only</code> فقط دیسک را snapshot می‌کند (بدون حافظه)."
+    },
+    {
+      "id": 607,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای ساخت یک ایمیج با استفاده از Dockerfile و استفاده از BuildKit (برای سرعت و قابلیت‌های بیشتر)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>DOCKER_BUILDKIT=1 docker build -t myimage:tag .</code>",
+        "<code>docker build --buildkit -t myimage:tag .</code>",
+        "<code>docker build -t myimage:tag .</code> (با تنظیم DOCKER_BUILDKIT در محیط)",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "BuildKit یک موتور ساخت بهبودیافته برای Docker است که سرعت بیشتری دارد، از کش‌های هوشمندتر و ساخت موازی پشتیبانی می‌کند. فعال‌سازی: <code>export DOCKER_BUILDKIT=1</code> و سپس <code>docker build -t myimage:tag .</code> یا <code>docker build --buildkit -t myimage:tag .</code> (در نسخه‌های جدید). همچنین می‌توان با <code># syntax=docker/dockerfile:1</code> در Dockerfile از قابلیت‌های پیشرفته استفاده کرد."
+    },
+    {
+      "id": 608,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای مشاهده لاگ‌های یک کانتینر خاص و دنبال‌کردن آن‌ها به‌صورت زنده با نمایش timestamp، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>docker logs -f -t container_name</code>",
+        "<code>docker logs --tail 100 -f container_name</code>",
+        "هر دو گزینه",
+        "<code>docker attach container_name</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>docker logs -f -t container_name</code> (follow و timestamp) لاگ‌ها را زنده و با زمان نمایش می‌دهد. <code>--tail 100</code> فقط ۱۰۰ خط آخر را نمایش می‌دهد (به‌همراه -f مفید است). <code>docker logs</code> خروجی STDOUT/STDERR کانتینر را نمایش می‌دهد. <code>docker attach</code> به جریان ورودی/خروجی کانتینر متصل می‌شود اما تعاملی‌تر است."
+    },
+    {
+      "id": 609,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای پیکربندی یک VM با استفاده از یک توزیع خاص (مثلاً Ubuntu Server) و تنظیم منابع (CPU, RAM, Disk) از طریق رابط وب، مراحل اصلی چیست؟",
+      "options": [
+        "Create VM → انتخاب ISO/Storage → تنظیم CPU/RAM → تنظیم Disk → تنظیم Network → تایید و نصب",
+        "فقط Create VM",
+        "فقط تنظیم ISO",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل ایجاد VM در Proxmox: ۱. Create VM (در رابط وب). ۲. تنظیم OS (انتخاب ISO، نوع سیستمعامل). ۳. تنظیم System (BIOS/UEFI، SCSI controller). ۴. تنظیم Disk (Bus type، حجم، Storage). ۵. تنظیم CPU (تعداد هسته‌ها، نوع). ۶. تنظیم Memory (RAM). ۷. تنظیم Network (Bridge، VLAN، مدل). ۸. Confirm و شروع نصب. همچنین می‌توان از Templates برای نصب سریع استفاده کرد."
+    },
+    {
+      "id": 610,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای نمایش آمار شبکه به‌صورت تجمعی (Total Received/Transmitted) از زمان روشن شدن سیستم، از چه دستوری استفاده می‌شود و چگونه می‌توان آمار را به‌صورت خوانا (مثلاً مگابایت) نمایش داد؟",
+      "options": [
+        "<code>cat /proc/net/dev</code> (بایت) و <code>ip -s link show eth0</code> (بایت)، و با <code>awk</code> می‌توان به مگابایت تبدیل کرد",
+        "فقط <code>cat /proc/net/dev</code>",
+        "فقط <code>ip -s link</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "آمار شبکه: <code>cat /proc/net/dev</code> (ارسال/دریافت به بایت)، <code>ip -s link show eth0</code> (آمار دقیق با خطاها و dropped). برای تبدیل به مگابایت: <code>cat /proc/net/dev | awk '/eth0/ {print $1, $2/1024/1024 \" MB\", $10/1024/1024 \" MB\"}'</code>. <code>vnstat</code> (ابزار جداگانه) نیز آمار تجمعی با پایگاه داده ارائه می‌دهد. <code>ifconfig eth0</code> نیز آمار را نشان می‌دهد اما قدیمی است."
+    },
+    {
+      "id": 611,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای مانیتورینگ لحظه‌ای ترافیک شبکه بر روی یک رابط (مانند eth0) با نمایش سرعت به‌صورت نمودار متنی (گرافیکی)، از چه دستوری می‌توان استفاده کرد؟",
+      "options": [
+        "<code>bmon -p eth0</code> (نمودار) و <code>nload eth0</code> (نمودار ساده) و <code>iftop -i eth0</code> (لیست اتصالات)",
+        "فقط <code>bmon</code>",
+        "فقط <code>nload</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "همه این ابزارها مانیتورینگ ترافیک شبکه را انجام می‌دهند: <code>bmon</code> (نمودار پیشرفته با چندین متریک)، <code>nload eth0</code> (نمودار ساده و خوانا)، <code>iftop -i eth0</code> (نمایش ترافیک بر اساس اتصال، مشابه top). <code>iptraf-ng</code> و <code>speedometer</code> نیز گزینه‌های دیگری هستند. نیاز به نصب دارند (غیر از ابزارهای استاندارد)."
+    },
+    {
+      "id": 612,
+      "category": "شبکه - DNS",
+      "level": 4,
+      "text": "برای افزودن یک رکورد DNS (مانند A, CNAME, MX) به یک سرور DNS موضعی (با استفاده از <code>/etc/hosts</code> یا dnsmasq) و تست آن، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "در <code>/etc/hosts</code>: <code>IP domain</code> (مثلاً <code>192.168.1.10 mytest.local</code>) و تست با <code>ping mytest.local</code> یا <code>dig mytest.local</code>",
+        "فقط <code>/etc/hosts</code>",
+        "فقط <code>dnsmasq</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای تست سریع DNS: <code>/etc/hosts</code> (نگاشت IP به نام، بلافاصله اعمال می‌شود). با <code>dnsmasq</code> (سرور DNS سبک) می‌توان رکوردهای بیشتری تعریف کرد: <code>address=/mytest.local/192.168.1.10</code> در <code>/etc/dnsmasq.conf</code> و سپس ری‌استارت. تست با <code>ping</code>، <code>dig</code> یا <code>nslookup</code>. همچنین <code>host</code> و <code>getent hosts domain</code> برای بررسی <code>/etc/hosts</code>."
+    },
+    {
+      "id": 613,
+      "category": "امنیت - SUID/SGID",
+      "level": 4,
+      "text": "چرا فایل <code>/usr/bin/passwd</code> دارای SUID است و اگر این SUID حذف شود، چه اتفاقی برای کاربران عادی می‌افتد؟",
+      "options": [
+        "برای تغییر رمز عبور، به دسترسی به <code>/etc/shadow</code> نیاز است که فقط root دسترسی دارد؛ با SUID، passwd با دسترسی root اجرا می‌شود. بدون SUID، کاربران عادی نمی‌توانند رمز خود را تغییر دهند",
+        "فقط root می‌تواند رمز را تغییر دهد",
+        "هیچ تأثیری ندارد",
+        "فایل خراب می‌شود"
+      ],
+      "correct": 0,
+      "explanation": "فایل <code>/usr/bin/passwd</code> دارای SUID (۴۰۰۰) است که باعث می‌شود با سطح دسترسی مالک (root) اجرا شود. این به کاربران عادی اجازه می‌دهد رمز خود را تغییر دهند (که نیاز به نوشتن در <code>/etc/shadow</code> دارد). بدون SUID، کاربران عادی نمی‌توانند به <code>/etc/shadow</code> دسترسی داشته باشند و فرمان passwd با Permission Denied مواجه می‌شود."
+    },
+    {
+      "id": 614,
+      "category": "امنیت - SUID/SGID",
+      "level": 4,
+      "text": "برای یافتن فایل‌هایی با SUID و SGID در کل سیستم و نمایش آن‌ها به‌صورت لیست با جزئیات، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>find / -type f -perm /6000 -ls 2>/dev/null</code>",
+        "<code>find / -type f -perm -4000 -o -perm -2000 -ls</code>",
+        "هر دو گزینه",
+        "<code>find / -type f -perm +6000 -ls</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور کار می‌کنند: <code>find / -type f -perm /6000 -ls 2>/dev/null</code> (SUID یا SGID)، و <code>find / -type f -perm -4000 -o -perm -2000 -ls</code> (SUID یا SGID به‌صورت جداگانه). <code>/6000</code> یعنی هر کدام از بیت‌های SUID یا SGID تنظیم شده باشد. <code>2>/dev/null</code> خطاهای دسترسی را نادیده می‌گیرد. <code>-ls</code> نمایش کامل با مجوزها و مالکیت."
+    },
+    {
+      "id": 615,
+      "category": "امنیت - SUID/SGID",
+      "level": 4,
+      "text": "برای ایجاد یک فایل با SUID به‌صورت دستی (مثلاً برای یک اسکریپت خاص) و تنظیم مالکیت به root، از چه دستوراتی استفاده می‌شود و چه خطراتی دارد؟",
+      "options": [
+        "<code>chmod u+s script.sh; chown root:root script.sh</code> (نیاز به دسترسی root)، خطر: هر کاربری که اسکریپت را اجرا کند، با دسترسی root اجرا می‌شود که می‌تواند خطر امنیتی بزرگی باشد",
+        "فقط <code>chmod u+s</code>",
+        "فقط <code>chown root</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیم SUID: <code>chown root:root script.sh</code> (مالکیت به root) و <code>chmod u+s script.sh</code> (تنظیم SUID). سپس هر کاربری که اسکریپت را اجرا کند، با دسترسی root اجرا می‌شود. این بسیار خطرناک است و باید با احتیاط کامل انجام شود (فقط برای اسکریپت‌های قابل اعتماد). برای جلوگیری از سوءاستفاده، اسکریپت باید به‌خوبی نوشته شود (مثلاً از ورودی کاربری در مسیرهای فرمان استفاده نکند)."
+    },
+    {
+      "id": 616,
+      "category": "مدیریت دیسک - فایل‌سیستم پیشرفته",
+      "level": 4,
+      "text": "برای افزایش اندازه یک فایل‌سیستم EXT4 که روی یک Logical Volume (LVM) قرار دارد، مراحل صحیح به چه ترتیبی است؟",
+      "options": [
+        "ابتدا LV را با <code>lvextend -L +10G /dev/vg/lv</code> افزایش دهید، سپس فایل‌سیستم را با <code>resize2fs /dev/vg/lv</code> بزرگ کنید",
+        "ابتدا فایل‌سیستم را بزرگ کنید، سپس LV",
+        "فقط LV را بزرگ کنید",
+        "فقط فایل‌سیستم را بزرگ کنید"
+      ],
+      "correct": 0,
+      "explanation": "برای افزایش اندازه (Extend) یک LV با EXT4: ۱. افزایش LV: <code>lvextend -L +10G /dev/vg/lv</code> (یا <code>-L 20G</code> برای اندازه مشخص). ۲. افزایش فایل‌سیستم: <code>resize2fs /dev/vg/lv</code> (که به‌طور خودکار فایل‌سیستم را به اندازه LV بزرگ می‌کند). برخلاف کاهش (Shrink) که ترتیب معکوس است. برای فایل‌سیستم XFS، از <code>xfs_growfs /mountpoint</code> استفاده می‌شود."
+    },
+    {
+      "id": 617,
+      "category": "مدیریت دیسک - فایل‌سیستم پیشرفته",
+      "level": 4,
+      "text": "برای ایجاد یک فایل‌سیستم XFS روی یک پارتیشن جدید و مانت کردن آن با گزینه‌های بهینه (مانند noatime, inode64) برای سرورهای با کارایی بالا، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>mkfs.xfs /dev/sdX</code> (ایجاد)، سپس <code>mount -o noatime,nodev,nosuid,inode64 /dev/sdX /mnt</code>",
+        "فقط <code>mkfs.xfs</code>",
+        "فقط <code>mount</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای XFS: <code>mkfs.xfs /dev/sdX</code> (با گزینه‌های پیش‌فرض). گزینه‌های بهینه مانت: <code>noatime</code> (عدم به‌روزرسانی زمان دسترسی برای کاهش I/O)، <code>nodev</code> (غیرفعال کردن دستگاه‌ها)، <code>nosuid</code> (غیرفعال کردن SUID)، <code>inode64</code> (پشتیبانی از inodeهای بالای ۳۲ بیت در حجم‌های بزرگ). برای دائمی در <code>/etc/fstab</code>: <code>/dev/sdX /mnt xfs defaults,noatime,inode64 0 0</code>."
+    },
+    {
+      "id": 618,
+      "category": "مدیریت دیسک - فایل‌سیستم پیشرفته",
+      "level": 4,
+      "text": "برای تعمیر یک فایل‌سیستم XFS که به‌درستی unmount نشده (یا خراب شده) و بررسی سلامت آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>xfs_repair /dev/sdX</code> (نیاز به unmount) و <code>xfs_check /dev/sdX</code> (بررسی، منسوخ شده)، <code>xfs_repair -n /dev/sdX</code> (بررسی بدون تعمیر)",
+        "فقط <code>fsck.xfs</code>",
+        "فقط <code>xfs_repair</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای XFS: <code>xfs_repair /dev/sdX</code> (تعمیر فایل‌سیستم، باید unmount باشد). <code>xfs_repair -n /dev/sdX</code> (بررسی بدون انجام تغییرات). <code>xfs_check</code> منسوخ شده و به‌جای آن <code>xfs_repair -n</code> توصیه می‌شود. همچنین <code>xfs_metadump</code> برای استخراج متادیتا (برای دیباگ) و <code>xfs_db</code> برای دسترسی سطح پایین وجود دارد. برای بررسی در زمان بوت، systemd به‌طور خودکار fsck.xfs را اجرا نمی‌کند (XFS لاگ‌های خود را دارد)."
+    },
+    {
+      "id": 619,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل درباره یک بسته نصب‌شده در RedHat-family (شامل نسخه، معماری، تاریخ نصب، و وابستگی‌ها)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>rpm -qi package</code> (اطلاعات کامل) و <code>rpm -qR package</code> (وابستگی‌ها)",
+        "فقط <code>rpm -qi</code>",
+        "فقط <code>rpm -qR</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>rpm -qi package</code> (query info) اطلاعات کامل: نام، نسخه، معماری، تاریخ نصب، گروه، توضیحات، URL و نام Vendor. <code>rpm -qR package</code> (query requires) وابستگی‌های بسته را نشان می‌دهد. <code>rpm -qc package</code> (فایل‌های پیکربندی)، <code>rpm -qd package</code> (مستندات). <code>rpm -qa</code> نیز لیست همه بسته‌های نصب‌شده را نمایش می‌دهد."
+    },
+    {
+      "id": 620,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل درباره یک بسته نصب‌شده در Debian-family (شامل نسخه، توضیحات، وابستگی‌ها و نگهداری‌کننده)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>dpkg -s package</code> (اطلاعات کامل)، <code>apt-cache show package</code> (اطلاعات از مخزن)، <code>dpkg -l package</code> (خلاصه)",
+        "فقط <code>dpkg -s</code>",
+        "فقط <code>apt-cache show</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>dpkg -s package</code> (status) اطلاعات کامل بسته نصب‌شده: نسخه، معماری، توضیحات، وابستگی‌ها (Depends)، نگهداری‌کننده (Maintainer) و تاریخ نصب. <code>apt-cache show package</code> اطلاعات بسته از مخزن (حتی اگر نصب نباشد). <code>dpkg -l package</code> خلاصه‌ای از نام و نسخه. <code>apt show package</code> نیز نسخه جدیدتر است."
+    },
+    {
+      "id": 621,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 3,
+      "text": "دستور <code>readlink</code> چه کاربردی دارد و چه تفاوتی با <code>ls -l</code> در نمایش لینک‌ها دارد؟",
+      "options": [
+        "<code>readlink</code> مسیر واقعی (مقصد) یک لینک سمبولیک را به‌صورت مستقیم نمایش می‌دهد، در حالی که <code>ls -l</code> آن را به‌صورت <code>link -> target</code> نشان می‌دهد",
+        "هر دو یکسان هستند",
+        "<code>ls -l</code> مسیر واقعی را نمایش می‌دهد",
+        "<code>readlink</code> فقط برای لینک‌های شکسته کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>readlink</code> (مانند <code>readlink /path/to/link</code>) فقط مسیر مقصد (Target) را به‌صورت یک رشته خالص نمایش می‌دهد، که برای استفاده در اسکریپت‌ها بسیار مفید است. <code>ls -l</code> اطلاعات بیشتری (مجوزها، مالکیت) را به‌همراه مسیر مقصد نمایش می‌دهد. <code>readlink -f</code> مسیر مطلق (با حل کردن all لینک‌ها) را نمایش می‌دهد."
+    },
+    {
+      "id": 622,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تغییر گروه یک فایل به‌صورت بازگشتی (Recursive) روی یک دایرکتوری و همه محتویات آن، از چه دستوری استفاده می‌شود و چه سوییچی برای بازگشتی استفاده می‌شود؟",
+      "options": [
+        "<code>chgrp -R group /path</code> (تغییر گروه به‌صورت بازگشتی)",
+        "<code>chown -R :group /path</code> (همان کار با chown)",
+        "هر دو گزینه",
+        "<code>chmod -R g+rw /path</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>chgrp -R group /path</code> (تغییر گروه) و <code>chown -R :group /path</code> (با <code>:</code> قبل از گروه، فقط گروه تغییر می‌کند). <code>chown -R user:group /path</code> هم مالک و هم گروه را تغییر می‌دهد. <code>chmod</code> برای تغییر مجوزهاست، نه مالکیت یا گروه."
+    },
+    {
+      "id": 623,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تغییر مالکیت یک فایل به‌صورت بازگشتی در دایرکتوری فعلی و نمایش تغییرات (Verbose)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>chown -Rv user:group .</code>",
+        "<code>chown -R user:group .</code>",
+        "هر دو گزینه (با <code>-v</code> برای verbose)",
+        "<code>chown user:group -R .</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>chown -R user:group .</code> (بازگشتی، بدون نمایش) و <code>chown -Rv user:group .</code> (با <code>-v</code> برای نمایش فایل‌های تغییر یافته). <code>-v</code> (verbose) برای دیباگ و تأیید تغییرات مفید است. همچنین <code>--reference=file</code> برای کپی کردن مالکیت از یک فایل مرجع وجود دارد."
+    },
+    {
+      "id": 624,
+      "category": "شبکه - مسیریابی",
+      "level": 4,
+      "text": "برای نمایش جدول مسیریابی به‌صورت درختی و با جزئیات کامل (شامل metrics و interface)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ip route show table all</code>",
+        "<code>ip -d route show table all</code>",
+        "<code>ip -s route show table all</code>",
+        "همه موارد"
+      ],
+      "correct": 1,
+      "explanation": "<code>ip -d route show table all</code> (with details) جزئیات کامل مانند metrics، interface، و ویژگی‌های مسیر را نمایش می‌دهد. <code>-s</code> (statistics) آمار بسته‌ها را نشان می‌دهد. <code>ip route show table all</code> نیز کار می‌کند اما جزئیات کمتری دارد. <code>ip route show table main</code> فقط جدول اصلی را نشان می‌دهد."
+    },
+    {
+      "id": 625,
+      "category": "شبکه - مسیریابی",
+      "level": 4,
+      "text": "برای افزودن یک مسیر پیش‌فرض (Default Route) در لینوکس و حذف مسیر پیش‌فرض فعلی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ip route add default via 192.168.1.1</code> (افزودن)، <code>ip route del default</code> (حذف)",
+        "<code>route add default gw 192.168.1.1</code>",
+        "هر دو گزینه",
+        "<code>ip route replace default via 192.168.1.1</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>ip route add default via 192.168.1.1</code> (مدرن) و <code>route add default gw 192.168.1.1</code> (قدیمی). برای حذف: <code>ip route del default</code> یا <code>route del default</code>. <code>ip route replace default via 192.168.1.1</code> جایگزین مسیر پیش‌فرض موجود می‌شود (بدون نیاز به حذف). مسیر پیش‌فرض برای ترافیک به خارج از شبکه محلی استفاده می‌شود."
+    },
+    {
+      "id": 626,
+      "category": "شبکه - مسیریابی",
+      "level": 4,
+      "text": "برای افزودن یک مسیر استاتیک که از یک رابط خاص (Interface) و با یک Metric مشخص استفاده کند، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ip route add 10.0.0.0/8 via 192.168.1.1 dev eth0 metric 100</code>",
+        "<code>ip route add 10.0.0.0/8 dev eth0 metric 100</code> (بدون gateway)",
+        "هر دو گزینه",
+        "<code>route add -net 10.0.0.0 netmask 255.0.0.0 gw 192.168.1.1 metric 100</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>ip route add 10.0.0.0/8 via 192.168.1.1 dev eth0 metric 100</code> (با gateway و رابط و metric). <code>ip route add 10.0.0.0/8 dev eth0 metric 100</code> (بدون gateway، برای شبکه‌های مستقیم متصل). <code>metric</code> اولویت مسیر را تعیین می‌کند (عدد کمتر اولویت بالاتر). روش قدیمی <code>route</code> نیز با <code>metric</code> کار می‌کند."
+    },
+    {
+      "id": 627,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای مخفی کردن منوی بوت و نمایش آن فقط در صورت فشار دادن کلید Shift (یا Esc در UEFI)، از چه تنظیماتی در <code>/etc/default/grub</code> استفاده می‌شود؟",
+      "options": [
+        "<code>GRUB_TIMEOUT_STYLE=hidden</code> و <code>GRUB_TIMEOUT=5</code> (منو مخفی، اما با کلید Shift ظاهر می‌شود)",
+        "فقط <code>GRUB_TIMEOUT=0</code>",
+        "فقط <code>GRUB_HIDDEN_TIMEOUT=5</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای مخفی کردن منوی GRUB: <code>GRUB_TIMEOUT_STYLE=hidden</code> (منو را مخفی می‌کند) و <code>GRUB_TIMEOUT=5</code> (چند ثانیه منتظر بماند، در صورت فشار Shift ظاهر شود). همچنین <code>GRUB_HIDDEN_TIMEOUT=5</code> (منو مخفی و فقط با Shift نمایش داده می‌شود) در نسخه‌های قدیمی‌تر استفاده می‌شود. سپس <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>."
+    },
+    {
+      "id": 628,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پسورد برای ویرایش خطوط بوت و همچنین برای بوت کردن ورودی‌های محافظت‌شده، از چه تنظیماتی استفاده می‌شود و کدام فایل‌ها تغییر می‌کنند؟",
+      "options": [
+        "تنظیم <code>set superusers=\"admin\"</code> و <code>password_pbkdf2 admin hashed-password</code> در <code>/etc/grub.d/40_custom</code> و سپس بازسازی grub.cfg؛ و برای ورودی‌های خاص: <code>--users</code> یا <code>--unrestricted</code>",
+        "فقط <code>grub2-setpassword</code>",
+        "فقط <code>/etc/grub.d/40_custom</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای محافظت GRUB: ۱. تولید هش: <code>grub2-mkpasswd-pbkdf2</code>. ۲. افزودن به <code>/etc/grub.d/40_custom</code>: <code>set superusers=\"admin\"</code> و <code>password_pbkdf2 admin hash</code>. ۳. برای ورودی‌ها: <code>menuentry \"Secure Entry\" --users admin { ... }</code> (نیاز به پسورد) یا <code>--unrestricted</code> (بدون پسورد). ۴. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. همچنین <code>grub2-setpassword</code> روش ساده‌تر (اما با محدودیت کمتر)."
+    },
+    {
+      "id": 629,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پسورد برای ورود به خط فرمان GRUB (Command Line) و جلوگیری از تغییرات غیرمجاز، از چه تنظیماتی استفاده می‌شود؟",
+      "options": [
+        "تنظیم <code>set superusers=\"admin\"</code> و <code>password_pbkdf2 admin hash</code> در <code>/etc/grub.d/40_custom</code> و سپس <code>grub2-mkconfig</code>، که با زدن <code>c</code> از کاربر پسورد می‌خواهد",
+        "فقط <code>grub2-setpassword</code>",
+        "فقط <code>/etc/grub.d/40_custom</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای محافظت از خط فرمان GRUB (کلید <code>c</code>): با تنظیم <code>superusers</code> و <code>password_pbkdf2</code>، GRUB از کاربر برای ورود به خط فرمان (و همچنین ویرایش با <code>e</code>) پسورد می‌خواهد. <code>grub2-setpassword</code> نیز همین کار را به‌صورت ساده‌تر انجام می‌دهد (فایل <code>/boot/grub2/user.cfg</code> ایجاد می‌کند). پس از تنظیم، برای دسترسی به خط فرمان باید پسورد superuser را وارد کنید."
+    },
+    {
+      "id": 630,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "ابزار <code>watch</code> چگونه می‌تواند برای مانیتورینگ تغییرات یک فایل (مثلاً با <code>ls -la</code>) یا یک دایرکتوری استفاده شود و چه گزینه‌هایی برای نمایش تغییرات برجسته دارد؟",
+      "options": [
+        "<code>watch -d -n 1 'ls -la /path'</code> (با هایلایت تغییرات هر ۱ ثانیه)",
+        "<code>watch -n 1 'ls -la /path'</code> (بدون هایلایت)",
+        "هر دو گزینه",
+        "<code>watch -g -n 1 'ls -la /path'</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>watch</code> با <code>-d</code> (differences) تغییرات بین دو خروجی متوالی را هایلایت می‌کند. <code>-n 1</code> فاصله زمانی (۱ ثانیه). <code>watch -g</code> (--chgexit) در صورت تغییر خروجی از حلقه خارج می‌شود (برای اسکریپت‌ها). مثال: <code>watch -d -n 2 'ls -la /tmp'</code> تغییرات در <code>/tmp</code> را هر ۲ ثانیه با هایلایت نمایش می‌دهد."
+    },
+    {
+      "id": 631,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش ۱۰ خط اول و ۱۰ خط آخر یک فایل به‌صورت هم‌زمان، از چه ترکیبی از دستورات می‌توان استفاده کرد و آیا ابزار مستقیمی برای این کار وجود دارد؟",
+      "options": [
+        "<code>(head -10 file; tail -10 file)</code> یا <code>cat file | (head -10; tail -10)</code>، اما هیچ ابزار مستقیمی وجود ندارد، باید ترکیب کرد",
+        "<code>head -10 file && tail -10 file</code>",
+        "هر دو گزینه",
+        "<code>head -10 file | tail -10 file</code>"
+      ],
+      "correct": 2,
+      "explanation": "برای نمایش ابتدا و انتهای یک فایل: <code>(head -10 file; tail -10 file)</code> (در یک subshell) یا <code>{ head -10 file; tail -10 file; }</code>. <code>cat file | (head -10; tail -10)</code> نیز کار می‌کند (اما توجه داشته باشید که cat غیرضروری است). هیچ ابزار مستقیمی (مانند <code>headtail</code>) وجود ندارد، باید ترکیب کرد. <code>sed -n '1,10p; $p' file</code> نیز می‌تواند استفاده شود اما پیچیده‌تر است."
+    },
+    {
+      "id": 632,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش تعداد خطوط، کلمات و کاراکترهای یک فایل با استفاده از <code>wc</code> و همچنین نمایش فقط تعداد خطوط، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>wc file</code> (همه موارد: خطوط، کلمات، کاراکترها)، <code>wc -l file</code> (فقط خطوط)، <code>wc -w file</code> (فقط کلمات)، <code>wc -c file</code> (فقط بایت‌ها)",
+        "فقط <code>wc file</code>",
+        "فقط <code>wc -l</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>wc</code> (word count) با گزینه‌های مختلف: <code>wc file</code> (خطوط، کلمات، بایت‌ها)، <code>wc -l</code> (خطوط)، <code>wc -w</code> (کلمات)، <code>wc -c</code> (بایت‌ها)، <code>wc -m</code> (کاراکترها، برای متون چندبایتی). <code>wc -L</code> طولانی‌ترین خط را نشان می‌دهد. همچنین <code>wc file1 file2</code> مجموع دو فایل را نمایش می‌دهد."
+    },
+    {
+      "id": 633,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای ساخت یک ایمیج با استفاده از Dockerfile و استفاده از <code>--cache-from</code> برای استفاده از کش ایمیج‌های موجود در رجیستری (برای سرعت بیشتر)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>docker build --cache-from myimage:latest -t newimage:tag .</code>",
+        "<code>docker build --cache-from registry/myimage:latest -t newimage:tag .</code>",
+        "هر دو گزینه",
+        "<code>docker build --build-arg BUILDKIT_CACHE_MOUNT_NS=... -t newimage:tag .</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>docker build --cache-from image:tag -t newimage:tag .</code> از ایمیج مشخص‌شده به‌عنوان منبع کش استفاده می‌کند (برای CI/CD مفید است). <code>--cache-from</code> می‌تواند چندین ایمیج را با کاما جدا کند. در BuildKit، گزینه‌های بیشتری مانند <code>--build-arg BUILDKIT_CACHE_MOUNT_NS=... </code> وجود دارد. این گزینه سرعت ساخت را افزایش می‌دهد، به‌ویژه در محیط‌های بدون کش محلی."
+    },
+    {
+      "id": 634,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای پشتیبان‌گیری از یک VM به‌صورت زنده (با استفاده از Snapshot Mode) و بدون قطعی سرویس، از چه گزینه‌هایی در رابط وب یا خط فرمان استفاده می‌شود؟",
+      "options": [
+        "در رابط وب: Backup → انتخاب VM → Mode: Snapshot (یا Suspend)، در خط فرمان: <code>vzdump VMID --mode snapshot --compress zstd</code>",
+        "فقط Snapshot",
+        "فقط Suspend",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "Proxmox Backup Modes: <code>snapshot</code> (پشتیبان‌گیری زنده با استفاده از snapshot، بدون قطعی، توصیه‌شده)، <code>suspend</code> (VM را معلق کرده و بکاپ می‌گیرد، قطعی کوتاه)، <code>stop</code> (VM را متوقف کرده و بکاپ می‌گیرد، بیشترین قطعی). گزینه <code>snapshot</code> بهترین تعادل بین قابلیت اطمینان و حداقل قطعی است. <code>vzdump</code> با <code>--mode snapshot</code> و <code>--compress zstd</code> (فشرده‌سازی سریع) کار می‌کند."
+    },
+    {
+      "id": 635,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی تاریخچه ورود کاربران (چه کسانی و از کجا وارد شده‌اند) و همچنین شناسایی ورودهای ناموفق (Failed Login Attempts)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>last</code> (ورود موفق)، <code>lastb</code> (ورود ناموفق)، <code>lastlog</code> (آخرین ورود هر کاربر)، <code>who</code> (کاربران فعلی)",
+        "فقط <code>last</code>",
+        "فقط <code>lastb</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>last</code> تاریخچه ورود موفق را از <code>/var/log/wtmp</code> نمایش می‌دهد. <code>lastb</code> تلاش‌های ناموفق را از <code>/var/log/btmp</code> نمایش می‌دهد. <code>lastlog</code> آخرین ورود هر کاربر را از <code>/var/log/lastlog</code> نمایش می‌دهد. <code>who</code> کاربران فعلی را نشان می‌دهد. <code>last -n 10</code> فقط ۱۰ خط آخر را نمایش می‌دهد. این دستورات برای ممیزی امنیتی بسیار مفید هستند."
+    },
+    {
+      "id": 636,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی فایل‌های پیکربندی که به‌روزرسانی نشده‌اند (Configuration Files Changed) پس از آپدیت بسته‌ها در RedHat-family، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>rpm -qc package | xargs rpm -V</code> یا <code>rpm -Va | grep '^..5'</code> (بررسی همه فایل‌های پیکربندی)",
+        "فقط <code>rpm -V</code>",
+        "فقط <code>rpm -qc</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای یافتن فایل‌های پیکربندی تغییر یافته: <code>rpm -qc package</code> (لیست فایل‌های پیکربندی بسته) و سپس <code>rpm -V</code> برای بررسی تغییرات. <code>rpm -Va</code> همه بسته‌ها را بررسی می‌کند و <code>grep '^..5'</code> فایل‌هایی با MD5 تغییر یافته را نشان می‌دهد. در دبیان، <code>dpkg --audit</code> و <code>debsums</code> مشابه را ارائه می‌دهند."
+    },
+    {
+      "id": 637,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی سرویس‌های در حال اجرا (Listening Services) و شناسایی سرویس‌های غیرضروری که ممکن است خطر امنیتی داشته باشند، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ss -lntp</code> (پورت‌های TCP گوش‌دهنده) و <code>ss -lunp</code> (UDP) و <code>systemctl list-units --type=service --state=running</code> (سرویس‌های فعال)",
+        "فقط <code>ss -lntp</code>",
+        "فقط <code>systemctl</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای شناسایی سرویس‌های در حال اجرا: <code>ss -lntp</code> (TCP listening با PID و برنامه)، <code>ss -lunp</code> (UDP)، <code>lsof -i -P -n</code> (همه سوکت‌ها). <code>systemctl list-units --type=service --state=running</code> (سرویس‌های فعال systemd). <code>ps aux</code> و <code>netstat</code> نیز می‌توانند استفاده شوند. سرویس‌های غیرضروری (مانند telnet، rlogin) باید غیرفعال شوند."
+    },
+    {
+      "id": 638,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/hostname</code> و <code>/etc/hosts</code> چه نقشی دارند و چه تفاوتی با یکدیگر دارند؟",
+      "options": [
+        "<code>/etc/hostname</code> نام هاست سیستم را ذخیره می‌کند، <code>/etc/hosts</code> نگاشت IP به نام دامنه (محلی) را برای وضوح نام (قبل از DNS) فراهم می‌کند",
+        "هر دو یکسان هستند",
+        "<code>/etc/hostname</code> برای DNS است",
+        "<code>/etc/hosts</code> نام هاست را ذخیره می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/hostname</code> شامل نام هاست سیستم است که با <code>hostnamectl</code> یا <code>hostname</code> خوانده می‌شود. <code>/etc/hosts</code> شامل نگاشت IP به نام دامنه (مثلاً <code>127.0.0.1 localhost</code>) است که برای وضوح نام محلی و جلوگیری از ترافیک DNS استفاده می‌شود. همچنین معمولاً یک خط برای <code>127.0.1.1 hostname</code> برای نام هاست در شبکه وجود دارد. هر دو فایل در <code>/etc/nsswitch.conf</code> به‌عنوان <code>files</code> مرجع هستند."
+    },
+    {
+      "id": 639,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/resolv.conf</code> چه اطلاعاتی را ذخیره می‌کند و چگونه می‌توان تنظیمات DNS را در سیستم‌های با systemd-resolved مدیریت کرد؟",
+      "options": [
+        "<code>/etc/resolv.conf</code> شامل آدرس سرورهای DNS و دامنه جستجو (search) است؛ در systemd-resolved، با <code>resolvectl</code> مدیریت می‌شود و <code>/etc/resolv.conf</code> معمولاً یک لینک نمادین است",
+        "فقط شامل سرورهای DNS",
+        "فقط شامل دامنه جستجو",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/resolv.conf</code> شامل <code>nameserver</code> (آدرس DNS)، <code>search</code> (دامنه جستجو)، و <code>options</code> است. در سیستم‌های با systemd-resolved، این فایل معمولاً به <code>/run/systemd/resolve/stub-resolv.conf</code> لینک می‌شود و با <code>resolvectl dns INTERFACE IP</code> مدیریت می‌شود. برای مدیریت کل سیستم، <code>resolvectl</code> و <code>systemd-resolved</code> توصیه می‌شوند."
+    },
+    {
+      "id": 640,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کاربران واردشده (Logged-in Users) با جزئیات بیشتر (مانند فعالیت و فرمان در حال اجرا)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>w</code>",
+        "<code>who</code>",
+        "هر دو گزینه (با تفاوت در جزئیات)",
+        "<code>users</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>w</code> (who with load average) اطلاعات کامل‌تری نسبت به <code>who</code> نمایش می‌دهد: کاربران، ترمینال، زمان لاگین، زمان بیکاری، CPU استفاده‌شده، و فرمان در حال اجرا. <code>who</code> فقط کاربران و زمان لاگین را نشان می‌دهد. <code>users</code> فقط نام کاربران (یک خط) را نمایش می‌دهد. <code>last</code> نیز تاریخچه ورود را نشان می‌دهد."
+    },
+    {
+      "id": 641,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای مشاهده اطلاعات مربوط به زمان سیستم (مانند زمان فعلی، منطقه زمانی، و همگام‌سازی NTP) در یک نگاه، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>timedatectl</code>",
+        "<code>date</code>",
+        "<code>hwclock</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>timedatectl</code> (از systemd) اطلاعات جامعی را نمایش می‌دهد: زمان فعلی (local و UTC)، منطقه زمانی، وضعیت NTP (فعال/غیرفعال)، و همگام‌سازی (Synchronized). <code>date</code> فقط زمان فعلی را نمایش می‌دهد. <code>hwclock</code> زمان سخت‌افزاری را نمایش می‌دهد. <code>timedatectl</code> بهترین گزینه برای یک نمای کلی است."
+    },
+    {
+      "id": 642,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای تغییر نوع یک پارتیشن (مثلاً از Linux filesystem به Linux LVM) در <code>fdisk</code> و سپس اعمال تغییرات بدون ری‌استارت، از چه مراحلی استفاده می‌شود؟",
+      "options": [
+        "<code>fdisk /dev/sdX</code> → <code>t</code> (تغییر نوع) → انتخاب کد (مثلاً 8e برای LVM) → <code>w</code> (نوشتن) و سپس <code>partprobe /dev/sdX</code> (برای اطلاع‌رسانی به کرنل)",
+        "فقط <code>fdisk</code>",
+        "فقط <code>partprobe</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل: ۱. <code>fdisk /dev/sdX</code>. ۲. <code>t</code> برای تغییر نوع پارتیشن. ۳. انتخاب شماره پارتیشن و کد جدید (مثلاً <code>8e</code> برای Linux LVM). ۴. <code>w</code> برای نوشتن تغییرات. ۵. <code>partprobe /dev/sdX</code> (یا <code>kpartx</code> یا <code>partx -u</code>) برای اطلاع‌رسانی به کرنل بدون نیاز به ری‌استارت. همچنین می‌توان از <code>sfdisk</code> یا <code>parted</code> استفاده کرد."
+    },
+    {
+      "id": 643,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای نمایش جدول پارتیشن یک دیسک به‌صورت دقیق (شامل شماره سکتور شروع و پایان، اندازه، و نوع) با استفاده از <code>fdisk</code> و <code>parted</code>، از چه دستوراتی استفاده می‌شود و چه تفاوتی دارند؟",
+      "options": [
+        "<code>fdisk -l /dev/sdX</code> (خلاصه) و <code>parted /dev/sdX print</code> (جزئیات بیشتر، پشتیبانی از GPT و دیسک‌های بزرگ)",
+        "فقط <code>fdisk -l</code>",
+        "فقط <code>parted print</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>fdisk -l /dev/sdX</code> نمایش سنتی با فرمت MBR/GPT و جزئیات اولیه. <code>parted /dev/sdX print</code> اطلاعات کامل‌تری (به‌ویژه برای GPT و دیسک‌های بالای ۲ ترابایت) ارائه می‌دهد: نوع جدول، شماره سکتورها، اندازه، نوع پارتیشن، و flags. <code>parted /dev/sdX unit s print</code> سکتورها را به‌صورت دقیق نمایش می‌دهد. <code>gdisk -l /dev/sdX</code> نیز برای GPT پیشرفته است."
+    },
+    {
+      "id": 644,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای پاک کردن کامل جدول پارتیشن یک دیسک (شامل MBR و GPT) و شروع از صفر، از چه دستوراتی استفاده می‌شود و آیا داده‌ها قابل بازیابی هستند؟",
+      "options": [
+        "<code>wipefs -a /dev/sdX</code> (پاک کردن امضاها، سریع) و <code>dd if=/dev/zero of=/dev/sdX bs=1M count=10</code> (پاک کردن ابتدای دیسک)، و <code>sgdisk -Z /dev/sdX</code> (پاک کردن GPT). داده‌ها در بخش‌های دیگر باقی می‌مانند و قابل بازیابی هستند",
+        "فقط <code>wipefs</code>",
+        "فقط <code>dd</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای پاک کردن جدول پارتیشن: <code>wipefs -a /dev/sdX</code> (تمام امضاها را پاک می‌کند، سریع). <code>dd if=/dev/zero of=/dev/sdX bs=1M count=10</code> (۱۰ مگابایت اول را صفر می‌کند، MBR/GPT را از بین می‌برد). <code>sgdisk -Z /dev/sdX</code> (پاک کردن خاص GPT). توجه: این روش‌ها داده‌های واقعی را حذف نمی‌کنند (فقط جدول پارتیشن را پاک می‌کنند)، بنابراین داده‌ها با ابزارهای بازیابی قابل بازیابی هستند. برای پاک کردن امن، از <code>dd</code> روی کل دیسک یا <code>shred</code> استفاده کنید."
+    },
+    {
+      "id": 645,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای ایجاد یک جدول پارتیشن GPT روی یک دیسک و سپس ایجاد پارتیشن‌ها با استفاده از <code>gdisk</code>، مراحل اصلی چیست و چه تفاوتی با <code>fdisk</code> دارد؟",
+      "options": [
+        "<code>gdisk /dev/sdX</code> → <code>o</code> (ایجاد جدول GPT جدید) → <code>n</code> (ایجاد پارتیشن‌ها با نوع و اندازه) → <code>w</code> (نوشتن). <code>gdisk</code> از GPT پشتیبانی کامل دارد و کدهای نوع (مانند 8e00 برای LVM) متفاوت از fdisk (MBR) هستند",
+        "فقط <code>gdisk</code>",
+        "فقط <code>fdisk</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل gdisk: ۱. <code>gdisk /dev/sdX</code>. ۲. <code>o</code> (جدول GPT جدید). ۳. <code>n</code> (ایجاد پارتیشن با شماره، شروع، اندازه، و کد نوع). ۴. <code>t</code> برای تغییر نوع (کدهای ۸E۰۰ برای LVM، ۸۲۰۰ برای swap، ۸۳۰۰ برای Linux filesystem). ۵. <code>w</code> برای نوشتن. تفاوت با fdisk: gdisk مخصوص GPT است و کدهای نوع هگزادسیمال متفاوتی دارد. همچنین <code>parted</code> نیز از GPT پشتیبانی می‌کند."
+    },
+    {
+      "id": 646,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای ایجاد یک کانتینر (CT) با استفاده از یک Template (مانند Ubuntu) و تنظیم منابع (CPU, RAM, Disk)، مراحل اصلی چیست؟",
+      "options": [
+        "Create CT → انتخاب Template → تنظیم منابع (CPU, RAM) → تنظیم Disk (Root Disk) → تنظیم Network → تایید و شروع",
+        "فقط Create CT",
+        "فقط انتخاب Template",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل ایجاد کانتینر در Proxmox: ۱. Create CT (در رابط وب). ۲. تنظیم Template (انتخاب Template از Storage که قبلاً دانلود شده). ۳. تنظیم General (نام، پسورد root). ۴. تنظیم CPU (تعداد هسته‌ها، وزن). ۵. تنظیم Memory (RAM و Swap). ۶. تنظیم Disk (اندازه Root Disk). ۷. تنظیم Network (Bridge، VLAN، IP). ۸. Confirm و شروع. کانتینرها سبک‌تر از VMها هستند و از LXC استفاده می‌کنند."
+    },
+    {
+      "id": 647,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای مهاجرت آفلاین (Offline Migration) یک VM از یک گره به گره دیگر (بدون Live Migration)، چه مراحلی لازم است و چه محدودیت‌هایی دارد؟",
+      "options": [
+        "Migrate → انتخاب گره مقصد → انتخاب Storage مقصد (در صورت نیاز) → شروع. VM باید خاموش باشد (یا متوقف شود). نیاز به ذخیره‌سازی مشترک نیست (با انتخاب Storage مقصد)",
+        "فقط Migrate",
+        "فقط انتخاب Storage",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "Offline Migration در Proxmox: ۱. VM را خاموش کنید (یا Suspend). ۲. از رابط وب: Migrate → انتخاب گره مقصد → انتخاب Storage مقصد (اختیاری، اگر ذخیره‌سازی مشترک نباشد). ۳. شروع مهاجرت. مزیت: نیاز به ذخیره‌سازی مشترک ندارد (فایل‌ها کپی می‌شوند). محدودیت: VM در طول مهاجرت آفلاین است. برای Live Migration، نیاز به ذخیره‌سازی مشترک و شبکه پرسرعت است."
+    },
+    {
+      "id": 648,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی cron jobs (وظایف زمان‌بندی‌شده) که توسط کاربران مختلف روی سیستم تنظیم شده‌اند و اطمینان از عدم وجود cron jobs مخرب، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>crontab -l -u user</code> (برای هر کاربر)، <code>ls /var/spool/cron/</code> (فایل‌های cron کاربران)، و <code>cat /etc/crontab</code> (سیستمی)، <code>ls /etc/cron.d/</code> و <code>/etc/cron.*</code>",
+        "فقط <code>crontab -l</code>",
+        "فقط <code>ls /var/spool/cron/</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای بررسی cron jobs: ۱. <code>crontab -l -u user</code> (cron هر کاربر). ۲. <code>ls -la /var/spool/cron/</code> (فایل‌های cron کاربران). ۳. <code>cat /etc/crontab</code> (cron سیستمی). ۴. <code>ls /etc/cron.d/</code> (cron jobs اضافی). ۵. <code>ls /etc/cron.hourly/ /etc/cron.daily/ /etc/cron.weekly/ /etc/cron.monthly/</code> (اسکریپت‌های زمان‌بندی). همچنین <code>systemctl list-timers</code> برای systemd timers. بررسی دوره‌ای cron jobs برای شناسایی بدافزارها مهم است."
+    },
+    {
+      "id": 649,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی فایل‌های log که ممکن است نشانه نفوذ یا فعالیت مشکوک باشند (مانند تلاش‌های مکرر SSH یا خطاهای احراز هویت)، از چه دستوراتی استفاده می‌شود و چه الگوهایی جستجو می‌شوند؟",
+      "options": [
+        "<code>grep \"Failed password\" /var/log/secure</code> (ردهت) یا <code>grep \"Failed password\" /var/log/auth.log</code> (دبیان)، <code>grep \"Accepted password\"</code> برای ورود موفق، و <code>journalctl -u sshd | grep -i fail</code>",
+        "فقط <code>grep \"Failed password\"</code>",
+        "فقط <code>journalctl</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای بررسی لاگ‌های امنیتی SSH: در ردهت: <code>/var/log/secure</code>، در دبیان: <code>/var/log/auth.log</code>. الگوهای جستجو: <code>\"Failed password\"</code> (تلاش ناموفق)، <code>\"Accepted password\"</code> (ورود موفق با پسورد)، <code>\"Accepted publickey\"</code> (ورود موفق با کلید)، <code>\"Invalid user\"</code> (کاربر نامعتبر). همچنین <code>journalctl -u sshd -f</code> (مانیتورینگ زنده) و <code>journalctl -u sshd --since \"1 hour ago\"</code> (بازه زمانی). <code>fail2ban</code> نیز برای خودکارسازی مسدودسازی IPهای مخرب استفاده می‌شود."
+    },
+    {
+      "id": 650,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، کدام یک از موارد زیر بهترین روش برای مدیریت سرویس‌ها در توزیع‌های مدرن (با systemd) است؟",
+      "options": [
+        "استفاده از <code>systemctl</code> برای شروع، توقف، فعال‌سازی و مشاهده وضعیت سرویس‌ها",
+        "استفاده از <code>service</code>",
+        "استفاده از <code>init.d</code> اسکریپت‌ها",
+        "همه موارد (اما systemctl توصیه می‌شود)"
+      ],
+      "correct": 3,
+      "explanation": "در توزیع‌های با systemd، <code>systemctl</code> ابزار اصلی برای مدیریت سرویس‌ها است. <code>service</code> و <code>init.d</code> روش‌های قدیمی هستند و در سیستم‌های مدرن به systemctl نگاشت می‌شوند، اما <code>systemctl</code> توصیه می‌شود (یکپارچگی، قابلیت‌های بیشتر مانند systemd timers, dependencies, resource limits). دستورات رایج: <code>systemctl start/stop/status/restart/enable/disable</code>."
+    }
+  ]
+}

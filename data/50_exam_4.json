@@ -1,0 +1,706 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی نهایی (بخش 651 تا 700)",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه سوالات 651 تا 700",
+  "questions": [
+    {
+      "id": 651,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، برای مشاهده تاریخچه کامل عملیات (نصب، حذف، بروزرسانی) یک بسته خاص با استفاده از <code>dnf</code>، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf history info package</code>",
+        "<code>dnf history list package</code>",
+        "<code>dnf history package</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>dnf history info package</code> تاریخچه کامل عملیات مربوط به یک بسته خاص را نمایش می‌دهد (شامل زمان، عمل انجام‌شده، و نسخه‌ها). <code>dnf history list</code> لیست کلی عملیات را نشان می‌دهد. <code>dnf history undo</code> و <code>dnf history rollback</code> نیز برای بازگشت به حالت قبلی وجود دارد."
+    },
+    {
+      "id": 652,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، برای مشاهده تاریخچه کامل عملیات (نصب، حذف، بروزرسانی) با استفاده از <code>apt</code>، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>cat /var/log/apt/history.log</code> (فایل متنی تاریخچه)",
+        "<code>apt log</code>",
+        "<code>apt-history</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در دبیان، تاریخچه apt در فایل <code>/var/log/apt/history.log</code> ذخیره می‌شود. همچنین <code>/var/log/apt/term.log</code> خروجی ترمینال هر عملیات را ذخیره می‌کند. ابزار <code>apt-history</code> (اسکریپت) نیز می‌تواند استفاده شود. <code>dpkg -l</code> لیست بسته‌های نصب‌شده را نشان می‌دهد اما تاریخچه عملیات را نشان نمی‌دهد."
+    },
+    {
+      "id": 653,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، برای حذف یک بسته و همچنین حذف وابستگی‌های آن که توسط بسته‌های دیگر استفاده نمی‌شوند، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf remove package</code> (خودکار وابستگی‌های غیرضروری را حذف می‌کند)",
+        "<code>dnf autoremove package</code>",
+        "<code>dnf erase package</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>dnf remove package</code> (یا <code>dnf erase</code>) بسته و وابستگی‌های آن را که توسط بسته‌های دیگر استفاده نمی‌شوند حذف می‌کند. <code>dnf autoremove</code> (بدون نام بسته) وابستگی‌های اضافی را حذف می‌کند. در دبیان، <code>apt autoremove</code> معادل است."
+    },
+    {
+      "id": 654,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، برای حذف کامل یک بسته به‌همراه فایل‌های پیکربندی آن، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>apt remove --purge package</code> یا <code>apt purge package</code>",
+        "<code>apt remove package</code>",
+        "<code>apt autoremove package</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>apt purge package</code> (یا <code>apt remove --purge</code>) بسته را حذف کرده و همچنین فایل‌های پیکربندی آن (در <code>/etc</code>) را نیز حذف می‌کند. <code>apt remove</code> فقط بسته را حذف می‌کند و فایل‌های پیکربندی را باقی می‌گذارد. <code>apt autoremove</code> وابستگی‌های غیرضروری را حذف می‌کند."
+    },
+    {
+      "id": 655,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش فرکانس فعلی و Governor پردازنده (CPU) در لینوکس، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>cpupower frequency-info</code> (اطلاعات کامل)، <code>cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor</code> (Governor فعلی)، <code>cat /proc/cpuinfo | grep MHz</code> (فرکانس)",
+        "فقط <code>cpupower</code>",
+        "فقط <code>cat /proc/cpuinfo</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای اطلاعات فرکانس CPU: <code>cpupower frequency-info</code> (اطلاعات کامل شامل Governor و فرکانس‌های موجود). <code>cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor</code> (Governor فعلی مانند performance, powersave, ondemand). <code>cat /proc/cpuinfo | grep MHz</code> (فرکانس هر هسته). <code>watch -n 1 'cat /proc/cpuinfo | grep MHz'</code> برای مانیتورینگ زنده."
+    },
+    {
+      "id": 656,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای تغییر Governor پردازنده به حالت Performance (برای حداکثر کارایی) در لینوکس، از چه دستوراتی استفاده می‌شود و چه پیش‌نیازی دارد؟",
+      "options": [
+        "<code>cpupower frequency-set -g performance</code> (نیاز به دسترسی root و پشتیبانی کرنل از cpufreq)",
+        "<code>echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor</code>",
+        "هر دو گزینه",
+        "<code>systemctl set-cpu performance</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>cpupower frequency-set -g performance</code> (با ابزار cpupower) و <code>echo performance > /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor</code> (مستقیم). برای دائمی‌سازی، می‌توان از <code>tuned</code> یا پیکربندی در <code>/etc/default/grub</code> استفاده کرد. نیاز به دسترسی root و پشتیبانی کرنل (ماژول‌های cpufreq) دارد."
+    },
+    {
+      "id": 657,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای فشرده‌سازی یک فایل با استفاده از <code>gzip</code> با بالاترین سطح فشرده‌سازی و سپس مشاهده محتوای فایل فشرده بدون خارج‌سازی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>gzip -9 file.txt</code> (بالاترین فشرده‌سازی) و <code>zcat file.txt.gz</code> (مشاهده محتوا)",
+        "<code>gzip file.txt</code>",
+        "<code>gunzip -c file.txt.gz | less</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>gzip -9</code> (سطح ۹، بالاترین فشرده‌سازی، کندترین). برای مشاهده: <code>zcat file.txt.gz</code> (نمایش در خروجی استاندارد) یا <code>zless file.txt.gz</code> (صفحه‌به‌صفحه) یا <code>gunzip -c file.txt.gz | less</code>. <code>zcat</code> سریع‌ترین روش است. همچنین <code>gzip -d</code> برای خارج‌سازی (decompress)."
+    },
+    {
+      "id": 658,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای فشرده‌سازی یک فایل با استفاده از <code>bzip2</code> با بالاترین سطح فشرده‌سازی و سپس مشاهده محتوای فایل فشرده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>bzip2 -9 file.txt</code> و <code>bzcat file.txt.bz2</code>",
+        "<code>bzip2 file.txt</code>",
+        "<code>bunzip2 -c file.txt.bz2 | less</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>bzip2 -9</code> (سطح ۹، بالاترین فشرده‌سازی، کندتر از gzip). برای مشاهده: <code>bzcat file.txt.bz2</code> یا <code>bzless file.txt.bz2</code> یا <code>bunzip2 -c file.txt.bz2 | less</code>. <code>bzip2 -d</code> برای خارج‌سازی. <code>bzip2</code> معمولاً نسبت فشرده‌سازی بهتری نسبت به gzip دارد اما کندتر است."
+    },
+    {
+      "id": 659,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای فشرده‌سازی یک فایل با استفاده از <code>xz</code> با بالاترین سطح فشرده‌سازی و سپس مشاهده محتوای فایل فشرده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>xz -9 file.txt</code> و <code>xzcat file.txt.xz</code>",
+        "<code>xz file.txt</code>",
+        "<code>unxz -c file.txt.xz | less</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>xz -9</code> (سطح ۹، بالاترین فشرده‌سازی، کندترین اما بهترین نسبت). برای مشاهده: <code>xzcat file.txt.xz</code> یا <code>xzless file.txt.xz</code> یا <code>unxz -c file.txt.xz | less</code>. <code>xz -d</code> برای خارج‌سازی. <code>xz</code> معمولاً بهترین نسبت فشرده‌سازی را در بین این سه ابزار دارد."
+    },
+    {
+      "id": 660,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/aliases</code> چه نقشی در مدیریت ایمیل دارد و چگونه می‌توان یک آلیاس برای ایمیل root ایجاد کرد؟",
+      "options": [
+        "<code>/etc/aliases</code> برای تعریف آلیاس‌های ایمیل (مثلاً root: user@domain) استفاده می‌شود؛ با ویرایش فایل و سپس <code>newaliases</code> اعمال می‌شود",
+        "فقط برای postfix",
+        "فقط برای sendmail",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/aliases</code> فایل پیکربندی آلیاس‌های ایمیل برای MTA (مانند postfix, sendmail) است. مثال: <code>root: admin@example.com</code> (ایمیل‌های root به admin ارسال شود). پس از ویرایش، <code>newaliases</code> (برای sendmail) یا <code>postalias /etc/aliases</code> (برای postfix) برای اعمال تغییرات نیاز است. همچنین <code>/etc/mail/aliases</code> نیز در برخی سیستم‌ها وجود دارد."
+    },
+    {
+      "id": 661,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در iptables، برای مسدود کردن یک آدرس IP خاص (مثلاً 1.2.3.4) به‌صورت دائمی و با ثبت لاگ (Logging) برای هر بسته مسدودشده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>iptables -A INPUT -s 1.2.3.4 -j LOG --log-prefix \"DROP: \"</code> و سپس <code>iptables -A INPUT -s 1.2.3.4 -j DROP</code>",
+        "<code>iptables -A INPUT -s 1.2.3.4 -j DROP</code>",
+        "<code>iptables -I INPUT -s 1.2.3.4 -j DROP</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای مسدودسازی و لاگ: ۱. <code>iptables -A INPUT -s 1.2.3.4 -j LOG --log-prefix \"DROP: \" --log-level 4</code> (ثبت در syslog). ۲. <code>iptables -A INPUT -s 1.2.3.4 -j DROP</code> (مسدودسازی). ترتیب مهم است (LOG قبل از DROP). <code>--log-prefix</code> یک برچسب برای فیلتر کردن لاگ‌ها فراهم می‌کند. برای دائمی، قوانین را با <code>iptables-save</code> ذخیره کنید."
+    },
+    {
+      "id": 662,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در iptables، برای مسدود کردن تمام ترافیک ورودی به جز ترافیک از یک شبکه محلی خاص (مثلاً 192.168.1.0/24)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>iptables -A INPUT -s 192.168.1.0/24 -j ACCEPT</code> و سپس <code>iptables -A INPUT -j DROP</code>",
+        "<code>iptables -A INPUT -j DROP</code>",
+        "<code>iptables -A INPUT -s ! 192.168.1.0/24 -j DROP</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "روش‌ها: ۱. <code>iptables -A INPUT -s 192.168.1.0/24 -j ACCEPT</code> و سپس <code>iptables -A INPUT -j DROP</code> (اول مجاز، سپس همه را مسدود کن). ۲. <code>iptables -A INPUT -s ! 192.168.1.0/24 -j DROP</code> (مسدود کردن همه به‌جز شبکه). همچنین <code>-m state --state ESTABLISHED,RELATED -j ACCEPT</code> برای اتصالات برقرار شده توصیه می‌شود. سیاست پیش‌فرض INPUT نیز می‌تواند DROP باشد."
+    },
+    {
+      "id": 663,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای تولید یک گواهی خودامضا (Self-Signed Certificate) با اعتبار ۱ سال و کلید RSA 4096 بیتی با استفاده از <code>openssl</code>، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</code>",
+        "<code>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365</code>",
+        "<code>openssl genrsa -out key.pem 4096</code> و سپس <code>openssl req -new -key key.pem -out cert.pem -x509 -days 365</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "روش‌های تولید گواهی خودامضا: ۱. یک مرحله‌ای: <code>openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</code> (با تولید کلید و گواهی هم‌زمان). ۲. دو مرحله‌ای: <code>openssl genrsa -out key.pem 4096</code> (کلید) و <code>openssl req -new -x509 -key key.pem -out cert.pem -days 365</code> (گواهی). <code>-nodes</code> (no DES) یعنی کلید بدون رمزگذاری. اعتبار با <code>-days</code> تنظیم می‌شود."
+    },
+    {
+      "id": 664,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای بررسی یک گواهی SSL که روی یک وب‌سرور نصب شده است (بدون نیاز به دانلود فایل گواهی)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>openssl s_client -connect host:443 -showcerts</code>",
+        "<code>openssl s_client -connect host:443 -showcerts -servername host</code> (برای SNI)",
+        "هر دو گزینه (با -servername برای SNI)",
+        "<code>openssl x509 -in cert.pem -text</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>openssl s_client -connect host:443 -showcerts</code> به سرور متصل شده و گواهی را نمایش می‌دهد. <code>-servername host</code> برای SNI (Server Name Indication) ضروری است اگر سرور چندین گواهی روی یک IP داشته باشد. خروجی شامل زنجیره گواهی (Chain) است. سپس می‌توان با <code>openssl x509 -text -noout</code> جزئیات را بررسی کرد."
+    },
+    {
+      "id": 665,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای استخراج گواهی از یک وب‌سرور و ذخیره آن در یک فایل (برای استفاده در برنامه‌ها)، از چه ترکیبی از دستورات استفاده می‌شود؟",
+      "options": [
+        "<code>openssl s_client -connect host:443 -showcerts < /dev/null 2>/dev/null | openssl x509 -out cert.pem</code>",
+        "<code>openssl s_client -connect host:443 -showcerts -servername host </dev/null 2>/dev/null | sed -n '/-----BEGIN/,/-----END/p' > cert.pem</code>",
+        "هر دو گزینه",
+        "<code>wget --no-check-certificate https://host/ -O -</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: ۱. استفاده از <code>openssl s_client</code> با <code>openssl x509</code> برای استخراج گواهی. ۲. استفاده از <code>sed</code> برای استخراج بخش‌های PEM از خروجی s_client. <code>openssl s_client -connect host:443 -showcerts -servername host </dev/null 2>/dev/null | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > cert.pem</code>. سپس گواهی قابل استفاده در برنامه‌ها یا بررسی با <code>openssl x509 -in cert.pem -text</code> است."
+    },
+    {
+      "id": 666,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک تصویر پس‌زمینه (Background Image) در منوی بوت، چه فایل‌هایی باید ویرایش شوند و فرمت تصویر باید چگونه باشد؟",
+      "options": [
+        "فایل <code>/etc/default/grub</code> با <code>GRUB_BACKGROUND=\"/path/to/image.png\"</code> (تصویر باید PNG با فرمت ۸ بیتی و اندازه مناسب باشد) و سپس <code>grub2-mkconfig</code>",
+        "فقط <code>/boot/grub2/grub.cfg</code>",
+        "فقط <code>/etc/grub.d/</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "تنظیم پس‌زمینه GRUB: ۱. تنظیم <code>GRUB_BACKGROUND</code> در <code>/etc/default/grub</code> (مسیر تصویر PNG). ۲. تصویر باید PNG با فرمت ۸ بیتی (یا JPEG، اما PNG توصیه می‌شود) و اندازه مناسب (معمولاً ۱۰۲۴×۷۶۸ یا ۱۹۲۰×۱۰۸۰). ۳. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. همچنین می‌توان تصویر را در <code>/boot/grub2/</code> قرار داد. در دبیان از <code>update-grub</code> استفاده می‌شود."
+    },
+    {
+      "id": 667,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، برای تغییر رنگ و ظاهر منوی بوت (با استفاده از تم/Theme)، از چه تنظیماتی استفاده می‌شود و تم‌های GRUB در کجا قرار دارند؟",
+      "options": [
+        "تنظیم <code>GRUB_THEME=\"/path/to/theme.txt\"</code> در <code>/etc/default/grub</code> (تم شامل فایل‌های CSS-like و تصاویر)، تم‌ها معمولاً در <code>/boot/grub2/themes/</code> قرار دارند",
+        "فقط <code>GRUB_THEME</code>",
+        "فقط <code>/boot/grub2/themes/</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیم تم GRUB: ۱. ایجاد یا دانلود تم در <code>/boot/grub2/themes/</code> (شامل فایل <code>theme.txt</code> و تصاویر). ۲. تنظیم <code>GRUB_THEME=\"/boot/grub2/themes/mycustom/theme.txt\"</code> در <code>/etc/default/grub</code>. ۳. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. تم‌ها امکان تغییر رنگ‌ها، فونت‌ها، آیکون‌ها و پس‌زمینه را فراهم می‌کنند. همچنین <code>grub2-themes</code> بسته برای نصب تم‌های آماده وجود دارد."
+    },
+    {
+      "id": 668,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش تفاوت بین دو فایل به‌صورت تکی (Side-by-Side) با استفاده از <code>sdiff</code> و همچنین نمایش فقط خطوط متفاوت، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>sdiff file1 file2</code> (نمایش کنار هم) و <code>sdiff -s file1 file2</code> (فقط خطوط متفاوت)",
+        "<code>sdiff -w 80 file1 file2</code> (تنظیم عرض)",
+        "هر دو گزینه",
+        "<code>diff -y file1 file2</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>sdiff</code> (side-by-side diff) دو فایل را به‌صورت دو ستونی با یک جداکننده نمایش می‌دهد (<, >, |). <code>-s</code> (suppress) فقط خطوط متفاوت را نمایش می‌دهد (خطوط مشترک را حذف می‌کند). <code>-w N</code> عرض صفحه را تنظیم می‌کند. <code>diff -y</code> نیز خروجی side-by-side مشابهی ارائه می‌دهد. <code>sdiff</code> برای مقایسه سریع و بصری مفید است."
+    },
+    {
+      "id": 669,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای شمارش تعداد خطوط خالی (Empty Lines) و تعداد خطوط غیرخالی در یک فایل، از چه ترکیبی از دستورات می‌توان استفاده کرد؟",
+      "options": [
+        "<code>grep -c '^$' file</code> (خطوط خالی)، <code>grep -c '[^[:space:]]' file</code> (خطوط غیرخالی)، <code>wc -l file</code> (کل خطوط)",
+        "<code>sed -n '/^$/p' file | wc -l</code>",
+        "هر دو گزینه",
+        "<code>awk '/^$/ {count++} END {print count}' file</code>"
+      ],
+      "correct": 2,
+      "explanation": "روش‌های مختلف: <code>grep -c '^$' file</code> (خطوط خالی، <code>^</code> ابتدا و <code>$</code> انتها). <code>grep -c '[^[:space:]]' file</code> (خطوط غیرخالی، یعنی حداقل یک کاراکتر غیرفاصله). <code>wc -l file</code> (کل خطوط). همچنین <code>sed -n '/^$/p' file | wc -l</code> و <code>awk '/^$/ {count++} END {print count}' file</code> نیز کار می‌کنند. <code>^[[:space:]]*$</code> برای خطوط خالی یا فقط فاصله/تب."
+    },
+    {
+      "id": 670,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش خطوط تکراری (Duplicate Lines) در یک فایل و همچنین نمایش خطوط یکتا (Unique Lines)، از چه ترکیبی از دستورات استفاده می‌شود؟",
+      "options": [
+        "<code>sort file | uniq -d</code> (خطوط تکراری)، <code>sort file | uniq -u</code> (خطوط یکتا)، <code>sort file | uniq -c</code> (تعداد تکرار هر خط)",
+        "فقط <code>uniq -d</code>",
+        "فقط <code>uniq -u</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>uniq</code> نیاز به فایل مرتب‌شده دارد. <code>sort file | uniq -d</code> (duplicate) خطوطی که بیش از یک بار تکرار شده‌اند را نمایش می‌دهد. <code>sort file | uniq -u</code> (unique) خطوطی که فقط یک بار آمده‌اند را نمایش می‌دهد. <code>sort file | uniq -c</code> (count) تعداد تکرار هر خط را نمایش می‌دهد. <code>uniq</code> فقط خطوط مجاور را مقایسه می‌کند، بنابراین مرتب‌سازی قبل از آن ضروری است."
+    },
+    {
+      "id": 671,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات حافظه (RAM) به‌صورت گرافیکی (نوار پیشرفت) و با قابلیت به‌روزرسانی زنده، از چه دستوری می‌توان استفاده کرد؟",
+      "options": [
+        "<code>free -h</code> (متنی) و <code>watch -n 1 free -h</code> (زنده) یا <code>htop</code> (نمایش گرافیکی)",
+        "<code>smem</code>",
+        "<code>top</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای نمایش گرافیکی حافظه: <code>htop</code> (رابط بصری با نوارهای رنگی برای RAM و Swap). <code>watch -n 1 free -h</code> (به‌روزرسانی متنی هر ۱ ثانیه). <code>smem -p</code> (نمایش درصدی). <code>free -h</code> خود متن است اما با <code>watch</code> زنده می‌شود. <code>top</code> نیز حافظه را نشان می‌دهد اما گرافیکی‌تر از htop نیست."
+    },
+    {
+      "id": 672,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به دما (Temperature) و سرعت فن CPU و سخت‌افزار در لینوکس، از چه دستوراتی استفاده می‌شود و چه بسته‌هایی نیاز است؟",
+      "options": [
+        "<code>sensors</code> (از بسته lm-sensors) و <code>sensors -u</code> (خام)، و <code>watch sensors</code> برای مانیتورینگ",
+        "فقط <code>sensors</code>",
+        "فقط <code>lm-sensors</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای نمایش دما: <code>sensors</code> (از بسته <code>lm-sensors</code>) اطلاعات دما، ولتاژ و سرعت فن را از سنسورهای سخت‌افزار نمایش می‌دهد. پس از نصب، ممکن است نیاز به <code>sensors-detect</code> برای شناسایی سنسورها باشد. <code>sensors -u</code> خروجی خام (برای اسکریپت‌ها). <code>watch sensors</code> برای مانیتورینگ زنده. همچنین <code>psensor</code> (GUI) و <code>glances</code> نیز اطلاعات دما را نمایش می‌دهند."
+    },
+    {
+      "id": 673,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات دقیق باتری (ظرفیت، وضعیت شارژ، و سلامت) در لپ‌تاپ‌های لینوکسی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>upower -i /org/freedesktop/UPower/devices/battery_BAT0</code> (اطلاعات کامل)، <code>acpi -V</code> (خلاصه)، <code>cat /sys/class/power_supply/BAT0/uevent</code>",
+        "فقط <code>upower</code>",
+        "فقط <code>acpi</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای اطلاعات باتری: <code>upower -i /org/freedesktop/UPower/devices/battery_BAT0</code> (UPower) اطلاعات کامل (ظرفیت، وضعیت، درصد، سلامت، زمان). <code>acpi -V</code> (یا <code>acpi -b</code>) خلاصه. <code>cat /sys/class/power_supply/BAT0/uevent</code> (دسترسی مستقیم به sysfs). <code>powertop</code> نیز اطلاعات مصرف انرژی را نمایش می‌دهد."
+    },
+    {
+      "id": 674,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای مانیتورینگ اتصالات شبکه (TCP) به‌صورت زنده با نمایش آدرس‌های IP و شماره پورت و وضعیت (State)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ss -tunp</code> (خلاصه) و <code>watch -n 1 'ss -tunp'</code> (زنده)",
+        "<code>netstat -tunp</code>",
+        "هر دو گزینه",
+        "<code>lsof -i</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو <code>ss -tunp</code> (مدرن) و <code>netstat -tunp</code> (قدیمی) اتصالات TCP و UDP را با جزئیات (آدرس، پورت، وضعیت، PID/نام برنامه) نمایش می‌دهند. <code>-t</code> (TCP)، <code>-u</code> (UDP)، <code>-n</code> (numeric، بدون وضوح نام)، <code>-p</code> (process). <code>watch</code> برای به‌روزرسانی زنده استفاده می‌شود. <code>lsof -i</code> نیز اتصالات شبکه را نمایش می‌دهد اما با فرمت متفاوت."
+    },
+    {
+      "id": 675,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای نمایش مسیر رسیدن به یک هاست با استفاده از <code>traceroute</code> و نمایش شماره AS (Autonomous System) هر هاپ، از چه سوییچی استفاده می‌شود و چه اطلاعاتی ارائه می‌دهد؟",
+      "options": [
+        "<code>traceroute -A host</code> (نمایش AS Number برای هر هاپ، نیاز به پایگاه داده whois)",
+        "<code>traceroute -a host</code>",
+        "<code>traceroute -A host</code> (با <code>-A</code>)",
+        "همه موارد"
+      ],
+      "correct": 2,
+      "explanation": "<code>traceroute -A host</code> (AS Lookup) شماره AS (سیستم خودمختار) هر هاپ را با استفاده از پایگاه داده whois نمایش می‌دهد. این برای شناسایی شبکه‌های مسیر (ISPها) در طول مسیر مفید است. <code>-a</code> برای نمایش AS در برخی نسخه‌ها، اما <code>-A</code> استاندارد است. همچنین <code>mtr -z</code> (در mtr) AS Number را نمایش می‌دهد. نیاز به اتصال اینترنت برای پرس‌وجوی whois دارد."
+    },
+    {
+      "id": 676,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای ایجاد یک تایمر (Timer) که یک سرویس را هر روز ساعت ۲ بامداد اجرا کند و در صورت از دست رفتن زمان (مثلاً سیستم خاموش بود)، در اولین فرصت اجرا شود، از چه تنظیماتی استفاده می‌شود؟",
+      "options": [
+        "<code>OnCalendar=daily</code> و <code>OnCalendar=02:00:00</code> و <code>Persistent=true</code> و <code>OnUnitActiveSec</code> برای اجرای مجدد",
+        "فقط <code>OnCalendar=02:00</code>",
+        "فقط <code>Persistent=true</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "تنظیمات تایمر systemd: <code>OnCalendar=*-*-* 02:00:00</code> (هر روز ساعت ۲ بامداد)، <code>Persistent=true</code> (اگر سیستم در زمان اجرا خاموش بود، در اولین فرصت اجرا کند). <code>Unit=myservice.service</code> (سرویس مرتبط). همچنین <code>OnUnitActiveSec</code> برای تکرار پس از اجرا. مثال فایل <code>mytimer.timer</code>: <code>[Timer]\\nOnCalendar=*-*-* 02:00:00\\nPersistent=true</code>. سپس <code>systemctl enable mytimer.timer</code>."
+    },
+    {
+      "id": 677,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای محدود کردن مصرف CPU یک سرویس به ۵۰٪ از یک هسته (CPUQuota) و تنظیم اولویت (CPUWeight)، از چه دستوراتی در فایل unit استفاده می‌شود؟",
+      "options": [
+        "<code>CPUQuota=50%</code> (محدودیت ۵۰٪ از یک هسته) و <code>CPUWeight=100</code> (اولویت، پیش‌فرض ۱۰۰) در بخش [Service]",
+        "فقط <code>CPUQuota</code>",
+        "فقط <code>CPUWeight</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در بخش [Service] فایل unit: <code>CPUQuota=50%</code> (حداکثر ۵۰٪ از یک هسته CPU برای سرویس). <code>CPUWeight=100</code> (وزن اولویت، پیش‌فرض ۱۰۰، مقدار بیشتر = اولویت بیشتر در زمان رقابت بر CPU). همچنین <code>CPUAccounting=true</code> برای فعال‌سازی آمار CPU. پس از تغییر، <code>systemctl daemon-reload</code> و <code>systemctl restart service</code>. این محدودیت‌ها با cgroups پیاده‌سازی می‌شوند."
+    },
+    {
+      "id": 678,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای محدود کردن حافظه (RAM) یک سرویس به ۵۱۲ مگابایت و جلوگیری از استفاده بیش از حد، از چه دستوری در فایل unit استفاده می‌شود؟",
+      "options": [
+        "<code>MemoryMax=512M</code> (سخت‌افزاری، حداکثر مطلق) و <code>MemoryHigh=400M</code> (نرم‌افزاری، هشدار و محدودیت تدریجی) در بخش [Service]",
+        "فقط <code>MemoryMax</code>",
+        "فقط <code>MemoryHigh</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در بخش [Service]: <code>MemoryMax=512M</code> (حداکثر حافظه سخت‌افزاری، در صورت تجاوز، سرویس OOM می‌شود). <code>MemoryHigh=400M</code> (آستانه نرم‌افزاری، systemd تلاش می‌کند حافظه را در این محدوده نگه دارد). همچنین <code>MemoryAccounting=true</code> برای فعال‌سازی آمار. <code>MemorySwapMax=0</code> برای جلوگیری از استفاده از swap. پس از تغییر، <code>systemctl daemon-reload</code> و <code>systemctl restart service</code>."
+    },
+    {
+      "id": 679,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای محدود کردن تعداد فایل‌های باز (Open Files) و تعداد پردازش‌های هم‌زمان (Processes) یک سرویس، از چه دستوراتی در فایل unit استفاده می‌شود؟",
+      "options": [
+        "<code>LimitNOFILE=4096</code> (تعداد فایل‌های باز) و <code>LimitNPROC=10</code> (تعداد پردازش‌ها) و <code>TasksMax=10</code> (تعداد تسک‌های cgroup) در بخش [Service]",
+        "فقط <code>LimitNOFILE</code>",
+        "فقط <code>LimitNPROC</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در بخش [Service]: <code>LimitNOFILE=4096</code> (حداکثر فایل‌های باز، شامل سوکت‌ها). <code>LimitNPROC=10</code> (حداکثر تعداد پردازش‌های هم‌زمان). <code>TasksMax=10</code> (تعداد تسک‌ها در cgroup، مشابه با LimitNPROC). همچنین <code>LimitMEMLOCK</code> و <code>LimitAS</code> برای محدودیت حافظه قفل‌شده و آدرس فضا. این محدودیت‌ها با ulimit همخوانی دارند و برای جلوگیری از مصرف بیش از حد منابع مفید هستند."
+    },
+    {
+      "id": 680,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پارامتر کرنل (مانند <code>nomodeset</code>) به‌صورت دائمی برای همه بوت‌ها، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "افزودن پارامتر به <code>GRUB_CMDLINE_LINUX</code> در <code>/etc/default/grub</code> و سپس <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "فقط <code>GRUB_CMDLINE_LINUX</code>",
+        "فقط <code>grub2-mkconfig</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای اضافه کردن پارامتر دائمی: ۱. ویرایش <code>/etc/default/grub</code>. ۲. پیدا کردن خط <code>GRUB_CMDLINE_LINUX</code> و افزودن پارامتر (مثلاً <code>GRUB_CMDLINE_LINUX=\"quiet nomodeset\"</code>). ۳. اجرای <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> (در ردهت) یا <code>update-grub</code> (در دبیان). پارامترها به کرنل در زمان بوت ارسال می‌شوند. همچنین <code>GRUB_CMDLINE_LINUX_DEFAULT</code> برای پارامترهای پیش‌فرض (و <code>GRUB_CMDLINE_LINUX</code> برای حالت recovery) وجود دارد."
+    },
+    {
+      "id": 681,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پارامتر کرنل (مانند <code>single</code> یا <code>rd.break</code>) برای یک بوت موقت (بدون تغییر دائمی)، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "در منوی GRUB، کلید <code>e</code> را بزنید، خط کرنل را ویرایش کرده و پارامتر را اضافه کنید، سپس <code>Ctrl+X</code> یا <code>F10</code> برای بوت",
+        "فقط <code>e</code>",
+        "فقط <code>Ctrl+X</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای بوت موقت با پارامتر جدید: ۱. در منوی GRUB، ورودی مورد نظر را انتخاب کرده و کلید <code>e</code> (edit) را بزنید. ۲. خط شروع با <code>linux</code> (یا <code>linuxefi</code>) را پیدا کنید. ۳. پارامتر مورد نظر (مثلاً <code>single</code> یا <code>rd.break</code> یا <code>nomodeset</code>) را به انتهای خط اضافه کنید. ۴. <code>Ctrl+X</code> (یا <code>F10</code>) برای بوت با پارامترهای جدید (فقط یک بار). این روش برای دیباگ و ریکاوری بسیار مفید است."
+    },
+    {
+      "id": 682,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تغییر نام تعداد زیادی فایل (مثلاً همه فایل‌های <code>.txt</code> به <code>.bak</code>) با استفاده از <code>rename</code> (نسخه Perl) و همچنین نسخه util-linux، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "Perl: <code>rename 's/\\.txt$/.bak/' *.txt</code> (دبیان) و util-linux: <code>rename .txt .bak *.txt</code> (ردهت)",
+        "فقط Perl: <code>rename</code>",
+        "فقط util-linux: <code>rename</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در Perl rename (معمول در دبیان): <code>rename 's/\\.txt$/.bak/' *.txt</code> (با عبارت منظم). در util-linux rename (معمول در ردهت): <code>rename .txt .bak *.txt</code> (سینتکس ساده‌تر). برای تشخیص نسخه، <code>rename --version</code> یا <code>man rename</code> را بررسی کنید. همچنین می‌توان از <code>mmv</code> یا <code>mv</code> با حلقه استفاده کرد: <code>for f in *.txt; do mv \"$f\" \"${f%.txt}.bak\"; done</code>."
+    },
+    {
+      "id": 683,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تغییر نام تمام فایل‌های یک دایرکتوری با تبدیل حروف بزرگ به کوچک (یا برعکس) با استفاده از <code>rename</code>، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "با Perl rename: <code>rename 'y/A-Z/a-z/' *</code> (بزرگ به کوچک) و <code>rename 'y/a-z/A-Z/' *</code> (کوچک به بزرگ)",
+        "با util-linux rename: <code>rename A-Z a-z *</code> (در برخی نسخه‌ها)",
+        "هر دو گزینه (بسته به نسخه rename)",
+        "<code>tr</code>"
+      ],
+      "correct": 2,
+      "explanation": "در Perl rename: <code>rename 'y/A-Z/a-z/' *</code> (بزرگ به کوچک) و <code>rename 'y/a-z/A-Z/' *</code> (کوچک به بزرگ). در util-linux rename (نسخه‌های جدیدتر): <code>rename A-Z a-z *</code> و <code>rename a-z A-Z *</code>. همچنین می‌توان با <code>for f in *; do mv \"$f\" \"$(echo $f | tr '[:upper:]' '[:lower:]')\"; done</code> با حلقه انجام داد. این برای یکسان‌سازی نام فایل‌ها مفید است."
+    },
+    {
+      "id": 684,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای اتصال به یک کانتینر در حال اجرا و اجرای یک فرمان تعاملی (مانند bash) برای عیب‌یابی، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>docker exec -it container_name bash</code>",
+        "<code>docker attach container_name</code>",
+        "هر دو گزینه (با تفاوت در رفتار)",
+        "<code>docker run -it container_name bash</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>docker exec -it container_name bash</code> (recommended) یک فرمان جدید (bash) در کانتینر در حال اجرا اجرا می‌کند و به آن متصل می‌شود (تعاملی). <code>docker attach container_name</code> به جریان ورودی/خروجی اصلی کانتینر متصل می‌شود (ممکن است تداخل داشته باشد). <code>docker exec</code> برای دیباگ و عیب‌یابی توصیه می‌شود زیرا یک نشست جدید ایجاد می‌کند و روی پردازش اصلی تأثیری ندارد. برای خروج از bash، <code>exit</code> بزنید."
+    },
+    {
+      "id": 685,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای کپی کردن یک فایل از کانتینر به هاست (و برعکس) با استفاده از <code>docker cp</code>، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "از کانتینر به هاست: <code>docker cp container_name:/path/to/file /host/path</code>، از هاست به کانتینر: <code>docker cp /host/path container_name:/path/to/file</code>",
+        "فقط از کانتینر به هاست",
+        "فقط از هاست به کانتینر",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>docker cp</code> برای کپی فایل‌ها بین کانتینر و هاست استفاده می‌شود. سینتکس: <code>docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH</code> (از کانتینر به هاست) و <code>docker cp [OPTIONS] SRC_PATH CONTAINER:DEST_PATH</code> (از هاست به کانتینر). مثال: <code>docker cp mycontainer:/app/logs /tmp/</code>. برای کپی دایرکتوری‌ها، از <code>-a</code> (archive) برای حفظ مجوزها استفاده می‌شود."
+    },
+    {
+      "id": 686,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای تغییر اندازه دیسک یک VM (افزایش حجم) بدون از دست دادن داده، از چه روشی استفاده می‌شود و چه مراحلی پس از آن در VM لازم است؟",
+      "options": [
+        "در رابط وب: VM → Hardware → Disk → Resize → تنظیم حجم جدید. سپس در VM: با <code>lsblk</code> بررسی دیسک، و برای EXT4: <code>resize2fs /dev/sdX</code> و برای XFS: <code>xfs_growfs /mountpoint</code>",
+        "فقط Resize در Proxmox",
+        "فقط resize2fs",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل: ۱. در Proxmox، VM را خاموش کنید (برای تغییر دیسک، بهتر است خاموش باشد، اما در برخی موارد با <code>--online</code> نیز امکان‌پذیر است). ۲. در رابط وب، Hardware → Disk → Resize → مقدار جدید (مثلاً +10G). ۳. VM را استارت کنید. ۴. داخل VM، دیسک جدید را با <code>lsblk</code> بررسی کنید. ۵. برای EXT4: <code>resize2fs /dev/sdX</code> (اگر پارتیشن LVM است، ابتدا LV را بزرگ کنید). برای XFS: <code>xfs_growfs /mountpoint</code>. برای LVM: <code>lvextend -L +10G /dev/vg/lv</code> و سپس resize2fs یا xfs_growfs."
+    },
+    {
+      "id": 687,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای ایجاد یک کلاستر (Cluster) با دو گره و تنظیم شبکه خصوصی (Corosync) برای ارتباط بین گره‌ها، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "در گره اول: <code>pvecm create clustername</code> و در گره دوم: <code>pvecm add IP_OF_FIRST_NODE</code>. سپس تنظیم <code>/etc/corosync/corosync.conf</code> برای network (bindnetaddr, mcastaddr)",
+        "فقط <code>pvecm create</code>",
+        "فقط <code>pvecm add</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای ایجاد کلاستر Proxmox: ۱. روی گره اول: <code>pvecm create MYCLUSTER</code> (ایجاد کلاستر). ۲. روی گره‌های دیگر: <code>pvecm add IP_OF_FIRST</code> (پیوستن به کلاستر). ۳. پس از آن، <code>/etc/corosync/corosync.conf</code> را برای تنظیمات شبکه (bindnetaddr برای IP گره، mcastaddr برای multicast) ویرایش کنید. ۴. با <code>pvecm status</code> وضعیت کلاستر را بررسی کنید. برای ۲ گره، ممکن است نیاز به تنظیم <code>two_node: 1</code> در corosync.conf برای جلوگیری از مشکلات Quorum باشد."
+    },
+    {
+      "id": 688,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در firewalld، برای محدود کردن اتصالات SSH (پورت ۲۲) به یک شبکه محلی خاص (مثلاً 192.168.1.0/24) و مسدود کردن سایر IPها، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.168.1.0/24\" service name=\"ssh\" accept'</code> و <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" service name=\"ssh\" drop'</code> (با ترتیب)",
+        "فقط <code>--add-source</code>",
+        "فقط <code>--add-rich-rule</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای محدود کردن SSH به یک شبکه: از Rich Rules استفاده کنید: ۱. اجازه به شبکه محلی: <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.168.1.0/24\" service name=\"ssh\" accept'</code>. ۲. مسدود کردن بقیه: <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" service name=\"ssh\" drop'</code>. ترتیب مهم است (اول allow، سپس drop). سپس <code>firewall-cmd --reload</code>. همچنین با <code>--add-source</code> و <code>--remove-service</code> نیز می‌توان این کار را انجام داد."
+    },
+    {
+      "id": 689,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در firewalld، برای مسدود کردن یک آدرس IP خاص (مثلاً 1.2.3.4) به‌صورت دائمی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --permanent --add-rich-rule='rule family=\"ipv4\" source address=\"1.2.3.4\" drop'</code> و سپس <code>firewall-cmd --reload</code>",
+        "<code>firewall-cmd --permanent --add-source=1.2.3.4 --zone=public</code> و سپس <code>firewall-cmd --reload</code>",
+        "هر دو گزینه (با تفاوت در رفتار)",
+        "<code>firewall-cmd --add-rich-rule='rule family=\"ipv4\" source address=\"1.2.3.4\" reject'</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: ۱. Rich Rule: <code>firewall-cmd --permanent --add-rich-rule='rule family=\"ipv4\" source address=\"1.2.3.4\" drop'</code> (یا reject). ۲. <code>firewall-cmd --permanent --add-source=1.2.3.4 --zone=public</code> (منبع را به zone اضافه می‌کند، سپس با تنظیمات zone می‌توان مسدود کرد، اما خود source به‌تنهایی مسدود نمی‌کند). بهترین روش Rich Rule با <code>drop</code> یا <code>reject</code> است. سپس <code>firewall-cmd --reload</code>."
+    },
+    {
+      "id": 690,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی تغییرات در فایل‌های پیکربندی مهم (مانند <code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/sudoers</code>) و تشخیص تغییرات غیرمجاز، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "استفاده از <code>aide</code> (Advanced Intrusion Detection Environment) با ایجاد پایگاه داده اولیه و مقایسه دوره‌ای، یا <code>tripwire</code> یا <code>rkhunter</code>",
+        "فقط <code>aide</code>",
+        "فقط <code>rkhunter</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "ابزارهای یکپارچگی فایل (File Integrity Checkers): <code>aide</code> (پیشرفته، با قابلیت ایجاد پایگاه داده و مقایسه)، <code>tripwire</code> (قدیمی)، <code>rkhunter</code> (rootkit hunter که تغییرات فایل‌های سیستمی را نیز بررسی می‌کند). همچنین <code>debsums</code> (دبیان) و <code>rpm -V</code> (ردهت) برای بررسی یکپارچگی بسته‌ها. مراحل AIDE: <code>aide --init</code> (ایجاد پایگاه داده)، <code>aide --check</code> (مقایسه). تغییرات غیرمجاز نشانه نفوذ احتمالی است."
+    },
+    {
+      "id": 691,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی کرون‌تب‌های (Cron Jobs) سیستم که توسط کاربران مختلف تنظیم شده‌اند و شناسایی cron jobs مخرب یا غیرضروری، از چه دستوراتی استفاده می‌شود و کدام فایل‌ها باید بررسی شوند؟",
+      "options": [
+        "<code>crontab -l -u user</code> (برای هر کاربر)، <code>ls /var/spool/cron/</code> (فایل‌های cron کاربران)، <code>cat /etc/crontab</code> (سیستمی)، <code>ls /etc/cron.d/</code> و <code>/etc/cron.*/</code>",
+        "فقط <code>crontab -l</code>",
+        "فقط <code>ls /var/spool/cron/</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای بررسی cron jobs: ۱. <code>crontab -l -u user</code> برای هر کاربر (با <code>su - user -c 'crontab -l'</code> نیز می‌توان). ۲. <code>ls -la /var/spool/cron/</code> (فایل‌های cron کاربران). ۳. <code>cat /etc/crontab</code> (cron سیستمی). ۴. <code>ls /etc/cron.d/</code> (cron jobs اضافی). ۵. <code>ls /etc/cron.hourly/ /etc/cron.daily/ /etc/cron.weekly/ /etc/cron.monthly/</code> (اسکریپت‌های زمان‌بندی). ۶. <code>systemctl list-timers</code> برای systemd timers. بررسی دوره‌ای این فایل‌ها برای شناسایی بدافزارها و تروجان‌ها ضروری است."
+    },
+    {
+      "id": 692,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، تفاوت بین کانتینرهای (Container) مبتنی بر سیستمعامل (OS Container) مانند LXC و کانتینرهای برنامه (Application Container) مانند Docker در چیست و هرکدام چه کاربردی دارند؟",
+      "options": [
+        "OS Container (مانند LXC) یک محیط کامل شبیه‌سازی‌شده (با init system) ایجاد می‌کند و برای اجرای چندین سرویس در یک کانتینر مناسب است. Application Container (مانند Docker) فقط یک پردازش را اجرا می‌کند و برای میکروسرویس‌ها و برنامه‌های تک‌سرویس طراحی شده است",
+        "هر دو یکسان هستند",
+        "Docker یک محیط کامل سیستمعامل دارد",
+        "LXC فقط برای برنامه‌های تک‌سرویس است"
+      ],
+      "correct": 0,
+      "explanation": "تفاوت اصلی: OS Containers (LXC, LXD) یک فضای کاربری کامل با systemd/init، چندین پردازش، و قابلیت‌های شبکه پیشرفته ایجاد می‌کنند و شبیه VMهای سبک هستند. Application Containers (Docker, Podman) روی یک پردازش واحد (single-process) با قابلیت restart و مدیریت وابستگی‌ها متمرکز هستند و برای میکروسرویس‌ها، CI/CD، و برنامه‌های قابل حمل طراحی شده‌اند. Docker امروزه محبوب‌تر است، اما LXC برای سناریوهای سروری که نیاز به محیط کامل دارند مفید است."
+    },
+    {
+      "id": 693,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، تفاوت بین Passthrough (گذر مستقیم سخت‌افزار) و SR-IOV چیست و هرکدام چه مزایایی در کارایی I/O دارند؟",
+      "options": [
+        "Passthrough: یک دستگاه فیزیکی (مانند GPU, NIC) را به یک VM اختصاص می‌دهد (کارایی نزدیک به native، اما غیرقابل اشتراک). SR-IOV: یک دستگاه فیزیکی را به چندین VF (Virtual Function) تقسیم می‌کند تا چندین VM بتوانند به‌طور مستقیم و با کارایی بالا از آن استفاده کنند (قابل اشتراک)",
+        "هر دو یکسان هستند",
+        "Passthrough قابل اشتراک است",
+        "SR-IOV غیرقابل اشتراک است"
+      ],
+      "correct": 0,
+      "explanation": "Passthrough (گذر مستقیم) یک دستگاه سخت‌افزاری را به‌طور کامل به یک VM اختصاص می‌دهد و توسط VM مدیریت می‌شود (کارایی حداکثر، اما غیرقابل اشتراک با VMهای دیگر). SR-IOV (Single Root I/O Virtualization) یک دستگاه فیزیکی را به چندین VF (Virtual Function) منطقی تقسیم می‌کند که هر VF می‌تواند به یک VM اختصاص یابد، بنابراین چندین VM می‌توانند از یک دستگاه فیزیکی با کارایی بالا استفاده کنند (قابل اشتراک). SR-IOV به پشتیبانی سخت‌افزاری نیاز دارد."
+    },
+    {
+      "id": 694,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای بررسی سلامت (Health) و اطلاعات دقیق یک دیسک SATA/NVMe (مانند S.M.A.R.T) در لینوکس، از چه دستوراتی استفاده می‌شود و چه بسته‌هایی نیاز است؟",
+      "options": [
+        "<code>smartctl -a /dev/sdX</code> (از بسته smartmontools) برای نمایش اطلاعات کامل S.M.A.R.T، <code>smartctl -t short /dev/sdX</code> برای تست کوتاه، و <code>nvme-cli</code> برای NVMe",
+        "فقط <code>smartctl</code>",
+        "فقط <code>nvme-cli</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای بررسی سلامت دیسک: <code>smartctl -a /dev/sdX</code> (از بسته <code>smartmontools</code>) اطلاعات S.M.A.R.T (Self-Monitoring, Analysis and Reporting Technology) را نمایش می‌دهد: درصد سلامت، دمای دیسک، تعداد سکتورهای خراب، و خطاهای خواندن/نوشتن. <code>smartctl -t short /dev/sdX</code> (تست کوتاه) و <code>-t long</code> (تست بلند). برای NVMe، از <code>nvme-cli</code> استفاده می‌شود: <code>nvme smart-log /dev/nvme0</code>. <code>badblocks</code> نیز برای بررسی سکتورهای خراب استفاده می‌شود."
+    },
+    {
+      "id": 695,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای بررسی سکتورهای خراب (Bad Blocks) روی یک دیسک و سپس ثبت آن‌ها در فایل‌سیستم (برای جلوگیری از استفاده)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>badblocks -sv /dev/sdX</code> (بررسی سطح پایین، نیاز به unmount) و سپس با <code>e2fsck -l badblocks.txt /dev/sdX</code> (برای EXT4) می‌توان سکتورهای خراب را ثبت کرد",
+        "فقط <code>badblocks</code>",
+        "فقط <code>e2fsck</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای یافتن سکتورهای خراب: <code>badblocks -sv /dev/sdX &gt; badblocks.txt</code> (خواندن-نوشتن، حتماً دیسک unmount باشد). سپس با <code>e2fsck -l badblocks.txt /dev/sdX</code> (برای EXT4) سکتورها را به‌عنوان خراب علامت‌گذاری می‌کنیم تا فایل‌سیستم از آن‌ها استفاده نکند. برای XFS، از <code>xfs_repair</code> استفاده می‌شود. <code>smartctl</code> نیز می‌تواند سکتورهای خراب را شناسایی کند. این کار برای دیسک‌های قدیمی و جلوگیری از از دست رفتن داده مفید است."
+    },
+    {
+      "id": 696,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش محتوای یک فایل به‌صورت هگزادسیمال (Hex) و ASCII و همچنین نمایش آفست (Offset) در لینوکس، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>hexdump -C file</code> (نمایش هگز و ASCII با آفست)، <code>xxd file</code> (نمایش مشابه)، <code>od -t x1 -c file</code> (با octal dump)",
+        "فقط <code>hexdump</code>",
+        "فقط <code>xxd</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "هر سه ابزار برای نمایش باینری به‌صورت خوانا استفاده می‌شوند: <code>hexdump -C file</code> (canonical hex+ASCII، با آفست، هگز ۱۶ بایت و ASCII). <code>xxd file</code> (نمایش هگز و ASCII، با آفست). <code>od -t x1 -c file</code> (octal dump، <code>-t x1</code> برای هگز، <code>-c</code> برای کاراکترها). <code>hexdump</code> و <code>xxd</code> برای تحلیل فایل‌های باینری، بررسی هدرها و عیب‌یابی فایل‌های خراب مفید هستند."
+    },
+    {
+      "id": 697,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش محتوای یک فایل به‌صورت هگزادسیمال با استفاده از <code>xxd</code> و سپس بازگرداندن آن به حالت باینری اصلی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>xxd file.bin > file.hex</code> (تبدیل به هگز)، <code>xxd -r file.hex > file.bin</code> (بازگردانی)",
+        "<code>xxd file.bin</code>",
+        "<code>xxd -r</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>xxd file.bin > file.hex</code> (تبدیل فایل باینری به نمایش هگز با آفست). <code>xxd -r file.hex > file.bin</code> (reverse) برای بازگردانی از هگز به باینری اصلی. همچنین با <code>-p</code> (plain) می‌توان خروجی بدون آفست دریافت کرد. این برای ویرایش فایل‌های باینری به‌صورت متنی (مثلاً تغییر هدرها) و سپس بازگردانی مفید است."
+    },
+    {
+      "id": 698,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل سیستم (مانند توزیع، کرنل، معماری، و Virtualization) در یک نگاه، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>hostnamectl</code>",
+        "<code>uname -a</code>",
+        "هر دو گزینه (با تفاوت در جزئیات)",
+        "<code>lsb_release -a</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>hostnamectl</code> (از systemd) اطلاعات جامع: هاست‌نیم، معماری، نسخه توزیع (ID و VERSION_ID)، کرنل، و virtualization. <code>uname -a</code> اطلاعات کرنل (نام، نسخه، معماری) را نمایش می‌دهد. <code>lsb_release -a</code> (در صورت نصب) اطلاعات توزیع را نمایش می‌دهد. <code>cat /etc/os-release</code> نیز اطلاعات توزیع را نشان می‌دهد. <code>hostnamectl</code> کامل‌ترین است."
+    },
+    {
+      "id": 699,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش لیست تمام سرویس‌های (Service Units) فعال و غیرفعال در systemd و همچنین سرویس‌های failed، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl list-units --type=service --state=running</code> (فعال)، <code>systemctl list-units --type=service --state=inactive</code> (غیرفعال)، <code>systemctl list-units --type=service --state=failed</code> (خراب)",
+        "فقط <code>systemctl list-units</code>",
+        "فقط <code>systemctl status</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای فیلتر سرویس‌ها: <code>systemctl list-units --type=service</code> (همه سرویس‌ها با وضعیت). <code>--state=running</code> (فعال)، <code>--state=inactive</code> (غیرفعال)، <code>--state=failed</code> (خراب). <code>systemctl status</code> وضعیت یک سرویس خاص را نشان می‌دهد. همچنین <code>systemctl list-unit-files --type=service</code> برای سرویس‌های enable/disable شده. <code>systemctl --failed</code> لیست سرویس‌های خراب را نشان می‌دهد."
+    },
+    {
+      "id": 700,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، کدام یک از موارد زیر بهترین روش برای مدیریت شبکه در توزیع‌های مدرن (با NetworkManager) است؟",
+      "options": [
+        "استفاده از <code>nmcli</code> (خط فرمان) برای پیکربندی اتصالات شبکه به‌صورت دائمی و مدیریت شده",
+        "استفاده از <code>ifconfig</code> و <code>route</code>",
+        "ویرایش مستقیم فایل‌های <code>/etc/network/interfaces</code> (دبیان) یا <code>/etc/sysconfig/network-scripts/</code> (ردهت)",
+        "همه موارد (اما nmcli توصیه می‌شود)"
+      ],
+      "correct": 3,
+      "explanation": "در توزیع‌های مدرن، NetworkManager (با ابزار <code>nmcli</code>) روش توصیه‌شده برای مدیریت شبکه است. <code>ifconfig</code> و <code>route</code> قدیمی هستند و در برخی توزیع‌ها به‌طور پیش‌فرض نصب نیستند. ویرایش مستقیم فایل‌های پیکربندی همچنان کار می‌کند اما ممکن است با NetworkManager تداخل داشته باشد و مدیریت را پیچیده کند. <code>nmcli</code> یکپارچه، پایدار و قابل اسکریپت‌نویسی است."
+    }
+  ]
+}

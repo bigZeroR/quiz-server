@@ -1,0 +1,706 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی (بخش پایانی)",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه سوالات 501 به بعد",
+  "questions": [
+    {
+      "id": 501,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل یک Volume Group در LVM (شامل PVهای عضو، LVها، اندازه کل و فضای آزاد)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>vgdisplay vg_name</code>",
+        "<code>vgs vg_name</code>",
+        "<code>lvdisplay</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>vgdisplay</code> اطلاعات کامل یک Volume Group را نمایش می‌دهد: نام VG، UUID، اندازه کل، فضای آزاد، تعداد PVها و LVها، و وضعیت. <code>vgs</code> خلاصه‌ای از VGها را نشان می‌دهد (مناسب برای اسکریپت‌ها). <code>lvdisplay</code> برای نمایش LVها است. برای مشاهده PVهای عضو: <code>pvdisplay</code> یا <code>pvs</code>."
+    },
+    {
+      "id": 502,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "برای تغییر نام یک Volume Group در LVM بدون از دست دادن داده، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>vgrename old_vg new_vg</code>",
+        "<code>lvrename</code>",
+        "<code>pvrename</code>",
+        "غیرممکن است"
+      ],
+      "correct": 0,
+      "explanation": "<code>vgrename</code> نام یک Volume Group را تغییر می‌دهد. این کار بر داده‌ها تأثیری ندارد اما لازم است پس از تغییر، فایل‌های پیکربندی (مانند <code>/etc/fstab</code>) که از نام VG استفاده می‌کنند به‌روزرسانی شوند. همچنین ممکن است نیاز به به‌روزرسانی <code>/boot/grub2/grub.cfg</code> (در صورت وجود) داشته باشید. <code>lvrename</code> برای تغییر نام Logical Volumes و <code>pvrename</code> برای Physical Volumes استفاده می‌شود."
+    },
+    {
+      "id": 503,
+      "category": "مدیریت دیسک - RAID",
+      "level": 4,
+      "text": "در RAID نرم‌افزاری با mdadm، برای بررسی وضعیت همگام‌سازی (Sync) یک آرایه در حال بازسازی، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>cat /proc/mdstat</code>",
+        "<code>mdadm --detail /dev/md0</code>",
+        "هر دو گزینه",
+        "<code>mdadm --monitor</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور وضعیت همگام‌سازی را نشان می‌دهند: <code>cat /proc/mdstat</code> خروجی سریع با درصد پیشرفت و سرعت را نشان می‌دهد. <code>mdadm --detail /dev/md0</code> اطلاعات کامل‌تری از جمله درصد همگام‌سازی، سرعت، و زمان تخمینی باقی‌مانده را نمایش می‌دهد. <code>mdadm --monitor</code> برای نظارت بر رویدادهای RAID استفاده می‌شود."
+    },
+    {
+      "id": 504,
+      "category": "مدیریت دیسک - RAID",
+      "level": 4,
+      "text": "در RAID نرم‌افزاری، پس از تعویض یک دیسک خراب و اضافه کردن دیسک جدید، آرایه به‌طور خودکار شروع به همگام‌سازی می‌کند. برای افزایش سرعت همگام‌سازی، چه پارامتری می‌توان تنظیم کرد؟",
+      "options": [
+        "<code>echo 50000 > /proc/sys/dev/raid/speed_limit_max</code> (افزایش سرعت حداکثر)",
+        "<code>echo 50000 > /proc/sys/dev/raid/speed_limit_min</code> (افزایش سرعت حداقل)",
+        "تنظیم <code>--speed-limit</code> در mdadm",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "سرعت همگام‌سازی RAID با دو پارامتر کرنل کنترل می‌شود: <code>/proc/sys/dev/raid/speed_limit_min</code> (حداقل سرعت، پیش‌فرض ۱۰۰۰ KB/s) و <code>/proc/sys/dev/raid/speed_limit_max</code> (حداکثر سرعت، پیش‌فرض ۲۰۰۰۰۰ KB/s). با افزایش <code>speed_limit_max</code> (مثلاً به ۵۰۰۰۰۰) می‌توان سرعت را افزایش داد اما ممکن است بر عملکرد سیستم تأثیر بگذارد. همچنین در دستور <code>mdadm</code> با <code>--speed-limit</code> می‌توان سرعت را تنظیم کرد."
+    },
+    {
+      "id": 505,
+      "category": "شبکه - مسیریابی پیشرفته",
+      "level": 4,
+      "text": "برای نمایش جدول مسیریابی (Routing Table) در لینوکس به‌صورت عددی (بدون وضوح نام) و با جزئیات کامل، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ip route show table all</code>",
+        "<code>route -n</code>",
+        "هر دو گزینه",
+        "<code>netstat -rn</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور معتبر هستند: <code>ip route show table all</code> (مدرن) و <code>route -n</code> (قدیمی) و <code>netstat -rn</code> (قدیمی). <code>-n</code> (numeric) از وضوح نام جلوگیری می‌کند و نمایش سریع‌تری دارد. <code>ip route show table all</code> همه جداول مسیریابی (شامل main، local، و default) را نمایش می‌دهد. <code>route -n</code> فقط جدول اصلی را نشان می‌دهد."
+    },
+    {
+      "id": 506,
+      "category": "شبکه - مسیریابی پیشرفته",
+      "level": 4,
+      "text": "برای حذف یک مسیر استاتیک از جدول مسیریابی در لینوکس، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ip route del 192.168.1.0/24 via 192.168.0.1</code>",
+        "<code>route del -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.0.1</code>",
+        "هر دو گزینه",
+        "<code>ip route delete all</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش برای حذف مسیر کار می‌کنند: <code>ip route del</code> (روش مدرن) و <code>route del</code> (روش قدیمی). مثال: <code>ip route del 10.0.0.0/8 via 192.168.1.1</code>. برای حذف مسیر پیش‌فرض: <code>ip route del default</code> یا <code>route del default gw 192.168.1.1</code>. توجه داشته باشید که مسیر باید دقیقاً مطابق مسیر اضافه‌شده باشد."
+    },
+    {
+      "id": 507,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای مشاهده پارامترهای بوت (Boot Parameters) که به کرنل در زمان راه‌اندازی ارسال شده‌اند، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>cat /proc/cmdline</code>",
+        "<code>dmesg | grep \"Command line\"</code>",
+        "<code>grub2-editenv list</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/proc/cmdline</code> شامل خط فرمان (Command Line) است که به کرنل در زمان بوت ارسال شده است (پارامترهایی مانند <code>ro</code>، <code>root=</code>، <code>quiet</code>، <code>nomodeset</code>). این فایل فقط خواندنی است و اطلاعات دقیقی از پارامترهای استفاده‌شده ارائه می‌دهد. <code>dmesg | grep \"Command line\"</code> نیز این پارامترها را در لاگ‌های بوت نشان می‌دهد."
+    },
+    {
+      "id": 508,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای پیکربندی پارامترهای کرنل در زمان اجرا (Runtime) به‌صورت دائمی (پس از ری‌استارت نیز باقی بماند)، کدام فایل باید ویرایش شود؟",
+      "options": [
+        "<code>/etc/sysctl.conf</code> یا <code>/etc/sysctl.d/*.conf</code>",
+        "<code>/proc/sys/</code>",
+        "<code>/etc/kernel/</code>",
+        "<code>/boot/config-$(uname -r)</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیم دائمی پارامترهای کرنل، باید آنها را در <code>/etc/sysctl.conf</code> یا فایل‌های <code>.conf</code> در <code>/etc/sysctl.d/</code> قرار داد. مثال: <code>net.ipv4.ip_forward=1</code>. سپس با <code>sysctl -p</code> یا <code>sysctl --system</code> اعمال می‌شود. تغییرات در <code>/proc/sys/</code> موقتی هستند و با ری‌استارت از بین می‌روند. <code>/boot/config-*</code> شامل تنظیمات کامپایل کرنل است و قابل تغییر نیست."
+    },
+    {
+      "id": 509,
+      "category": "مدیریت فایل‌ها - ln",
+      "level": 3,
+      "text": "دستور <code>ln -s /etc/passwd /tmp/passwd_link</code> چه کاری انجام می‌دهد و چه تفاوتی با <code>ln /etc/passwd /tmp/passwd_link</code> دارد؟",
+      "options": [
+        "دستور اول یک لینک سمبولیک (نرم) ایجاد می‌کند که به فایل اصلی اشاره دارد؛ دستور دوم یک Hard Link ایجاد می‌کند که به inode یکسان اشاره دارد (فقط در همان پارتیشن)",
+        "هر دو یکسان هستند",
+        "دستور دوم یک لینک نرم ایجاد می‌کند",
+        "دستور اول یک Hard Link ایجاد می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>ln -s</code> (با سوییچ <code>-s</code>) یک لینک سمبولیک (Symbolic/Soft Link) ایجاد می‌کند که به نام فایل اصلی اشاره دارد. <code>ln</code> (بدون سوییچ) یک Hard Link ایجاد می‌کند که به inode یکسان اشاره دارد و تنها در همان فایل‌سیستم (پارتیشن) قابل ایجاد است. Hard Link با حذف فایل اصلی همچنان معتبر است، اما Soft Link با حذف اصلی خراب می‌شود."
+    },
+    {
+      "id": 510,
+      "category": "مدیریت فایل‌ها - ln",
+      "level": 4,
+      "text": "در لینوکس، چرا یک دایرکتوری خالی حداقل ۲ لینک (Hard Link) دارد؟",
+      "options": [
+        "یک لینک از خود دایرکتوری (<code>.</code>) و یک لینک از دایرکتوری والد (<code>..</code>) ایجاد می‌شود",
+        "یک لینک از خود دایرکتوری و یک لینک از root",
+        "به‌طور پیش‌فرض همه دایرکتوری‌ها ۲ لینک دارند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "هر دایرکتوری حداقل ۲ لینک سخت (Hard Link) دارد: یکی از خود دایرکتوری به نام <code>.</code> (که به خودش اشاره دارد) و یکی از دایرکتوری والد به نام <code>..</code> که به این دایرکتوری اشاره دارد. با افزودن زیردایرکتوری‌ها، تعداد لینک‌ها افزایش می‌یابد (هر زیردایرکتوری یک لینک <code>..</code> به والد اضافه می‌کند). بنابراین یک دایرکتوری خالی دقیقاً ۲ لینک دارد."
+    },
+    {
+      "id": 511,
+      "category": "امنیت - Umask",
+      "level": 3,
+      "text": "اگر <code>umask</code> روی ۰۰۲ تنظیم باشد، مجوز پیش‌فرض یک فایل جدید و یک دایرکتوری جدید چه خواهد بود؟",
+      "options": [
+        "فایل: ۶۶۴ (rw-rw-r--)، دایرکتوری: ۷۷۵ (rwxrwxr-x)",
+        "فایل: ۷۵۵، دایرکتوری: ۷۵۵",
+        "فایل: ۶۴۴، دایرکتوری: ۷۵۵",
+        "فایل: ۶۶۶، دایرکتوری: ۷۷۷"
+      ],
+      "correct": 0,
+      "explanation": "مجوز پیش‌فرض فایل‌ها ۶۶۶ (rw-rw-rw-) و دایرکتوری‌ها ۷۷۷ (rwxrwxrwx) است. <code>umask</code> ۰۰۲ به معنای حذف دسترسی Write از Others است. بنابراین: فایل: ۶۶۶ - ۰۰۲ = ۶۶۴ (rw-rw-r--)، دایرکتوری: ۷۷۷ - ۰۰۲ = ۷۷۵ (rwxrwxr-x). <code>umask</code> از دسترسی‌های پیش‌فرض کم می‌کند."
+    },
+    {
+      "id": 512,
+      "category": "امنیت - Umask",
+      "level": 4,
+      "text": "برای تنظیم umask به‌صورت دائمی برای همه کاربران سیستم، کدام فایل باید ویرایش شود؟",
+      "options": [
+        "<code>/etc/profile</code> یا <code>/etc/bash.bashrc</code> یا <code>/etc/login.defs</code> (UMASK)",
+        "فقط <code>/etc/profile</code>",
+        "فقط <code>~/.bashrc</code>",
+        "فقط <code>/etc/login.defs</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیم umask سیستمی: ۱. در <code>/etc/profile</code> یا <code>/etc/bash.bashrc</code> (برای bash) با <code>umask 002</code>. ۲. در <code>/etc/login.defs</code> با پارامتر <code>UMASK 002</code> (برای کاربرانی که با login ایجاد می‌شوند). تنظیم در <code>~/.bashrc</code> فقط برای یک کاربر است. در سیستم‌های با systemd، فایل‌های <code>/etc/systemd/system.conf</code> و <code>/etc/systemd/user.conf</code> نیز تنظیمات umask را دارند."
+    },
+    {
+      "id": 513,
+      "category": "سیستم - محیط",
+      "level": 3,
+      "text": "در bash، تفاوت بین <code>export</code> و <code>declare -x</code> در تعریف متغیرهای محیطی چیست؟",
+      "options": [
+        "هر دو متغیر را به محیط (Environment) اضافه می‌کنند؛ <code>declare -x</code> همچنین می‌تواند متغیر را فقط خواندنی کند (با <code>-r</code>)",
+        "هیچ تفاوتی ندارند",
+        "<code>export</code> فقط برای متغیرهای محلی است",
+        "<code>declare -x</code> فقط در اسکریپت‌ها کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "هر دو <code>export VAR=value</code> و <code>declare -x VAR=value</code> متغیر را به محیط (Environment) اضافه می‌کنند. <code>declare</code> (با سوییچ <code>-x</code>) همچنین می‌تواند با <code>-r</code> متغیر را فقط خواندنی (readonly) کند: <code>declare -rx VAR=value</code>. <code>export</code> معمولاً ساده‌تر و رایج‌تر است. <code>declare</code> در اسکریپت‌ها برای کنترل بیشتر استفاده می‌شود."
+    },
+    {
+      "id": 514,
+      "category": "سیستم - محیط",
+      "level": 4,
+      "text": "برای مشاهده متغیرهای محیطی (Environment Variables) یک پردازش خاص با PID مشخص، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "<code>cat /proc/PID/environ | tr '\\0' '\\\n'</code>",
+        "<code>strings /proc/PID/environ</code>",
+        "<code>ps eww -p PID</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "همه این روش‌ها محیط یک پردازش خاص را نشان می‌دهند: <code>cat /proc/PID/environ</code> (خروجی با کاراکتر null جدا می‌شود، نیاز به <code>tr</code> یا <code>xargs -0</code>). <code>strings /proc/PID/environ</code> (نمایش رشته‌ها). <code>ps eww -p PID</code> (نمایش کامل محیط با ps). <code>cat /proc/PID/environ | xargs -0 -n1 echo</code> نیز کار می‌کند. این روش برای دیباگ و تحلیل فرآیندها مفید است."
+    },
+    {
+      "id": 515,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>tcpdump</code> چگونه می‌تواند بسته‌های یک پورت خاص (مثلاً ۸۰) را فیلتر کند و در یک فایل ذخیره نماید؟",
+      "options": [
+        "<code>tcpdump -i eth0 port 80 -w capture.pcap</code>",
+        "<code>tcpdump -i eth0 tcp port 80 -w capture.pcap</code>",
+        "هر دو گزینه",
+        "<code>tcpdump -i eth0 port 80 > capture.txt</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور کار می‌کنند: <code>tcpdump -i eth0 port 80 -w capture.pcap</code> (همه بسته‌های پورت ۸۰، چه TCP چه UDP) و <code>tcpdump -i eth0 tcp port 80 -w capture.pcap</code> (فقط TCP پورت ۸۰). <code>-w</code> خروجی را در فرمت pcap (قابل خواندن با Wireshark) ذخیره می‌کند. <code>-i</code> رابط شبکه را مشخص می‌کند. برای خروجی متنی، از <code>&gt;</code> استفاده می‌شود اما فرمت pcap توصیه می‌شود."
+    },
+    {
+      "id": 516,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای نمایش بسته‌های شبکه در خروجی متنی با <code>tcpdump</code> به‌صورت خوانا (ASCII) و بدون وضوح نام (DNS)، از چه سوییچ‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>tcpdump -A -n</code>",
+        "<code>tcpdump -X -n</code>",
+        "هر دو گزینه",
+        "<code>tcpdump -v -n</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>-A</code> (ASCII) داده‌های بسته را به‌صورت ASCII نمایش می‌دهد (مناسب برای متن). <code>-X</code> (hex/ASCII) داده را به‌صورت هگز و ASCII نمایش می‌دهد. <code>-n</code> (numeric) از وضوح نام (DNS) جلوگیری می‌کند و سرعت را افزایش می‌دهد. <code>-v</code> (verbose) جزئیات بیشتر را نشان می‌دهد. برای نمایش فقط هدرها، از <code>-q</code> (quiet) استفاده می‌شود."
+    },
+    {
+      "id": 517,
+      "category": "امنیت - SSH کلید",
+      "level": 4,
+      "text": "در SSH، برای استفاده از یک کلید خصوصی خاص (غیر از پیش‌فرض <code>id_rsa</code>) در اتصال، از کدام سوییچ استفاده می‌شود و چگونه می‌توان آن را به‌صورت دائمی در <code>~/.ssh/config</code> تنظیم کرد؟",
+      "options": [
+        "سوییچ: <code>ssh -i /path/to/key user@host</code> و در <code>~/.ssh/config</code>: <code>IdentityFile /path/to/key</code>",
+        "فقط <code>-i</code>",
+        "فقط <code>~/.ssh/config</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای استفاده از کلید خصوصی خاص: در خط فرمان: <code>ssh -i ~/.ssh/mykey user@host</code>. برای دائمی کردن برای یک هاست خاص، در <code>~/.ssh/config</code>: <code>Host hostname\\n  IdentityFile ~/.ssh/mykey</code> (و <code>IdentitiesOnly yes</code> برای جلوگیری از امتحان کلیدهای دیگر). همچنین می‌توان با <code>ssh-agent</code> و <code>ssh-add</code> کلید را به agent اضافه کرد."
+    },
+    {
+      "id": 518,
+      "category": "امنیت - SSH کلید",
+      "level": 4,
+      "text": "در SSH، برای غیرفعال کردن بررسی <code>known_hosts</code> (برای محیط‌های تست)، از کدام سوییچ استفاده می‌شود و چه خطری دارد؟",
+      "options": [
+        "<code>ssh -o StrictHostKeyChecking=no user@host</code> (غیرفعال می‌کند) که می‌تواند خطر حمله Man-in-the-Middle را افزایش دهد",
+        "<code>ssh -o CheckHostIP=no</code>",
+        "<code>ssh -o UserKnownHostsFile=/dev/null</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>ssh -o StrictHostKeyChecking=no</code> بررسی کلید هاست را غیرفعال می‌کند و در صورت تغییر کلید، اتصال برقرار می‌شود. این کار برای محیط‌های تست مفید است اما خطر امنیتی دارد (حمله MITM). <code>ssh -o UserKnownHostsFile=/dev/null</code> نیز ذخیره کلید را غیرفعال می‌کند. برای امنیت، در محیط‌های Production هرگز نباید این گزینه‌ها استفاده شوند."
+    },
+    {
+      "id": 519,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>smem</code> چه تفاوتی با <code>free</code> و <code>top</code> در نمایش حافظه دارد و چه اطلاعاتی ارائه می‌دهد؟",
+      "options": [
+        "smem میزان حافظه واقعی استفاده‌شده توسط هر پردازش را (USS - Unique Set Size) نشان می‌دهد که دقیق‌تر از RSS است و حافظه مشترک را محاسبه می‌کند",
+        "همان free است",
+        "همان top است",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "smem یک ابزار مدرن برای گزارش حافظه است که معیارهای مختلفی را نمایش می‌دهد: RSS (Resident Set Size) و USS (Unique Set Size) که حافظه اختصاصی هر پردازش را بدون حافظه مشترک نشان می‌دهد و برای شناسایی مصرف‌کنندگان واقعی حافظه دقیق‌تر است. همچنین PSS (Proportional Set Size) را نشان می‌دهد که حافظه مشترک را به‌طور متناسب بین پردازش‌ها تقسیم می‌کند. مثال: <code>smem -r -s uss</code> (مرتب‌سازی بر اساس USS)."
+    },
+    {
+      "id": 520,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>bat</code> چه تفاوتی با <code>cat</code> دارد و چه ویژگی‌های اضافی ارائه می‌دهد؟",
+      "options": [
+        "bat یک جایگزین مدرن برای cat با هایلایت سینتکس، شماره خطوط، ادغام با git، و خروجی زیباتر است (با پشتیبانی از paging)",
+        "همان cat است",
+        "فقط برای فایل‌های JSON است",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "bat یک ابزار مدرن با قابلیت‌هایی فراتر از cat است: هایلایت سینتکس برای زبان‌های برنامه‌نویسی، شماره خطوط، نمایش diff با git (تغییرات را نشان می‌دهد)، paging خودکار برای فایل‌های بزرگ، و قالب‌بندی زیبا. می‌توان با <code>bat -A</code> کاراکترهای غیرقابل چاپ را نمایش داد. نیاز به نصب جداگانه دارد (<code>dnf install bat</code> یا <code>apt install bat</code>)."
+    },
+    {
+      "id": 521,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "برای یافتن فایل‌های بزرگ (مثلاً بزرگتر از ۱۰۰ مگابایت) در یک دایرکتوری و نمایش اندازه آن‌ها به‌صورت خوانا، از چه دستوری می‌توان استفاده کرد؟",
+      "options": [
+        "<code>find / -type f -size +100M -exec ls -lh {} \\; 2>/dev/null</code>",
+        "<code>find / -type f -size +100M -ls</code>",
+        "هر دو گزینه",
+        "<code>du -sh * | sort -h | tail -10</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>find / -type f -size +100M -exec ls -lh {} \\; 2>/dev/null</code> (نمایش با ls -lh) و <code>find / -type f -size +100M -ls</code> (نمایش با فرمت find). <code>2>/dev/null</code> خطاهای Permission را نادیده می‌گیرد. <code>du -sh * | sort -h</code> برای دایرکتوری‌ها مفید است اما برای فایل‌های خاص باید از find استفاده کرد. <code>-size +100M</code> یعنی بزرگتر از ۱۰۰ مگابایت."
+    },
+    {
+      "id": 522,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "برای شمارش تعداد فایل‌ها و دایرکتوری‌ها در یک مسیر (به‌جز خود مسیر)، از چه ترکیبی از دستورات می‌توان استفاده کرد؟",
+      "options": [
+        "<code>ls -1 | wc -l</code> (تعداد موارد)، <code>find . -type f | wc -l</code> (فقط فایل‌ها)، <code>find . -type d | wc -l</code> (فقط دایرکتوری‌ها)",
+        "فقط <code>ls -1 | wc -l</code>",
+        "فقط <code>find . -type f | wc -l</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای شمارش: <code>ls -1 | wc -l</code> (تعداد همه موارد، شامل فایل‌های مخفی با <code>-a</code>)، <code>find . -maxdepth 1 -type f | wc -l</code> (فقط فایل‌ها در سطح جاری)، <code>find . -maxdepth 1 -type d | wc -l</code> (فقط دایرکتوری‌ها، شامل <code>.</code> و <code>..</code>). <code>tree</code> نیز تعداد فایل‌ها و دایرکتوری‌ها را در انتها نمایش می‌دهد. برای شمارش دقیق، از <code>find . -maxdepth 1 -type f | wc -l</code> و <code>find . -maxdepth 1 -type d | wc -l</code> استفاده کنید."
+    },
+    {
+      "id": 523,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، دستور <code>docker system df</code> چه اطلاعاتی را نمایش می‌دهد و چگونه می‌توان فضای اشغال‌شده توسط Docker را آزاد کرد؟",
+      "options": [
+        "نمایش میزان استفاده از فضای دیسک توسط ایمیج‌ها، کانتینرها، حجم‌ها و شبکه‌های Docker؛ آزادسازی با <code>docker system prune -a -f</code>",
+        "فقط ایمیج‌ها را نشان می‌دهد",
+        "فقط کانتینرها را نشان می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>docker system df</code> فضای اشغال‌شده توسط Docker را به تفکیک: ایمیج‌ها (Images)، کانتینرها (Containers)، حجم‌ها (Volumes) و شبکه‌ها (Networks) نمایش می‌دهد. برای آزادسازی فضای قابل بازیابی: <code>docker system prune</code> (فقط موارد استفاده‌نشده)، <code>docker system prune -a</code> (همه ایمیج‌های استفاده‌نشده)، و <code>-f</code> (force بدون تأیید). همچنین <code>docker container prune</code> و <code>docker image prune</code> برای بخش‌های خاص."
+    },
+    {
+      "id": 524,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Docker، برای اجرا کردن یک کانتینر به‌صورت دائمی (حتی پس از خروج از ترمینال) و با نام مشخص، از چه ترکیبی از سوییچ‌ها استفاده می‌شود؟",
+      "options": [
+        "<code>docker run -d --name container_name image</code>",
+        "<code>docker run -it --name container_name image</code>",
+        "<code>docker run -d image</code>",
+        "<code>docker run -dt image</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>-d</code> (detach) کانتینر را در پس‌زمینه اجرا می‌کند و بعد از خروج از ترمینال نیز ادامه می‌یابد. <code>--name</code> نام مشخصی به کانتینر می‌دهد که برای مدیریت آسان‌تر است. <code>-it</code> (interactive + TTY) برای تعامل با کانتینر است و معمولاً بدون <code>-d</code> استفاده می‌شود. <code>-dt</code> ترکیبی از detached و TTY است که با <code>docker attach</code> می‌توان به آن متصل شد."
+    },
+    {
+      "id": 525,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، برای مهاجرت زنده (Live Migration) یک VM از یک گره به گره دیگر، چه پیش‌نیازهایی ضروری است؟",
+      "options": [
+        "ذخیره‌سازی مشترک (Shared Storage مانند NFS، Ceph، یا ZFS با replication)، شبکه پرسرعت بین گره‌ها، و فعال بودن ویژگی‌های مجازی‌سازی",
+        "فقط شبکه پرسرعت",
+        "فقط ذخیره‌سازی مشترک",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای Live Migration در Proxmox: ۱. ذخیره‌سازی مشترک بین گره‌ها (مانند NFS، Ceph RBD، ZFS با replication، یا iSCSI) تا فایل‌های دیسک VM برای هر دو گره قابل دسترس باشد. ۲. شبکه پرسرعت (حداقل ۱ گیگابیت، ترجیحاً ۱۰ گیگابیت) برای انتقال حافظه. ۳. هر دو گره باید در کلاستر Proxmox عضو باشند. ۴. VM باید خاموش نباشد و CPU پشتیبانی از Live Migration داشته باشد. بدون ذخیره‌سازی مشترک، امکان Live Migration وجود ندارد (مگر با روش‌های پیشرفته مانند storage migration)."
+    },
+    {
+      "id": 526,
+      "category": "سیستم - مجازی‌سازی پیشرفته",
+      "level": 4,
+      "text": "در Proxmox VE، کلاستر (Cluster) چه مزیتی نسبت به یک سرور مستقل دارد و حداقل تعداد گره‌ها برای تشکیل کلاستر چقدر است؟",
+      "options": [
+        "مدیریت متمرکز، High Availability، Live Migration، و تحمل‌پذیری خطا؛ حداقل ۲ گره (با حداقل ۳ گره برای HA توصیه می‌شود)",
+        "فقط مدیریت متمرکز",
+        "حداقل ۱ گره",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "کلاستر Proxmox مزایایی دارد: مدیریت متمرکز از طریق یک رابط وب، Live Migration بدون قطعی، High Availability (با خودکارسازی VMهای خراب روی گره‌های سالم)، و ذخیره‌سازی مشترک. حداقل ۲ گره برای تشکیل کلاستر نیاز است، اما برای High Availability به حداقل ۳ گره (برای داشتن Quorum) توصیه می‌شود. با ۲ گره، در صورت از کار افتادن یکی، دیگری ممکن است Quorum را از دست بدهد."
+    },
+    {
+      "id": 527,
+      "category": "شبکه - DNS",
+      "level": 4,
+      "text": "در لینوکس، برای تغییر سرور DNS در سیستم‌های با systemd-resolved، از چه دستوری استفاده می‌شود و چگونه می‌توان آن را برای یک رابط خاص تنظیم کرد؟",
+      "options": [
+        "<code>resolvectl dns INTERFACE DNS_IP</code> و <code>resolvectl status</code> برای مشاهده وضعیت",
+        "<code>systemd-resolve --set-dns DNS_IP</code>",
+        "فقط با ویرایش <code>/etc/resolv.conf</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در سیستم‌های با systemd-resolved، از <code>resolvectl</code> برای مدیریت DNS استفاده می‌شود. <code>resolvectl dns eth0 8.8.8.8</code> DNS را برای رابط eth0 تنظیم می‌کند. <code>resolvectl status</code> وضعیت فعلی (شامل سرورهای DNS استفاده‌شده) را نمایش می‌دهد. <code>resolvectl dns eth0</code> بدون آدرس، DNS را حذف می‌کند. <code>/etc/resolv.conf</code> معمولاً یک لینک نمادین به <code>/run/systemd/resolve/stub-resolv.conf</code> است و ویرایش مستقیم آن مؤثر نیست."
+    },
+    {
+      "id": 528,
+      "category": "شبکه - DNS",
+      "level": 4,
+      "text": "برای تست و عیب‌یابی سرور DNS با استفاده از <code>dig</code> و نمایش جزئیات کامل (شامل زمان پاسخ و مسیر Query)، از چه سوییچ‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>dig +trace +stats domain.com</code>",
+        "<code>dig +noall +answer domain.com</code>",
+        "<code>dig +short domain.com</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "همه گزینه‌ها مفید هستند: <code>dig +trace domain.com</code> (دنبال‌کردن زنجیره اعتماد از Root تا پاسخ نهایی، برای عیب‌یابی). <code>dig +stats domain.com</code> (نمایش زمان پاسخ، اندازه بسته). <code>dig +noall +answer</code> (فقط بخش Answer را نمایش می‌دهد). <code>dig +short</code> (نمایش مختصر و سریع آدرس IP). همچنین <code>dig @DNS_SERVER domain.com</code> برای تست با سرور DNS خاص."
+    },
+    {
+      "id": 529,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld (ردهت)، برای تغییر zone پیش‌فرض یک رابط شبکه، از چه دستوراتی استفاده می‌شود و چگونه می‌توان zone فعلی یک رابط را مشاهده کرد؟",
+      "options": [
+        "مشاهده: <code>firewall-cmd --get-active-zones</code>، تغییر: <code>firewall-cmd --zone=internal --change-interface=eth0 --permanent</code> و سپس <code>firewall-cmd --reload</code>",
+        "فقط <code>firewall-cmd --get-active-zones</code>",
+        "فقط <code>firewall-cmd --change-interface</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای مشاهده zoneهای فعال و رابط‌های مرتبط: <code>firewall-cmd --get-active-zones</code>. برای تغییر zone یک رابط: <code>firewall-cmd --zone=internal --change-interface=eth0 --permanent</code> (تغییر به zone internal) و سپس <code>firewall-cmd --reload</code> برای اعمال. همچنین <code>firewall-cmd --zone=internal --add-interface=eth0 --permanent</code> نیز کار می‌کند. با <code>--permanent</code> تغییر دائمی می‌شود."
+    },
+    {
+      "id": 530,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در iptables، برای ذخیره قوانین فعلی و بارگذاری آن‌ها در زمان بوت (در توزیع‌های Debian-family)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>iptables-save > /etc/iptables/rules.v4</code> و <code>iptables-restore < /etc/iptables/rules.v4</code> با فعال‌سازی سرویس <code>netfilter-persistent</code> یا <code>iptables-persistent</code>",
+        "فقط <code>iptables-save</code>",
+        "فقط <code>iptables-restore</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "در Debian-family، برای ذخیره دائمی قوانین iptables: ۱. ذخیره قوانین: <code>iptables-save > /etc/iptables/rules.v4</code> و برای IPv6: <code>ip6tables-save > /etc/iptables/rules.v6</code>. ۲. نصب بسته <code>iptables-persistent</code> یا <code>netfilter-persistent</code> که قوانین را در بوت بارگذاری می‌کند. ۳. با <code>netfilter-persistent save</code> و <code>netfilter-persistent reload</code> نیز می‌توان مدیریت کرد. در RedHat-family، firewalld این کار را خودکار انجام می‌دهد."
+    },
+    {
+      "id": 531,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش تاریخچه کامل (با زمان) یک کاربر خاص در <code>bash</code> (از فایل <code>~/.bash_history</code>)، از چه دستوری می‌توان استفاده کرد و چگونه می‌توان تاریخچه را با timestamp ذخیره کرد؟",
+      "options": [
+        "با تنظیم <code>HISTTIMEFORMAT=\"%F %T \"</code> در <code>~/.bashrc</code> و سپس <code>history</code> (که زمان را نشان می‌دهد)، و <code>history -a</code> برای ذخیره در فایل",
+        "فقط <code>history</code>",
+        "فقط <code>cat ~/.bash_history</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای ذخیره زمان در تاریخچه bash، متغیر <code>HISTTIMEFORMAT</code> را تنظیم کنید: <code>export HISTTIMEFORMAT=\"%F %T \"</code> (تاریخ و زمان). سپس هر فرمان جدید با timestamp ذخیره می‌شود. برای ذخیره تاریخچه فعلی در فایل: <code>history -a</code> (اضافه کردن به فایل) یا <code>history -w</code> (بازنویسی فایل). تاریخچه با <code>history</code> نمایش داده می‌شود. <code>~/.bash_history</code> فایل فیزیکی است اما بدون timestamp قابل خواندن است (اگر HISTTIMEFORMAT تنظیم نشده باشد)."
+    },
+    {
+      "id": 532,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای اجرای یک اسکریپت به‌گونه‌ای که متغیرهای محیطی از یک فایل خاص (مثلاً <code>.env</code>) بارگذاری شوند، از چه روشی در bash استفاده می‌شود؟",
+      "options": [
+        "<code>set -a; source .env; set +a; ./script.sh</code> یا <code>export $(grep -v '^#' .env | xargs)</code>",
+        "فقط <code>source .env</code>",
+        "فقط <code>export</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "روش‌های مختلف برای بارگذاری یک فایل <code>.env</code>: ۱. <code>set -a; source .env; set +a; ./script.sh</code> (همه متغیرها را export می‌کند). ۲. <code>export $(grep -v '^#' .env | xargs)</code> (خطوط غیرکامنت را export می‌کند). ۳. <code>export $(cat .env | xargs)</code>. ۴. با استفاده از <code>env $(cat .env | xargs) ./script.sh</code>. <code>source .env</code> متغیرها را در شل جاری تنظیم می‌کند اما ممکن است export نشوند، بنابراین در اسکریپت زیرشل قابل دسترس نباشند."
+    },
+    {
+      "id": 533,
+      "category": "مدیریت فایل‌ها - ویرایش",
+      "level": 4,
+      "text": "در ویرایشگر <code>sed</code>، برای جایگزینی یک الگو در یک محدوده مشخص از خطوط (مثلاً خطوط ۱۰ تا ۲۰) و ذخیره مستقیم در فایل، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>sed -i '10,20s/old/new/g' file.txt</code>",
+        "<code>sed '10,20s/old/new/g' file.txt</code>",
+        "هر دو گزینه (با <code>-i</code> برای ذخیره مستقیم)",
+        "<code>sed -n '10,20s/old/new/p' file.txt</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>sed '10,20s/old/new/g' file.txt</code> جایگزینی را در خطوط ۱۰ تا ۲۰ انجام می‌دهد اما فقط خروجی را نمایش می‌دهد (فایل تغییر نمی‌کند). <code>sed -i '10,20s/old/new/g' file.txt</code> (با <code>-i</code> برای in-place) مستقیماً فایل را ویرایش می‌کند. همچنین <code>-i.bak</code> از فایل اصلی بکاپ می‌گیرد. <code>-n</code> با <code>p</code> فقط خطوط تغییر‌یافته را چاپ می‌کند."
+    },
+    {
+      "id": 534,
+      "category": "مدیریت فایل‌ها - ویرایش",
+      "level": 4,
+      "text": "در ویرایشگر <code>sed</code>، برای حذف خطوط خالی (Empty Lines) از یک فایل، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>sed -i '/^$/d' file.txt</code>",
+        "<code>sed -i '/^[[:space:]]*$/d' file.txt</code> (برای حذف خطوط خالی با فاصله و تب)",
+        "هر دو گزینه",
+        "<code>sed -i 's/^$/d' file.txt</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور کار می‌کنند: <code>sed -i '/^$/d' file.txt</code> (حذف خطوط کاملاً خالی بدون هیچ کاراکتری). <code>sed -i '/^[[:space:]]*$/d' file.txt</code> (حذف خطوط خالی یا شامل فقط فاصله و تب). <code>^</code> ابتدا و <code>$</code> انتهای خط را نشان می‌دهد، بنابراین <code>/^$/</code> خطوط خالی را شناسایی می‌کند. <code>d</code> دستور delete است."
+    },
+    {
+      "id": 535,
+      "category": "امنیت - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>openssl</code> چگونه می‌تواند برای بررسی اعتبار یک گواهی SSL و نمایش جزئیات آن (مانند تاریخ انقضا و Subject) استفاده شود؟",
+      "options": [
+        "<code>openssl x509 -in cert.pem -text -noout</code> (برای فایل گواهی) و <code>openssl s_client -connect host:443 -showcerts</code> (برای سرور زنده)",
+        "فقط <code>openssl x509</code>",
+        "فقط <code>openssl s_client</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای بررسی گواهی: <code>openssl x509 -in cert.pem -text -noout</code> (جزئیات کامل گواهی از یک فایل). <code>openssl x509 -in cert.pem -dates -noout</code> (تاریخ شروع و انقضا). <code>openssl s_client -connect host:443 -showcerts </dev/null</code> (اتصال به سرور و نمایش گواهی آن). <code>openssl verify -CAfile ca.pem cert.pem</code> (بررسی اعتبار با CA). همچنین <code>echo | openssl s_client -servername host -connect host:443 2>/dev/null | openssl x509 -text</code> برای استخراج گواهی از سرور."
+    },
+    {
+      "id": 536,
+      "category": "امنیت - ابزارها",
+      "level": 4,
+      "text": "برای تولید یک درخواست امضای گواهی (CSR - Certificate Signing Request) با openssl، از چه دستوری استفاده می‌شود و چه فایل‌هایی تولید می‌شوند؟",
+      "options": [
+        "<code>openssl req -new -newkey rsa:2048 -nodes -keyout key.pem -out req.csr</code> (تولید کلید خصوصی و CSR)",
+        "<code>openssl req -new -key key.pem -out req.csr</code> (با کلید موجود)",
+        "هر دو گزینه",
+        "<code>openssl genrsa -out key.pem 2048</code>"
+      ],
+      "correct": 2,
+      "explanation": "برای تولید CSR: ۱. با تولید کلید جدید: <code>openssl req -new -newkey rsa:2048 -nodes -keyout key.pem -out req.csr</code> (فایل‌های <code>key.pem</code> کلید خصوصی و <code>req.csr</code> درخواست گواهی). ۲. با کلید موجود: <code>openssl req -new -key key.pem -out req.csr</code>. <code>-nodes</code> (no DES) یعنی کلید بدون رمزگذاری. سپس CSR را به CA می‌فرستید و گواهی امضا شده دریافت می‌کنید. <code>openssl req -text -noout -in req.csr</code> برای مشاهده محتوای CSR."
+    },
+    {
+      "id": 537,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات سیستم (مانند نسخه توزیع، کرنل، معماری و میزبان) در لینوکس، از چه دستوراتی می‌توان استفاده کرد؟",
+      "options": [
+        "<code>hostnamectl</code> (اطلاعات کامل)، <code>cat /etc/os-release</code> (اطلاعات توزیع)، <code>uname -a</code> (اطلاعات کرنل)",
+        "فقط <code>hostnamectl</code>",
+        "فقط <code>cat /etc/os-release</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای اطلاعات سیستم: <code>hostnamectl</code> (اطلاعات کامل شامل هاست‌نیم، کرنل، معماری، توزیع و systemd). <code>cat /etc/os-release</code> (اطلاعات توزیع مانند ID، VERSION_ID، NAME). <code>uname -a</code> (نسخه کرنل، نام هاست، معماری). <code>lsb_release -a</code> (اطلاعات استاندارد LSB، در صورت نصب). <code>cat /proc/version</code> (اطلاعات کرنل و کامپایلر). هر کدام اطلاعات خاصی ارائه می‌دهند."
+    },
+    {
+      "id": 538,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای تنظیم هاست‌نیم (Hostname) به‌صورت دائمی در لینوکس، از چه دستوری استفاده می‌شود و کدام فایل‌ها تحت تأثیر قرار می‌گیرند؟",
+      "options": [
+        "<code>hostnamectl set-hostname new-hostname</code> (دائمی، فایل‌های <code>/etc/hostname</code> و <code>/etc/hosts</code> را به‌روزرسانی می‌کند)",
+        "<code>echo \"new-hostname\" > /etc/hostname</code>",
+        "<code>sysctl kernel.hostname=new-hostname</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>hostnamectl set-hostname</code> (از systemd) روش استاندارد برای تنظیم هاست‌نیم دائمی است. فایل <code>/etc/hostname</code> را به‌روزرسانی می‌کند. همچنین توصیه می‌شود <code>/etc/hosts</code> را نیز ویرایش کنید تا شامل هاست‌نیم جدید باشد (خط <code>127.0.1.1 new-hostname</code>). <code>echo</code> مستقیم نیز کار می‌کند اما <code>hostnamectl</code> یکپارچه‌تر است. <code>sysctl kernel.hostname</code> فقط موقتی است و با ری‌استارت از بین می‌رود."
+    },
+    {
+      "id": 539,
+      "category": "مدیریت دیسک - مونت",
+      "level": 4,
+      "text": "برای مانت کردن یک پارتیشن با گزینه‌های خاص (مثلاً فقط خواندنی، noexec، یا remount) در لینوکس، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>mount -o ro,noexec /dev/sdX /mnt</code>",
+        "<code>mount -o remount,rw /mnt</code> (تغییر گزینه‌ها بدون unmount)",
+        "هر دو گزینه",
+        "<code>mount -t ext4 /dev/sdX /mnt</code>"
+      ],
+      "correct": 2,
+      "explanation": "برای مانت با گزینه‌ها: <code>mount -o ro,noexec /dev/sdX /mnt</code> (فقط خواندنی و غیرقابل اجرا). <code>mount -o remount,rw /mnt</code> (تغییر گزینه‌های مانت بدون نیاز به unmount، مفید برای تغییر روت از ro به rw). سایر گزینه‌ها: <code>nosuid</code> (غیرفعال کردن SUID)، <code>nodev</code> (غیرفعال کردن دستگاه‌ها)، <code>noatime</code> (به‌روزرسانی نکردن زمان دسترسی). گزینه‌ها با کاما جدا می‌شوند."
+    },
+    {
+      "id": 540,
+      "category": "مدیریت دیسک - مونت",
+      "level": 4,
+      "text": "برای مشاهده همه دستگاه‌های مانت‌شده به‌همراه گزینه‌های مانت (مانند rw, noexec) و نوع فایل‌سیستم، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>mount</code> (بدون آرگومان)",
+        "<code>findmnt</code> (با ساختار درختی)",
+        "هر دو گزینه",
+        "<code>df -h</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>mount</code> (بدون آرگومان) لیست همه دستگاه‌های مانت‌شده را با گزینه‌ها نمایش می‌دهد. <code>findmnt</code> (ابزار مدرن) اطلاعات دقیق‌تر و ساختار درختی را نشان می‌دهد. <code>findmnt -o TARGET,SOURCE,FSTYPE,OPTIONS</code> برای انتخاب ستون‌ها. <code>df -h</code> فقط فضای دیسک را نشان می‌دهد و گزینه‌های مانت را نشان نمی‌دهد (با <code>df -T</code> نوع فایل‌سیستم). <code>cat /proc/mounts</code> نیز لیست کامل را نشان می‌دهد."
+    },
+    {
+      "id": 541,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای نوشتن یک حلقه <code>while</code> که یک فایل را خط‌به‌خط بخواند و هر خط را پردازش کند، از چه ساختاری استفاده می‌شود؟",
+      "options": [
+        "<code>while IFS= read -r line; do echo \"$line\"; done < file.txt</code>",
+        "<code>cat file.txt | while read line; do echo \"$line\"; done</code>",
+        "هر دو گزینه",
+        "<code>for line in $(cat file.txt); do echo \"$line\"; done</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>while IFS= read -r line; do ...; done < file.txt</code> (روش استاندارد و توصیه‌شده، با <code>IFS=</code> برای حفظ فاصله‌ها و <code>-r</code> برای جلوگیری از تفسیر بک‌اسلش). <code>cat file.txt | while read line; do ...; done</code> (استفاده از pipe، اما توجه داشته باشید که حلقه در subshell اجرا می‌شود و متغیرها در خارج از حلقه قابل دسترس نیستند). <code>for</code> با <code>$(cat)</code> برای فایل‌های بزرگ مناسب نیست و خطوط با فاصله را به‌درستی مدیریت نمی‌کند."
+    },
+    {
+      "id": 542,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای اجرای یک فرمان با محدودیت زمان (Timeout) و در صورت تجاوز از زمان، آن را kill کردن، از چه ابزاری می‌توان استفاده کرد؟",
+      "options": [
+        "<code>timeout 5s command</code>",
+        "<code>timeout 5 command</code> (ثانیه)",
+        "هر دو گزینه",
+        "<code>timelimit command</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>timeout</code> ابزار استاندارد برای محدودیت زمانی است. <code>timeout 5s command</code> (۵ ثانیه) یا <code>timeout 5 command</code> (۵ ثانیه). اگر فرمان بیشتر از زمان مشخص طول بکشد، <code>timeout</code> آن را با سیگنال TERM (و سپس KILL) متوقف می‌کند. <code>-k</code> (kill after) برای ارسال SIGKILL پس از زمان مشخص. همچنین <code>alarm</code> یا <code>expect</code> نیز وجود دارند. برای اسکریپت‌ها، <code>timeout</code> بسیار مفید است."
+    },
+    {
+      "id": 543,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای گرفتن خروجی یک فرمان و نیز کد خروجی (Exit Status) آن به‌طور هم‌زمان، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "<code>output=$(command); status=$?</code>",
+        "<code>command; status=$?; output=$(command)</code>",
+        "<code>output=$(command) || status=$?</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "روش صحیح: <code>output=$(command); status=$?</code> (ابتدا خروجی را گرفته و سپس کد خروجی را ذخیره می‌کند). توجه داشته باشید که <code>$?</code> بلافاصله پس از اجرای command باید خوانده شود، در غیر این صورت مقدار آن تغییر می‌کند. روش دوم (<code>command; status=$?; output=$(command)</code>) فرمان را دو بار اجرا می‌کند که ممکن است مطلوب نباشد. <code>command || status=$?</code> فقط در صورت شکست کد خروجی را ذخیره می‌کند. بهترین روش، ذخیره خروجی و سپس کد خروجی است."
+    },
+    {
+      "id": 544,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش تفاوت بین دو فایل به‌صورت تعاملی و با قابلیت پیمایش (مشابه less)، از چه ابزاری می‌توان استفاده کرد؟",
+      "options": [
+        "<code>diff -u file1 file2 | less</code>",
+        "<code>vimdiff file1 file2</code>",
+        "هر دو گزینه",
+        "<code>sdiff file1 file2</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>diff -u file1 file2 | less</code> (خروجی unified diff را در less نمایش می‌دهد). <code>vimdiff file1 file2</code> (ویرایشگر تعاملی با هایلایت تفاوت‌ها، امکان ویرایش هم‌زمان). <code>sdiff</code> (side-by-side diff) تفاوت‌ها را به‌صورت دو ستونی نمایش می‌دهد. <code>colordiff</code> نیز خروجی رنگی ارائه می‌دهد. برای مقایسه تعاملی، <code>vimdiff</code> قدرتمندترین است."
+    },
+    {
+      "id": 545,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش ساختار درختی یک دایرکتوری با اطلاعاتی مانند اندازه و تاریخ آخرین تغییر، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>tree -h -D</code> (با اندازه خوانا و تاریخ)",
+        "<code>tree -s -D</code> (با اندازه بایت و تاریخ)",
+        "هر دو گزینه",
+        "<code>ls -lR</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>tree</code> با سوییچ‌های مختلف ساختار درختی را نمایش می‌دهد: <code>-h</code> (human-readable size)، <code>-D</code> (date/time of last modification)، <code>-s</code> (size in bytes)، <code>-L level</code> (عمق). <code>tree -h -D /path</code>. <code>ls -lR</code> (recursive) نیز اطلاعات مشابهی را به‌صورت لیست نمایش می‌دهد اما بدون ساختار درختی. <code>tree</code> باید نصب شود (<code>dnf install tree</code>)."
+    },
+    {
+      "id": 546,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، برای تغییر زمان تاخیر (Timeout) منوی بوت به‌صورت دائمی، کدام فایل باید ویرایش شود و سپس چه دستوری اجرا شود؟",
+      "options": [
+        "ویرایش <code>/etc/default/grub</code> (خط <code>GRUB_TIMEOUT=5</code>) و سپس <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "فقط <code>/etc/default/grub</code>",
+        "فقط <code>grub2-mkconfig</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای تغییر زمان تاخیر GRUB: ۱. ویرایش <code>/etc/default/grub</code> و تنظیم <code>GRUB_TIMEOUT=5</code> (۵ ثانیه) یا <code>GRUB_TIMEOUT=-1</code> (منتظر ماندن تا انتخاب کاربر) یا <code>GRUB_TIMEOUT=0</code> (بدون تاخیر). ۲. اجرای <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> (در ردهت) یا <code>update-grub</code> (در دبیان) برای اعمال تغییرات. همچنین <code>GRUB_HIDDEN_TIMEOUT</code> برای مخفی‌کردن منو و نمایش فقط با کلید Shift وجود دارد."
+    },
+    {
+      "id": 547,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم ورودی پیش‌فرض منو (Default Entry) به‌صورت دائمی، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "تنظیم <code>GRUB_DEFAULT=0</code> یا <code>GRUB_DEFAULT=\"name\"</code> (نام ورودی) یا <code>GRUB_DEFAULT=saved</code> در <code>/etc/default/grub</code> و سپس <code>grub2-mkconfig</code>",
+        "فقط <code>GRUB_DEFAULT=0</code>",
+        "فقط <code>GRUB_DEFAULT=saved</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "تنظیم ورودی پیش‌فرض با <code>GRUB_DEFAULT</code> در <code>/etc/default/grub</code>: <code>GRUB_DEFAULT=0</code> (اولین ورودی، شماره از ۰ شروع می‌شود)، <code>GRUB_DEFAULT=\"Ubuntu\"</code> (با نام ورودی)، <code>GRUB_DEFAULT=saved</code> (ذخیره آخرین انتخاب با <code>grub2-set-default</code> و <code>grub2-editenv</code>). سپس <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. در دبیان از <code>update-grub</code> استفاده می‌شود."
+    },
+    {
+      "id": 548,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات دقیق RAM (مانند سرعت، نوع، و اندازه هر ماژول) از طریق خط فرمان، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dmidecode -t memory</code>",
+        "<code>lshw -short -class memory</code>",
+        "<code>cat /proc/meminfo</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>dmidecode -t memory</code> اطلاعات کامل DMI/SMBIOS حافظه را نشان می‌دهد: نوع (DDR3/DDR4)، سرعت، اندازه هر ماژول، و اطلاعات Vendor. <code>lshw -class memory</code> نیز اطلاعات مشابهی دارد. <code>cat /proc/meminfo</code> اطلاعات هسته (کل RAM، آزاد، buffer، cache) را نشان می‌دهد و اطلاعات سخت‌افزاری دقیق مانند سرعت و نوع را ندارد. <code>dmidecode</code> نیاز به دسترسی root دارد."
+    },
+    {
+      "id": 549,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات دقیق CPU (مانند مدل، تعداد هسته‌ها، فرکانس، و قابلیت‌های مجازی‌سازی) در لینوکس، از چه دستوراتی می‌توان استفاده کرد؟",
+      "options": [
+        "<code>lscpu</code> (خلاصه)، <code>cat /proc/cpuinfo</code> (جزئیات کامل برای هر هسته)، <code>cpupower frequency-info</code> (اطلاعات فرکانس)",
+        "فقط <code>lscpu</code>",
+        "فقط <code>cat /proc/cpuinfo</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای اطلاعات CPU: <code>lscpu</code> (خلاصه معماری، تعداد هسته‌ها، فرکانس، مجازی‌سازی). <code>cat /proc/cpuinfo</code> (اطلاعات کامل برای هر هسته: مدل، flags (vmx/svm برای مجازی‌سازی)، کش، فرکانس فعلی). <code>cpupower frequency-info</code> (اطلاعات فرکانس و Governor). <code>dmidecode -t processor</code> (اطلاعات SMBIOS). <code>nproc</code> نیز تعداد هسته‌های قابل استفاده را نمایش می‌دهد."
+    },
+    {
+      "id": 550,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای ذخیره خروجی یک فرمان در یک فایل و همزمان نمایش آن در ترمینال (مشاهده و ذخیره هم‌زمان)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>command | tee output.log</code>",
+        "<code>command > output.log; cat output.log</code>",
+        "هر دو گزینه",
+        "<code>command &> output.log</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>tee</code> خروجی را هم به فایل هدایت می‌کند و هم در ترمینال نمایش می‌دهد. مثال: <code>ls -la | tee filelist.txt</code>. <code>tee -a</code> (append) به انتهای فایل اضافه می‌کند. <code>command | tee output.log | grep pattern</code> نیز برای پردازش هم‌زمان خروجی مفید است. روش دوم (<code>></code> و سپس <code>cat</code>) فقط خروجی را ذخیره می‌کند و بعداً نمایش می‌دهد، نه هم‌زمان. <code>tee</code> برای نظارت و لاگ‌گیری هم‌زمان عالی است."
+    }
+  ]
+}

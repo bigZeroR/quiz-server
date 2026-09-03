@@ -1,0 +1,230 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 بر اساس لیست دستورات و سوییچ‌ها (بخش دوم)",
+  "description": "ادامه سوالات عمیق و سناریومحور از مباحث مختلف LPIC-1 شامل LVM، RAID، اسکریپت‌نویسی، زمان‌بندی، مجازی‌سازی و ابزارهای سخت‌افزاری.",
+  "questions": [
+    {
+      "id": 17,
+      "category": "RAID و مدیریت دیسک",
+      "level": 3,
+      "text": "یک آرایه RAID-1 با استفاده از <code>mdadm</code> ساخته شده است. یکی از دیسک‌ها به‌طور فیزیکی از سیستم خارج شده و پس از تعویض، دیسک جدید اضافه شده است. کدام دنباله از دستورات برای جایگزینی صحیح دیسک خراب و افزودن دیسک جدید به آرایه صحیح است؟",
+      "options": [
+        "<code>mdadm --manage /dev/md0 --fail /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --remove /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "<code>mdadm --manage /dev/md0 --remove /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "<code>mdadm --manage /dev/md0 --fail /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "<code>mdadm --manage /dev/md0 --add /dev/sdb1</code> سپس <code>mdadm --manage /dev/md0 --fail /dev/sda1</code>"
+      ],
+      "correct": 0,
+      "explanation": "ترتیب صحیح: ابتدا دیسک خراب را <code>--fail</code> می‌کنیم تا از آرایه خارج شود، سپس آن را <code>--remove</code> می‌کنیم، و در نهایت دیسک جدید را با <code>--add</code> اضافه می‌کنیم. گزینه دوم <code>--fail</code> را ندارد که باعث می‌شود آرایه وضعیت نامشخصی داشته باشد. گزینه سوم <code>--remove</code> را ندارد و دیسک خراب هنوز در لیست باقی می‌ماند. گزینه چهارم ترتیب اشتباه است و قبل از حذف دیسک خراب، دیسک جدید اضافه می‌شود که ممکن است خطا بدهد."
+    },
+    {
+      "id": 18,
+      "category": "RAID و مدیریت دیسک",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش وضعیت لحظه‌ای و پیشرفت فرآیند rebuild یک آرایه RAID نرم‌افزاری در لینوکس استفاده می‌شود؟",
+      "options": [
+        "<code>mdadm --detail /dev/md0</code>",
+        "<code>cat /proc/mdstat</code>",
+        "<code>mdadm --examine /dev/sda1</code>",
+        "<code>mdadm --monitor /dev/md0</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>/proc/mdstat</code> یک فایل مجازی است که وضعیت تمام آرایه‌های RAID فعال را به‌صورت لحظه‌ای نمایش می‌دهد و پیشرفت rebuild را با درصد نشان می‌دهد. <code>mdadm --detail</code> اطلاعات کامل اما ایستا (static) از آرایه را نشان می‌دهد. <code>--examine</code> اطلاعات یک دیسک فیزیکی را بررسی می‌کند. <code>--monitor</code> برای نظارت مداوم در پس‌زمینه استفاده می‌شود. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 19,
+      "category": "اسکریپت‌نویسی و شل",
+      "level": 3,
+      "text": "در یک اسکریپت bash، می‌خواهید ورودی کاربر را در مدت زمان حداکثر ۵ ثانیه دریافت کنید و اگر کاربر پاسخی نداد، اسکریپت با یک پیام مناسب ادامه یابد. کدام ساختار این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>read -t 5 -p \"Enter name: \" name</code> سپس بررسی خالی بودن متغیر",
+        "<code>if read -t 5 -p \"Enter name: \" name; then echo \"Welcome $name\"; else echo \"Timeout\"; fi</code>",
+        "<code>read -p \"Enter name: \" name; sleep 5; echo \"Welcome $name\"</code>",
+        "<code>timeout 5 read -p \"Enter name: \" name</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه دوم با استفاده از شرط <code>if read -t 5</code>، حالت موفقیت (ورود کاربر) و شکست (timeout) را به‌درستی مدیریت می‌کند. گزینه اول فقط زمان می‌دهد اما timeout را تشخیص نمی‌دهد (متغیر خالی می‌ماند). گزینه سوم زمان‌سنج ندارد و <code>sleep</code> بعد از read اجرا می‌شود. گزینه چهارم سینتکس اشتباه دارد (<code>timeout</code> برای فرمان‌ها استفاده می‌شود نه <code>read</code> بیلتین)."
+    },
+    {
+      "id": 20,
+      "category": "اسکریپت‌نویسی و شل",
+      "level": 3,
+      "text": "کدام یک از گزینه‌های زیر در مورد تفاوت <code>test</code> و <code>[ ]</code> در bash صحیح است؟",
+      "options": [
+        "<code>test</code> و <code>[ ]</code> کاملاً معادل هستند و تفاوتی ندارند.",
+        "<code>[ ]</code> یک فرمان بیلتین است، در حالی که <code>test</code> یک فایل اجرایی خارجی است.",
+        "<code>test</code> قابلیت‌های بیشتری نسبت به <code>[ ]</code> دارد، مانند مقایسه رشته‌ها.",
+        "<code>[ ]</code> نیاز به فاصله بعد از <code>[</code> و قبل از <code>]</code> دارد، در حالی که <code>test</code> به فاصله حساس نیست."
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>test</code> و <code>[ ]</code> معادل هستند و معمولاً به‌عنوان بیلتین در bash پیاده‌سازی می‌شوند. اما تفاوت مهم این است که <code>[ ]</code> به فاصله بعد از <code>[</code> و قبل از <code>]</code> حساس است (مثلاً <code>[ -f file ]</code> درست است، ولی <code>[-f file]</code> اشتباه است)، در حالی که <code>test</code> به فاصله حساس نیست. گزینه اول نادرست است (تفاوت در سینتکس وجود دارد). گزینه دوم نادرست است (هر دو معمولاً بیلتین هستند). گزینه سوم نادرست است (هر دو قابلیت‌های یکسانی دارند). پس گزینه چهارم صحیح است."
+    },
+    {
+      "id": 21,
+      "category": "اسکریپت‌نویسی و شل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای محاسبه مقدار <code>10 / 3</code> در bash، عدد اعشاری (decimal) را برمی‌گرداند؟",
+      "options": [
+        "<code>echo $((10 / 3))</code>",
+        "<code>echo \"10 / 3\" | bc -l</code>",
+        "<code>echo $((10.0 / 3.0))</code>",
+        "<code>expr 10 / 3</code>"
+      ],
+      "correct": 1,
+      "explanation": "bash فقط محاسبات اعداد صحیح را پشتیبانی می‌کند. <code>$((10 / 3))</code> و <code>expr</code> هر دو عدد صحیح ۳ را برمی‌گردانند. <code>bc -l</code> با گزینه <code>-l</code> کتابخانه استاندارد ریاضی را بارگذاری کرده و محاسبات اعشاری را انجام می‌دهد. <code>echo \"10 / 3\" | bc -l</code> خروجی ۳.۳۳۳... را نشان می‌دهد. گزینه سوم سینتکس اشتباه دارد و bash اعداد اعشاری را نمی‌پذیرد. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 22,
+      "category": "زمان‌بندی خودکار",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک اسکریپت بک‌آپ را هر روز ساعت ۲:۳۰ صبح اجرا کند، اما فقط در روزهای کاری (دوشنبه تا جمعه). کدام عبارت crontab این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>30 2 * * 1-5 /path/to/backup.sh</code>",
+        "<code>30 2 * * 1-5 /path/to/backup.sh > /dev/null 2>&1</code>",
+        "<code>30 2 * * 2-6 /path/to/backup.sh</code>",
+        "هر دو گزینه اول و دوم صحیح هستند، اما گزینه دوم خروجی را به <code>/dev/null</code> می‌فرستد."
+      ],
+      "correct": 3,
+      "explanation": "در cron، روز هفته از ۰ (یکشنبه) تا ۶ (شنبه) شماره‌گذاری می‌شود. برای روزهای دوشنبه تا جمعه باید از ۱ تا ۵ استفاده کرد (گزینه اول). گزینه دوم همان زمان‌بندی را دارد اما خروجی استاندارد و خطا را به <code>/dev/null</code> ری‌دایرکت می‌کند تا ایمیل ارسال نشود. گزینه سوم از ۲ تا ۶ استفاده می‌کند که شامل یکشنبه (۰) نمی‌شود و دوشنبه (۱) را از دست می‌دهد. پس گزینه‌های اول و دوم هر دو از نظر زمان‌بندی صحیح هستند و گزینه چهارم درست است."
+    },
+    {
+      "id": 23,
+      "category": "زمان‌بندی خودکار",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر در مورد تفاوت <code>at</code> و <code>cron</code> نادرست است؟",
+      "options": [
+        "<code>at</code> برای اجرای یک‌باره در زمان مشخص استفاده می‌شود.",
+        "<code>cron</code> برای اجرای دوره‌ای و تکراری طراحی شده است.",
+        "با <code>atq</code> می‌توان لیست کارهای زمان‌بندی‌شده با <code>cron</code> را مشاهده کرد.",
+        "کارهای <code>at</code> پس از اجرا به‌طور خودکار از صف حذف می‌شوند."
+      ],
+      "correct": 2,
+      "explanation": "گزینه سوم نادرست است. <code>atq</code> برای نمایش کارهای زمان‌بندی‌شده با <code>at</code> استفاده می‌شود، نه <code>cron</code>. برای cron از <code>crontab -l</code> استفاده می‌شود. گزینه‌های اول، دوم و چهارم درست هستند. پس گزینه سوم نادرست است."
+    },
+    {
+      "id": 24,
+      "category": "مجازی‌سازی و کانتینر",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک کانتینر Docker را در حالت تعاملی (interactive) با bash اجرا کند و پس از خروج از bash، کانتینر به‌طور خودکار حذف شود. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>docker run -it --rm ubuntu bash</code>",
+        "<code>docker run -it ubuntu bash</code>",
+        "<code>docker start -it ubuntu bash</code>",
+        "<code>docker attach ubuntu</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-it</code> برای تعامل، <code>--rm</code> برای حذف خودکار پس از خروج، و <code>bash</code> به‌عنوان فرمان ورودی، دقیقاً نیاز را برآورده می‌کند. گزینه دوم کانتینر را حذف نمی‌کند. گزینه سوم سینتکس اشتباه دارد (<code>start</code> برای کانتینرهای موجود است). گزینه چهارم به یک کانتینر در حال اجرا متصل می‌شود، نه ایجاد جدید. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 25,
+      "category": "مجازی‌سازی و کانتینر",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر در مورد تفاوت KVM و Docker صحیح است؟",
+      "options": [
+        "KVM یک هایپروایزر نوع ۲ است، در حالی که Docker یک هایپروایزر نوع ۱ است.",
+        "KVM برای مجازی‌سازی کامل سیستم‌عامل استفاده می‌شود، در حالی که Docker از کانتینرهای سبک مبتنی بر هسته لینوکس استفاده می‌کند.",
+        "Docker می‌تواند ویندوز را به‌عنوان مهمان اجرا کند، در حالی که KVM فقط لینوکس را پشتیبانی می‌کند.",
+        "هر دو از <code>systemd</code> برای مدیریت استفاده می‌کنند."
+      ],
+      "correct": 1,
+      "explanation": "KVM یک هایپروایزر نوع ۱ است (نه نوع ۲) که مجازی‌سازی کامل سخت‌افزاری را فراهم می‌کند و می‌تواند هر سیستم‌عاملی را اجرا کند. Docker از کانتینرها استفاده می‌کند که سبک‌تر هستند و از هسته میزبان بهره می‌برند. گزینه اول نادرست است (KVM نوع ۱ است). گزینه سوم نادرست است (Docker معمولاً فقط لینوکس را پشتیبانی می‌کند، مگر با ویندوز کانتینر که محدود است). گزینه چهارم نادرست است (KVM با libvirt/virsh مدیریت می‌شود، Docker با docker command). پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 26,
+      "category": "محیط گرافیکی و دسکتاپ",
+      "level": 2,
+      "text": "کدام دستور برای تغییر حالت بوت پیش‌فرض سیستم از خط فرمان (multi-user) به محیط گرافیکی (graphical) در سیستم‌های مبتنی بر systemd استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl set-default graphical.target</code>",
+        "<code>systemctl enable graphical.target</code>",
+        "<code>systemctl start graphical.target</code>",
+        "<code>systemctl set-default multi-user.target</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>systemctl set-default</code> برای تنظیم target پیش‌فرض بوت استفاده می‌شود. <code>graphical.target</code> معادل runlevel 5 است. گزینه دوم (<code>enable</code>) برای فعال کردن سرویس‌ها استفاده می‌شود، نه target. گزینه سوم (<code>start</code>) target را یک‌بار اجرا می‌کند اما پیش‌فرض را تغییر نمی‌دهد. گزینه چهارم برعکس است (multi-user را تنظیم می‌کند). پس گزینه اول صحیح است."
+    },
+    {
+      "id": 27,
+      "category": "محیط گرافیکی و دسکتاپ",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد با استفاده از SSH به یک سرور لینوکس متصل شود و یک برنامه گرافیکی (مانند <code>firefox</code>) را روی سرور اجرا کند، اما پنجره آن روی سیستم محلی خودش نمایش داده شود. کدام گام‌ها برای این کار ضروری است؟",
+      "options": [
+        "فعال کردن <code>X11Forwarding</code> در <code>/etc/ssh/sshd_config</code> و اتصال با <code>ssh -X user@server</code>",
+        "فقط اتصال با <code>ssh -X user@server</code>",
+        "نصب <code>xorg</code> روی سرور و اتصال با <code>ssh -x user@server</code>",
+        "فعال کردن <code>X11UseLocalhost</code> در <code>/etc/ssh/ssh_config</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای X-Forwarding، هم در سمت سرور باید <code>X11Forwarding yes</code> در <code>sshd_config</code> تنظیم شود و هم کلاینت باید با <code>ssh -X</code> (یا <code>-Y</code> برای trusted) متصل شود. گزینه دوم فقط سمت کلاینت را پوشش می‌دهد. گزینه سوم از سوییچ اشتباه (<code>-x</code>) استفاده می‌کند که X-Forwarding را غیرفعال می‌کند. گزینه چهارم مربوط به تنظیمات کلاینت است و کافی نیست. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 28,
+      "category": "ابزارهای سخت‌افزاری و سیستم",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش اطلاعات کامل و جزئی سخت‌افزار سیستم، از جمله IRQها و آدرس‌های I/O، استفاده می‌شود؟",
+      "options": [
+        "<code>lshw -short</code>",
+        "<code>lshw</code>",
+        "<code>lspci -v</code>",
+        "<code>lsdev</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>lshw</code> بدون سوییچ، اطلاعات کامل و دقیق سخت‌افزار (شامل IRQها، I/O ports، memory regions) را نمایش می‌دهد. <code>lshw -short</code> خلاصه‌ای از اطلاعات را نشان می‌دهد. <code>lspci -v</code> فقط دستگاه‌های PCI را نشان می‌دهد. <code>lsdev</code> اطلاعات کلی دیوایس‌ها را نشان می‌دهد اما به اندازه <code>lshw</code> جامع نیست. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 29,
+      "category": "ابزارهای سخت‌افزاری و سیستم",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد ماژول کرنل <code>raid5</code> را بارگذاری کند، اما می‌داند که این ماژول به ماژول دیگری وابسته است. کدام دستور این کار را با اطمینان از بارگذاری تمام وابستگی‌ها انجام می‌دهد؟",
+      "options": [
+        "<code>insmod raid5</code>",
+        "<code>modprobe raid5</code>",
+        "<code>modinfo raid5</code>",
+        "<code>lsmod | grep raid5</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>modprobe</code> به‌طور خودکار وابستگی‌های ماژول را بررسی و بارگذاری می‌کند. <code>insmod</code> فقط ماژول مشخص‌شده را بارگذاری می‌کند و در صورت وجود وابستگی، خطا می‌دهد (مگر اینکه مسیر کامل و وابستگی‌ها دستی داده شوند). <code>modinfo</code> اطلاعات ماژول را نمایش می‌دهد، بارگذاری نمی‌کند. <code>lsmod</code> ماژول‌های بارگذاری‌شده را نمایش می‌دهد. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 30,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای فشرده‌سازی یک فایل با بالاترین نسبت فشرده‌سازی (best compression) با استفاده از <code>xz</code> استفاده می‌شود؟",
+      "options": [
+        "<code>xz -1 file</code>",
+        "<code>xz -9 file</code>",
+        "<code>xz -e -9 file</code>",
+        "<code>xz -z file</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>xz</code> از سطوح ۰ تا ۹ پشتیبانی می‌کند، که ۹ بالاترین سطح فشرده‌سازی است. سوییچ <code>-e</code> (extreme) نیز برای افزایش نسبت فشرده‌سازی با مصرف CPU بیشتر استفاده می‌شود. ترکیب <code>-e -9</code> بهترین فشرده‌سازی را فراهم می‌کند. گزینه اول (<code>-1</code>) سریع‌ترین و کم‌ترین فشرده‌سازی است. گزینه دوم فقط سطح ۹ را دارد بدون <code>-e</code>. گزینه چهارم <code>-z</code> معادل فشرده‌سازی است اما سطح پیش‌فرض (معمولاً ۶) را استفاده می‌کند. پس گزینه سوم صحیح است."
+    },
+    {
+      "id": 31,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 3,
+      "text": "یک مدیر سیستم یک فایل آرشیو به نام <code>backup.tar.xz</code> دارد و می‌خواهد محتویات آن را در دایرکتوری <code>/restore</code> استخراج کند. کدام دستور این کار را به‌درستی انجام می‌دهد، بدون این‌که ساختار دایرکتوری‌های داخل آرشیو را تغییر دهد؟",
+      "options": [
+        "<code>tar -xvf backup.tar.xz -C /restore</code>",
+        "<code>tar -xvf backup.tar.xz --directory /restore</code>",
+        "<code>xz -d backup.tar.xz && tar -xvf backup.tar -C /restore</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند. <code>tar -xvf backup.tar.xz -C /restore</code> با سوییچ <code>-C</code> یا <code>--directory</code> مسیر استخراج را مشخص می‌کند و خود <code>tar</code> فشرده‌سازی xz را تشخیص می‌دهد. گزینه سوم ابتدا فایل را با <code>xz -d</code> از حالت فشرده خارج می‌کند و سپس با <code>tar</code> معمولی استخراج می‌کند. هر سه گزینه صحیح هستند. پس گزینه چهارم درست است."
+    },
+    {
+      "id": 32,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد کاربری به نام <code>newuser</code> ایجاد کند که دایرکتوری خانه آن در <code>/custom/home/newuser</code> باشد، شل پیش‌فرض آن <code>/bin/zsh</code> باشد و بلافاصله به گروه <code>devops</code> اضافه شود. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>useradd -d /custom/home/newuser -s /bin/zsh -G devops newuser</code>",
+        "<code>useradd -m -d /custom/home/newuser -s /bin/zsh -g devops newuser</code>",
+        "<code>useradd -d /custom/home/newuser -s /bin/zsh -G devops newuser</code> سپس <code>passwd newuser</code>",
+        "گزینه اول و سوم هر دو صحیح هستند، اما گزینه سوم پسورد را نیز تنظیم می‌کند."
+      ],
+      "correct": 3,
+      "explanation": "گزینه اول از نظر سینتکس صحیح است (<code>-d</code> برای دایرکتوری، <code>-s</code> برای شل، <code>-G</code> برای گروه‌های ثانویه). اما برای ایجاد دایرکتوری خانه باید از <code>-m</code> نیز استفاده کرد. در گزینه اول <code>-m</code> وجود ندارد، بنابراین دایرکتوری خانه ساخته نمی‌شود. گزینه دوم از <code>-g</code> برای گروه اصلی استفاده می‌کند (نه ثانویه) و گروه اصلی را devops قرار می‌دهد که ممکن است مطلوب نباشد. گزینه سوم تمام پارامترهای درست را دارد و با <code>passwd</code> پسورد نیز تنظیم می‌شود. پس گزینه سوم کامل‌ترین پاسخ است."
+    }
+  ]
+}

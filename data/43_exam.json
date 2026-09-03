@@ -1,0 +1,608 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی پیشرفته",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - بخش نهایی",
+  "questions": [
+    {
+      "id": 398,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در iptables، تفاوت بین قوانین <code>DROP</code> و <code>REJECT</code> در زنجیره‌های فیلتر چیست و هرکدام چه تأثیری بر کلاینت دارد؟",
+      "options": [
+        "DROP بسته را بدون هیچ پاسخ‌ای حذف می‌کند (کلاینت منتظر می‌ماند تا Timeout شود)، REJECT بسته را حذف کرده و یک پیام خطای ICMP (مانند Port Unreachable) به کلاینت ارسال می‌کند",
+        "هر دو یکسان هستند",
+        "DROP پیام خطا ارسال می‌کند",
+        "REJECT بسته را بی‌صدا حذف می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "DROP بی‌صدا بسته را دور می‌ریزد و هیچ پاسخی ارسال نمی‌شود. کلاینت منتظر می‌ماند تا Timeout شود که می‌تواند باعث کندی شود. REJECT بسته را دور می‌ریزد اما یک پیام خطای ICMP (مانند administratively prohibited یا port unreachable) به کلاینت ارسال می‌کند تا سریعاً متوجه بسته شدن پورت شود. REJECT معمولاً برای سرویس‌هایی که نباید در دسترس باشند استفاده می‌شود و DROP برای مخفی‌سازی سیستم."
+    },
+    {
+      "id": 399,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld (ردهت)، برای باز کردن یک پورت خاص (مثلاً پورت ۸۰۸۰ TCP) در zone عمومی به‌صورت دائمی، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --zone=public --add-port=8080/tcp --permanent</code> و سپس <code>firewall-cmd --reload</code>",
+        "<code>firewall-cmd --add-port=8080/tcp</code>",
+        "<code>firewall-cmd --zone=public --add-port=8080</code>",
+        "<code>firewall-cmd --add-port=8080 --permanent</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای باز کردن یک پورت خاص در firewalld: ۱. <code>firewall-cmd --zone=public --add-port=8080/tcp --permanent</code> (اضافه کردن پورت به zone عمومی به‌صورت دائمی). ۲. <code>firewall-cmd --reload</code> برای اعمال تغییرات بدون ری‌استارت فایروال. بدون <code>--permanent</code> تغییر موقتی است و با ری‌استارت یا reload از بین می‌رود. سرویس‌های از پیش تعریف‌شده مانند http با <code>--add-service=http</code> نیز قابل استفاده هستند."
+    },
+    {
+      "id": 400,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>nc</code> (netcat) چه کاربردی دارد و چگونه می‌توان از آن برای تست پورت و انتقال فایل استفاده کرد؟",
+      "options": [
+        "یک ابزار چندمنظوره شبکه برای خواندن/نوشتن داده از طریق اتصالات TCP/UDP؛ <code>nc -l -p PORT</code> برای گوش‌دادن، <code>nc HOST PORT</code> برای اتصال، و <code>nc -l -p PORT &lt; file</code> برای انتقال فایل",
+        "فقط برای پینگ",
+        "فقط برای اسکن پورت",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "netcat (nc) یک ابزار بسیار مفید برای شبکه است: تست پورت: <code>nc -zv HOST PORT</code> (z=zero I/O, v=verbose). گوش‌دادن روی یک پورت: <code>nc -l -p PORT</code>. اتصال به یک پورت: <code>nc HOST PORT</code>. انتقال فایل: سرور <code>nc -l -p PORT &gt; file</code> و کلاینت <code>nc HOST PORT &lt; file</code>. ایجاد یک چت ساده و بررسی اتصالات نیز با nc امکان‌پذیر است."
+    },
+    {
+      "id": 401,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>curl</code> چه تفاوتی با <code>wget</code> دارد و هرکدام چه کاربردهای متفاوتی دارند؟",
+      "options": [
+        "curl یک ابزار انتقال داده با پشتیبانی از پروتکل‌های متعدد (HTTP, FTP, SMTP و ...) و قابلیت ارسال درخواست‌های پیچیده (API) است، wget یک دانلودر ساده با پشتیبانی از دانلود بازگشتی و Resume است",
+        "هر دو یکسان هستند",
+        "wget برای ارسال API است",
+        "curl فقط برای دانلود است"
+      ],
+      "correct": 0,
+      "explanation": "curl (Client URL) یک ابزار قدرتمند برای انتقال داده با پشتیبانی از پروتکل‌های متعدد (HTTP/S, FTP/S, SMTP, POP3, IMAP, LDAP و غیره) و قابلیت‌های پیشرفته (ارسال داده با POST، هدرهای سفارشی، احراز هویت، کوکی‌ها). wget یک دانلودر ساده با پشتیبانی از دانلود بازگشتی (وب‌سایت‌ها)، Resume (ادامه دانلود ناقص)، و mirroring. curl بیشتر برای توسعه‌دهندگان و APIها استفاده می‌شود، wget برای دانلود فایل‌ها و وب‌سایت‌ها."
+    },
+    {
+      "id": 402,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>ip link set eth0 down</code> چه کاری انجام می‌دهد و چه تفاوتی با <code>ifconfig eth0 down</code> دارد؟",
+      "options": [
+        "رابط شبکه eth0 را غیرفعال (Down) می‌کند؛ <code>ip</code> دستور مدرن و توصیه‌شده است، <code>ifconfig</code> قدیمی است اما همان کار را می‌کند",
+        "هر دو یکسان هستند",
+        "<code>ip</code> فقط IP را حذف می‌کند",
+        "<code>ifconfig</code> کار نمی‌کند"
+      ],
+      "correct": 0,
+      "explanation": "هر دو دستور رابط شبکه را غیرفعال می‌کنند، اما <code>ip link set eth0 down</code> روش مدرن (از بسته iproute2) و <code>ifconfig eth0 down</code> روش قدیمی (از بسته net-tools) است. <code>ip</code> توصیه می‌شود زیرا قدرتمندتر، سریع‌تر و به‌روزتر است. برای فعال کردن: <code>ip link set eth0 up</code> یا <code>ifconfig eth0 up</code>. غیرفعال کردن رابط، تمام ارتباطات شبکه روی آن را قطع می‌کند."
+    },
+    {
+      "id": 403,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای بارگذاری یک ماژول کرنل به‌صورت خودکار در زمان بوت، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "افزودن نام ماژول به فایل <code>/etc/modules-load.d/*.conf</code> (در systemd) یا <code>/etc/modules</code> (در sysvinit)",
+        "با <code>modprobe</code> در اسکریپت بوت",
+        "با <code>insmod</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "در systemd، ماژول‌هایی که باید در زمان بوت بارگذاری شوند در فایل‌های <code>/etc/modules-load.d/*.conf</code> (یک نام ماژول در هر خط) قرار می‌گیرند. در sysvinit قدیمی، فایل <code>/etc/modules</code> استفاده می‌شود. این روش بهتر از اضافه کردن به اسکریپت‌های بوت است و توسط systemd-modules-load.service مدیریت می‌شود. همچنین می‌توان با <code>modprobe</code> در <code>/etc/rc.local</code> (در صورت وجود) نیز بارگذاری کرد اما روش استاندارد فایل‌های conf است."
+    },
+    {
+      "id": 404,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای جلوگیری از بارگذاری یک ماژول کرنل خاص (مثلاً به دلیل باگ یا امنیت)، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "افزودن <code>blacklist module_name</code> به فایل <code>/etc/modprobe.d/blacklist.conf</code>",
+        "با <code>rmmod</code>",
+        "با <code>modprobe -r</code>",
+        "غیرممکن است"
+      ],
+      "correct": 0,
+      "explanation": "برای سیاه‌لیست کردن (blacklist) یک ماژول کرنل، یک فایل در <code>/etc/modprobe.d/</code> (معمولاً <code>blacklist.conf</code>) با محتوای <code>blacklist module_name</code> ایجاد می‌شود. این کار از بارگذاری خودکار ماژول در بوت جلوگیری می‌کند، اما همچنان می‌توان با <code>modprobe</code> دستی آن را بارگذاری کرد مگر اینکه با <code>install /bin/false</code> نیز مسدود شود. برای بارگذاری نشدن کامل، از ترکیب blacklist و <code>install /bin/false</code> استفاده می‌شود."
+    },
+    {
+      "id": 405,
+      "category": "سیستم - کرنل",
+      "level": 3,
+      "text": "دستور <code>dmesg</code> چه اطلاعاتی را نمایش می‌دهد و چگونه می‌توان پیام‌های بوت را فیلتر کرد؟",
+      "options": [
+        "پیام‌های حلقه بوت (Ring Buffer) کرنل را نمایش می‌دهد؛ با <code>dmesg | grep -i error</code> یا <code>dmesg --level=err</code> می‌توان فیلتر کرد",
+        "فقط اطلاعات سخت‌افزار",
+        "فقط اطلاعات شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>dmesg</code> (diagnostic message) پیام‌های کرنل را از Ring Buffer (که شامل پیام‌های بوت و رویدادهای سخت‌افزاری است) نمایش می‌دهد. برای عیب‌یابی سخت‌افزار، شناسایی دیوایس‌های جدید، و بررسی خطاهای کرنل مفید است. فیلتر کردن: <code>dmesg | grep -i error</code> (خطاها)، <code>dmesg | grep -i usb</code> (رویدادهای USB)، <code>dmesg --level=err,warn</code> (فقط سطوح خطا و هشدار)."
+    },
+    {
+      "id": 406,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، تفاوت بین <code>docker stop</code> و <code>docker kill</code> چیست و هرکدام چه سیگنالی ارسال می‌کنند؟",
+      "options": [
+        "<code>docker stop</code> سیگنال SIGTERM ارسال کرده و به کانتینر زمان (۱۰ ثانیه) برای تمیزکاری می‌دهد، <code>docker kill</code> سیگنال SIGKILL ارسال می‌کند و فوراً کانتینر را خاتمه می‌دهد",
+        "هر دو یکسان هستند",
+        "<code>docker stop</code> SIGKILL ارسال می‌کند",
+        "<code>docker kill</code> SIGTERM ارسال می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>docker stop</code> به کانتینر سیگنال SIGTERM (۱۵) می‌فرستد و تا ۱۰ ثانیه (قابل تنظیم با <code>-t</code>) منتظر می‌ماند تا کانتینر به‌خوبی خاتمه یابد. اگر کانتینر در این مدت خاتمه نیابد، SIGKILL ارسال می‌شود. <code>docker kill</code> بلافاصله سیگنال SIGKILL (۹) را ارسال می‌کند و کانتینر را بدون هیچ تمیزکاری خاتمه می‌دهد. <code>docker kill -s SIGNAL</code> نیز می‌تواند سیگنال‌های سفارشی ارسال کند."
+    },
+    {
+      "id": 407,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، مفهوم Volume چیست و چه مزیتی نسبت به ذخیره‌سازی در لایه‌های کانتینر دارد؟",
+      "options": [
+        "Volume یک دایرکتوری قابل mount است که داده‌ها را خارج از سیستم فایل کانتینر (در هاست) ذخیره می‌کند و برای persistence و اشتراک داده بین کانتینرها استفاده می‌شود",
+        "یک نوع ایمیج است",
+        "یک شبکه مجازی است",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "Volume در Docker داده‌ها را خارج از سیستم فایل کانتینر ذخیره می‌کند، بنابراین با حذف کانتینر داده‌ها از بین نمی‌روند (persistence). همچنین برای اشتراک داده بین چندین کانتینر مفید است. انواع: bind mounts (نگاشت دایرکتوری هاست به کانتینر)، named volumes (مدیریت‌شده توسط Docker)، و tmpfs mounts (در حافظه، موقت). Volumeها توسط <code>docker volume create</code> ایجاد و با <code>-v</code> یا <code>--mount</code> به کانتینر متصل می‌شوند."
+    },
+    {
+      "id": 408,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، دستور <code>docker commit</code> چه کاری انجام می‌دهد و چه کاربردی دارد؟",
+      "options": [
+        "یک ایمیج جدید از تغییرات یک کانتینر در حال اجرا ایجاد می‌کند (برای ذخیره تغییرات یا اشکال‌زدایی)، اما روش توصیه‌شده استفاده از Dockerfile است",
+        "کانتینر را متوقف می‌کند",
+        "کانتینر را حذف می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>docker commit CONTAINER [IMAGE_NAME]</code> یک ایمیج جدید از وضعیت فعلی یک کانتینر (با تغییرات) ایجاد می‌کند. این روش برای ذخیره تغییرات موقت یا اشکال‌زدایی مفید است اما روش توصیه‌شده برای ساخت ایمیج‌ها استفاده از Dockerfile است (تکرارپذیر، قابل مستندسازی و قابل نگهداری). commit معمولاً برای ایجاد ایمیج‌های یکبار مصرف یا اشکال‌زدایی استفاده می‌شود."
+    },
+    {
+      "id": 409,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Proxmox VE، برای ایجاد یک کلاستر (Cluster) بین چندین سرور، از چه ابزاری استفاده می‌شود و چه مزایایی دارد؟",
+      "options": [
+        "از ابزار <code>pvecm</code> (Proxmox Cluster Manager) برای ایجاد کلاستر استفاده می‌شود که امکان مدیریت متمرکز، مهاجرت زنده (Live Migration) و High Availability را فراهم می‌کند",
+        "از <code>docker swarm</code>",
+        "از <code>kubernetes</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "Proxmox VE از <code>pvecm</code> (Proxmox VE Cluster Manager) برای ایجاد کلاستر استفاده می‌کند. مزایا: مدیریت متمرکز از طریق یک رابط وب، مهاجرت زنده (Live Migration) بدون قطعی سرویس، High Availability (HA) با خودکارسازی VMهای خراب، و همگام‌سازی پیکربندی. کلاستر از Corosync برای ارتباط بین گره‌ها استفاده می‌کند و به حداقل ۳ گره برای HA توصیه می‌شود."
+    },
+    {
+      "id": 410,
+      "category": "شبکه - پیشرفته",
+      "level": 4,
+      "text": "برای ایجاد یک رابط شبکه مجازی (مانند TUN/TAP) در لینوکس و استفاده از آن در VPN یا مجازی‌سازی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ip tuntap add dev tap0 mode tap</code> برای ایجاد رابط TAP و <code>ip tuntap add dev tun0 mode tun</code> برای TUN (با استفاده از ابزار <code>tunctl</code> نیز امکان‌پذیر است)",
+        "فقط <code>ifconfig</code>",
+        "فقط <code>ip link</code>",
+        "غیرممکن است"
+      ],
+      "correct": 0,
+      "explanation": "رابط‌های TUN و TAP دستگاه‌های مجازی شبکه هستند: TUN (لایه ۳، IP) برای VPNهای مسیریابی و TAP (لایه ۲، اترنت) برای پل زدن و مجازی‌سازی استفاده می‌شود. ایجاد: <code>ip tuntap add dev tun0 mode tun</code> یا <code>ip tuntap add dev tap0 mode tap</code>. سپس می‌توان با <code>ip link set tap0 up</code> فعال کرد و IP به آن داد. ابزار قدیمی <code>tunctl</code> نیز موجود است اما <code>ip</code> توصیه می‌شود."
+    },
+    {
+      "id": 411,
+      "category": "شبکه - پیشرفته",
+      "level": 4,
+      "text": "برای مسیریابی ترافیک بین دو شبکه مختلف در لینوکس (به‌عنوان روتر)، چه تنظیماتی لازم است؟",
+      "options": [
+        "فعال‌سازی IP Forwarding، تنظیم مسیرهای استاتیک (یا استفاده از پروتکل مسیریابی)، و اطمینان از قوانین فایروال مناسب",
+        "فقط فعال‌سازی IP Forwarding",
+        "فقط تنظیم مسیرها",
+        "فقط فایروال"
+      ],
+      "correct": 0,
+      "explanation": "برای مسیریابی بین شبکه‌ها: ۱. فعال‌سازی IP Forwarding (<code>sysctl net.ipv4.ip_forward=1</code> و دائمی در <code>/etc/sysctl.conf</code>). ۲. تنظیم مسیرهای استاتیک (با <code>ip route add</code>) یا استفاده از پروتکل مسیریابی (مانند OSPF با Quagga/FRRouting). ۳. تنظیم قوانین فایروال (iptables/nftables) برای اجازه ترافیک بین شبکه‌ها (زنجیره FORWARD). ۴. در صورت نیاز، NAT برای دسترسی به اینترنت. همچنین اطمینان از اینکه هر رابط شبکه آدرس IP در subnet صحیح دارد."
+    },
+    {
+      "id": 412,
+      "category": "شبکه - پیشرفته",
+      "level": 4,
+      "text": "در لینوکس، پروتکل VXLAN چه کاربردی دارد و چگونه می‌توان یک VXLAN Tunnel ایجاد کرد؟",
+      "options": [
+        "VXLAN برای ایجاد شبکه‌های مجازی لایه ۲ روی شبکه لایه ۳ (Overlay) در محیط‌های مجازی‌سازی و دیتاسنتر استفاده می‌شود؛ با <code>ip link add vxlan0 type vxlan id 100 remote 192.168.1.10 dev eth0</code> ایجاد می‌شود",
+        "فقط برای VPN",
+        "فقط برای VLAN",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "VXLAN (Virtual Extensible LAN) یک پروتکل Overlay است که شبکه‌های مجازی لایه ۲ (Ethernet) را روی شبکه لایه ۳ (IP) ایجاد می‌کند و برای مجازی‌سازی (مانند OpenStack، VMware NSX) استفاده می‌شود. ایجاد در لینوکس: <code>ip link add vxlan0 type vxlan id 100 remote 192.168.1.10 dev eth0 dstport 4789</code>. این رابط مجازی سپس به یک Bridge اضافه شده و VMها را به هم متصل می‌کند. VXLAN محدودیت VLAN (۴۰۹۶) را برطرف می‌کند (۱۶ میلیون شبکه)."
+    },
+    {
+      "id": 413,
+      "category": "سیستم - راه‌اندازی مجدد",
+      "level": 3,
+      "text": "دستور <code>shutdown -r +10</code> چه کاری انجام می‌دهد و چه مزیتی نسبت به <code>reboot</code> دارد؟",
+      "options": [
+        "سیستم را ۱۰ دقیقه بعد ری‌استارت می‌کند و به کاربران متصل پیام می‌دهد، که اجازه می‌دهد کاربران کارهای خود را ذخیره کنند (برخلاف reboot که فوری است)",
+        "سیستم را فوری ری‌استارت می‌کند",
+        "سیستم را خاموش می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>shutdown -r +10</code> به معنای ری‌استارت (reboot) بعد از ۱۰ دقیقه است. <code>shutdown</code> به کاربران متصل پیام می‌دهد (از طریق wall) و فرصت می‌دهد کارهای خود را ذخیره کنند. <code>reboot</code> سیستم را بلافاصله ری‌استارت می‌کند. <code>shutdown</code> همچنین قابلیت زمان‌بندی دقیق‌تر (ساعت مشخص، دقیقه) و لغو با <code>shutdown -c</code> را دارد. برای خاموشی: <code>shutdown -h now</code>."
+    },
+    {
+      "id": 414,
+      "category": "سیستم - راه‌اندازی مجدد",
+      "level": 4,
+      "text": "اگر فرمان <code>shutdown</code> در دسترس نباشد (سیستم‌های حداقلی)، چگونه می‌توان سیستم را خاموش یا ری‌استارت کرد؟",
+      "options": [
+        "با <code>systemctl poweroff</code> (خاموشی) یا <code>systemctl reboot</code> (ری‌استارت) در سیستم‌های با systemd، یا <code>halt</code> و <code>reboot</code> در sysvinit",
+        "با <code>init 0</code>",
+        "با <code>kill -9 1</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "در سیستم‌های مدرن با systemd: <code>systemctl poweroff</code> (خاموشی) و <code>systemctl reboot</code> (ری‌استارت). در sysvinit: <code>init 0</code> (خاموشی) و <code>init 6</code> (ری‌استارت). همچنین <code>halt</code> (توقف CPU) و <code>reboot</code> کار می‌کنند. <code>kill -9 1</code> (کشتن init) روش غیراستاندارد و خطرناک است و می‌تواند باعث آسیب سیستم شود، توصیه نمی‌شود. در سیستم‌های حداقلی، <code>systemctl</code> بهترین گزینه است."
+    },
+    {
+      "id": 415,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، تفاوت بین <code>$(command)</code> و <code>`command`</code> (بک‌کوتیشن) چیست و کدام یک توصیه می‌شود؟",
+      "options": [
+        "<code>$(...)</code> قابل خواندن‌تر است، از nesting (تودرتو) پشتیبانی می‌کند و مدیریت بک‌اسلش بهتری دارد، <code>`...`</code> قدیمی و محدود است؛ <code>$(...)</code> توصیه می‌شود",
+        "هر دو یکسان هستند",
+        "<code>`...`</code> مدرن‌تر است",
+        "<code>$(...)</code> فقط روی bash کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "هر دو برای جایگزینی فرمان (Command Substitution) استفاده می‌شوند، اما <code>$(...)</code> مزایای زیادی دارد: ۱. خوانایی بهتر (به‌ویژه در تودرتوها: <code>$(command1 $(command2))</code>). ۲. مدیریت ساده‌تر بک‌اسلش‌ها. ۳. قابلیت nesting بدون نیاز به escape کردن. ۴. در POSIX و bash پشتیبانی می‌شود. <code>`...`</code> (بک‌کوتیشن) قدیمی است و در بسیاری از موارد توصیه نمی‌شود مگر برای سازگاری با شل‌های بسیار قدیمی."
+    },
+    {
+      "id": 416,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، متغیر <code>RANDOM</code> چه کاربردی دارد و چگونه می‌توان اعداد تصادفی در یک بازه مشخص تولید کرد؟",
+      "options": [
+        "<code>$RANDOM</code> یک عدد تصادفی بین ۰ تا ۳۲۷۶۷ تولید می‌کند؛ با <code>echo $((RANDOM % N))</code> می‌توان عددی بین ۰ تا N-1 تولید کرد",
+        "فقط عدد ثابت تولید می‌کند",
+        "فقط بین ۰ تا ۱۰۰",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>$RANDOM</code> یک متغیر ویژه در bash است که هر بار خوانده شود، یک عدد صحیح تصادفی (شبه‌تصادفی) بین ۰ تا ۳۲۷۶۷ برمی‌گرداند. برای تولید اعداد در بازه خاص: <code>$((RANDOM % 100))</code> (۰ تا ۹۹)، <code>$((RANDOM % 50 + 1))</code> (۱ تا ۵۰). برای تولید اعداد تصادفی با کیفیت بالاتر، از <code>/dev/urandom</code> یا ابزار <code>shuf</code> استفاده می‌شود. <code>$RANDOM</code> برای اسکریپت‌های ساده و نیازهای غیرامنیتی کافی است."
+    },
+    {
+      "id": 417,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، عملگر <code>:-</code> (مثل <code>${var:-default}</code>) چه کاربردی دارد و چه تفاوتی با <code>:=</code> دارد؟",
+      "options": [
+        "<code>${var:-default}</code> مقدار default را برمی‌گرداند اگر var تعریف‌نشده یا خالی باشد (اما var را تغییر نمی‌دهد)، <code>${var:=default}</code> همچنین var را به default تنظیم می‌کند",
+        "هر دو یکسان هستند",
+        "<code>:-</code> var را تغییر می‌دهد",
+        "<code>:=</code> فقط برمی‌گرداند"
+      ],
+      "correct": 0,
+      "explanation": "هر دو برای مقادیر پیش‌فرض متغیرها استفاده می‌شوند: <code>${var:-default}</code> (یا <code>${var-default}</code>) مقدار var را برمی‌گرداند اگر تعریف شده باشد، در غیر این صورت مقدار default را برمی‌گرداند (بدون تغییر var). <code>${var:=default}</code> مانند بالا است اما اگر var تعریف نشده یا خالی باشد، آن را به default تنظیم می‌کند و سپس مقدار را برمی‌گرداند. مثال: <code>echo ${name:-\"Ali\"}</code> (فقط برمی‌گرداند) در مقابل <code>echo ${name:=\"Ali\"}</code> (تنظیم و برمی‌گرداند)."
+    },
+    {
+      "id": 418,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، عملگر <code>#</code> و <code>%</code> برای دستکاری رشته‌ها چه کاربردی دارند و تفاوت آن‌ها چیست؟",
+      "options": [
+        "<code>${var#pattern}</code> کوتاه‌ترین پیشوند مطابق را حذف می‌کند، <code>${var##pattern}</code> بلندترین پیشوند را حذف می‌کند؛ <code>${var%pattern}</code> کوتاه‌ترین پسوند را حذف می‌کند، <code>${var%%pattern}</code> بلندترین پسوند را حذف می‌کند",
+        "همه یکسان هستند",
+        "<code>#</code> برای پسوند است",
+        "<code>%</code> برای پیشوند است"
+      ],
+      "correct": 0,
+      "explanation": "این عملگرها برای حذف زیررشته‌ها از ابتدا یا انتهای یک رشته استفاده می‌شوند: <code>#</code> و <code>##</code> برای حذف از ابتدا (پیشوند): <code>${var#pattern}</code> کوتاه‌ترین و <code>${var##pattern}</code> بلندترین. <code>%</code> و <code>%%</code> برای حذف از انتها (پسوند): <code>${var%pattern}</code> کوتاه‌ترین و <code>${var%%pattern}</code> بلندترین. مثال: <code>file=\"a.b.c\"; echo ${file%.*}</code> خروجی <code>a.b</code>، <code>echo ${file%%.*}</code> خروجی <code>a</code>."
+    },
+    {
+      "id": 419,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "دستور <code>find</code> با <code>-exec</code> و <code>-execdir</code> چه تفاوتی دارند و هرکدام چه زمانی استفاده می‌شوند؟",
+      "options": [
+        "<code>-exec</code> فرمان را در دایرکتوری جاری اجرا می‌کند، <code>-execdir</code> فرمان را در دایرکتوری حاوی فایل پیدا شده اجرا می‌کند (امن‌تر برای تغییر فایل‌ها)",
+        "هر دو یکسان هستند",
+        "<code>-execdir</code> در دایرکتوری جاری اجرا می‌کند",
+        "<code>-exec</code> امن‌تر است"
+      ],
+      "correct": 0,
+      "explanation": "<code>-exec</code> فرمان مشخص را از دایرکتوری جاری (جایی که find اجرا شده) اجرا می‌کند. <code>-execdir</code> فرمان را در دایرکتوری حاوی فایل پیدا شده اجرا می‌کند که امن‌تر است (به‌ویژه هنگام حذف فایل‌ها) زیرا از خطاهای مسیر نسبی جلوگیری می‌کند. <code>-execdir</code> همچنین از فراخوانی فرمان برای هر فایل با مسیر کامل جلوگیری می‌کند. مثال: <code>find . -name \"*.log\" -execdir rm {} \\;</code> (هر فایل را در دایرکتوری خودش حذف می‌کند)."
+    },
+    {
+      "id": 420,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "دستور <code>find</code> با <code>-mtime</code> و <code>-ctime</code> چه تفاوتی دارند و هرکدام بر اساس چه زمانی جستجو می‌کنند؟",
+      "options": [
+        "<code>-mtime</code> بر اساس زمان تغییر محتوا (Modification time) جستجو می‌کند، <code>-ctime</code> بر اساس زمان تغییر متادیتا (Change time، شامل مجوزها و مالکیت) جستجو می‌کند",
+        "هر دو یکسان هستند",
+        "<code>-ctime</code> بر اساس زمان دسترسی است",
+        "<code>-mtime</code> بر اساس زمان ایجاد است"
+      ],
+      "correct": 0,
+      "explanation": "<code>-mtime</code> (modification time) به زمان آخرین تغییر محتوای فایل اشاره دارد (زمانی که داده‌های فایل تغییر می‌کنند). <code>-ctime</code> (change time) به زمان آخرین تغییر متادیتا (اطلاعات inode مانند مجوزها، مالکیت، لینک‌ها) اشاره دارد، حتی اگر محتوا تغییر نکرده باشد. <code>-atime</code> نیز زمان آخرین دسترسی (access) را نشان می‌دهد. مثال: <code>find . -mtime -7</code> فایل‌هایی که در ۷ روز گذشته تغییر کرده‌اند."
+    },
+    {
+      "id": 421,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "دستور <code>rename</code> (و <code>mv</code>) چه تفاوتی در تغییر نام انبوه فایل‌ها دارند و چگونه می‌توان با <code>rename</code> (Perl) یا <code>rename</code> (util-linux) این کار را انجام داد؟",
+      "options": [
+        "<code>rename</code> (Perl) از عبارات منظم برای تغییر نام انبوه استفاده می‌کند (مثال: <code>rename 's/old/new/' *.txt</code>)، <code>mv</code> فقط یک فایل را تغییر نام می‌دهد؛ نوع util-linux سینتکس متفاوتی دارد",
+        "هر دو یکسان هستند",
+        "<code>mv</code> برای تغییر نام انبوه است",
+        "<code>rename</code> فقط یک فایل را تغییر می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "در لینوکس دو نوع <code>rename</code> وجود دارد: ۱. نسخه Perl (معمول در دبیان) که از عبارات منظم استفاده می‌کند: <code>rename 's/\\.txt$/.bak/' *.txt</code>. ۲. نسخه util-linux (معمول در ردهت) با سینتکس: <code>rename .txt .bak *.txt</code>. <code>mv</code> فقط یک فایل را جابه‌جا یا تغییر نام می‌دهد و برای تغییر نام انبوه باید از حلقه استفاده کرد. <code>rename</code> برای تغییر نام انبوه بسیار کارآمد است."
+    },
+    {
+      "id": 422,
+      "category": "امنیت - پیشرفته",
+      "level": 4,
+      "text": "برای رمزگذاری یک فایل با استفاده از OpenSSL (رمزگذاری متقارن با AES)، از چه دستوری استفاده می‌شود و چه پارامترهایی نیاز است؟",
+      "options": [
+        "<code>openssl enc -aes-256-cbc -salt -in file.txt -out file.enc -k pass</code> (با رمز عبور)؛ برای رمزگشایی از <code>-d</code> استفاده می‌شود",
+        "<code>openssl genrsa</code>",
+        "<code>openssl req</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "OpenSSL می‌تواند برای رمزگذاری متقارن استفاده شود: <code>openssl enc -aes-256-cbc -salt -in file.txt -out file.enc -k PASSWORD</code>. پارامترها: <code>-aes-256-cbc</code> الگوریتم، <code>-salt</code> برای افزایش امنیت، <code>-in</code> فایل ورودی، <code>-out</code> فایل خروجی، <code>-k</code> رمز عبور. برای رمزگشایی: <code>openssl enc -d -aes-256-cbc -in file.enc -out file.txt -k PASSWORD</code>. این روش برای رمزگذاری سریع فایل‌ها مناسب است."
+    },
+    {
+      "id": 423,
+      "category": "امنیت - پیشرفته",
+      "level": 4,
+      "text": "برای تولید یک هش (checksum) از یک فایل با استفاده از SHA-256 در لینوکس، از چه دستوری استفاده می‌شود و چه کاربردی دارد؟",
+      "options": [
+        "<code>sha256sum file</code> (یا <code>sha256sum file &gt; file.sha256</code>) که برای تأیید یکپارچگی فایل استفاده می‌شود",
+        "<code>md5sum</code>",
+        "<code>cksum</code>",
+        "<code>sum</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>sha256sum</code> هش SHA-256 یک فایل را تولید می‌کند. برای تأیید: <code>sha256sum -c file.sha256</code>. سایر ابزارهای هش: <code>md5sum</code> (MD5، قدیمی و کمتر امن)، <code>sha1sum</code> (SHA-1، در حال منسوخ شدن)، <code>sha512sum</code> (SHA-512، امن‌تر). هش‌ها برای تأیید یکپارچگی فایل‌های دانلودی، تشخیص تغییرات، و امضای دیجیتال استفاده می‌شوند. SHA-256 امروزه استاندارد امنیتی است."
+    },
+    {
+      "id": 424,
+      "category": "امنیت - پیشرفته",
+      "level": 4,
+      "text": "در لینوکس، ابزار <code>auditd</code> چه کاربردی دارد و چه تفاوتی با <code>systemd-journald</code> دارد؟",
+      "options": [
+        "<code>auditd</code> یک سیستم ممیزی (Audit) است که رویدادهای امنیتی خاص (مانند تغییر فایل‌های سیستمی، دسترسی به فایل‌های حساس، تغییر مجوزها) را ثبت می‌کند، در حالی که journald لاگ‌های عمومی سیستم را جمع‌آوری می‌کند",
+        "هر دو یکسان هستند",
+        "<code>auditd</code> برای لاگ‌های عمومی است",
+        "<code>journald</code> برای ممیزی امنیتی است"
+      ],
+      "correct": 0,
+      "explanation": "<code>auditd</code> (Linux Audit System) یک چارچوب ممیزی در کرنل است که رویدادهای امنیتی خاص (بر اساس قوانین تعریف‌شده) را ثبت می‌کند. قوانین در <code>/etc/audit/rules.d/</code> تعریف می‌شوند و می‌توانند تغییر فایل‌ها، دسترسی به فایل‌های حساس، تغییر مجوزها، و تلاش‌های ناموفق احراز هویت را پایش کنند. journald لاگ‌های عمومی سیستم (سرویس‌ها، کرنل) را جمع‌آوری می‌کند. auditd برای محیط‌های امنیتی و انطباق (Compliance) ضروری است."
+    },
+    {
+      "id": 425,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>strace</code> چه کاربردی در عیب‌یابی و تحلیل برنامه‌ها دارد؟",
+      "options": [
+        "تماس‌های سیستمی (System Calls) و سیگنال‌های یک برنامه را ردیابی می‌کند و برای عیب‌یابی مشکلات (مانند خطای Permission، فایل‌های گم‌شده) بسیار مفید است",
+        "فقط برای دیباگ کرنل",
+        "فقط برای شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>strace</code> یک ابزار دیباگ است که تمام تماس‌های سیستمی (system calls) و سیگنال‌های یک برنامه را ردیابی می‌کند. مثال: <code>strace -e openat ls</code> (نشان می‌دهد ls کدام فایل‌ها را باز می‌کند). برای عیب‌یابی خطاهای Permission، فایل‌های گم‌شده، مشکلات شبکه، و عملکرد برنامه مفید است. <code>strace -p PID</code> برای اتصال به یک پردازش در حال اجرا. <code>ltrace</code> برای ردیابی تماس‌های کتابخانه‌ای (Library Calls) استفاده می‌شود."
+    },
+    {
+      "id": 426,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>lsof</code> چه کاربردی دارد و چگونه می‌توان فایل‌های باز یک پردازش خاص را مشاهده کرد؟",
+      "options": [
+        "<code>lsof -p PID</code> لیست فایل‌های باز (شامل فایل‌های معمولی، دایرکتوری‌ها، سوکت‌های شبکه، لینک‌ها) توسط یک پردازش خاص را نشان می‌دهد",
+        "فقط فایل‌های معمولی",
+        "فقط شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>lsof</code> (List Open Files) یک ابزار قدرتمند برای نمایش فایل‌های باز توسط پردازش‌ها است. <code>lsof -p PID</code> فایل‌های باز یک پردازش خاص را نشان می‌دهد. <code>lsof /path/file</code> نشان می‌دهد کدام پردازش‌ها از یک فایل خاص استفاده می‌کنند. <code>lsof -i :port</code> نشان می‌دهد کدام پردازش روی یک پورت خاص گوش می‌دهد. برای عیب‌یابی \"Device or resource busy\"، شناسایی پرونده‌های باز توسط سرویس‌ها، و تحلیل اتصالات شبکه بسیار مفید است."
+    },
+    {
+      "id": 427,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>fuser</code> چه کاربردی دارد و چه تفاوتی با <code>lsof</code> دارد؟",
+      "options": [
+        "<code>fuser</code> PIDهای پردازش‌هایی که از یک فایل یا دایرکتوری خاص استفاده می‌کنند را نشان می‌دهد (و می‌تواند آن‌ها را kill کند)، در حالی که <code>lsof</code> اطلاعات دقیق‌تری از فایل‌های باز ارائه می‌دهد",
+        "هر دو یکسان هستند",
+        "<code>fuser</code> فقط برای شبکه است",
+        "<code>lsof</code> فقط برای فایل‌های معمولی است"
+      ],
+      "correct": 0,
+      "explanation": "<code>fuser</code> (File USER) پردازش‌هایی که از یک فایل، دایرکتوری یا سوکت استفاده می‌کنند را شناسایی می‌کند. <code>fuser -v /path</code> نمایش دقیق، <code>fuser -k /path</code> kill کردن پردازش‌ها. <code>lsof</code> اطلاعات جامع‌تری از فایل‌های باز (نوع فایل، حالت دسترسی) ارائه می‌دهد. هر دو برای عیب‌یابی \"Device or resource busy\" و unmount کردن دایرکتوری‌های در حال استفاده مفید هستند. <code>fuser</code> معمولاً سریع‌تر است اما <code>lsof</code> جزئیات بیشتری دارد."
+    },
+    {
+      "id": 428,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>watch</code> چه کاربردی دارد و چگونه می‌توان از آن برای مانیتورینگ استفاده کرد؟",
+      "options": [
+        "<code>watch</code> یک فرمان را به‌صورت دوره‌ای (هر ۲ ثانیه به‌طور پیش‌فرض) اجرا کرده و خروجی را به‌روزرسانی می‌کند، برای مانیتورینگ زنده مانند <code>watch -n 1 'ls -l'</code>",
+        "فقط یک بار اجرا می‌کند",
+        "فقط برای شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>watch</code> یک ابزار ساده اما قدرتمند برای اجرای دوره‌ای یک فرمان است. <code>watch -n 1 'date'</code> هر ثانیه زمان را به‌روزرسانی می‌کند. <code>watch 'ps aux | grep httpd'</code> برای مانیتورینگ پردازش‌ها. <code>watch -d 'ls -l'</code> با هایلایت کردن تغییرات. برای مانیتورینگ فایل‌ها (با <code>ls -l</code>)، پردازش‌ها، استفاده از دیسک (<code>df -h</code>) و شبکه (<code>ss -tunp</code>) بسیار مفید است. خروجی با <code>Ctrl+C</code> متوقف می‌شود."
+    },
+    {
+      "id": 429,
+      "category": "سیستم - ابزارها",
+      "level": 3,
+      "text": "ابزار <code>screen</code> چه تفاوتی با <code>tmux</code> دارد و هرکدام چه زمانی استفاده می‌شوند؟",
+      "options": [
+        "هر دو چندترمینالی (Multiplexer) هستند؛ screen قدیمی‌تر و ساده‌تر است، tmux مدرن‌تر با قابلیت‌های پیشرفته‌تر (تقسیم صفحه، اسکریپت‌پذیری، پشتیبانی از ماوس) و معمولاً توصیه می‌شود",
+        "هر دو یکسان هستند",
+        "screen مدرن‌تر است",
+        "tmux فقط روی دبیان کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "هر دو ابزار ترمینال مولتی‌پلکسر (Terminal Multiplexer) هستند که امکان اجرای چندین جلسه ترمینال در یک پنجره، detach/attach جلسات، و تقسیم صفحه را فراهم می‌کنند. screen (۱۹۸۷) قدیمی‌تر و ساده‌تر است (کلیدهای <code>Ctrl+a</code>). tmux (۲۰۰۷) مدرن‌تر با قابلیت‌های پیشرفته‌تر: تقسیم صفحه به‌صورت عمودی و افقی (<code>Ctrl+b %</code> و <code>Ctrl+b \"</code>)، پشتیبانی از ماوس، اسکریپت‌پذیری (با فایل <code>.tmux.conf</code>) و مدیریت بهتر پنجره‌ها. tmux امروزه توصیه می‌شود، اما screen همچنان در سیستم‌های قدیمی استفاده می‌شود."
+    },
+    {
+      "id": 430,
+      "category": "سیستم - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>inotifywait</code> چه کاربردی دارد و چگونه می‌توان از آن برای نظارت بر تغییرات فایل‌ها استفاده کرد؟",
+      "options": [
+        "<code>inotifywait</code> از زیرسیستم inotify کرنل برای نظارت بر رویدادهای فایل‌سیستم (ایجاد، حذف، تغییر، دسترسی) و اجرای اقدامات خودکار استفاده می‌کند (مثلاً اسکریپت‌ها)",
+        "فقط برای تغییرات دایرکتوری",
+        "فقط برای تغییرات محتوا",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>inotifywait</code> (از بسته inotify-tools) یک ابزار خط فرمان برای نظارت بر رویدادهای فایل‌سیستم با استفاده از inotify کرنل است. مثال: <code>inotifywait -m -e modify,create,delete /path</code> (نظارت مداوم بر رویدادهای تغییر، ایجاد، حذف). کاربردها: اجرای خودکار اسکریپت‌ها هنگام تغییر فایل (مثل کامپایل خودکار)، نظارت بر دایرکتوری‌های اشتراکی، و واکنش به آپلود فایل. <code>inotifywatch</code> نیز آمار رویدادها را جمع‌آوری می‌کند."
+    },
+    {
+      "id": 431,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>traceroute</code> و <code>tracepath</code> چه تفاوتی دارند و هرکدام چه زمانی استفاده می‌شوند؟",
+      "options": [
+        "<code>traceroute</code> از پروتکل‌های مختلف (UDP، ICMP، TCP) برای کشف مسیر استفاده می‌کند و اطلاعات دقیق‌تری دارد، <code>tracepath</code> از UDP استفاده می‌کند و نیازی به دسترسی root ندارد (ساده‌تر)",
+        "هر دو یکسان هستند",
+        "<code>tracepath</code> دقیق‌تر است",
+        "<code>traceroute</code> به root نیاز ندارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>traceroute</code> یک ابزار قدرتمند و قدیمی برای کشف مسیر شبکه است که از پروتکل‌های مختلف (UDP به‌طور پیش‌فرض، ICMP با <code>-I</code>، TCP با <code>-T</code>) استفاده می‌کند و به root نیاز دارد (برای بسته‌های خاص). <code>tracepath</code> یک ابزار ساده‌تر است که از UDP استفاده می‌کند و نیازی به root ندارد (در بسیاری از توزیع‌ها) و MTU مسیر را نیز کشف می‌کند. <code>traceroute</code> جزئیات بیشتری (مانند ASN، زمان تأخیر دقیق‌تر) ارائه می‌دهد اما <code>tracepath</code> برای کاربران عادی کافی است."
+    },
+    {
+      "id": 432,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "ابزار <code>iptables-save</code> و <code>iptables-restore</code> چه کاربردی در مدیریت قوانین فایروال دارند؟",
+      "options": [
+        "<code>iptables-save</code> قوانین فعلی iptables را در یک فایل ذخیره می‌کند، <code>iptables-restore</code> قوانین را از فایل بازیابی می‌کند (برای پایداری و بکاپ)",
+        "فقط برای نمایش",
+        "فقط برای پاک‌کردن",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>iptables-save</code> تمام قوانین فعلی iptables (در همه جداول) را به‌صورت یک فایل متنی خروجی می‌دهد که می‌توان آن را ذخیره کرد (مثلاً <code>iptables-save &gt; /etc/iptables/rules.v4</code>). <code>iptables-restore</code> قوانین را از یک فایل بارگذاری می‌کند (مثلاً <code>iptables-restore &lt; /etc/iptables/rules.v4</code>). این ابزارها برای بکاپ‌گیری، پایداری (بارگذاری در بوت) و انتقال قوانین بین سیستم‌ها مفید هستند. در firewalld، قوانین به‌صورت خودکار مدیریت می‌شوند و نیازی به این ابزارها نیست."
+    },
+    {
+      "id": 433,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "در لینوکس، ابزار <code>arp-scan</code> چه کاربردی دارد و چگونه می‌توان از آن برای کشف دستگاه‌های شبکه استفاده کرد؟",
+      "options": [
+        "<code>arp-scan</code> بسته‌های ARP را به تمام IPهای شبکه ارسال می‌کند تا دستگاه‌های متصل (با آدرس MAC) را شناسایی کند، برای کشف شبکه و ممیزی امنیتی",
+        "فقط برای مسیریابی",
+        "فقط برای اسکن پورت",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>arp-scan</code> یک ابزار قدرتمند برای کشف دستگاه‌های شبکه با استفاده از پروتکل ARP است. با ارسال بسته‌های ARP به همه آدرس‌های IP در یک شبکه، پاسخ‌های ARP را جمع‌آوری کرده و آدرس MAC، Vendor (سازنده) و IP را نمایش می‌دهد. مثال: <code>arp-scan --interface eth0 192.168.1.0/24</code>. کاربردها: کشف دستگاه‌های متصل، تشخیص دستگاه‌های ناشناس، ممیزی امنیتی، و عیب‌یابی شبکه. نیاز به دسترسی root دارد."
+    },
+    {
+      "id": 434,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، دستور <code>dnf repolist</code> چه اطلاعاتی را نشان می‌دهد و چگونه می‌توان یک مخزن جدید اضافه کرد؟",
+      "options": [
+        "لیست مخازن فعال (Repository) را با شناسه و تعداد بسته‌ها نشان می‌دهد؛ با ایجاد فایل <code>.repo</code> در <code>/etc/yum.repos.d/</code> یا با <code>dnf config-manager --add-repo URL</code> می‌توان مخزن اضافه کرد",
+        "فقط مخازن غیرفعال",
+        "فقط بسته‌های نصب‌شده",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>dnf repolist</code> (با <code>all</code> برای همه مخازن) مخازن پیکربندی‌شده را نشان می‌دهد. برای اضافه کردن مخزن: ۱. ایجاد فایل <code>.repo</code> در <code>/etc/yum.repos.d/</code> با محتوای: <code>[repo-id]\\nname=...\\nbaseurl=...\\ngpgcheck=1\\nenabled=1</code>. ۲. با <code>dnf config-manager --add-repo=URL</code> (نیاز به بسته dnf-plugins-core). سپس <code>dnf update</code> برای به‌روزرسانی متادیتا. برای فعال/غیرفعال کردن: <code>dnf config-manager --set-enabled REPO_ID</code>."
+    },
+    {
+      "id": 435,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، تفاوت بین <code>apt update</code> و <code>apt upgrade</code> چیست و چرا هر دو لازم هستند؟",
+      "options": [
+        "<code>apt update</code> لیست بسته‌های موجود در مخازن را به‌روزرسانی می‌کند (متادیتا)، <code>apt upgrade</code> بسته‌های نصب‌شده را به نسخه‌های جدیدتر ارتقا می‌دهد (هر دو لازم: اول update، سپس upgrade)",
+        "هر دو یکسان هستند",
+        "<code>apt upgrade</code> متادیتا را به‌روز می‌کند",
+        "<code>apt update</code> بسته‌ها را ارتقا می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>apt update</code> (یا <code>apt-get update</code>) لیست بسته‌های موجود در مخازن (Package Index) را از سرورها دانلود و به‌روزرسانی می‌کند. بدون این کار، apt از اطلاعات قدیمی استفاده می‌کند. <code>apt upgrade</code> (یا <code>apt-get upgrade</code>) بسته‌های نصب‌شده را به نسخه‌های جدیدتر (بر اساس اطلاعات به‌روز شده) ارتقا می‌دهد. بنابراین ترتیب صحیح: ابتدا <code>apt update</code> و سپس <code>apt upgrade</code>. <code>apt full-upgrade</code> یا <code>dist-upgrade</code> نیز وابستگی‌ها را مدیریت کرده و ممکن است بسته‌هایی را حذف یا نصب کند."
+    },
+    {
+      "id": 436,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، برای یافتن بسته‌ای که یک فایل خاص را ارائه می‌دهد (مثلاً <code>/etc/ssh/sshd_config</code>)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf provides /etc/ssh/sshd_config</code> یا <code>dnf whatprovides /etc/ssh/sshd_config</code>",
+        "<code>rpm -qf</code>",
+        "<code>dnf search</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "همه این دستورات برای یافتن بسته‌ای که یک فایل خاص را نصب کرده است استفاده می‌شوند: <code>dnf provides /path/to/file</code> (یا <code>dnf whatprovides</code>) جدیدترین روش. <code>rpm -qf /path/to/file</code> (قدیمی، فقط فایل‌های نصب‌شده را جستجو می‌کند). <code>dnf search</code> برای جستجوی نام بسته و توضیحات است نه فایل‌های خاص. <code>dnf provides</code> همچنین مخازن را جستجو می‌کند و بهترین گزینه برای یافتن بسته‌ای که یک فایل خاص را ارائه می‌دهد (حتی اگر نصب نباشد) است."
+    },
+    {
+      "id": 437,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، برای یافتن بسته‌ای که یک فایل خاص (مثلاً <code>/usr/bin/ls</code>) را نصب کرده است، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dpkg -S /usr/bin/ls</code> یا <code>apt-file search /usr/bin/ls</code> (اگر apt-file نصب باشد)",
+        "<code>apt search</code>",
+        "<code>dpkg -l</code>",
+        "<code>apt-cache</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>dpkg -S</code> (search) پایگاه داده dpkg را برای یافتن بسته‌ای که فایل مشخص را نصب کرده است جستجو می‌کند (فقط فایل‌های نصب‌شده). <code>apt-file search</code> نیز بسته‌های موجود در مخازن (حتی نصب‌نشده) را جستجو می‌کند اما نیاز به نصب <code>apt-file</code> و به‌روزرسانی آن با <code>apt-file update</code> دارد. مثال: <code>dpkg -S /etc/ssh/sshd_config</code> نشان می‌دهد که این فایل متعلق به بسته openssh-server است."
+    },
+    {
+      "id": 438,
+      "category": "امنیت - پیشرفته",
+      "level": 4,
+      "text": "در لینوکس، ابزار <code>lynis</code> چه کاربردی دارد و چه نوع بررسی‌هایی انجام می‌دهد؟",
+      "options": [
+        "یک ابزار بررسی امنیتی (Security Auditing) است که سیستم را از نظر آسیب‌پذیری‌ها، پیکربندی‌های ضعیف، و بهترین شیوه‌های امنیتی اسکن می‌کند و یک گزارش ارائه می‌دهد",
+        "فقط بررسی فایروال",
+        "فقط بررسی کاربران",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>lynis</code> یک ابزار امنیتی رایگان و متن‌باز است که سیستم لینوکس را برای یافتن نقاط ضعف امنیتی بررسی می‌کند. بررسی‌ها شامل: مجوزهای فایل‌ها، کاربران و گروه‌ها، سرویس‌های در حال اجرا، فایروال، SSH، به‌روزرسانی‌های امنیتی، کرنل، و پیکربندی‌های سیستم است. خروجی شامل هشدارها، توصیه‌ها و امتیاز امنیتی است. مثال: <code>lynis audit system</code>. برای بهبود امنیت و انطباق با استانداردها (مانند PCI-DSS) بسیار مفید است."
+    },
+    {
+      "id": 439,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "دستور <code>sort</code> با سوییچ‌های <code>-n</code>، <code>-r</code> و <code>-k</code> چه کاربردی دارد و چگونه می‌توان فایل‌های CSV را بر اساس یک ستون خاص مرتب کرد؟",
+      "options": [
+        "<code>sort -n</code> برای مرتب‌سازی عددی، <code>-r</code> برای معکوس (نزولی)، <code>-k</code> برای تعیین ستون (فیلد)؛ برای CSV با جداکننده کاما: <code>sort -t, -k2 -n file.csv</code>",
+        "فقط مرتب‌سازی متنی",
+        "فقط مرتب‌سازی عددی",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>sort</code> یک ابزار قدرتمند برای مرتب‌سازی خطوط فایل‌ها است. سوییچ‌ها: <code>-n</code> (numeric sort) برای مرتب‌سازی عددی (بدون آن، ۱۰ قبل از ۲ قرار می‌گیرد). <code>-r</code> (reverse) برای مرتب‌سازی نزولی. <code>-k</code> (key) برای تعیین ستون (فیلد) برای مرتب‌سازی. <code>-t</code> برای تعیین جداکننده (مثلاً <code>-t,</code> برای CSV). مثال: <code>sort -t, -k3 -n file.csv</code> فایل CSV را بر اساس ستون سوم به‌صورت عددی مرتب می‌کند. <code>-u</code> نیز برای حذف خطوط تکراری استفاده می‌شود."
+    },
+    {
+      "id": 440,
+      "category": "مدیریت فایل‌ها - پیشرفته",
+      "level": 4,
+      "text": "دستور <code>awk</code> چه کاربردی در پردازش فایل‌های متنی و گزارش‌گیری دارد و چگونه می‌توان از آن برای استخراج ستون‌ها استفاده کرد؟",
+      "options": [
+        "<code>awk</code> یک زبان اسکریپت‌نویسی برای پردازش الگو-محور متن است که به‌طور خودکار فایل‌ها را خط‌به‌خط پردازش کرده و فیلدها را جدا می‌کند (جداکننده پیش‌فرض فاصله)؛ برای استخراج ستون‌ها از <code>awk '{print $1, $3}'</code> استفاده می‌شود",
+        "فقط برای پردازش عددی",
+        "فقط برای فرمت‌دهی",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>awk</code> یک ابزار قدرتمند برای پردازش متون ساختاریافته (مانند CSV، لاگ‌ها، فایل‌های پیکربندی) است. به‌صورت خودکار هر خط را به فیلدها (بر اساس جداکننده) تقسیم می‌کند: <code>$1</code> (اولین فیلد)، <code>$2</code>، ... <code>$0</code> (کل خط). مثال‌ها: <code>awk '{print $1}' file</code> (ستون اول)، <code>awk -F: '{print $1, $3}' /etc/passwd</code> (جداکننده <code>:</code>)، <code>awk '/error/ {print $0}' log</code> (فیلتر خطوط حاوی error). همچنین می‌توان محاسبات انجام داد: <code>awk '{sum += $1} END {print sum}'</code>."
+    }
+  ]
+}

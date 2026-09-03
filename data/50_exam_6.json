@@ -1,0 +1,706 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی نهایی (بخش 751 تا 800)",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه سوالات 751 تا 800 (پایانی)",
+  "questions": [
+    {
+      "id": 751,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، برای دانلود یک بسته و تمام وابستگی‌های آن به‌صورت آفلاین (برای نصب روی سیستم بدون اینترنت) با استفاده از <code>dnf</code>، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf download --resolve --destdir=/path package</code>",
+        "<code>dnf download package</code>",
+        "<code>dnf install --downloadonly package</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش کار می‌کنند: <code>dnf download --resolve --destdir=/path package</code> (دانلود بسته و وابستگی‌ها در مسیر مشخص)، <code>dnf download package</code> (فقط خود بسته)، و <code>dnf install --downloadonly package</code> (دانلود بسته و وابستگی‌ها در کش dnf). برای نصب آفلاین از فایل‌های دانلودی، از <code>dnf localinstall *.rpm</code> یا <code>rpm -ivh *.rpm</code> استفاده می‌شود."
+    },
+    {
+      "id": 752,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، برای دانلود یک بسته و تمام وابستگی‌های آن به‌صورت آفلاین (برای نصب روی سیستم بدون اینترنت)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>apt-get download package</code> (فقط بسته اصلی) و <code>apt-get install --download-only package</code> (دانلود بسته و وابستگی‌ها در کش apt)، سپس <code>dpkg -i *.deb</code> برای نصب",
+        "فقط <code>apt-get download</code>",
+        "فقط <code>apt-get install --download-only</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای دانلود آفلاین: <code>apt-get download package</code> (فقط بسته اصلی در دایرکتوری جاری). <code>apt-get install --download-only package</code> (دانلود بسته و وابستگی‌ها در <code>/var/cache/apt/archives/</code>). سپس با <code>dpkg -i *.deb</code> یا <code>apt install ./package.deb</code> نصب کنید. همچنین <code>apt-offline</code> ابزار تخصصی‌تری برای دانلود کامل وابستگی‌ها وجود دارد."
+    },
+    {
+      "id": 753,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، برای نصب یک بسته از یک فایل RPM محلی و حل خودکار وابستگی‌های آن (با استفاده از مخازن)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf localinstall package.rpm</code>",
+        "<code>rpm -ivh package.rpm</code> (نیاز به حل دستی وابستگی‌ها)",
+        "هر دو گزینه (با تفاوت در حل وابستگی)",
+        "<code>dnf install package.rpm</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>dnf localinstall package.rpm</code> (یا <code>dnf install ./package.rpm</code>) بسته محلی را با حل خودکار وابستگی‌ها از مخازن نصب می‌کند. <code>rpm -ivh package.rpm</code> بسته را نصب می‌کند اما وابستگی‌ها را حل نمی‌کند (در صورت وجود وابستگی، خطا می‌دهد). <code>dnf install package.rpm</code> نیز کار می‌کند (معادل localinstall). در دبیان، <code>dpkg -i</code> مشابه <code>rpm</code> است و <code>apt install ./package.deb</code> وابستگی‌ها را حل می‌کند."
+    },
+    {
+      "id": 754,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، برای نصب یک بسته از یک فایل DEB محلی و حل خودکار وابستگی‌های آن (با استفاده از مخازن)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>apt install ./package.deb</code>",
+        "<code>dpkg -i package.deb</code> (نیاز به حل دستی وابستگی‌ها با <code>apt-get install -f</code>)",
+        "هر دو گزینه",
+        "<code>gdebi package.deb</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>apt install ./package.deb</code> (نسخه جدید) بسته محلی را با حل خودکار وابستگی‌ها از مخازن نصب می‌کند. <code>dpkg -i package.deb</code> بسته را نصب می‌کند اما وابستگی‌ها را حل نمی‌کند (بعداً با <code>apt-get install -f</code> می‌توان وابستگی‌ها را ترمیم کرد). <code>gdebi</code> ابزاری برای نصب DEB با حل وابستگی است."
+    },
+    {
+      "id": 755,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل از تمام بسته‌های نصب‌شده (شامل نسخه، معماری، و توضیحات) در RedHat-family، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>rpm -qa --queryformat \"%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\\\n\"</code> (با فرمت دلخواه) و <code>dnf list installed</code> (خلاصه)",
+        "فقط <code>rpm -qa</code>",
+        "فقط <code>dnf list installed</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>rpm -qa</code> (query all) لیست همه بسته‌های نصب‌شده را با نام کامل نمایش می‌دهد. با <code>--queryformat</code> می‌توان خروجی را سفارشی کرد (مثلاً <code>%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}</code>). <code>dnf list installed</code> لیست خلاصه‌تری با نسخه و مخزن ارائه می‌دهد. <code>dnf repoquery</code> نیز برای جستجو در مخازن استفاده می‌شود."
+    },
+    {
+      "id": 756,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات کامل از تمام بسته‌های نصب‌شده (شامل نسخه، معماری، و توضیحات) در Debian-family، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>dpkg -l</code> (لیست خلاصه) و <code>dpkg-query -l</code> (جزئیات) و <code>apt list --installed</code> (خلاصه مدرن)",
+        "فقط <code>dpkg -l</code>",
+        "فقط <code>apt list --installed</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>dpkg -l</code> (یا <code>dpkg --list</code>) لیست بسته‌های نصب‌شده را با نام، نسخه و توضیحات نمایش می‌دهد. <code>dpkg-query -l</code> مشابه است. <code>apt list --installed</code> خروجی مدرن‌تری با قالب رنگی دارد. <code>apt-cache show package</code> اطلاعات کامل یک بسته خاص را نمایش می‌دهد."
+    },
+    {
+      "id": 757,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای بررسی نسخه کرنل در حال اجرا و همچنین نسخه‌های کرنل نصب‌شده روی سیستم (برای بوت بعدی)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>uname -r</code> (در حال اجرا) و <code>rpm -qa kernel</code> (ردهت) یا <code>dpkg -l linux-image-*</code> (دبیان) برای نسخه‌های نصب‌شده، و <code>ls /boot/vmlinuz-*</code>",
+        "فقط <code>uname -r</code>",
+        "فقط <code>ls /boot</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>uname -r</code> (در حال اجرا) و <code>uname -a</code> (جزئیات کامل). برای کرنل‌های نصب‌شده: در ردهت <code>rpm -qa kernel</code> (یا <code>dnf list kernel</code>)، در دبیان <code>dpkg -l | grep linux-image</code>. <code>ls /boot/vmlinuz-*</code> نیز فایل‌های کرنل را نشان می‌دهد. <code>grubby --info=ALL</code> برای اطلاعات بوت‌لودر."
+    },
+    {
+      "id": 758,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای تنظیم کرنل پیش‌فرض در بوت (در سیستم‌های با GRUB2) و مشاهده کرنل فعال فعلی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>grubby --set-default /boot/vmlinuz-<version></code> (ردهت) و <code>grubby --default-kernel</code> (مشاهده پیش‌فرض) و <code>grub2-set-default</code> (روش دیگر)",
+        "فقط <code>grubby</code>",
+        "فقط <code>grub2-set-default</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "روش‌های تنظیم کرنل پیش‌فرض: <code>grubby --set-default /boot/vmlinuz-<version></code> (ردهت) و <code>grub2-set-default 'Kernel Name'</code> (در منو). <code>grubby --default-kernel</code> کرنل پیش‌فرض فعلی را نشان می‌دهد. <code>grubby --info=ALL</code> اطلاعات همه ورودی‌های بوت. همچنین با ویرایش <code>/etc/default/grub</code> و <code>GRUB_DEFAULT</code> و اجرای <code>grub2-mkconfig</code> می‌توان تنظیم کرد."
+    },
+    {
+      "id": 759,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به virtualization (نوع هایپروایزر و قابلیت‌ها) روی یک سیستم لینوکسی، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>systemd-detect-virt</code> (نوع مجازی‌سازی) و <code>virt-what</code> (اطلاعات دقیق‌تر) و <code>hostnamectl</code> (خلاصه)",
+        "فقط <code>systemd-detect-virt</code>",
+        "فقط <code>virt-what</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>systemd-detect-virt</code> (از systemd) نوع هایپروایزر را تشخیص می‌دهد (kvm, xen, vmware, container, none). <code>virt-what</code> اطلاعات دقیق‌تری (مانند نسخه) ارائه می‌دهد (نیاز به نصب). <code>hostnamectl</code> در بخش Virtualization خلاصه را نشان می‌دهد. <code>dmesg | grep -i virtual</code> و <code>cat /proc/cpuinfo | grep hypervisor</code> نیز اطلاعات تکمیلی دارند."
+    },
+    {
+      "id": 760,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی با KVM، مفهوم VirtIO چیست و چه مزیتی نسبت به دستگاه‌های شبیه‌سازی‌شده (مانند e1000 یا IDE) دارد؟",
+      "options": [
+        "VirtIO یک استاندارد برای I/O با کارایی بالا (Paravirtualized) است که با درایورهای مخصوص در Guest، عملکرد نزدیک به native را ارائه می‌دهد و از شبیه‌سازی سخت‌افزار جلوگیری می‌کند",
+        "فقط برای دیسک",
+        "فقط برای شبکه",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "VirtIO یک فریم‌ورک Paravirtualization است که به Guest اجازه می‌دهد مستقیماً با هایپروایزر (KVM) برای I/O (دیسک و شبکه) ارتباط برقرار کند، بدون شبیه‌سازی سخت‌افزار کامل. این کار overhead را کاهش داده و عملکرد را به میزان قابل‌توجهی افزایش می‌دهد (نزدیک به native). دستگاه‌های شبیه‌سازی‌شده (مانند e1000 برای شبکه، IDE برای دیسک) کندتر هستند. VirtIO برای سرورهای مجازی تولیدی توصیه می‌شود."
+    },
+    {
+      "id": 761,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، تفاوت بین HVM (Hardware Virtual Machine) و PV (Paravirtualization) چیست و هرکدام در چه سناریوهایی استفاده می‌شوند؟",
+      "options": [
+        "HVM (Full Virtualization) با پشتیبانی سخت‌افزاری (Intel VT-x/AMD-V) و بدون تغییر Guest OS کار می‌کند (سازگاری بالا). PV نیاز به تغییر Guest OS دارد و کارایی بالاتری ارائه می‌دهد (در Xen رایج است، در KVM کمتر)",
+        "هر دو یکسان هستند",
+        "HVM نیاز به تغییر Guest OS دارد",
+        "PV از پشتیبانی سخت‌افزاری استفاده می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "HVM (Hardware Virtual Machine) با استفاده از پسوندهای سخت‌افزاری (Intel VT-x/AMD-V) بدون تغییر Guest OS (سیستمعامل مهمان) کار می‌کند و سازگاری بالایی دارد (هر سیستمعاملی قابل اجراست). PV (Paravirtualization) نیاز به Guest OS آگاه از مجازی‌سازی دارد (کرنل تغییر یافته) و کارایی بالاتری ارائه می‌دهد (به‌ویژه در Xen). در KVM مدرن، ترکیب HVM + VirtIO (برای I/O) بهترین عملکرد را ارائه می‌دهد."
+    },
+    {
+      "id": 762,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی لیست کاربران دارای دسترسی sudo و همچنین کاربرانی که مستقیماً root هستند، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>grep -E '^sudo|^wheel' /etc/group</code> (بر اساس گروه sudo/wheel) و <code>getent group sudo</code> و <code>grep root /etc/passwd</code>",
+        "فقط <code>grep root /etc/passwd</code>",
+        "فقط <code>getent group sudo</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای یافتن کاربران sudo: ۱. در دبیان: <code>getent group sudo</code> (یا <code>grep '^sudo:' /etc/group</code>) ۲. در ردهت: <code>getent group wheel</code> (یا <code>grep '^wheel:' /etc/group</code>). ۳. برای کاربران با دسترسی مستقیم root: <code>grep -E '^root:|:0:' /etc/passwd</code> (کاربران با UID=0). ۴. <code>visudo -l</code> برای مشاهده قوانین sudo. کاربران با دسترسی sudo باید به‌صورت دوره‌ای بررسی شوند."
+    },
+    {
+      "id": 763,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی سرویس‌های فعال در زمان بوت (Enable Services) و شناسایی سرویس‌های غیرضروری که ممکن است خطر امنیتی داشته باشند، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl list-unit-files --type=service --state=enabled</code> و <code>systemctl list-unit-files --type=service --state=running</code> (با systemd)",
+        "فقط <code>systemctl list-unit-files</code>",
+        "فقط <code>ls /etc/systemd/system/multi-user.target.wants/</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای لیست سرویس‌های enable: <code>systemctl list-unit-files --type=service --state=enabled</code> (در بوت فعال). <code>systemctl list-unit-files --type=service --state=running</code> (در حال اجرا). <code>ls /etc/systemd/system/multi-user.target.wants/</code> (لینک‌های enable شده). <code>systemctl list-sockets</code> برای سوکت‌های فعال. سرویس‌های غیرضروری (مانند telnet, rlogin) باید غیرفعال شوند: <code>systemctl disable SERVICE</code>."
+    },
+    {
+      "id": 764,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی پورت‌های باز (Open Ports) در سیستم و اطمینان از اینکه هیچ سرویس غیرمنتظره‌ای روی شبکه گوش نمی‌دهد، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ss -lntp</code> (TCP listening)، <code>ss -lunp</code> (UDP listening)، <code>nmap localhost</code> (اسکن کامل)، <code>lsof -i -P -n</code>",
+        "فقط <code>ss -lntp</code>",
+        "فقط <code>nmap localhost</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای شناسایی پورت‌های باز: <code>ss -lntp</code> (پورت‌های TCP با جزئیات PID/برنامه)، <code>ss -lunp</code> (UDP). <code>netstat -tulpn</code> (قدیمی). <code>lsof -i -P -n</code> (همه سوکت‌ها). <code>nmap localhost</code> (اسکن محلی کامل). <code>fuser -n tcp PORT</code> برای شناسایی برنامه روی پورت خاص. پورت‌های غیرمنتظره ممکن است نشانه نفوذ باشند."
+    },
+    {
+      "id": 765,
+      "category": "امنیت - بررسی",
+      "level": 4,
+      "text": "برای بررسی فایل‌های SUID و SGID در سیستم و شناسایی فایل‌های بالقوه خطرناک، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>find / -type f -perm -4000 -ls 2>/dev/null</code> (SUID) و <code>find / -type f -perm -2000 -ls</code> (SGID) و <code>find / -type f -perm -6000 -ls</code> (هر دو)",
+        "فقط <code>find / -perm -4000</code>",
+        "فقط <code>find / -perm -2000</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای یافتن فایل‌های با SUID: <code>find / -type f -perm -4000 -ls 2>/dev/null</code> (مجوز ۴۰۰۰). برای SGID: <code>find / -type f -perm -2000 -ls 2>/dev/null</code>. برای هر دو: <code>-perm -6000</code>. فایل‌های SUID/SGID غیرضروری (به‌جز passwd, su, sudo) باید بررسی شوند، زیرا می‌توانند بردار حملات باشند. <code>find / -type f -perm -4000 -exec ls -la {} \\; 2>/dev/null</code> برای جزئیات کامل."
+    },
+    {
+      "id": 766,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به دما و سلامت سخت‌افزار (مانند CPU، مادربرد، و دیسک‌ها) در لینوکس، از چه دستوراتی استفاده می‌شود و چه بسته‌هایی نیاز است؟",
+      "options": [
+        "<code>sensors</code> (lm-sensors) برای دما، <code>smartctl -a /dev/sdX</code> (smartmontools) برای دیسک، <code>hddtemp /dev/sdX</code> (برای دمای دیسک)",
+        "فقط <code>sensors</code>",
+        "فقط <code>smartctl</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای دما: <code>sensors</code> (از بسته lm-sensors، نیاز به <code>sensors-detect</code> برای شناسایی سنسورها). برای دیسک: <code>smartctl -a /dev/sdX</code> (از smartmontools) شامل دما و سلامت. <code>hddtemp /dev/sdX</code> (دمای دیسک). <code>nvme smart-log /dev/nvme0</code> برای NVMe. <code>sensors -u</code> خروجی خام برای اسکریپت‌ها."
+    },
+    {
+      "id": 767,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به استفاده از دیسک (Disk Usage) به‌صورت درختی و خلاصه در دایرکتوری فعلی با قابلیت مرتب‌سازی بر اساس اندازه، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>du -sh * | sort -h</code> (مرتب‌سازی بر اساس اندازه خوانا) و <code>du -sh * | sort -hr</code> (نزولی) و <code>du -d 1 -h</code> (عمق ۱)",
+        "فقط <code>du -sh</code>",
+        "فقط <code>du -d 1</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>du -sh *</code> (summary human-readable) اندازه هر فایل/دایرکتوری را در دایرکتوری جاری نمایش می‌دهد. <code>sort -h</code> (human numeric) برای مرتب‌سازی بر اساس اندازه. <code>du -d 1 -h</code> (عمق ۱) مشابه. <code>du -sh * | sort -hr | head -10</code> برای ۱۰ مورد بزرگ. <code>ncdu</code> (ابزار جداگانه) رابط تعاملی جذابی ارائه می‌دهد."
+    },
+    {
+      "id": 768,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به استفاده از inodeها (تعداد inodeهای استفاده‌شده و آزاد) در پارتیشن‌ها، از چه دستوری استفاده می‌شود و چرا inodeها مهم هستند؟",
+      "options": [
+        "<code>df -i</code> (نمایش inodeها در هر پارتیشن) و <code>find / -type f -printf '%i\\\n' | sort -u | wc -l</code> (تعداد inodeهای استفاده‌شده در یک دایرکتوری)",
+        "فقط <code>df -i</code>",
+        "فقط <code>ls -li</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>df -i</code> (inodes) تعداد inodeهای استفاده‌شده و آزاد را در هر پارتیشن نشان می‌دهد. اگر inodeها تمام شوند، حتی با فضای خالی دیسک نمی‌توان فایل جدید ایجاد کرد (خطای \"No space left on device\"). <code>find / -type f | wc -l</code> تعداد فایل‌ها (تقریباً برابر inodeها) را نمایش می‌دهد. <code>ls -li</code> شماره inode هر فایل را نشان می‌دهد."
+    },
+    {
+      "id": 769,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک تصویر پس‌زمینه با فرمت PNG و همچنین تنظیم رزولوشن صفحه (Resolution) در منوی بوت، از چه تنظیماتی در <code>/etc/default/grub</code> استفاده می‌شود؟",
+      "options": [
+        "<code>GRUB_BACKGROUND=/path/to/image.png</code> (تصویر) و <code>GRUB_GFXMODE=1920x1080</code> (رزولوشن) و <code>GRUB_GFXPAYLOAD_LINUX=keep</code>",
+        "فقط <code>GRUB_BACKGROUND</code>",
+        "فقط <code>GRUB_GFXMODE</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "تنظیمات ظاهری GRUB: <code>GRUB_BACKGROUND</code> (مسیر تصویر PNG، باید با فرمت ۸ بیتی و اندازه مناسب باشد). <code>GRUB_GFXMODE=1920x1080</code> (رزولوشن منو). <code>GRUB_GFXPAYLOAD_LINUX=keep</code> (حفظ رزولوشن برای کرنل). همچنین <code>GRUB_TERMINAL_OUTPUT=gfxterm</code> برای گرافیک. پس از تنظیم، <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> (ردهت) یا <code>update-grub</code> (دبیان)."
+    },
+    {
+      "id": 770,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پیام (Message) یا بنر در منوی بوت (بالای لیست ورودی‌ها)، از چه تنظیماتی استفاده می‌شود؟",
+      "options": [
+        "با استفاده از <code>GRUB_DISTRIBUTOR</code> یا افزودن <code>echo</code> و <code>cat</code> در فایل <code>/etc/grub.d/40_custom</code> و سپس بازسازی grub.cfg",
+        "فقط <code>GRUB_DISTRIBUTOR</code>",
+        "فقط <code>40_custom</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای افزودن متن به منوی GRUB: ۱. ویرایش <code>/etc/grub.d/40_custom</code> و افزودن <code>echo \"My Custom Message\"</code> یا <code>cat <<EOF\\nMy Message\\nEOF</code>. ۲. سپس <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. همچنین <code>GRUB_DISTRIBUTOR</code> در <code>/etc/default/grub</code> برای تنظیم نام توزیع (که در هدر منو ظاهر می‌شود) استفاده می‌شود. <code>GRUB_HIDDEN_TIMEOUT</code> نیز برای مخفی‌سازی منو است."
+    },
+    {
+      "id": 771,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تبدیل یک فایل از فرمت CSV به فرمت TSV (جداکننده تب) و برعکس، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>tr ',' '\\\t' < file.csv > file.tsv</code> (CSV به TSV) و <code>tr '\\\t' ',' < file.tsv > file.csv</code> (برعکس)",
+        "<code>sed 's/,/\\\t/g' file.csv > file.tsv</code>",
+        "هر دو گزینه",
+        "<code>awk -F, -v OFS='\\\t' '{print}' file.csv > file.tsv</code>"
+      ],
+      "correct": 2,
+      "explanation": "برای تبدیل جداکننده: <code>tr ',' '\\\t' < file.csv > file.tsv</code> (کاما به تب). برعکس: <code>tr '\\\t' ',' < file.tsv > file.csv</code>. <code>sed 's/,/\\\t/g' file.csv > file.tsv</code> نیز کار می‌کند. <code>awk -F, -v OFS='\\\t' '{$1=$1; print}' file.csv > file.tsv</code> (با awk). توجه: CSV ممکن است شامل کاما درون فیلدها باشد که این روش‌ها را پیچیده‌تر می‌کند."
+    },
+    {
+      "id": 772,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای ادغام (Merge) دو فایل به‌صورت ستونی (کنار هم) با استفاده از <code>paste</code> و تنظیم جداکننده دلخواه، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>paste -d '|' file1 file2</code> (جداکننده '|') و <code>paste -d ':' file1 file2</code> (جداکننده ':') و <code>paste -s file1 file2</code> (سری، یک ستون)",
+        "فقط <code>paste -d</code>",
+        "فقط <code>paste</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>paste</code> فایل‌ها را به‌صورت ستونی (کنار هم) با جداکننده پیش‌فرض تب (<code>\\\t</code>) ادغام می‌کند. <code>-d</code> (delimiter) جداکننده دلخواه را تنظیم می‌کند (مثلاً <code>paste -d ',' file1 file2</code> برای CSV). <code>-s</code> (serial) خطوط را به‌صورت سری (یک ستون) ادغام می‌کند. برای ادغام عمودی (پشت سر هم)، از <code>cat</code> استفاده می‌شود."
+    },
+    {
+      "id": 773,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش ۱۰ خط میانی یک فایل (مثلاً خطوط ۵ تا ۱۵) و همچنین نمایش یک بازه از خطوط با استفاده از <code>sed</code> و <code>awk</code>، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>sed -n '5,15p' file</code> (خطوط ۵ تا ۱۵) و <code>awk 'NR>=5 && NR<=15' file</code> (مشابه) و <code>head -15 file | tail -11</code> (با head/tail)",
+        "فقط <code>sed</code>",
+        "فقط <code>awk</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای نمایش بازه خطوط: <code>sed -n '5,15p' file</code> (<code>-n</code> خاموش، <code>p</code> چاپ). <code>awk 'NR>=5 && NR<=15' file</code> (NR شماره خط). <code>head -15 file | tail -11</code> (۱۵ خط اول، سپس ۱۱ خط آخر از آن). <code>nl</code> نیز شماره خطوط را نمایش می‌دهد. <code>tail -n +5 file | head -11</code> (از خط ۵ شروع، ۱۱ خط)."
+    },
+    {
+      "id": 774,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش خطوط یک فایل که با یک الگوی خاص شروع می‌شوند یا به آن ختم می‌شوند، با استفاده از <code>grep</code> و <code>sed</code>، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>grep '^pattern' file</code> (شروع با) و <code>grep 'pattern$' file</code> (پایان با) و <code>sed -n '/^pattern/p' file</code> و <code>sed -n '/pattern$/p' file</code>",
+        "فقط <code>grep</code>",
+        "فقط <code>sed</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>^</code> (caret) ابتدای خط و <code>$</code> (dollar) انتهای خط را نشان می‌دهد. <code>grep '^pattern' file</code> (خطوط شروع‌شونده با pattern) و <code>grep 'pattern$' file</code> (خطوط ختم‌شونده به pattern). <code>grep -v</code> برای نقیض. با <code>sed</code>: <code>sed -n '/^pattern/p' file</code> و <code>sed -n '/pattern$/p' file</code>. ترکیب: <code>grep '^[0-9]' file</code> (شروع با عدد)."
+    },
+    {
+      "id": 775,
+      "category": "امنیت - SSH",
+      "level": 4,
+      "text": "در SSH، برای تنظیم یک بنر (Banner) که قبل از احراز هویت به کاربر نمایش داده شود (مانند هشدار امنیتی)، از چه تنظیماتی در <code>/etc/ssh/sshd_config</code> استفاده می‌شود؟",
+      "options": [
+        "<code>Banner /etc/issue.net</code> (مسیر فایل حاوی متن بنر) و سپس <code>systemctl restart sshd</code>",
+        "فقط <code>Banner</code>",
+        "فقط <code>/etc/issue.net</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "گزینه <code>Banner</code> در <code>/etc/ssh/sshd_config</code> مسیر فایلی را مشخص می‌کند که محتوای آن قبل از درخواست پسورد به کاربر نمایش داده می‌شود. مثال: <code>Banner /etc/issue.net</code>. فایل شامل هشدارهای قانونی و امنیتی است. پس از تغییر، <code>systemctl restart sshd</code> برای اعمال. <code>issue.net</code> برای اتصالات شبکه (مانند SSH) و <code>issue</code> برای ورود محلی است."
+    },
+    {
+      "id": 776,
+      "category": "امنیت - SSH",
+      "level": 4,
+      "text": "در SSH، برای محدود کردن زمان مجاز برای احراز هویت (LoginGraceTime) و تعداد تلاش‌های مجاز (MaxAuthTries) برای جلوگیری از Brute Force، از چه تنظیماتی در <code>/etc/ssh/sshd_config</code> استفاده می‌شود؟",
+      "options": [
+        "<code>LoginGraceTime 30s</code> (۳۰ ثانیه) و <code>MaxAuthTries 3</code> (۳ تلاش) و سپس <code>systemctl restart sshd</code>",
+        "فقط <code>LoginGraceTime</code>",
+        "فقط <code>MaxAuthTries</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>LoginGraceTime</code> زمان مجاز برای تکمیل احراز هویت را تعیین می‌کند (پیش‌فرض ۲ دقیقه). <code>MaxAuthTries</code> تعداد تلاش‌های مجاز برای احراز هویت را مشخص می‌کند (پیش‌فرض ۶). مقادیر کمتر (مثلاً ۳) امنیت را افزایش می‌دهند. همچنین <code>MaxSessions</code> برای تعداد نشست‌های هم‌زمان و <code>MaxStartups</code> برای تعداد اتصالات هم‌زمان در مرحله احراز هویت وجود دارد."
+    },
+    {
+      "id": 777,
+      "category": "امنیت - SSH",
+      "level": 4,
+      "text": "در SSH، برای غیرفعال کردن انتقال X11 (X11Forwarding) و جلوگیری از حملات احتمالی، از چه تنظیماتی در <code>/etc/ssh/sshd_config</code> استفاده می‌شود؟",
+      "options": [
+        "<code>X11Forwarding no</code> و <code>X11UseLocalhost yes</code> (اختیاری) و سپس <code>systemctl restart sshd</code>",
+        "فقط <code>X11Forwarding no</code>",
+        "فقط <code>X11UseLocalhost yes</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "غیرفعال کردن X11Forwarding: <code>X11Forwarding no</code> از انتقال برنامه‌های گرافیکی از طریق SSH جلوگیری می‌کند (که می‌تواند خطر امنیتی داشته باشد). <code>X11UseLocalhost yes</code> اتصال X11 را به لوپ‌بک محدود می‌کند. در سرورهایی که نیازی به برنامه‌های گرافیکی ندارند، این گزینه‌ها توصیه می‌شوند. همچنین <code>AllowTcpForwarding no</code> برای غیرفعال کردن فورواردینگ پورت."
+    },
+    {
+      "id": 778,
+      "category": "امنیت - SSH",
+      "level": 4,
+      "text": "در SSH، برای محدود کردن کاربرانی که می‌توانند از طریق SSH وارد سیستم شوند (AllowUsers و AllowGroups) و جلوگیری از ورود سایر کاربران، از چه تنظیماتی در <code>/etc/ssh/sshd_config</code> استفاده می‌شود؟",
+      "options": [
+        "<code>AllowUsers user1 user2</code> و <code>AllowGroups group1 group2</code> و سپس <code>systemctl restart sshd</code>",
+        "فقط <code>AllowUsers</code>",
+        "فقط <code>AllowGroups</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>AllowUsers</code> لیست کاربران مجاز برای SSH (با نام کاربری) را مشخص می‌کند. <code>AllowGroups</code> گروه‌های مجاز را مشخص می‌کند (کاربران عضو آن گروه‌ها می‌توانند وارد شوند). همچنین <code>DenyUsers</code> و <code>DenyGroups</code> برای مسدودسازی. مثال: <code>AllowUsers admin user@*.example.com</code> (با محدودیت دامنه). پس از تغییر، سرویس را ری‌استارت کنید. این روش لایه اضافی امنیتی فراهم می‌کند."
+    },
+    {
+      "id": 779,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات سیستم (شامل سخت‌افزار، کرنل، و توزیع) در یک خروجی خلاصه و خوانا، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>neofetch</code> (ابزار جداگانه) و <code>screenfetch</code> و <code>hostnamectl</code> (خلاصه systemd)",
+        "فقط <code>hostnamectl</code>",
+        "فقط <code>neofetch</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>hostnamectl</code> (از systemd) خلاصه اطلاعات سیستم را نمایش می‌دهد (توزیع، کرنل، معماری). <code>neofetch</code> و <code>screenfetch</code> ابزارهای تخصصی‌تر با خروجی زیبا و اطلاعات کامل‌تر (GPU، حافظه، uptime) هستند. <code>inxi -F</code> نیز اطلاعات کامل سخت‌افزار را نمایش می‌دهد. <code>lsb_release -a</code> برای اطلاعات توزیع."
+    },
+    {
+      "id": 780,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به حافظه (RAM) و Swap به‌صورت خلاصه و همچنین اطلاعات مربوط به Buffer/Cache، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>free -h</code> (خلاصه خوانا) و <code>free -m</code> (مگابایت) و <code>cat /proc/meminfo</code> (جزئیات کامل)",
+        "فقط <code>free -h</code>",
+        "فقط <code>cat /proc/meminfo</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>free -h</code> (human-readable) نمایش خلاصه RAM، Swap، Buffer و Cache. <code>free -m</code> (مگابایت). <code>cat /proc/meminfo</code> اطلاعات دقیق‌تری مانند MemTotal, MemFree, Cached, SwapTotal, SwapFree ارائه می‌دهد. <code>vmstat</code> و <code>top</code> نیز حافظه را نشان می‌دهند. <code>smem</code> برای نمایش حافظه بر اساس پردازش (USS, PSS)."
+    },
+    {
+      "id": 781,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به uptime (زمان روشن‌بودن سیستم)، تعداد کاربران، و بار سیستم (Load Average) در یک نگاه، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>uptime</code>",
+        "<code>top</code> (خط اول)",
+        "<code>w</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>uptime</code> زمان روشن‌بودن، تعداد کاربران، و Load Average (۱, ۵, ۱۵ دقیقه) را نمایش می‌دهد. <code>top</code> و <code>htop</code> نیز این اطلاعات را در خط اول نشان می‌دهند. <code>w</code> نیز اطلاعات مشابهی به‌همراه کاربران و فعالیت آن‌ها ارائه می‌دهد. Load Average نشان‌دهنده بار سیستم است (عدد کمتر از تعداد هسته‌ها = وضعیت مطلوب)."
+    },
+    {
+      "id": 782,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "برای نمایش تاریخچه دستورات (History) با ذخیره زمان اجرای هر دستور و همچنین تنظیم اندازه history، از چه متغیرها و تنظیماتی در <code>~/.bashrc</code> استفاده می‌شود؟",
+      "options": [
+        "<code>HISTTIMEFORMAT=\"%F %T \"</code> (زمان) و <code>HISTSIZE=10000</code> (تعداد در حافظه) و <code>HISTFILESIZE=50000</code> (تعداد در فایل) و <code>export</code>",
+        "فقط <code>HISTTIMEFORMAT</code>",
+        "فقط <code>HISTSIZE</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "تنظیمات history bash: <code>HISTTIMEFORMAT=\"%F %T \"</code> (ذخیره زمان اجرا، نمایش با <code>history</code>). <code>HISTSIZE</code> (تعداد دستورات در حافظه نشست جاری). <code>HISTFILESIZE</code> (تعداد دستورات در فایل <code>~/.bash_history</code>). همچنین <code>HISTCONTROL=ignoredups</code> (نادیده‌گرفتن تکراری‌ها) و <code>HISTIGNORE</code> (الگوهای نادیده‌گرفته). <code>history -w</code> برای ذخیره در فایل."
+    },
+    {
+      "id": 783,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای نوشتن یک حلقه <code>for</code> که روی آرایه‌ای از رشته‌ها (با فاصله) تکرار شود و هر عنصر را پردازش کند، از چه ساختاری استفاده می‌شود و چگونه می‌توان از مشکل IFS جلوگیری کرد؟",
+      "options": [
+        "<code>IFS=' '; arr=\"a b c d\"; for i in $arr; do echo $i; done</code> (با تنظیم IFS) و <code>for i in \"${arr[@]}\"</code> (برای آرایه رسمی)",
+        "فقط <code>for i in $arr</code>",
+        "فقط <code>for i in \"${arr[@]}\"</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای تکرار روی رشته با فاصله: <code>IFS=' '; arr=\"a b c d\"; for i in $arr; do echo $i; done</code> (تنظیم IFS برای جلوگیری از رفتار غیرمنتظره). برای آرایه رسمی: <code>arr=(a b c d); for i in \"${arr[@]}\"; do echo $i; done</code> (که نیازی به تغییر IFS ندارد و هر عنصر را جداگانه نگه می‌دارد). <code>${arr[@]}</code> در کوتیشن برای حفظ فاصله‌های داخلی عناصر توصیه می‌شود."
+    },
+    {
+      "id": 784,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای نوشتن یک تابع که یک آرگومان را دریافت کرده و اگر خالی یا تعریف‌نشده بود، از یک مقدار پیش‌فرض استفاده کند، از چه عملگری استفاده می‌شود؟",
+      "options": [
+        "<code>${1:-default}</code> (اگر $1 تعریف‌نشده یا خالی باشد، default جایگزین می‌شود) و <code>${1:=default}</code> (مقداردهی می‌کند)",
+        "فقط <code>${1:-default}</code>",
+        "فقط <code>${1:=default}</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>${1:-default}</code> (اگر $1 تعریف‌نشده یا خالی باشد، مقدار default برگردانده می‌شود، بدون تغییر $1). <code>${1:=default}</code> (اگر $1 تعریف‌نشده یا خالی باشد، آن را به default تنظیم کرده و سپس مقدار را برمی‌گرداند). همچنین <code>${1:?error}</code> (اگر تعریف‌نشده باشد، خطا نمایش داده می‌شود). این عملگرها برای مدیریت آرگومان‌های اختیاری در توابع مفید هستند."
+    },
+    {
+      "id": 785,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای نوشتن یک تابع که خروجی فرمان را در یک متغیر ذخیره کرده و کد خروجی (Exit Code) آن را نیز بررسی کند، از چه ساختاری استفاده می‌شود؟",
+      "options": [
+        "<code>output=$(command 2>&1); status=$?</code> (ابتدا خروجی و سپس کد خروجی) و سپس <code>if [ $status -eq 0 ]; then ...</code>",
+        "فقط <code>output=$(command)</code>",
+        "فقط <code>$?</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای ذخیره خروجی و کد خروجی: <code>output=$(command 2>&1); status=$?</code> (ابتدا خروجی را گرفته و سپس کد خروجی را ذخیره می‌کند). <code>$?</code> باید بلافاصله پس از فرمان خوانده شود. <code>2>&1</code> برای گرفتن خطاها نیز. سپس با <code>if [ $status -eq 0 ]</code> می‌توان موفقیت را بررسی کرد. روش دیگر: <code>output=$(command) || status=$?</code> اما کمتر خوانا است."
+    },
+    {
+      "id": 786,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای ایجاد یک لاگ از اجرای اسکریپت با timestamp و همچنین نمایش آن در ترمینال هم‌زمان، از چه ترکیبی از دستورات استفاده می‌شود؟",
+      "options": [
+        "<code>exec > >(tee -a script.log) 2>&1</code> (با redirection) و <code>echo \"$(date) Script started\"</code>",
+        "فقط <code>tee</code>",
+        "فقط <code>exec</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای لاگ‌گیری هم‌زمان: <code>exec > >(tee -a script.log) 2>&1</code> (خروجی و خطا را به tee می‌دهد که هم در ترمینال و هم در فایل ذخیره می‌کند). سپس می‌توان <code>echo \"$(date) Message\"</code> را در اسکریپت نوشت. <code>-a</code> (append) به فایل اضافه می‌کند. روش دیگر: <code>./script.sh 2>&1 | tee -a script.log</code> (هنگام اجرا). برای timestamp، از <code>logger</code> نیز می‌توان استفاده کرد."
+    },
+    {
+      "id": 787,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای تست اتصال به یک سرور و اندازه‌گیری زمان پاسخ (Latency) با استفاده از <code>ping</code> با تعداد بسته‌های مشخص و فاصله زمانی خاص، از چه سوییچ‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>ping -c 10 -i 0.5 target</code> (۱۰ بسته با فاصله ۰.۵ ثانیه) و <code>ping -c 10 -i 0.5 -q target</code> (خلاصه)",
+        "فقط <code>-c</code>",
+        "فقط <code>-i</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>ping -c 10</code> (count) تعداد بسته‌ها را مشخص می‌کند. <code>-i 0.5</code> (interval) فاصله بین بسته‌ها را به ۰.۵ ثانیه تنظیم می‌کند (نیاز به root برای کمتر از ۰.۲). <code>-q</code> (quiet) فقط خلاصه (summary) را نمایش می‌دهد. <code>-s 1000</code> اندازه بسته را تنظیم می‌کند. <code>-W 2</code> (timeout) زمان انتظار برای پاسخ. <code>ping -c 10 -i 0.5 -s 1000 target</code>."
+    },
+    {
+      "id": 788,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای نمایش مسیر رسیدن به یک هاست و اندازه‌گیری زمان هر هاپ (Hop) با استفاده از <code>traceroute</code> و نمایش IP به‌جای نام (برای سرعت)، از چه سوییچ‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>traceroute -n target</code> (فقط IP) و <code>traceroute -I target</code> (استفاده از ICMP به‌جای UDP) و <code>traceroute -w 2 target</code> (تنظیم timeout)",
+        "فقط <code>-n</code>",
+        "فقط <code>-I</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>-n</code> (numeric) از وضوح نام (DNS) جلوگیری می‌کند و سرعت را افزایش می‌دهد. <code>-I</code> (ICMP) از بسته‌های ICMP به‌جای UDP استفاده می‌کند (مفید در برخی فایروال‌ها). <code>-w 2</code> (wait) زمان انتظار برای هر پاسخ را به ۲ ثانیه تنظیم می‌کند. <code>-m 30</code> (max hops) حداکثر تعداد هاپ‌ها. <code>traceroute -n -I target</code> برای تست سریع."
+    },
+    {
+      "id": 789,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به جدول ARP (آدرس MAC های کش‌شده) و پاک‌کردن یک ورودی خاص، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ip neigh show</code> (مدرن) و <code>arp -a</code> (قدیمی) برای نمایش، و <code>ip neigh flush dev eth0</code> یا <code>arp -d IP</code> برای حذف",
+        "فقط <code>arp -a</code>",
+        "فقط <code>ip neigh</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>ip neigh show</code> (neighbor) جدول ARP (نگاشت IP به MAC) را نمایش می‌دهد. <code>arp -a</code> (قدیمی) نیز همین کار را می‌کند. برای حذف یک ورودی: <code>ip neigh del IP dev eth0</code> یا <code>arp -d IP</code>. <code>ip neigh flush dev eth0</code> همه ورودی‌های یک رابط را پاک می‌کند. پاک‌سازی ARP برای رفع مشکلات شبکه یا پس از تغییر IP مفید است."
+    },
+    {
+      "id": 790,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای بررسی وضعیت یک پورت خاص (مثلاً ۸۰) و نمایش برنامه‌ای که روی آن گوش می‌دهد، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ss -lntp | grep :80</code> (فیلتر) و <code>lsof -i :80</code> (برنامه و PID) و <code>fuser 80/tcp</code> (PID و کاربر)",
+        "فقط <code>ss -lntp</code>",
+        "فقط <code>lsof -i</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای شناسایی برنامه روی پورت: <code>ss -lntp | grep :80</code> (با جزئیات PID و نام برنامه). <code>lsof -i :80</code> (فایل‌های باز روی پورت). <code>fuser 80/tcp</code> (PIDهای استفاده‌کننده از پورت). <code>netstat -tulpn | grep :80</code> (قدیمی). برای پورت UDP: <code>fuser 53/udp</code>. این دستورات برای عیب‌یابی و شناسایی سرویس‌های در حال اجرا مفید هستند."
+    },
+    {
+      "id": 791,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای ایجاد یک فایل‌سیستم EXT4 بر روی یک پارتیشن جدید و تنظیم گزینه‌های خاص مانند حجم inode (bytes-per-inode) و برچسب (Label)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>mkfs.ext4 -i 16384 -L mylabel /dev/sdX</code> (تنظیم inode size و label)",
+        "<code>mkfs -t ext4 -i 16384 -L mylabel /dev/sdX</code>",
+        "هر دو گزینه",
+        "<code>tune2fs -i 16384 -L mylabel /dev/sdX</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو روش کار می‌کنند: <code>mkfs.ext4 -i 16384 -L mylabel /dev/sdX</code> (مستقیم) و <code>mkfs -t ext4 -i 16384 -L mylabel /dev/sdX</code> (با <code>-t</code>). <code>-i</code> (bytes per inode) تعداد inodeها را کنترل می‌کند (مقادیر کوچکتر = inode بیشتر). <code>-L</code> برچسب (Label) را تنظیم می‌کند (قابل استفاده در fstab با <code>LABEL=mylabel</code>). <code>tune2fs</code> برای تغییر تنظیمات فایل‌سیستم موجود (پس از ساخت) استفاده می‌شود."
+    },
+    {
+      "id": 792,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای تغییر برچسب (Label) یک فایل‌سیستم EXT4 و XFS بدون نیاز به unmount، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "برای EXT4: <code>tune2fs -L newlabel /dev/sdX</code> (نیاز به unmount نیست) و برای XFS: <code>xfs_admin -L newlabel /dev/sdX</code> (نیاز به unmount نیست)",
+        "فقط <code>tune2fs</code>",
+        "فقط <code>xfs_admin</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای تغییر برچسب EXT4: <code>tune2fs -L newlabel /dev/sdX</code> (نیازی به unmount ندارد، اما برای امنیت بهتر است unmount شود). برای XFS: <code>xfs_admin -L newlabel /dev/sdX</code> (نیاز به unmount ندارد). برچسب‌ها در <code>/etc/fstab</code> با <code>LABEL=label</code> قابل استفاده هستند. برای مشاهده برچسب: <code>blkid /dev/sdX</code> یا <code>lsblk -f</code>."
+    },
+    {
+      "id": 793,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای نمایش اطلاعات مربوط به یک فایل‌سیستم XFS (مانند اندازه بلوک، inode size، و نسخه) و همچنین رشد (Grow) آن در یک حجم پویا، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>xfs_info /mountpoint</code> (اطلاعات) و <code>xfs_growfs /mountpoint</code> (رشد به اندازه کامل حجم)",
+        "فقط <code>xfs_info</code>",
+        "فقط <code>xfs_growfs</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>xfs_info /mountpoint</code> اطلاعات فایل‌سیستم XFS را نمایش می‌دهد: اندازه بلوک، inode size، نسخه، و تعداد بلوک‌ها. <code>xfs_growfs /mountpoint</code> فایل‌سیستم XFS را در یک حجم پویا (مانند LVM یا RAID) بزرگ می‌کند (باید mount باشد و نیازی به unmount ندارد). برای افزایش اندازه، ابتدا حجم فیزیکی (مانند LV) را بزرگ کرده، سپس <code>xfs_growfs</code> را اجرا کنید."
+    },
+    {
+      "id": 794,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، تفاوت بین NUMA (Non-Uniform Memory Access) و UMA (Uniform Memory Access) چیست و چه تأثیری بر پیکربندی VMها دارد؟",
+      "options": [
+        "UMA: تمام پردازنده‌ها به حافظه با تأخیر یکسان دسترسی دارند. NUMA: پردازنده‌ها به حافظه محلی (خودشان) سریع‌تر و به حافظه سایر پردازنده‌ها کندتر دسترسی دارند. در VMها، پین کردن vCPU به یک NUMA node برای کاهش تأخیر مهم است",
+        "هر دو یکسان هستند",
+        "NUMA تأخیر یکسان دارد",
+        "UMA کندتر است"
+      ],
+      "correct": 0,
+      "explanation": "NUMA (Non-Uniform Memory Access) معماری است که در سیستم‌های چندپردازنده (چند socket) استفاده می‌شود، جایی که هر پردازنده به حافظه محلی خود (در همان socket) سریع‌تر و به حافظه پردازنده دیگر کندتر دسترسی دارد. در مجازی‌سازی، اختصاص vCPUهای یک VM به یک NUMA node (با <code>numactl</code> یا تنظیمات libvirt) باعث افزایش کارایی می‌شود. UMA (Uniform Memory Access) تأخیر یکسان دارد. <code>numactl -H</code> برای نمایش topology NUMA."
+    },
+    {
+      "id": 795,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، مفهوم CPU Pinning و CPU Overcommit چیست و هرکدام چه تأثیری بر کارایی VMها دارند؟",
+      "options": [
+        "CPU Pinning: اختصاص یک یا چند هسته فیزیکی خاص به یک VM (انحصاری، کارایی بالا). Overcommit: تخصیص vCPU بیشتر از هسته‌های فیزیکی (افزایش چگالی، کاهش کارایی)",
+        "هر دو یکسان هستند",
+        "Pinning باعث کاهش کارایی می‌شود",
+        "Overcommit کارایی را افزایش می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "CPU Pinning (انحصاری) vCPUهای یک VM را به هسته‌های فیزیکی خاص متصل می‌کند (با <code>virsh vcpupin</code> یا تنظیمات libvirt)، که کارایی را افزایش می‌دهد (بدون اشتراک CPU). Overcommit به VMها بیش از هسته‌های فیزیکی vCPU اختصاص می‌دهد (چگالی بالا) که ممکن است باعث رقابت بر CPU و کاهش کارایی شود اما برای محیط‌های با بار متغیر مفید است. تعادل بین این دو مهم است."
+    },
+    {
+      "id": 796,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در iptables، برای مسدود کردن تمام ترافیک ورودی به جز ترافیک مربوط به اتصالات برقرارشده (ESTABLISHED,RELATED) و همچنین SSH از یک IP خاص، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</code> و <code>iptables -A INPUT -s 192.168.1.10 -p tcp --dport 22 -j ACCEPT</code> و سپس <code>iptables -A INPUT -j DROP</code>",
+        "فقط <code>-m state</code>",
+        "فقط <code>-s</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "سیاست استاندارد: ۱. <code>iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</code> (اتصالات برقرارشده). ۲. <code>iptables -A INPUT -s 192.168.1.10 -p tcp --dport 22 -j ACCEPT</code> (SSH از IP خاص). ۳. <code>iptables -A INPUT -j DROP</code> (مسدود کردن بقیه). همچنین می‌توان سیاست پیش‌فرض را DROP تنظیم کرد. <code>-m state</code> ماژول connection tracking است که کارایی بالایی دارد."
+    },
+    {
+      "id": 797,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld، برای مسدود کردن تمام ترافیک ورودی به‌جز اتصالات برقرارشده و SSH از یک شبکه خاص، از چه Rich Rules یا تنظیماتی استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.168.1.0/24\" service name=\"ssh\" accept'</code> و <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" service name=\"ssh\" drop'</code> و همچنین <code>--add-rich-rule='rule family=\"ipv4\" state established,related accept'</code>",
+        "فقط <code>--add-rich-rule</code>",
+        "فقط <code>--add-service</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در firewalld برای سیاست مشابه: ۱. <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" state established,related accept'</code>. ۲. <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.168.1.0/24\" service name=\"ssh\" accept'</code>. ۳. <code>firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" service name=\"ssh\" drop'</code> (یا <code>reject</code>). سپس <code>firewall-cmd --reload</code>. توجه: ترتیب در Rich Rules بر اساس اولویت اعمال می‌شود."
+    },
+    {
+      "id": 798,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، بهترین روش برای مدیریت کاربران و گروه‌ها در سیستم‌های مدرن چیست؟",
+      "options": [
+        "استفاده از <code>useradd</code>، <code>usermod</code>، <code>userdel</code> و <code>groupadd</code>، <code>groupmod</code>، <code>groupdel</code> برای مدیریت کاربران و گروه‌ها، همراه با <code>passwd</code> برای مدیریت رمز عبور",
+        "فقط <code>adduser</code>",
+        "فقط <code>useradd</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "ابزارهای استاندارد مدیریت کاربران: <code>useradd</code> (ایجاد کاربر)، <code>usermod</code> (تغییر مشخصات)، <code>userdel</code> (حذف)، <code>groupadd</code> (ایجاد گروه)، <code>groupmod</code> (تغییر گروه)، <code>groupdel</code> (حذف گروه). <code>passwd</code> برای مدیریت رمز عبور. <code>adduser</code> (دبیان) یک اسکریپت تعاملی است که <code>useradd</code> را با تنظیمات پیش‌فرض صدا می‌زند. <code>systemd</code> نیز با <code>systemd-homed</code> رویکرد جدیدی ارائه می‌دهد اما هنوز فراگیر نیست."
+    },
+    {
+      "id": 799,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، کدام یک از موارد زیر بهترین روش برای پشتیبان‌گیری و همگام‌سازی فایل‌ها در محیط شبکه (با قابلیت Resume و فشرده‌سازی) است؟",
+      "options": [
+        "استفاده از <code>rsync -avz --progress</code> برای همگام‌سازی محلی/شبکه با حفظ مجوزها و فشرده‌سازی، و <code>--partial</code> برای ادامه دانلود ناقص",
+        "استفاده از <code>scp</code>",
+        "استفاده از <code>cp -r</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>rsync</code> بهترین ابزار برای همگام‌سازی فایل‌ها در شبکه است: <code>-a</code> (archive: حفظ مجوزها، زمان‌ها، لینک‌ها)، <code>-v</code> (verbose)، <code>-z</code> (compress: فشرده‌سازی برای کاهش پهنای باند)، <code>--progress</code> (نمایش پیشرفت)، <code>--partial</code> (ادامه دانلود ناقص). <code>rsync</code> از SSH استفاده می‌کند و قابل اطمینان‌تر از <code>scp</code> (قدیمی) و <code>cp</code> (محلی) است. <code>rsync -avz --progress --partial source/ user@host:/dest/</code>."
+    },
+    {
+      "id": 800,
+      "category": "سیستم - خلاصه نهایی",
+      "level": 1,
+      "text": "پس از مطالعه کامل این مجموعه ۸۰۰ سوالی از تمام فصول LPIC-1، کدام یک از موارد زیر مهم‌ترین مهارت برای یک مدیر سیستم لینوکس است؟",
+      "options": [
+        "ترکیبی از دانش فرمان‌های پایه، درک مفاهیم شبکه و امنیت، توانایی عیب‌یابی، و مهارت در شل‌اسکریپت‌نویسی برای خودکارسازی",
+        "فقط حفظ کردن فرمان‌ها",
+        "فقط کار با محیط گرافیکی",
+        "فقط مدیریت کاربران"
+      ],
+      "correct": 0,
+      "explanation": "مدیریت سیستم لینوکس نیازمند ترکیبی از مهارت‌ها است: تسلط بر فرمان‌های پایه (حداقل ۵۰ فرمان پرکاربرد)، درک عمیق مفاهیم شبکه (TCP/IP، DNS، مسیریابی) و امنیت (فایروال، SELinux/AppArmor، SSH)، توانایی عیب‌یابی (logها، strace، tcpdump)، و مهارت در شل‌اسکریپت‌نویسی برای خودکارسازی وظایف تکراری (پشتیبان‌گیری، مانیتورینگ). این مجموعه ۸۰۰ سوالی تمامی این حوزه‌ها را پوشش می‌دهد و پایه‌ای قوی برای آزمون LPIC-1 و کار عملی فراهم می‌کند."
+    }
+  ]
+}
