@@ -1,0 +1,258 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 بر اساس لیست دستورات و سوییچ‌ها (بخش سوم)",
+  "description": "ادامه سوالات عمیق و سناریومحور با تمرکز بر دستورات مدیریت کاربران، مجوزها، زمان‌بندی، شبکه، فشرده‌سازی، و ابزارهای دیسک که در لیست کامل دستورات پوشش داده شده‌اند.",
+  "questions": [
+    {
+      "id": 33,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد کاربر <code>testuser</code> را به‌طور کامل از سیستم حذف کند، به‌طوری که دایرکتوری خانه و تمام فایل‌های آن نیز پاک شوند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>userdel testuser</code>",
+        "<code>userdel -f testuser</code>",
+        "<code>userdel -r testuser</code>",
+        "<code>userdel -R testuser</code>"
+      ],
+      "correct": 2,
+      "explanation": "سوییچ <code>-r</code> در <code>userdel</code> باعث می‌شود دایرکتوری خانه و صندوق پستی (mail spool) کاربر نیز حذف شود. گزینه اول فقط کاربر را حذف می‌کند اما دایرکتوری خانه باقی می‌ماند. گزینه دوم (<code>-f</code>) کاربر را حتی اگر لاگین باشد، حذف می‌کند اما دایرکتوری خانه را پاک نمی‌کند. گزینه سوم معتبر نیست. پس گزینه سوم صحیح است."
+    },
+    {
+      "id": 34,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تغییر گروه اصلی (primary group) یک کاربر موجود از <code>users</code> به <code>developers</code> استفاده می‌شود؟",
+      "options": [
+        "<code>usermod -g developers user</code>",
+        "<code>usermod -G developers user</code>",
+        "<code>usermod -aG developers user</code>",
+        "<code>groupmod -n developers user</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>usermod -g</code> گروه اصلی (primary group) کاربر را تغییر می‌دهد. <code>-G</code> گروه‌های ثانویه را تنظیم می‌کند (و گروه‌های قبلی را بازنویسی می‌کند مگر با <code>-a</code>). <code>-aG</code> گروه ثانویه را اضافه می‌کند بدون بازنویسی. <code>groupmod</code> برای تغییر نام گروه است، نه تغییر گروه کاربر. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 35,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم با استفاده از <code>passwd -l user</code> حساب کاربری را قفل کرده است. کدام یک از گزینه‌های زیر در مورد وضعیت این کاربر در فایل <code>/etc/shadow</code> صحیح است؟",
+      "options": [
+        "فیلد پسورد با <code>!</code> شروع می‌شود.",
+        "فیلد پسورد با <code></code> شروع می‌شود.",
+        "فیلد پسورد خالی می‌شود.",
+        "تاریخ انقضای پسورد به روز صفر تنظیم می‌شود."
+      ],
+      "correct": 0,
+      "explanation": "وقتی حساب کاربری با <code>passwd -l</code> قفل می‌شود، یک علامت <code>!</code> به ابتدای فیلد پسورد در <code>/etc/shadow</code> اضافه می‌شود. این باعث می‌شود احراز هویت با پسورد غیرممکن شود. گزینه دوم (<code></code>) معمولاً برای کاربران سیستمی است که لاگین ندارند. گزینه سوم (<code>!</code> خالی) نشان‌دهنده پسورد خالی است. گزینه چهارم مربوط به <code>chage</code> است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 36,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nmcli</code> یک اتصال شبکه جدید با آدرس IP ثابت (static) روی رابط <code>eth0</code> ایجاد کند. کدام دنباله از دستورات این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>nmcli connection add type ethernet ifname eth0 ipv4.addresses 192.168.1.10/24 ipv4.gateway 192.168.1.1 ipv4.method manual</code>",
+        "<code>nmcli connection add type ethernet con-name static-eth0 ifname eth0 ip4 192.168.1.10/24 gw4 192.168.1.1</code>",
+        "<code>nmcli connection modify eth0 ipv4.addresses 192.168.1.10/24 ipv4.gateway 192.168.1.1 ipv4.method manual</code>",
+        "گزینه اول و دوم هر دو صحیح هستند، اما گزینه دوم کوتاه‌تر است."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول و دوم یک اتصال جدید با تنظیمات static ایجاد می‌کنند. گزینه اول از سینتکس کامل <code>ipv4.addresses</code> و <code>ipv4.method manual</code> استفاده می‌کند. گزینه دوم از سینتکس کوتاه‌تر <code>ip4</code> و <code>gw4</code> استفاده می‌کند و همچنین <code>con-name</code> را مشخص می‌کند. گزینه سوم برای تغییر یک اتصال موجود است، نه ایجاد جدید. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 37,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر در مورد تفاوت <code>nslookup</code> و <code>dig</code> نادرست است؟",
+      "options": [
+        "<code>dig</code> اطلاعات جزئی‌تری مانند زمان پاسخ (query time) را نمایش می‌دهد.",
+        "<code>nslookup</code> می‌تواند در حالت تعاملی (interactive) و غیرتعاملی کار کند.",
+        "<code>dig</code> به‌طور پیش‌فرض از <code>/etc/resolv.conf</code> برای تعیین سرور DNS استفاده نمی‌کند.",
+        "هر دو ابزار برای پرس‌وجوی DNS استفاده می‌شوند."
+      ],
+      "correct": 2,
+      "explanation": "گزینه سوم نادرست است. <code>dig</code> نیز به‌طور پیش‌فرض از <code>/etc/resolv.conf</code> برای تعیین سرور DNS استفاده می‌کند، مگر اینکه با <code>@server</code> سرور دیگری مشخص شود. گزینه‌های اول، دوم و چهارم درست هستند. پس گزینه سوم نادرست است."
+    },
+    {
+      "id": 38,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد محتوای یک فایل <code>largefile.gz</code> را بدون خارج کردن از حالت فشرده (decompress) مشاهده کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>cat largefile.gz</code>",
+        "<code>zcat largefile.gz</code>",
+        "<code>gunzip -c largefile.gz</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>zcat</code> و <code>gunzip -c</code> محتوای فایل فشرده را بدون تغییر فایل اصلی، به خروجی استاندارد می‌فرستند. <code>cat</code> محتوای خام فشرده را نمایش می‌دهد که قابل‌خواندن نیست. بنابراین گزینه چهارم (هر دو دوم و سوم) صحیح است."
+    },
+    {
+      "id": 39,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تقسیم یک فایل بزرگ به چند بخش کوچک‌تر با اندازه مشخص (مثلاً ۱۰۰ مگابایت) استفاده می‌شود؟",
+      "options": [
+        "<code>split -b 100M largefile</code>",
+        "<code>split -l 100 largefile</code>",
+        "<code>dd if=largefile bs=100M count=10</code>",
+        "<code>cp --split=100M largefile</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>split -b 100M</code> فایل را به بخش‌های ۱۰۰ مگابایتی تقسیم می‌کند. <code>-l</code> برای تقسیم بر اساس تعداد خطوط است. <code>dd</code> برای کپی سطح بلاک است و نمی‌تواند به‌تنهایی فایل را تقسیم کند. <code>cp</code> سوییچ <code>--split</code> ندارد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 40,
+      "category": "زمان‌بندی خودکار",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای ویرایش کرون‌تب کاربر جاری استفاده می‌شود؟",
+      "options": [
+        "<code>crontab -e</code>",
+        "<code>crontab -l</code>",
+        "<code>crontab -r</code>",
+        "<code>crontab -u user -e</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>crontab -e</code> کرون‌تب کاربر جاری را برای ویرایش باز می‌کند. <code>-l</code> لیست کرون‌تب را نمایش می‌دهد. <code>-r</code> آن را حذف می‌کند. <code>-u</code> برای ویرایش کرون‌تب کاربر دیگر استفاده می‌شود (نیاز به دسترسی root). پس گزینه اول صحیح است."
+    },
+    {
+      "id": 41,
+      "category": "زمان‌بندی خودکار",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک اسکریپت را هر ۱۵ دقیقه یک‌بار اجرا کند. کدام عبارت crontab این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>/15 * * * * /path/to/script</code>",
+        "<code>15 * * * * /path/to/script</code>",
+        "<code>0,15,30,45 * * * * /path/to/script</code>",
+        "هر دو گزینه اول و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>/15</code> و <code>0,15,30,45</code> به‌معنی اجرا در دقیقه‌های ۰، ۱۵، ۳۰ و ۴۵ هستند و معادل‌اند. گزینه دوم فقط در دقیقه ۱۵ هر ساعت اجرا می‌شود. پس گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 42,
+      "category": "مدیریت بسته‌ها",
+      "level": 2,
+      "text": "در یک سیستم مبتنی بر Debian، کدام دستور برای به‌روزرسانی لیست بسته‌های موجود در مخازن (بدون نصب یا ارتقا) استفاده می‌شود؟",
+      "options": [
+        "<code>apt upgrade</code>",
+        "<code>apt update</code>",
+        "<code>apt dist-upgrade</code>",
+        "<code>apt full-upgrade</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>apt update</code> لیست بسته‌های موجود در مخازن را به‌روزرسانی می‌کند (metadata را دانلود می‌کند). <code>apt upgrade</code> بسته‌های نصب‌شده را ارتقا می‌دهد. <code>dist-upgrade</code> و <code>full-upgrade</code> ارتقای کامل با مدیریت وابستگی‌ها هستند. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 43,
+      "category": "مدیریت بسته‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک بسته <code>.rpm</code> را با نادیده گرفتن وابستگی‌ها (dependencies) نصب کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>rpm -i package.rpm</code>",
+        "<code>rpm -ivh package.rpm</code>",
+        "<code>rpm -i --nodeps package.rpm</code>",
+        "<code>rpm -Uvh --nodeps package.rpm</code>"
+      ],
+      "correct": 2,
+      "explanation": "سوییچ <code>--nodeps</code> به <code>rpm</code> می‌گوید وابستگی‌ها را نادیده بگیرد. گزینه اول و دوم بدون <code>--nodeps</code> هستند و در صورت وجود وابستگی‌های برآورده‌نشده، خطا می‌دهند. گزینه چهارم نیز با <code>--nodeps</code> کار می‌کند اما <code>-Uvh</code> برای ارتقا (upgrade) است، نه نصب خالص. بنابراین گزینه سوم دقیق‌ترین پاسخ برای نصب با نادیده گرفتن وابستگی‌ها است."
+    },
+    {
+      "id": 44,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر در مورد <code>find</code> با سوییچ <code>-exec</code> صحیح است؟",
+      "options": [
+        "<code>-exec</code> بدون <code>{} \\;</code> کار نمی‌کند.",
+        "<code>-exec</code> با <code>{} +</code> کارایی بالاتری دارد زیرا تعداد کمتری فرمان اجرا می‌کند.",
+        "<code>-exec</code> می‌تواند با <code>&&</code> یا <code>||</code> ترکیب شود.",
+        "همه گزینه‌ها صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه گزینه درست هستند. <code>-exec</code> نیاز به <code>{} \\;</code> یا <code>{} +</code> دارد تا جایگزینی فایل‌ها و پایان فرمان مشخص شود. <code>{} +</code> با گروه‌بندی فایل‌ها، تعداد دفعات اجرای فرمان را کاهش می‌دهد و کارایی بالاتری دارد. همچنین می‌توان <code>-exec</code> را با عملگرهای منطقی ترکیب کرد (مثلاً <code>-exec cmd1 \\; -a -exec cmd2 \\;</code>). پس گزینه چهارم صحیح است."
+    },
+    {
+      "id": 45,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش مسیر کامل یک فرمان (مانند <code>ls</code>) در سیستم استفاده می‌شود؟",
+      "options": [
+        "<code>which ls</code>",
+        "<code>whereis ls</code>",
+        "<code>type ls</code>",
+        "هر سه گزینه مسیر را نشان می‌دهند، اما <code>which</code> فقط مسیر فایل اجرایی را نشان می‌دهد."
+      ],
+      "correct": 3,
+      "explanation": "هر سه دستور می‌توانند مسیر یک فرمان را نشان دهند، اما تفاوت‌هایی دارند: <code>which</code> فقط مسیر فایل اجرایی را بر اساس <code>$PATH</code> نشان می‌دهد. <code>whereis</code> علاوه بر باینری، مسیر سورس و man pages را نیز نشان می‌دهد. <code>type</code> برای بیلتین‌ها و خارجی‌ها استفاده می‌شود و مسیر را برای خارجی‌ها نشان می‌دهد. پس گزینه چهارم درست است."
+    },
+    {
+      "id": 46,
+      "category": "LVM",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک Physical Volume جدید به یک Volume Group موجود اضافه کند. کدام دنباله از دستورات این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>pvcreate /dev/sdb1</code> سپس <code>vgextend vg_name /dev/sdb1</code>",
+        "<code>vgextend vg_name /dev/sdb1</code> (بدون نیاز به <code>pvcreate</code>)",
+        "<code>pvcreate /dev/sdb1</code> سپس <code>lvcreate -L 10G -n lv_name vg_name</code>",
+        "<code>pvcreate /dev/sdb1</code> سپس <code>vgcreate vg_name /dev/sdb1</code>"
+      ],
+      "correct": 0,
+      "explanation": "قبل از اضافه کردن یک دیسک به Volume Group، ابتدا باید با <code>pvcreate</code> آن را به Physical Volume تبدیل کرد. سپس با <code>vgextend</code> آن را به VG اضافه کرد. گزینه دوم <code>pvcreate</code> را ندارد و خطا می‌دهد. گزینه سوم مربوط به ایجاد Logical Volume جدید است، نه افزودن PV به VG. گزینه چهارم برای ایجاد VG جدید است، نه افزودن به VG موجود. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 47,
+      "category": "LVM",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش حجم‌های فیزیکی (Physical Volumes) موجود در سیستم به‌صورت خلاصه استفاده می‌شود؟",
+      "options": [
+        "<code>pvdisplay</code>",
+        "<code>pvs</code>",
+        "<code>pvscan</code>",
+        "<code>pvck</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>pvs</code> اطلاعات خلاصه‌ای از Physical Volumeها را نمایش می‌دهد. <code>pvdisplay</code> اطلاعات کامل و جزئی را نشان می‌دهد. <code>pvscan</code> برای اسکن دیسک‌ها به‌دنبال PVها استفاده می‌شود. <code>pvck</code> برای بررسی یکپارچگی PV است. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 48,
+      "category": "پردازش‌ها و مدیریت آنها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک فرمان را در پس‌زمینه اجرا کند و حتی پس از خروج از ترمینال، آن فرمان به کار خود ادامه دهد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>command &</code>",
+        "<code>nohup command &</code>",
+        "<code>command & disown</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "<code>nohup</code> فرمان را در برابر سیگنال SIGHUP مقاوم می‌کند و حتی پس از بستن ترمینال اجرا می‌شود. <code>disown</code> نیز پس از اجرا با <code>&</code>، کار را از لیست jobs خارج می‌کند و از SIGHUP محافظت می‌کند. گزینه اول (<code>command &</code>) پس از بستن ترمینال، فرمان را متوقف می‌کند. بنابراین گزینه چهارم (هر دو دوم و سوم) صحیح است."
+    },
+    {
+      "id": 49,
+      "category": "پردازش‌ها و مدیریت آنها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای ارسال سیگنال TERM (خاتمه نرم) به یک پردازش با PID مشخص استفاده می‌شود؟",
+      "options": [
+        "<code>kill -TERM PID</code>",
+        "<code>kill -15 PID</code>",
+        "<code>kill PID</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "سیگنال پیش‌فرض <code>kill</code> SIGTERM است (عدد ۱۵). بنابراین <code>kill PID</code>، <code>kill -15 PID</code> و <code>kill -TERM PID</code> همگی معادل‌اند و سیگنال TERM را ارسال می‌کنند. پس گزینه چهارم صحیح است."
+    },
+    {
+      "id": 50,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "در فرآیند هاردن‌کردن SSH، بعد از غیرفعال کردن <code>PasswordAuthentication</code>، کدام اقدام برای اطمینان از عدم قفل شدن مدیر سیستم از سرور ضروری است؟",
+      "options": [
+        "قبل از ری‌استارت کردن <code>sshd</code>، یک اتصال SSH جدید با کلید تست شود.",
+        "پس از تغییرات، <code>sshd</code> ری‌استارت شود و سپس اتصال تست شود.",
+        "هیچ اقدامی لازم نیست، زیرا <code>sshd</code> به‌طور خودکار تنظیمات جدید را اعمال می‌کند.",
+        "باید <code>PermitRootLogin</code> را نیز غیرفعال کرد."
+      ],
+      "correct": 0,
+      "explanation": "قبل از ری‌استارت <code>sshd</code>، باید یک اتصال جدید با کلید تست شود تا اطمینان حاصل شود که احراز هویت با کلید به‌درستی کار می‌کند. در غیر این صورت، اگر کلید مشکل داشته باشد، مدیر سیستم پس از ری‌استارت قفل می‌شود. گزینه دوم ریسک دارد. گزینه سوم نادرست است (<code>sshd</code> نیاز به ری‌استارت دارد). گزینه چهارم اقدام دیگری است اما برای جلوگیری از قفل شدن ضروری نیست. پس گزینه اول صحیح است."
+    }
+  ]
+}

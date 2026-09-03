@@ -1,0 +1,846 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی پیشرفته (بخش نهایی)",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه",
+  "questions": [
+    {
+      "id": 441,
+      "category": "مدیریت فایل‌ها - awk پیشرفته",
+      "level": 4,
+      "text": "در awk، چگونه می‌توان یک متغیر را تعریف کرد و از آن در محاسبات استفاده نمود؟",
+      "options": [
+        "با <code>awk '{sum += $1; count++} END {print sum/count}'</code> می‌توان مجموع و میانگین ستون اول را محاسبه کرد",
+        "فقط با <code>awk -v</code>",
+        "فقط با <code>BEGIN</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "در awk، متغیرها به‌صورت خودکار با استفاده از مقداردهی اولیه (مانند <code>sum = 0</code>) تعریف می‌شوند. <code>BEGIN</code> بلوک برای تنظیمات اولیه (مانند جداکننده) و <code>END</code> بلوک برای اجرا پس از پردازش همه خطوط است. مثال: <code>awk '{sum += $1; count++} END {if (count > 0) print sum/count}'</code>. <code>-v var=value</code> نیز برای انتقال متغیر از خط فرمان به awk استفاده می‌شود: <code>awk -v threshold=10 '$1 > threshold'</code>."
+    },
+    {
+      "id": 442,
+      "category": "مدیریت فایل‌ها - awk پیشرفته",
+      "level": 4,
+      "text": "در awk، تفاوت بین <code>FS</code> و <code>OFS</code> چیست و چگونه می‌توان خروجی را با جداکننده دلخواه فرمت کرد؟",
+      "options": [
+        "<code>FS</code> (Field Separator) جداکننده ورودی، <code>OFS</code> (Output Field Separator) جداکننده خروجی؛ با <code>OFS=\",\"</code> می‌توان خروجی را با کاما جدا کرد",
+        "هر دو یکسان هستند",
+        "<code>FS</code> برای خروجی است",
+        "<code>OFS</code> برای ورودی است"
+      ],
+      "correct": 0,
+      "explanation": "در awk، <code>FS</code> جداکننده فیلدهای ورودی (پیش‌فرض فاصله/تب) است که با <code>-F</code> یا <code>FS=\":\"</code> تنظیم می‌شود. <code>OFS</code> جداکننده فیلدهای خروجی (پیش‌فرض فاصله) است که هنگام استفاده از <code>print</code> با چندین فیلد اعمال می‌شود. مثال: <code>awk 'BEGIN{FS=\":\"; OFS=\",\"},\n{print $1, $3}' /etc/passwd</code> خروجی با کاما جدا می‌کند. <code>RS</code> (Record Separator) و <code>ORS</code> نیز برای جداکننده خطوط هستند."
+    },
+    {
+      "id": 443,
+      "category": "شبکه - VLAN",
+      "level": 4,
+      "text": "در لینوکس، برای ایجاد یک رابط VLAN با شناسه ۱۰۰ روی رابط eth0 و اختصاص IP به آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ip link add link eth0 name eth0.100 type vlan id 100; ip addr add 192.168.100.1/24 dev eth0.100; ip link set eth0.100 up</code>",
+        "<code>ifconfig eth0.100 192.168.100.1</code>",
+        "<code>vconfig add eth0 100</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای ایجاد VLAN در لینوکس: ۱. بارگذاری ماژول <code>8021q</code> (با <code>modprobe 8021q</code>). ۲. ایجاد رابط مجازی: <code>ip link add link eth0 name eth0.100 type vlan id 100</code>. ۳. اختصاص IP: <code>ip addr add 192.168.100.1/24 dev eth0.100</code>. ۴. فعال‌سازی: <code>ip link set eth0.100 up</code>. روش قدیمی <code>vconfig</code> نیز موجود است اما <code>ip</code> توصیه می‌شود. برای دائمی شدن، باید در فایل‌های پیکربندی شبکه (مانند <code>/etc/network/interfaces</code> در دبیان یا فایل‌های ifcfg در ردهت) تنظیم شود."
+    },
+    {
+      "id": 444,
+      "category": "شبکه - Bonding",
+      "level": 4,
+      "text": "برای ایجاد یک رابط Bonding با حالت active-backup روی دو رابط eth0 و eth1 در لینوکس، چه اقداماتی لازم است؟",
+      "options": [
+        "بارگذاری ماژول bonding با <code>modprobe bonding mode=1</code>، ایجاد رابط bond0 با <code>ip link add bond0 type bond</code>، اضافه کردن اعضا با <code>ip link set eth0 master bond0</code>، و اختصاص IP",
+        "فقط با <code>ifconfig</code>",
+        "فقط با <code>nmcli</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای Bonding: ۱. بارگذاری ماژول: <code>modprobe bonding mode=active-backup miimon=100</code> (یا <code>mode=1</code>). ۲. ایجاد رابط: <code>ip link add bond0 type bond</code>. ۳. تنظیم حالت: <code>echo active-backup > /sys/class/net/bond0/bonding/mode</code>. ۴. اضافه کردن اعضا: <code>ip link set eth0 master bond0</code> و <code>ip link set eth1 master bond0</code>. ۵. فعال‌سازی و اختصاص IP: <code>ip link set bond0 up; ip addr add 192.168.1.10/24 dev bond0</code>. روش <code>nmcli</code> نیز برای NetworkManager امکان‌پذیر است. برای دائمی شدن، فایل‌های پیکربندی لازم است."
+    },
+    {
+      "id": 445,
+      "category": "شبکه - Bridging",
+      "level": 4,
+      "text": "برای ایجاد یک پل (Bridge) شبکه در لینوکس و اتصال یک VM به آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ip link add br0 type bridge; ip link set eth0 master br0; ip link set br0 up; ip addr add 192.168.1.1/24 dev br0</code>",
+        "فقط <code>brctl</code>",
+        "فقط <code>nmcli</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای ایجاد Bridge: ۱. با <code>ip</code>: <code>ip link add br0 type bridge; ip link set eth0 master br0; ip link set br0 up; ip addr add 192.168.1.1/24 dev br0</code>. ۲. با <code>brctl</code> (قدیمی): <code>brctl addbr br0; brctl addif br0 eth0; ifconfig br0 up</code>. ۳. با <code>nmcli</code>: <code>nmcli connection add type bridge con-name br0 ifname br0; nmcli connection add type ethernet slave-type bridge con-name bridge-br0 ifname eth0 master br0</code>. Bridge در مجازی‌سازی برای اتصال VMها به شبکه فیزیکی استفاده می‌شود."
+    },
+    {
+      "id": 446,
+      "category": "مدیریت دیسک - LVM پیشرفته",
+      "level": 4,
+      "text": "برای کاهش اندازه (Shrink) یک Logical Volume در LVM با فایل‌سیستم EXT4، چه مراحلی باید به‌ترتیب انجام شود؟",
+      "options": [
+        "ابتدا فایل‌سیستم را با <code>resize2fs -M /dev/vg/lv</code> کوچک کنید، سپس LV را با <code>lvreduce -L -10G /dev/vg/lv</code> کاهش دهید",
+        "ابتدا LV را کاهش دهید، سپس فایل‌سیستم",
+        "فقط LV را کاهش دهید",
+        "غیرممکن است"
+      ],
+      "correct": 0,
+      "explanation": "برای کاهش حجم (Shrink) یک LV با EXT4، ترتیب بسیار مهم است: ۱. ابتدا فایل‌سیستم را بررسی کنید (umount و <code>e2fsck -f</code>). ۲. فایل‌سیستم را با <code>resize2fs /dev/vg/lv NEW_SIZE</code> کوچک کنید (ابتدا). ۳. سپس LV را با <code>lvreduce -L NEW_SIZE /dev/vg/lv</code> کاهش دهید. کاهش فایل‌سیستم قبل از کاهش LV ضروری است تا از تخریب داده جلوگیری شود. برخلاف افزایش (Extend) که ترتیب معکوس است (ابتدا LV سپس فایل‌سیستم)."
+    },
+    {
+      "id": 447,
+      "category": "مدیریت دیسک - LVM پیشرفته",
+      "level": 4,
+      "text": "برای جابه‌جایی داده از یک Physical Volume (دیسک قدیمی) به یک PV جدید در LVM بدون از دست دادن داده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>pvmove /dev/sdb1 /dev/sdc1</code> (داده‌ها از sdb1 به sdc1 منتقل می‌شود)، سپس <code>vgreduce vg0 /dev/sdb1</code> و <code>pvremove /dev/sdb1</code>",
+        "فقط <code>pvmove</code>",
+        "فقط <code>vgreduce</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای جابه‌جایی داده در LVM: ۱. اضافه کردن PV جدید: <code>pvcreate /dev/sdc1; vgextend vg0 /dev/sdc1</code>. ۲. جابه‌جایی داده از PV قدیمی به جدید: <code>pvmove /dev/sdb1 /dev/sdc1</code> (این کار ممکن است زمان‌بر باشد). ۳. حذف PV قدیمی از VG: <code>vgreduce vg0 /dev/sdb1</code>. ۴. حذف PV قدیمی: <code>pvremove /dev/sdb1</code>. <code>pvmove</code> داده را به‌صورت زنده و بدون قطعی جابه‌جا می‌کند."
+    },
+    {
+      "id": 448,
+      "category": "مدیریت دیسک - RAID پیشرفته",
+      "level": 4,
+      "text": "در RAID نرم‌افزاری با mdadm، برای جایگزینی یک دیسک خراب در آرایه RAID 1 (Mirror) با یک دیسک جدید، چه مراحلی لازم است؟",
+      "options": [
+        "علامت‌گذاری دیسک خراب: <code>mdadm --manage /dev/md0 --fail /dev/sda1</code>، حذف: <code>mdadm --manage /dev/md0 --remove /dev/sda1</code>، افزودن دیسک جدید: <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "فقط افزودن دیسک جدید",
+        "فقط حذف دیسک خراب",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "مراحل استاندارد جایگزینی دیسک در RAID: ۱. علامت‌گذاری دیسک خراب (فیل): <code>mdadm --manage /dev/md0 --fail /dev/sda1</code>. ۲. حذف دیسک خراب از آرایه: <code>mdadm --manage /dev/md0 --remove /dev/sda1</code>. ۳. افزودن دیسک جدید (که قبلاً پارتیشن‌بندی شده با نوع FD): <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>. ۴. بررسی وضعیت: <code>cat /proc/mdstat</code> یا <code>mdadm --detail /dev/md0</code>. سیستم به‌طور خودکار شروع به همگام‌سازی (Sync) می‌کند."
+    },
+    {
+      "id": 449,
+      "category": "مدیریت دیسک - RAID پیشرفته",
+      "level": 4,
+      "text": "در RAID نرم‌افزاری، برای افزایش تعداد دیسک‌های یک آرایه RAID 5 (Grow) بدون از دست دادن داده، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>mdadm --grow /dev/md0 --raid-devices=4</code> (پس از اضافه کردن دیسک جدید با <code>--add</code>)",
+        "<code>mdadm --add /dev/md0 /dev/sdd1</code>",
+        "<code>mdadm --grow /dev/md0 --size</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای افزایش تعداد دیسک‌ها در RAID 5 (یا RAID 6/10): ۱. اضافه کردن دیسک جدید: <code>mdadm --manage /dev/md0 --add /dev/sdd1</code> (ابتدا پارتیشن‌بندی با نوع FD). ۲. رشد (Grow) آرایه: <code>mdadm --grow /dev/md0 --raid-devices=4</code>. ۳. رشد فایل‌سیستم (در صورت نیاز): <code>resize2fs /dev/md0</code> (برای EXT4). این فرآیند ممکن است زمان‌بر باشد و در حین اجرا سیستم قابل استفاده است. وضعیت با <code>cat /proc/mdstat</code> قابل پایش است."
+    },
+    {
+      "id": 450,
+      "category": "سیستم - مجازی‌سازی KVM",
+      "level": 4,
+      "text": "در KVM، برای ایجاد یک ماشین مجازی از خط فرمان با استفاده از <code>virt-install</code> و نصب سیستمعامل از یک ISO، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>virt-install --name vm1 --memory 2048 --vcpus 2 --disk size=20 --cdrom /path/to/install.iso --os-type linux --network network=default</code>",
+        "<code>qemu-system-x86_64 -cdrom</code>",
+        "<code>virsh create</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>virt-install</code> یک ابزار خط فرمان برای ایجاد VMهای KVM است. پارامترها: <code>--name</code> (نام VM)، <code>--memory</code> (RAM در MB)، <code>--vcpus</code> (تعداد CPU)، <code>--disk size=20</code> (دیسک ۲۰ گیگابایت)، <code>--cdrom</code> (مسیر ISO نصب)، <code>--os-type</code> (نوع سیستمعامل)، <code>--network</code> (شبکه مجازی). پس از اجرا، فرآیند نصب شروع می‌شود. <code>virt-viewer</code> یا VNC برای اتصال به کنسول گرافیکی استفاده می‌شود. پس از نصب، با <code>virsh</code> قابل مدیریت است."
+    },
+    {
+      "id": 451,
+      "category": "سیستم - مجازی‌سازی KVM",
+      "level": 4,
+      "text": "در KVM با libvirt، برای مشاهده لیست VMهای در حال اجرا و متوقف‌کردن یک VM، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>virsh list</code> (VMهای در حال اجرا)، <code>virsh list --all</code> (همه VMها)، <code>virsh shutdown vm1</code> (خاموشی امن) و <code>virsh destroy vm1</code> (خاموشی فوری)",
+        "فقط <code>virsh list</code>",
+        "فقط <code>virsh shutdown</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>virsh</code> ابزار خط فرمان مدیریت VMهای libvirt است. <code>virsh list</code> VMهای در حال اجرا را نشان می‌دهد. <code>virsh list --all</code> همه VMها (شامل متوقف‌شده) را نشان می‌دهد. <code>virsh shutdown vm1</code> سیگنال خاموشی به VM ارسال می‌کند (اتصال ACPI، نیاز به پشتیبانی مهمان). <code>virsh destroy vm1</code> VM را فوراً خاموش می‌کند (مانند قطع برق). <code>virsh start vm1</code> VM را استارت می‌کند و <code>virsh suspend vm1</code> آن را معلق می‌کند."
+    },
+    {
+      "id": 452,
+      "category": "سیستم - مجازی‌سازی LXC",
+      "level": 4,
+      "text": "در LXC، برای ایجاد و راه‌اندازی یک کانتینر جدید (مثلاً با توزیع Ubuntu)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>lxc-create -n container1 -t ubuntu</code> (ایجاد)، <code>lxc-start -n container1</code> (راه‌اندازی)، <code>lxc-attach -n container1</code> (ورود)",
+        "فقط <code>lxc-create</code>",
+        "فقط <code>lxc-start</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "مراحل کار با LXC (نسخه قدیمی): ۱. ایجاد کانتینر: <code>lxc-create -n container1 -t ubuntu</code> (با استفاده از template). ۲. راه‌اندازی: <code>lxc-start -n container1 -d</code> (با <code>-d</code> در پس‌زمینه). ۳. ورود به کانتینر: <code>lxc-attach -n container1</code> (یا <code>lxc-console</code>). ۴. متوقف‌کردن: <code>lxc-stop -n container1</code>. ۵. حذف: <code>lxc-destroy -n container1</code>. در LXC 3.0 به بعد، ابزارها تغییر کرده‌اند و <code>lxc</code> (با سینتکس جدید) جایگزین شده است. LXD نیز یک رابط مدرن‌تر برای LXC است."
+    },
+    {
+      "id": 453,
+      "category": "سیستم - مجازی‌سازی Docker",
+      "level": 4,
+      "text": "در Docker، برای مشاهده لاگ‌های یک کانتینر در حال اجرا و دنبال‌کردن آن‌ها به‌صورت زنده، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>docker logs -f container_name</code>",
+        "<code>docker logs container_name</code>",
+        "<code>docker attach container_name</code>",
+        "<code>docker exec container_name tail -f</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>docker logs</code> خروجی (STDOUT و STDERR) یک کانتینر را نمایش می‌دهد. <code>-f</code> (follow) لاگ‌ها را به‌صورت زنده دنبال می‌کند (مانند <code>tail -f</code>). <code>docker logs --tail 100</code> فقط ۱۰۰ خط آخر را نشان می‌دهد. <code>docker attach</code> به جریان ورودی/خروجی کانتینر متصل می‌شود اما تعاملی‌تر است. برای مشاهده لاگ‌های قدیمی، از <code>docker logs</code> استفاده کنید. لاگ‌های Docker در سیستم هاست در <code>/var/lib/docker/containers/</code> ذخیره می‌شوند."
+    },
+    {
+      "id": 454,
+      "category": "سیستم - مجازی‌سازی Docker",
+      "level": 4,
+      "text": "در Docker، برای حذف تمام کانتینرهای متوقف‌شده و ایمیج‌های استفاده نشده (برای آزادسازی فضا)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>docker container prune</code> (حذف کانتینرها)، <code>docker image prune</code> (حذف ایمیج‌ها)، <code>docker system prune</code> (همه موارد)",
+        "فقط <code>docker system prune</code>",
+        "فقط <code>docker container prune</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "Docker فضای دیسک را با دستورات <code>prune</code> آزاد می‌کند: <code>docker container prune</code> (حذف همه کانتینرهای متوقف‌شده)، <code>docker image prune</code> (حذف ایمیج‌های استفاده نشده یا dangling)، <code>docker volume prune</code> (حذف حجم‌های استفاده نشده)، <code>docker system prune</code> (همه موارد به‌همراه شبکه‌های استفاده نشده). با <code>-a</code> (all) تمام ایمیج‌های استفاده نشده (نه فقط dangling) حذف می‌شوند. <code>docker system df</code> نیز میزان استفاده از فضای دیسک را نشان می‌دهد."
+    },
+    {
+      "id": 455,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، چگونه می‌توان یک تابع را با آرگومان‌های ورودی تعریف کرد و از آن استفاده نمود؟",
+      "options": [
+        "با <code>myfunc() { echo \"Arg1: $1, Arg2: $2\"; }</code> و سپس <code>myfunc \"hello\" \"world\"</code>",
+        "فقط با <code>function</code>",
+        "با <code>def</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "در bash، توابع با <code>funcname() { ... }</code> یا <code>function funcname { ... }</code> تعریف می‌شوند. آرگومان‌ها با <code>$1</code>، <code>$2</code> و ... در دسترس هستند. <code>$#</code> تعداد آرگومان‌ها، <code>$@</code> همه آرگومان‌ها (تک‌تک)، <code>$*</code> همه آرگومان‌ها (یک رشته). برای برگرداندن مقدار، از <code>return</code> (برای کد خروجی) یا <code>echo</code> (برای خروجی) استفاده می‌شود. مثال: <code>sum() { echo $(($1 + $2)); }; result=$(sum 5 3)</code>."
+    },
+    {
+      "id": 456,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای اجرای یک اسکریپت به‌گونه‌ای که خطاها به یک فایل و خروجی معمولی به فایل دیگری هدایت شوند، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "<code>./script.sh &gt; output.log 2&gt; error.log</code>",
+        "<code>./script.sh &gt;& output.log</code>",
+        "<code>./script.sh 2&gt;&1 &gt; output.log</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در bash: <code>&gt;</code> برای STDOUT (خروجی معمولی) و <code>2&gt;</code> برای STDERR (خطاها) استفاده می‌شود. مثال: <code>./script.sh > output.log 2> error.log</code> خروجی و خطا را به فایل‌های جداگانه هدایت می‌کند. <code>&gt; output.log 2>&1</code> هر دو (STDOUT و STDERR) را به یک فایل هدایت می‌کند. <code>&gt;&gt;</code> برای Append (اضافه کردن به انتهای فایل) و <code>&>/dev/null</code> برای نادیده گرفتن همه خروجی‌ها استفاده می‌شود."
+    },
+    {
+      "id": 457,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، متغیر <code>$_</code> (آندرلاین) چه معنایی دارد و در چه شرایطی مفید است؟",
+      "options": [
+        "آخرین آرگومان آخرین فرمان اجرا شده را ذخیره می‌کند؛ برای استفاده مجدد از آرگومان آخر مفید است",
+        "شماره خط جاری",
+        "نام اسکریپت",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>$_</code> (underscore) یک متغیر ویژه در bash است که آخرین آرگومان فرمان قبلی را ذخیره می‌کند. مثال: <code>ls -l /etc/passwd; echo $_</code> خروجی <code>/etc/passwd</code> خواهد بود. در اسکریپت‌ها، برای استفاده مجدد از آرگومان آخر مفید است. همچنین در ابتدای اسکریپت، مسیر کامل اسکریپت را نشان می‌دهد. در برخی شل‌ها، <code>$_</code> همچنین مسیر آخرین فرمان اجرا شده را ذخیره می‌کند."
+    },
+    {
+      "id": 458,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای ایجاد یک پارتیشن GPT با <code>gdisk</code> یا <code>fdisk</code> و تغییر نوع پارتیشن به Linux LVM (8e00)، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "با <code>gdisk /dev/sdX</code>، ایجاد پارتیشن با <code>n</code>، تغییر نوع با <code>t</code> و وارد کردن <code>8e00</code> (یا <code>8e</code> برای fdisk قدیمی)",
+        "فقط با <code>fdisk</code>",
+        "فقط با <code>parted</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در <code>gdisk</code> (برای GPT): ۱. <code>gdisk /dev/sdX</code>. ۲. <code>n</code> (ایجاد پارتیشن جدید). ۳. انتخاب شماره، شروع، اندازه. ۴. <code>t</code> (تغییر نوع) و وارد کردن <code>8e00</code> (کد نوع برای Linux LVM در GPT). ۵. <code>w</code> (نوشتن و خروج). در <code>fdisk</code> قدیمی (MBR) از کد <code>8e</code> (هگزادسیمال) استفاده می‌شود. در <code>parted</code>: <code>set 1 lvm on</code> (بعد از ایجاد). نوع صحیح برای شناسایی LVM و RAID مهم است."
+    },
+    {
+      "id": 459,
+      "category": "مدیریت دیسک - پارتیشن‌بندی",
+      "level": 4,
+      "text": "برای نمایش اطلاعات دقیق یک دیسک (شامل مدل، اندازه، نوع، و جدول پارتیشن) در لینوکس، از چه دستوراتی می‌توان استفاده کرد؟",
+      "options": [
+        "<code>lsblk -f</code> (فایل‌سیستم)، <code>fdisk -l /dev/sdX</code> (جدول پارتیشن)، <code>parted -l</code> (اطلاعات کامل)، <code>blkid</code> (UUID و نوع)",
+        "فقط <code>lsblk</code>",
+        "فقط <code>fdisk</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای نمایش اطلاعات دیسک: <code>lsblk -f</code> (فایل‌سیستم‌ها، UUID، نقاط مانت)، <code>fdisk -l /dev/sdX</code> (جدول پارتیشن MBR/GPT و اندازه پارتیشن‌ها)، <code>parted -l</code> (اطلاعات کامل با پشتیبانی از دیسک‌های بزرگ)، <code>blkid</code> (UUID و نوع فایل‌سیستم)، <code>df -h</code> (فضای استفاده‌شده)، <code>lsblk</code> (ساختار درختی دیسک‌ها). هر کدام اطلاعات خاصی ارائه می‌دهند و برای عیب‌یابی مفید هستند."
+    },
+    {
+      "id": 460,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، برای تنظیم یک پسورد برای ویرایش خطوط بوت (محافظت از Single User Mode)، از چه دستوری استفاده می‌شود و فایل پیکربندی کدام است؟",
+      "options": [
+        "<code>grub2-setpassword</code> (یا <code>grub-mkpasswd-pbkdf2</code>) و ذخیره هش در <code>/boot/grub2/user.cfg</code> یا <code>/etc/grub.d/40_custom</code>",
+        "فقط <code>grub2-setpassword</code>",
+        "فقط <code>grub-mkpasswd-pbkdf2</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای محافظت از GRUB با پسورد: ۱. تولید هش: <code>grub2-mkpasswd-pbkdf2</code> (رمز را وارد کرده و هش تولید می‌کند). ۲. افزودن به <code>/etc/grub.d/40_custom</code> (یا فایل جداگانه): <code>set superusers=\"admin\"; password_pbkdf2 admin grub.pbkdf2.xxxx</code> (با هش تولید شده). ۳. به‌روزرسانی: <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>. روش ساده‌تر: <code>grub2-setpassword</code> که فایل <code>/boot/grub2/user.cfg</code> را ایجاد می‌کند. پسورد از ویرایش خطوط بوت (با کلید e) محافظت می‌کند."
+    },
+    {
+      "id": 461,
+      "category": "سیستم - بوت و GRUB",
+      "level": 4,
+      "text": "در GRUB2، پارامتر <code>nomodeset</code> چه کاربردی دارد و چه زمانی استفاده می‌شود؟",
+      "options": [
+        "بارگذاری درایورهای گرافیکی کرنل را غیرفعال می‌کند (برای جلوگیری از مشکلات نمایشی با کارت‌های گرافیک جدید، مانند صفحه سیاه یا flicker)",
+        "SELinux را غیرفعال می‌کند",
+        "حالت Single User را فعال می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "پارامتر <code>nomodeset</code> (No Mode Setting) در خط کرنل GRUB به کرنل می‌گوید از حالت‌های نمایش پیش‌فرض (KMS - Kernel Mode Setting) استفاده نکند. این کار برای رفع مشکلات نمایش (صفحه سیاه، flicker، یا resolution نامناسب) با کارت‌های گرافیک NVIDIA یا AMD در زمان بوت مفید است. پس از نصب درایور اختصاصی، معمولاً دیگر نیازی نیست. مثال: <code>linux /vmlinuz-... ro root=... nomodeset</code>."
+    },
+    {
+      "id": 462,
+      "category": "امنیت - SELinux",
+      "level": 4,
+      "text": "در SELinux، مفاهیم <code>Enforcing</code>، <code>Permissive</code> و <code>Disabled</code> چه تفاوتی دارند و چگونه می‌توان وضعیت را تغییر داد؟",
+      "options": [
+        "Enforcing: اعمال سیاست‌ها (فعال). Permissive: فقط لاگ می‌کند (بدون اعمال، برای دیباگ). Disabled: کاملاً غیرفعال (نیاز به ری‌استارت). با <code>setenforce 0|1</code> (موقت) و <code>/etc/selinux/config</code> (دائمی)",
+        "همه یکسان هستند",
+        "Permissive اعمال می‌کند",
+        "Disabled برای دیباگ است"
+      ],
+      "correct": 0,
+      "explanation": "SELinux سه حالت دارد: <b>Enforcing</b>: سیاست‌های امنیتی به‌طور کامل اعمال می‌شوند و دسترسی‌های غیرمجاز مسدود می‌شوند. <b>Permissive</b>: سیاست‌ها اعمال نمی‌شوند اما تخلفات در لاگ ثبت می‌شوند (برای دیباگ و شناسایی مشکلات). <b>Disabled</b>: SELinux کاملاً غیرفعال است (فقط با تغییر در <code>/etc/selinux/config</code> و ری‌استارت امکان‌پذیر است). <code>getenforce</code> وضعیت را نشان می‌دهد. <code>setenforce 0</code> (Permissive) و <code>setenforce 1</code> (Enforcing) تغییرات موقت هستند."
+    },
+    {
+      "id": 463,
+      "category": "امنیت - SELinux",
+      "level": 4,
+      "text": "در SELinux، برای مشاهده و تغییر context امنیتی یک فایل یا دایرکتوری، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>ls -Z</code> (مشاهده context)، <code>chcon -t type file</code> (تغییر موقت)، <code>restorecon -v file</code> (بازگردانی به context پیش‌فرض)",
+        "فقط <code>ls -Z</code>",
+        "فقط <code>chcon</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای مدیریت SELinux context: <code>ls -Z</code> (نمایش context فایل‌ها)، <code>chcon -t type file</code> (تغییر context به‌صورت موقت)، <code>restorecon -v file</code> (بازگردانی به context پیش‌فرض بر اساس سیاست‌ها)، <code>semanage fcontext -a -t type '/path(/.*)?'</code> (تعریف context دائمی برای مسیر)، و سپس <code>restorecon -Rv /path</code> (اعمال). برای مثال، تغییر context یک دایرکتوری وب: <code>chcon -R -t httpd_sys_content_t /var/www/html/</code>."
+    },
+    {
+      "id": 464,
+      "category": "مدیریت فایل‌ها - rsync پیشرفته",
+      "level": 4,
+      "text": "در rsync، تفاوت بین <code>--delete</code>، <code>--delete-before</code> و <code>--delete-after</code> چیست و هرکدام چه زمانی استفاده می‌شوند؟",
+      "options": [
+        "همه فایل‌های حذف‌شده از منبع را در مقصد حذف می‌کنند؛ <code>--delete-before</code> قبل از انتقال، <code>--delete-after</code> بعد از انتقال، <code>--delete</code> به‌طور خودکار انتخاب می‌کند",
+        "همه یکسان هستند",
+        "<code>--delete-before</code> بعد از انتقال است",
+        "<code>--delete-after</code> قبل از انتقال است"
+      ],
+      "correct": 0,
+      "explanation": "این گزینه‌ها همگی فایل‌هایی که در منبع وجود ندارند را از مقصد حذف می‌کنند (همگام‌سازی دقیق). تفاوت در زمان حذف: <code>--delete-before</code> فایل‌های اضافی را قبل از انتقال فایل‌های جدید حذف می‌کند (فضای مقصد را آزاد می‌کند). <code>--delete-after</code> بعد از انتقال حذف می‌کند (کمتر خطرناک). <code>--delete</code> (پیش‌فرض) به‌طور خودکار انتخاب می‌کند. <code>--delete-excluded</code> نیز فایل‌های مستثنی‌شده را حذف می‌کند. برای همگام‌سازی دقیق دایرکتوری‌ها مفید است."
+    },
+    {
+      "id": 465,
+      "category": "مدیریت فایل‌ها - rsync پیشرفته",
+      "level": 4,
+      "text": "در rsync، سوییچ <code>-z</code> (فشرده‌سازی) چه تأثیری بر انتقال داده دارد و چه زمانی استفاده از آن مفید است؟",
+      "options": [
+        "داده‌ها را در حین انتقال فشرده می‌کند (کاهش پهنای باند، افزایش مصرف CPU)؛ برای اتصالات کند (مانند WAN) مفید است اما برای شبکه‌های سریع توصیه نمی‌شود",
+        "فقط سرعت انتقال را افزایش می‌دهد",
+        "فقط مصرف CPU را کاهش می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>-z</code> (compress) در rsync داده‌ها را در حین انتقال فشرده می‌کند. این کار پهنای باند مصرفی را کاهش می‌دهد اما مصرف CPU را افزایش می‌دهد (هم در مبدا و هم در مقصد). برای اتصالات کند (WAN، اینترنت) مفید است اما برای شبکه‌های محلی سریع (LAN) که CPU می‌تواند محدودیت باشد، بهتر است از آن استفاده نشود. <code>-z</code> معمولاً با <code>-a</code> (archive) و <code>-v</code> (verbose) ترکیب می‌شود."
+    },
+    {
+      "id": 466,
+      "category": "سیستم - ابزارهای مانیتورینگ",
+      "level": 4,
+      "text": "ابزار <code>htop</code> چه تفاوتی با <code>top</code> دارد و چه قابلیت‌های اضافی ارائه می‌دهد؟",
+      "options": [
+        "htop یک نسخه بهبودیافته با رابط کاربری بهتر (رنگی، اسکرول عمودی/افقی، انتخاب با ماوس، kill تعاملی، درخت پردازش‌ها) و امکانات بیشتر است",
+        "هر دو یکسان هستند",
+        "top مدرن‌تر است",
+        "htop فقط روی دبیان کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>htop</code> یک مانیتورینگ پردازش تعاملی است که بر اساس <code>top</code> ساخته شده اما قابلیت‌های بیشتری دارد: نمایش درخت پردازش‌ها (با کلید F5)، اسکرول عمودی و افقی، انتخاب چندین پردازش با ماوس، kill تعاملی (F9)، تنظیم اولویت (nice) با F7/F8، جستجو با F3، فیلتر با F4، و نمایش رنگی بهتر. <code>top</code> ساده‌تر و در همه سیستم‌ها موجود است، اما <code>htop</code> باید نصب شود (<code>dnf install htop</code> یا <code>apt install htop</code>)."
+    },
+    {
+      "id": 467,
+      "category": "سیستم - ابزارهای مانیتورینگ",
+      "level": 4,
+      "text": "ابزار <code>iotop</code> چه کاربردی دارد و چه اطلاعاتی را نمایش می‌دهد؟",
+      "options": [
+        "I/O (ورودی/خروجی) دیسک را به‌صورت زنده (Live) نمایش می‌دهد و نشان می‌دهد کدام پردازش‌ها از دیسک بیشتر استفاده می‌کنند (خواندن/نوشتن)",
+        "فقط CPU را نشان می‌دهد",
+        "فقط حافظه را نشان می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>iotop</code> (I/O top) یک ابزار مانیتورینگ است که فعالیت I/O دیسک (خواندن و نوشتن) را به‌صورت زنده نمایش می‌دهد. برای شناسایی پردازش‌هایی که دیسک را سنگین می‌کنند (مثلاً بکاپ، دیتابیس، فایل‌سیستم‌های سنگین) بسیار مفید است. خروجی شامل PID، کاربر، سرعت خواندن/نوشتن، و درصد I/O است. نیاز به دسترسی root دارد (برای دسترسی به اطلاعات I/O). <code>iostat</code> (از sysstat) نیز اطلاعات I/O را در سطح دیسک و پارتیشن نمایش می‌دهد."
+    },
+    {
+      "id": 468,
+      "category": "سیستم - ابزارهای مانیتورینگ",
+      "level": 4,
+      "text": "ابزار <code>nethogs</code> چه کاربردی دارد و چه تفاوتی با <code>iftop</code> دارد؟",
+      "options": [
+        "<code>nethogs</code> پهنای باند شبکه را بر اساس پردازش (Process) نمایش می‌دهد (کدام برنامه از شبکه استفاده می‌کند)، در حالی که <code>iftop</code> بر اساس اتصال (Connection) نمایش می‌دهد",
+        "هر دو یکسان هستند",
+        "<code>iftop</code> بر اساس پردازش نمایش می‌دهد",
+        "<code>nethogs</code> بر اساس اتصال نمایش می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>nethogs</code> (Net Top) پهنای باند شبکه را بر اساس پردازش (Process) و PID نمایش می‌دهد و به شناسایی برنامه‌هایی که از شبکه استفاده می‌کنند کمک می‌کند. <code>iftop</code> (Interface Top) پهنای باند را بر اساس جریان (Connection) و آدرس IP مبدا/مقصد نمایش می‌دهد. هر دو برای عیب‌یابی شبکه مفید هستند اما <code>nethogs</code> برای شناسایی برنامه‌های خاص مفیدتر است. نیاز به دسترسی root دارند."
+    },
+    {
+      "id": 469,
+      "category": "امنیت - fail2ban پیشرفته",
+      "level": 4,
+      "text": "در fail2ban، برای تنظیم یک جیل (Jail) سفارشی برای محافظت از یک سرویس خاص (مثلاً پورت ۸۰ با لاگ خاص)، چه فایل‌هایی باید ویرایش شوند؟",
+      "options": [
+        "فایل <code>/etc/fail2ban/jail.local</code> (برای تنظیمات) و <code>/etc/fail2ban/filter.d/</code> (برای فیلترهای سفارشی)",
+        "فقط <code>/etc/fail2ban/jail.conf</code>",
+        "فقط <code>/etc/fail2ban/filter.d/</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیمات fail2ban: ۱. ایجاد/ویرایش <code>/etc/fail2ban/jail.local</code> (تنظیمات اصلی، از <code>jail.conf</code> ارث‌بری می‌کند). ۲. تعریف فیلتر (در صورت نیاز) در <code>/etc/fail2ban/filter.d/</code> با یک فایل <code>.conf</code> که شامل <code>failregex</code> (الگوی خطا) است. ۳. در <code>jail.local</code>: <code>[myservice]\\nenabled = true\\nport = http,https\\nfilter = myfilter\\nlogpath = /var/log/myapp.log\\nmaxretry = 3\\nbantime = 3600</code>. ۴. ری‌استارت: <code>systemctl restart fail2ban</code>. <code>fail2ban-regex</code> برای تست regex استفاده می‌شود."
+    },
+    {
+      "id": 470,
+      "category": "امنیت - fail2ban پیشرفته",
+      "level": 4,
+      "text": "در fail2ban، برای مشاهده وضعیت فعلی جیل‌ها و لیست IPهای ممنوع‌شده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>fail2ban-client status</code> (وضعیت کلی)، <code>fail2ban-client status sshd</code> (وضعیت جیل خاص)، <code>fail2ban-client banned</code> (لیست IPها در همه جیل‌ها)، <code>fail2ban-client unban IP</code> (رفع ممنوعیت)",
+        "فقط <code>fail2ban-client status</code>",
+        "فقط <code>fail2ban-client banned</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>fail2ban-client</code> ابزار خط فرمان برای تعامل با fail2ban است: <code>fail2ban-client status</code> (لیست جیل‌های فعال)، <code>fail2ban-client status sshd</code> (جزئیات جیل sshd شامل IPهای ممنوع‌شده و تعداد تلاش‌ها)، <code>fail2ban-client get sshd banip</code> (لیست IPهای ممنوع‌شده برای sshd)، <code>fail2ban-client set sshd unbanip IP</code> (رفع ممنوعیت یک IP). <code>fail2ban-client reload</code> برای بارگذاری مجدد تنظیمات و <code>fail2ban-client start/stop</code> برای مدیریت سرویس."
+    },
+    {
+      "id": 471,
+      "category": "شبکه - ابزارهای DNS",
+      "level": 4,
+      "text": "ابزار <code>dig</code> چگونه می‌تواند یک نوع رکورد خاص (مثلاً MX، TXT یا NS) از یک دامنه را جستجو کند؟",
+      "options": [
+        "<code>dig domain.com MX</code> (رکوردهای MX)، <code>dig domain.com TXT</code> (رکوردهای TXT)، <code>dig domain.com NS</code> (رکوردهای NS)، <code>dig +trace domain.com</code> برای دنبال‌کردن زنجیره اعتماد",
+        "فقط <code>dig domain.com</code>",
+        "فقط با <code>nslookup</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>dig</code> (Domain Information Groper) امکان جستجوی انواع رکوردهای DNS را فراهم می‌کند: <code>dig google.com A</code> (آدرس IPv4)، <code>dig google.com AAAA</code> (IPv6)، <code>dig google.com MX</code> (سرورهای ایمیل)، <code>dig google.com NS</code> (سرورهای نام)، <code>dig google.com TXT</code> (رکوردهای متنی مانند SPF)، <code>dig google.com CNAME</code>. <code>dig +trace</code> مسیر درخت DNS را دنبال می‌کند. <code>dig @8.8.8.8 domain.com</code> برای استفاده از یک سرور DNS خاص."
+    },
+    {
+      "id": 472,
+      "category": "شبکه - ابزارهای DNS",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/hosts</code> چه نقشی در وضوح نام (Name Resolution) دارد و چه اولویتی نسبت به DNS دارد؟",
+      "options": [
+        "نگاشت دستی IP به نام دامنه (محلی) را فراهم می‌کند و معمولاً قبل از DNS (با اولویت بالاتر) در <code>/etc/nsswitch.conf</code> بررسی می‌شود",
+        "فقط برای localhost",
+        "همیشه بعد از DNS بررسی می‌شود",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/hosts</code> یک فایل متنی برای نگاشت دستی آدرس‌های IP به نام‌های هاست است. ترتیب وضوح نام (Name Resolution) در <code>/etc/nsswitch.conf</code> با خط <code>hosts: files dns</code> مشخص شده است (معمولاً <code>files</code> یعنی hosts قبل از DNS). این فایل برای تعریف نام‌های محلی (مثل localhost)، مسدودسازی دامنه‌ها (با 127.0.0.1)، یا تست بدون DNS مفید است. مثال: <code>192.168.1.10 myserver.local</code>."
+    },
+    {
+      "id": 473,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "دستور <code>find</code> با <code>-exec</code> و <code>+</code> (به‌جای <code>\\;</code>) چه تفاوتی در اجرا دارد و چه تأثیری بر کارایی دارد؟",
+      "options": [
+        "<code>\\;</code> فرمان را برای هر فایل به‌طور جداگانه اجرا می‌کند، <code>+</code> فرمان را با لیستی از فایل‌ها (چندین آرگومان) یک‌بار اجرا می‌کند (کارایی بالاتر برای فرمان‌هایی که چندین آرگومان می‌پذیرند)",
+        "هر دو یکسان هستند",
+        "<code>+</code> کندتر است",
+        "<code>\\;</code> کارایی بالاتر دارد"
+      ],
+      "correct": 0,
+      "explanation": "در <code>find -exec</code>: <code>\\;</code> (با escape شده سیمی‌کالون) فرمان را برای هر فایل پیدا شده به‌صورت جداگانه اجرا می‌کند (تعداد فراخوانی‌ها برابر تعداد فایل‌ها). <code>+</code> (جایگزین <code>\\;</code>) فرمان را با چندین آرگومان (تا حد مجاز) یک‌بار یا چند بار اجرا می‌کند (کاهش تعداد فراخوانی‌ها و افزایش کارایی). مثال: <code>find . -name \"*.txt\" -exec grep \"pattern\" {} +</code> (grep را یک‌بار با همه فایل‌ها اجرا می‌کند). <code>+</code> برای فرمان‌هایی که چندین فایل را می‌پذیرند (مانند grep، rm، wc) مناسب است."
+    },
+    {
+      "id": 474,
+      "category": "مدیریت فایل‌ها - جستجو",
+      "level": 4,
+      "text": "دستور <code>find</code> با <code>-type</code> و <code>-perm</code> چگونه می‌توان برای یافتن فایل‌هایی با سطح دسترسی خاص استفاده کرد؟",
+      "options": [
+        "<code>find / -type f -perm 644</code> (فایل‌های معمولی با مجوز ۶۴۴)، <code>-perm -4000</code> (SUID حداقل)، <code>-perm /4000</code> (SUID دقیق)، و <code>-type d</code> برای دایرکتوری‌ها",
+        "فقط با <code>-perm</code>",
+        "فقط با <code>-type</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>find</code> با <code>-type</code> (نوع فایل: <code>f</code> معمولی، <code>d</code> دایرکتوری، <code>l</code> لینک، <code>b</code> بلاک دیوایس، <code>c</code> کاراکتر دیوایس) و <code>-perm</code> (مجوزها) قابل ترکیب است. <code>-perm 644</code> فایل‌هایی با مجوز دقیق ۶۴۴. <code>-perm -4000</code> فایل‌هایی که SUID دارند (۴۰۰۰ + مجوز دیگر). <code>-perm /4000</code> فایل‌هایی که حداقل SUID دارند. مثال: <code>find /usr/bin -type f -perm -4000</code> (یافتن فایل‌های SUID)، <code>find /home -type d -perm 777</code> (دایرکتوری‌های با مجوز کامل)."
+    },
+    {
+      "id": 475,
+      "category": "سیستم - پکیج‌منیجمنت پیشرفته",
+      "level": 4,
+      "text": "در RedHat-family، برای دیدن وابستگی‌های (Dependencies) یک بسته بدون نصب آن، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf repoquery --requires package_name</code>",
+        "<code>rpm -qR package_name</code>",
+        "<code>dnf deplist package_name</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای مشاهده وابستگی‌ها: <code>dnf repoquery --requires package_name</code> (مدرن، مخازن را جستجو می‌کند). <code>rpm -qR package_name</code> (قدیمی، فقط بسته‌های نصب‌شده را بررسی می‌کند). <code>dnf deplist package_name</code> (وابستگی‌های کامل با توضیحات). <code>dnf repoquery --requires --resolve package_name</code> نیز وابستگی‌های حل‌شده را نشان می‌دهد. برای مشاهده وابستگی‌های معکوس (بسته‌هایی که به این بسته وابسته هستند): <code>dnf repoquery --whatrequires package_name</code>."
+    },
+    {
+      "id": 476,
+      "category": "سیستم - پکیج‌منیجمنت پیشرفته",
+      "level": 4,
+      "text": "در Debian-family، برای دیدن وابستگی‌های یک بسته بدون نصب آن، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>apt-cache depends package_name</code> یا <code>apt show package_name</code>",
+        "<code>dpkg -s package_name</code>",
+        "<code>apt-get depends package_name</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای مشاهده وابستگی‌ها در دبیان: <code>apt-cache depends package_name</code> (وابستگی‌ها و پیش‌نیازها)، <code>apt show package_name</code> (اطلاعات کامل شامل Depends و Recommends)، <code>apt-get depends package_name</code> (مشابه apt-cache). <code>dpkg -s package_name</code> فقط برای بسته‌های نصب‌شده کار می‌کند. <code>apt-cache rdepends package_name</code> برای وابستگی‌های معکوس (بسته‌هایی که به این بسته وابسته هستند)."
+    },
+    {
+      "id": 477,
+      "category": "سیستم - پکیج‌منیجمنت پیشرفته",
+      "level": 4,
+      "text": "در RedHat-family، برای دانلود یک بسته (فایل RPM) بدون نصب آن و همچنین وابستگی‌هایش، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>dnf download --resolve package_name</code> (با <code>--destdir</code> برای مسیر خاص)",
+        "<code>yumdownloader --resolve package_name</code>",
+        "<code>rpm -qlp</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای دانلود بسته‌ها: <code>dnf download package_name</code> (دانلود بسته اصلی)، <code>dnf download --resolve package_name</code> (دانلود بسته و همه وابستگی‌ها). <code>--destdir</code> برای تعیین مسیر. <code>yumdownloader</code> ابزار قدیمی (از بسته yum-utils) که هنوز موجود است. پس از دانلود، با <code>rpm -ivh</code> یا <code>dnf localinstall</code> می‌توان نصب کرد. این برای سیستم‌های بدون اینترنت مفید است."
+    },
+    {
+      "id": 478,
+      "category": "سیستم - پکیج‌منیجمنت پیشرفته",
+      "level": 4,
+      "text": "در Debian-family، برای دانلود یک بسته (فایل DEB) بدون نصب آن و همچنین وابستگی‌هایش، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>apt-get download package_name</code> (فقط بسته اصلی)، سپس <code>apt-get -d install package_name</code> (برای وابستگی‌ها) یا <code>apt-cache depends</code>",
+        "فقط <code>apt-get download</code>",
+        "فقط <code>apt-get -d install</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای دانلود بسته‌ها در دبیان: <code>apt-get download package_name</code> (فقط بسته اصلی را در دایرکتوری جاری دانلود می‌کند). <code>apt-get -d install package_name</code> بسته و وابستگی‌ها را دانلود می‌کند اما نصب نمی‌کند (در <code>/var/cache/apt/archives/</code> ذخیره می‌شود). <code>apt-cache depends</code> برای شناسایی وابستگی‌ها. ابزار <code>apt-offline</code> نیز برای دانلود کامل بسته‌ها و وابستگی‌ها وجود دارد. پس از دانلود، با <code>dpkg -i</code> یا <code>apt install ./file.deb</code> نصب می‌شود."
+    },
+    {
+      "id": 479,
+      "category": "شبکه - TCP Wrappers",
+      "level": 4,
+      "text": "TCP Wrappers (در فایل‌های <code>/etc/hosts.allow</code> و <code>/etc/hosts.deny</code>) چه نقشی در امنیت سرویس‌های لینوکس دارد و چگونه کار می‌کند؟",
+      "options": [
+        "کنترل دسترسی در سطح سرویس (مانند sshd، vsftpd) بر اساس آدرس IP یا دامنه را فراهم می‌کند؛ اول allow سپس deny بررسی می‌شود",
+        "فقط برای sshd",
+        "فقط برای FTP",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "TCP Wrappers (با کتابخانه libwrap) یک مکانیسم کنترل دسترسی در سطح برنامه است که سرویس‌های متصل به آن (مانند sshd، vsftpd، sendmail) را بر اساس قوانین <code>/etc/hosts.allow</code> و <code>/etc/hosts.deny</code> محدود می‌کند. قوانین: هر خط شامل سرویس: آدرس IP/دامنه است. اول allow (در صورت تطابق اجازه داده می‌شود)، سپس deny. مثال: <code>sshd: 192.168.1.</code> (اجازه به شبکه ۱۹۲.۱۶۸.۱). در سیستم‌های مدرن، TCP Wrappers با فایروال‌ها (iptables/nftables) جایگزین شده است اما هنوز در برخی سرویس‌ها پشتیبانی می‌شود."
+    },
+    {
+      "id": 480,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای دریافت اطلاعات دقیق درباره یک ماژول کرنل بارگذاری‌شده (شامل پارامترها، وابستگی‌ها و مسیر)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>modinfo module_name</code>",
+        "<code>lsmod module_name</code>",
+        "<code>cat /proc/modules</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>modinfo module_name</code> اطلاعات مفصلی درباره یک ماژول کرنل (بارگذاری‌شده یا موجود) نمایش می‌دهد: مسیر، لایسنس، توضیحات، وابستگی‌ها، و پارامترهای قابل تنظیم. <code>lsmod</code> فقط لیست ماژول‌های بارگذاری‌شده را نمایش می‌دهد. <code>cat /proc/modules</code> اطلاعات خلاصه ماژول‌های بارگذاری‌شده را نشان می‌دهد. <code>modinfo -p module_name</code> نیز پارامترهای قابل تنظیم ماژول را نشان می‌دهد. برای تنظیم پارامترهای ماژول در زمان بارگذاری: <code>modprobe module_name parameter=value</code>."
+    },
+    {
+      "id": 481,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای تنظیم پارامترهای یک ماژول کرنل در زمان بوت (با استفاده از فایل‌های <code>/etc/modprobe.d/</code>)، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "ایجاد یک فایل با پسوند <code>.conf</code> در <code>/etc/modprobe.d/</code> با محتوای <code>options module_name param=value</code>",
+        "با <code>modprobe</code>",
+        "با <code>insmod</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای تنظیم پارامترهای یک ماژول کرنل به‌صورت دائمی، یک فایل <code>.conf</code> در <code>/etc/modprobe.d/</code> ایجاد کنید با محتوای: <code>options module_name param1=value1 param2=value2</code>. مثال: <code>options snd-hda-intel model=alc298</code>. این پارامترها در زمان بارگذاری ماژول اعمال می‌شوند. همچنین <code>install</code> و <code>blacklist</code> در همین دایرکتوری قابل تعریف هستند. تغییرات با <code>modprobe</code> یا ری‌استارت اعمال می‌شوند."
+    },
+    {
+      "id": 482,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای بررسی و تعمیر یک فایل‌سیستم EXT4 (مثلاً پس از قطع برق) بدون نیاز به unmount (در صورت امکان)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>e2fsck -p /dev/sdX</code> (بررسی خودکار با پاسخ مثبت)، <code>e2fsck -f /dev/sdX</code> (بررسی اجباری حتی اگر سالم باشد)، و <code>fsck.ext4 /dev/sdX</code>",
+        "فقط <code>fsck</code>",
+        "فقط <code>e2fsck</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>fsck</code> (File System Check) و <code>e2fsck</code> (نسخه EXT) برای بررسی و تعمیر فایل‌سیستم‌ها استفاده می‌شوند. <code>-p</code> (preen) به‌طور خودکار خطاهای ایمن را تعمیر می‌کند. <code>-f</code> (force) بررسی اجباری حتی اگر نشانه‌های مشکل وجود نداشته باشد. <code>-y</code> به همه سؤالات پاسخ Yes می‌دهد. معمولاً فایل‌سیستم باید unmount باشد (در غیر این صورت با <code>-M</code> (mount) یا <code>-n</code> (در حالت فقط خواندنی) می‌توان بررسی کرد اما تعمیر کامل نیاز به unmount دارد. در زمان بوت نیز به‌طور خودکار بررسی می‌شود (بر اساس <code>/etc/fstab</code>)."
+    },
+    {
+      "id": 483,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای مشاهده UUID (Universally Unique Identifier) یک پارتیشن و استفاده از آن در <code>/etc/fstab</code> به‌جای نام دستگاه، از چه دستوری استفاده می‌شود و چه مزیتی دارد؟",
+      "options": [
+        "<code>blkid /dev/sdX</code> (نمایش UUID)، <code>lsblk -f</code>، <code>ls -l /dev/disk/by-uuid/</code>. استفاده از UUID پایدارتر است زیرا نام دستگاه ممکن است تغییر کند (مثلاً sda به sdb)",
+        "فقط <code>blkid</code>",
+        "فقط <code>lsblk</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای دریافت UUID: <code>blkid /dev/sdX</code>، <code>lsblk -f</code>، <code>ls -l /dev/disk/by-uuid/</code>. UUID یک شناسه یکتا برای هر پارتیشن است که با فرمت‌کردن ایجاد می‌شود و در <code>/etc/fstab</code> قابل استفاده است (به‌جای <code>/dev/sdX</code>). مزیت: UUID پایدار است، در حالی که نام دستگاه (sda, sdb) ممکن است با تغییر ترتیب دیسک‌ها تغییر کند. مثال در fstab: <code>UUID=xxxx-xxxx / ext4 defaults 0 1</code>. <code>PARTUUID</code> نیز برای شناسایی پارتیشن‌ها در GPT وجود دارد."
+    },
+    {
+      "id": 484,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "در مجازی‌سازی، مفاهیم Guest OS، Host OS و Hypervisor به چه معنا هستند و هرکدام چه نقشی دارند؟",
+      "options": [
+        "Host OS: سیستمعامل میزبان (که Hypervisor روی آن اجرا می‌شود). Guest OS: سیستمعامل مهمان (که در VM اجرا می‌شود). Hypervisor: لایه‌ای که سخت‌افزار را بین Guestها به اشتراک می‌گذارد و مدیریت می‌کند",
+        "Host و Guest یکسان هستند",
+        "Hypervisor همان Guest است",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "در مجازی‌سازی: <b>Hypervisor</b> (مانند KVM، ESXi، VirtualBox) نرم‌افزاری است که ماشین‌های مجازی را ایجاد و مدیریت می‌کند و منابع سخت‌افزاری (CPU، RAM، دیسک، شبکه) را بین VMها تخصیص می‌دهد. <b>Host OS</b> سیستمعامل روی سرور فیزیکی (میزبان) که Hypervisor روی آن اجرا می‌شود (در Type 2 مانند VirtualBox) یا خود Hypervisor مستقیماً روی سخت‌افزار (Type 1 مانند KVM/ESXi). <b>Guest OS</b> سیستمعامل نصب‌شده در هر VM (مهمان) که از منابع تخصیص‌یافته استفاده می‌کند."
+    },
+    {
+      "id": 485,
+      "category": "سیستم - مجازی‌سازی عمومی",
+      "level": 4,
+      "text": "مفهوم Live Migration در مجازی‌سازی چیست و چگونه کار می‌کند؟",
+      "options": [
+        "انتقال یک ماشین مجازی در حال اجرا از یک سرور فیزیکی به سرور دیگر بدون قطعی سرویس (با انتقال حافظه و وضعیت پردازش‌ها به‌صورت تدریجی)",
+        "خاموش کردن VM و انتقال آن",
+        "کپی کردن فایل‌های VM",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "Live Migration (مهاجرت زنده) یک قابلیت پیشرفته مجازی‌سازی است که یک VM در حال اجرا را از یک هاست فیزیکی به هاست دیگر منتقل می‌کند بدون اینکه کاربر متوجه قطعی شود. فرآیند: ۱. حافظه VM به‌صورت تدریجی به هاست مقصد کپی می‌شود. ۲. تغییرات حافظه (dirty pages) در چند مرحله منتقل می‌شود. ۳. در نهایت، VM به‌صورت لحظه‌ای (با قطع کوتاه کمتر از ۱ ثانیه) سوییچ می‌شود. نیاز به ذخیره‌سازی مشترک (shared storage) و شبکه پرسرعت دارد. در KVM با <code>virsh migrate</code> و در Proxmox با رابط وب امکان‌پذیر است."
+    },
+    {
+      "id": 486,
+      "category": "شبکه - ابزارهای عیب‌یابی",
+      "level": 4,
+      "text": "اگر یک سرویس روی پورت ۸۰ گوش دهد اما از بیرون قابل دسترسی نباشد، چگونه می‌توان مشکل را گام‌به‌گام عیب‌یابی کرد؟",
+      "options": [
+        "۱. بررسی سرویس (<code>systemctl status httpd</code>). ۲. بررسی پورت محلی (<code>ss -lntp | grep 80</code>). ۳. بررسی فایروال (<code>iptables -L</code> یا <code>firewall-cmd</code>). ۴. بررسی اتصال از بیرون (<code>telnet IP 80</code>). ۵. بررسی شنود روی همه اینترفیس‌ها (0.0.0.0)",
+        "فقط فایروال را چک کنید",
+        "فقط سرویس را ری‌استارت کنید",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "مراحل عیب‌یابی دسترسی به سرویس: ۱. <code>systemctl status</code> (سرویس در حال اجراست؟). ۲. <code>ss -lntp | grep 80</code> (آیا پورت در حال گوش‌دادن است و روی کدام اینترفیس؟). ۳. فایروال: <code>iptables -L -n</code> یا <code>firewall-cmd --list-all</code> (آیا پورت باز است؟). ۴. <code>telnet localhost 80</code> (از داخل قابل دسترسی است؟). ۵. <code>telnet IP_SERVER 80</code> (از خارج از سرور). ۶. بررسی SELinux (<code>audit2allow</code>) در صورت مسدود شدن. همچنین بررسی Bind Address (0.0.0.0 vs 127.0.0.1)."
+    },
+    {
+      "id": 487,
+      "category": "شبکه - ابزارهای عیب‌یابی",
+      "level": 4,
+      "text": "برای عیب‌یابی مشکل DNS (مانند عدم وضوح نام)، چه مراحلی باید انجام داد؟",
+      "options": [
+        "۱. <code>ping 8.8.8.8</code> (تست اتصال). ۲. <code>cat /etc/resolv.conf</code> (بررسی DNS). ۳. <code>dig google.com @8.8.8.8</code> (تست با سرور خاص). ۴. <code>nslookup google.com</code>. ۵. بررسی فایل <code>/etc/hosts</code> و <code>/etc/nsswitch.conf</code>",
+        "فقط <code>nslookup</code>",
+        "فقط <code>ping</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "مراحل عیب‌یابی DNS: ۱. تست اتصال: <code>ping 8.8.8.8</code> (اگر کار نکرد، مشکل شبکه است). ۲. بررسی تنظیمات DNS: <code>cat /etc/resolv.conf</code> (آدرس سرور DNS صحیح است؟). ۳. تست با سرور DNS خاص: <code>dig google.com @8.8.8.8</code> (اگر کار کرد، مشکل سرور DNS است). ۴. تست با ابزارها: <code>nslookup google.com</code> یا <code>host google.com</code>. ۵. بررسی فایل hosts: <code>/etc/hosts</code> (ممکن است تداخل داشته باشد). ۶. بررسی ترتیب در <code>/etc/nsswitch.conf</code> (files dns)."
+    },
+    {
+      "id": 488,
+      "category": "امنیت - پورت‌های باز",
+      "level": 4,
+      "text": "برای شناسایی پورت‌های باز یک سیستم از داخل (بدون اسکن شبکه)، از چه دستوراتی می‌توان استفاده کرد و هرکدام چه اطلاعاتی می‌دهند؟",
+      "options": [
+        "<code>ss -lntp</code> (جزئیات کامل با PID و برنامه)، <code>lsof -i -P</code> (فایل‌های باز شبکه)، <code>netstat -tulpn</code> (قدیمی)، <code>nmap localhost</code> (اسکن محلی)",
+        "فقط <code>ss -lntp</code>",
+        "فقط <code>nmap localhost</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای شناسایی پورت‌های باز در سیستم محلی: <code>ss -lntp</code> (پورت‌های در حال گوش‌دادن با TCP، نمایش PID و برنامه). <code>lsof -i -P -n</code> (لیست سوکت‌های شبکه با جزئیات). <code>netstat -tulpn</code> (نسخه قدیمی، مشابه ss). <code>nmap localhost</code> (اسکن پورت‌ها از داخل، مشابه دید خارجی). <code>ss -lunp</code> برای UDP. هر کدام اطلاعات متفاوتی ارائه می‌دهند: ss سریع‌تر، lsof جزئیات فایل‌ها، nmap دید کامل‌تر."
+    },
+    {
+      "id": 489,
+      "category": "امنیت - پورت‌های باز",
+      "level": 4,
+      "text": "برای بستن یک پورت باز که توسط یک سرویس غیرضروری استفاده می‌شود، چه اقداماتی باید انجام داد؟",
+      "options": [
+        "شناسایی سرویس با <code>ss -lntp</code> یا <code>lsof -i :port</code>، سپس متوقف کردن (<code>systemctl stop</code>) و غیرفعال کردن (<code>systemctl disable</code>) سرویس، و بستن پورت در فایروال",
+        "فقط سرویس را متوقف کنید",
+        "فقط پورت را در فایروال ببندید",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای بستن پورت: ۱. شناسایی سرویس: <code>ss -lntp | grep :PORT</code> یا <code>lsof -i :PORT</code>. ۲. متوقف کردن سرویس: <code>systemctl stop SERVICE</code> (موقت). ۳. غیرفعال کردن از بوت: <code>systemctl disable SERVICE</code> (دائمی). ۴. اطمینان از بسته شدن پورت در فایروال: <code>firewall-cmd --remove-port=PORT/tcp --permanent</code> (در ردهت) یا <code>ufw deny PORT</code> (در دبیان). ۵. اگر سرویس به پورت خاصی نیاز ندارد اما از xinetd استفاده می‌کند، آن را در <code>/etc/xinetd.d/</code> غیرفعال کنید."
+    },
+    {
+      "id": 490,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "ابزار <code>dstat</code> چه کاربردی دارد و چه تفاوتی با <code>vmstat</code> یا <code>iostat</code> دارد؟",
+      "options": [
+        "<code>dstat</code> یک ابزار جامع برای نمایش آمار سیستم (CPU، حافظه، I/O، شبکه، و ...) به‌صورت هم‌زمان و با خروجی قابل خواندن‌تر است، در حالی که vmstat/iostat هرکدام بخش خاصی را نشان می‌دهند",
+        "همه یکسان هستند",
+        "dstat فقط CPU را نشان می‌دهد",
+        "vmstat فقط شبکه را نشان می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>dstat</code> یک ابزار قدرتمند و جامع برای نمایش آمار سیستم در زمان واقعی است که اطلاعات CPU، دیسک، شبکه، حافظه، و پردازش‌ها را به‌صورت هم‌زمان و با قالب‌بندی زیبا نمایش می‌دهد. <code>vmstat</code> (Virtual Memory Statistics) بر حافظه مجازی، CPU و I/O متمرکز است. <code>iostat</code> بر I/O دیسک. <code>dstat</code> همچنین می‌تواند به‌صورت CSV خروجی دهد و افزونه‌هایی دارد. مثال: <code>dstat -cdngy</code> (CPU، دیسک، شبکه، صفحه‌بندی، سیستم)."
+    },
+    {
+      "id": 491,
+      "category": "سیستم - ابزارهای پیشرفته",
+      "level": 4,
+      "text": "ابزار <code>glances</code> چه کاربردی دارد و چه مزیتی نسبت به <code>top</code> یا <code>htop</code> دارد؟",
+      "options": [
+        "glances یک مانیتورینگ سیستم چندمنظوره با رابط کاربری جذاب و قابلیت نمایش اطلاعات در سطح بالاتر (CPU، حافظه، دیسک، شبکه، دما، و فرآیندها) با قابلیت خروجی تحت وب و API است",
+        "فقط برای CPU",
+        "فقط برای شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "glances یک ابزار پیشرفته مانیتورینگ سیستم است که اطلاعات جامعی (CPU، RAM، DISK، NETWORK، TEMPERATURE، و PROCESSES) را در یک صفحه نمایش می‌دهد. مزایا: رابط رنگی و خوانا، نمایش آمار به‌صورت پیش‌بینی‌کننده (warnings/alerts)، قابلیت خروجی تحت وب (<code>-w</code>)، ذخیره در فایل، و API برای اتصال به ابزارهای دیگر. نیاز به نصب (<code>pip install glances</code> یا بسته) دارد و برای نظارت سریع بر سیستم بسیار مفید است."
+    },
+    {
+      "id": 492,
+      "category": "مدیریت فایل‌ها - فشرده‌سازی پیشرفته",
+      "level": 4,
+      "text": "برای فشرده‌سازی یک دایرکتوری کامل با استفاده از <code>tar</code> و <code>xz</code> با بهترین نسبت فشرده‌سازی، از چه دستوری استفاده می‌شود و چه سوییچ‌هایی برای کنترل سطح فشرده‌سازی وجود دارد؟",
+      "options": [
+        "<code>tar -cJf archive.tar.xz /path</code> (با xz) و با <code>XZ_OPT=\"-9\"</code> برای سطح ۹ (بیشترین فشرده‌سازی) یا <code>--block-size=... -J</code>",
+        "فقط <code>tar -czf</code>",
+        "فقط <code>tar -cjf</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای فشرده‌سازی با xz: <code>tar -cJf archive.tar.xz /path</code> (سوییچ <code>-J</code> برای xz). برای کنترل سطح فشرده‌سازی xz: <code>XZ_OPT=\"-9\" tar -cJf archive.tar.xz /path</code> (سطح ۹ بالاترین فشرده‌سازی، زمان بیشتر). همچنین <code>--block-size=... -J</code> برای اندازه بلوک. برای gzip: <code>tar -czf</code> با <code>GZIP=\"-9\"</code> یا <code>-9</code>. برای bzip2: <code>tar -cjf</code> با <code>BZIP2=\"-9\"</code>. xz معمولاً بهترین نسبت فشرده‌سازی را دارد اما کندترین است."
+    },
+    {
+      "id": 493,
+      "category": "مدیریت فایل‌ها - فشرده‌سازی پیشرفته",
+      "level": 4,
+      "text": "برای فشرده‌سازی یک فایل به‌صورت چندبخشی (Split) و سپس ادغام آن‌ها، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>tar -cJf - /path | split -b 100M - archive.tar.xz.part</code> (تقسیم به بخش‌های ۱۰۰ مگابایتی)، سپس <code>cat archive.tar.xz.part* &gt; archive.tar.xz</code> (ادغام)",
+        "فقط <code>split</code>",
+        "فقط <code>cat</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای ایجاد فایل‌های فشرده چندبخشی: ۱. فشرده‌سازی با tar و هدایت خروجی به split: <code>tar -cJf - /path | split -b 100M - archive.tar.xz.part</code> (ایجاد فایل‌های <code>archive.tar.xz.partaa, .partab, ...</code>). ۲. برای ادغام: <code>cat archive.tar.xz.part* &gt; archive.tar.xz</code>. ۳. سپس با <code>tar -xJf archive.tar.xz</code> Extract کنید. <code>split</code> سوییچ‌های <code>-b</code> (اندازه بایت)، <code>-d</code> (پسوند عددی)، <code>-a</code> (طول پسوند) دارد. این روش برای انتقال فایل‌های بزرگ روی رسانه‌های با محدودیت حجم مفید است."
+    },
+    {
+      "id": 494,
+      "category": "سیستم - زمان‌بندی پیشرفته",
+      "level": 4,
+      "text": "در systemd timers، تفاوت بین <code>OnCalendar</code> و <code>OnBootSec</code> و <code>OnUnitActiveSec</code> چیست و چگونه می‌توان یک تایمر برای اجرای روزانه تنظیم کرد؟",
+      "options": [
+        "<code>OnCalendar</code> (زمان مشخص مانند روزانه)، <code>OnBootSec</code> (چند ثانیه پس از بوت)، <code>OnUnitActiveSec</code> (چند ثانیه پس از آخرین اجرا). مثال: <code>OnCalendar=daily</code> برای اجرای روزانه",
+        "همه یکسان هستند",
+        "OnBootSec برای زمان مشخص است",
+        "OnCalendar برای پس از بوت است"
+      ],
+      "correct": 0,
+      "explanation": "در systemd timers: <code>OnCalendar</code> زمان مشخص (مثلاً <code>daily</code>، <code>weekly</code>، <code>*-*-* 02:00:00</code>). <code>OnBootSec</code> اجرا پس از بوت (مثلاً <code>5min</code>). <code>OnUnitActiveSec</code> اجرا پس از آخرین فعال‌سازی سرویس مرتبط. مثال فایل <code>myscript.timer</code>: <code>[Timer]\\nOnCalendar=daily\\nPersistent=true</code>. <code>Persistent=true</code> اجرا در صورت از دست رفتن زمان. سپس <code>systemctl enable myscript.timer</code>."
+    },
+    {
+      "id": 495,
+      "category": "سیستم - زمان‌بندی پیشرفته",
+      "level": 4,
+      "text": "برای اجرای یک فرمان در زمان مشخص با <code>at</code> و مشاهده/لغو کارهای زمان‌بندی‌شده، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>at 14:30</code> (ورود فرمان و Ctrl+D)، <code>atq</code> (مشاهده لیست)، <code>atrm job_number</code> (لغو کار)",
+        "فقط <code>at</code>",
+        "فقط <code>atq</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>at</code> برای اجرای یک‌باره فرمان‌ها در زمان مشخص: <code>at 14:30</code> (بعد از آن فرمان را وارد کرده و با Ctrl+D پایان دهید). <code>at now + 5 minutes</code> (۵ دقیقه دیگر). <code>atq</code> (یا <code>at -l</code>) لیست کارهای زمان‌بندی‌شده را نمایش می‌دهد. <code>atrm job_number</code> (یا <code>at -r job_number</code>) یک کار را حذف می‌کند. <code>at</code> از <code>/etc/at.allow</code> و <code>/etc/at.deny</code> برای کنترل دسترسی استفاده می‌کند."
+    },
+    {
+      "id": 496,
+      "category": "امنیت - پیکربندی SSH",
+      "level": 4,
+      "text": "برای افزایش امنیت SSH، علاوه بر تغییر پورت و غیرفعال کردن PasswordAuthentication، چه تنظیمات دیگری در <code>/etc/ssh/sshd_config</code> توصیه می‌شود؟",
+      "options": [
+        "AllowUsers (محدود کردن کاربران مجاز)، PermitRootLogin no، Protocol 2، MaxAuthTries 3، ClientAliveInterval 300 (قطع اتصالات بی‌فعال)، و UseDNS no (افزایش سرعت)",
+        "فقط PermitRootLogin no",
+        "فقط Protocol 2",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "توصیه‌های امنیتی SSH: <code>PermitRootLogin no</code> (غیرفعال کردن ورود root)، <code>PasswordAuthentication no</code> (استفاده از کلید)، <code>Protocol 2</code> (نسخه امن‌تر)، <code>AllowUsers user1 user2</code> (محدود کردن کاربران)، <code>MaxAuthTries 3</code> (تعداد تلاش‌ها)، <code>ClientAliveInterval 300</code> (قطع اتصالات بی‌فعال پس از ۵ دقیقه)، <code>PubkeyAuthentication yes</code> (فعال کردن کلید)، <code>UseDNS no</code> (افزایش سرعت با غیرفعال کردن DNS lookup)، و <code>Banner /etc/issue.net</code> (نمایش بنر قبل از ورود)."
+    },
+    {
+      "id": 497,
+      "category": "امنیت - پیکربندی SSH",
+      "level": 4,
+      "text": "در SSH، برای محدود کردن دسترسی یک کاربر به اجرای یک فرمان خاص (بدون دسترسی به شل کامل)، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "استفاده از <code>command=\"cmd\"</code> در فایل <code>authorized_keys</code> (قبل از کلید عمومی) یا استفاده از <code>ForceCommand</code> در <code>sshd_config</code> برای یک کاربر خاص",
+        "فقط با <code>ForceCommand</code>",
+        "فقط با <code>command=</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای محدود کردن کاربر SSH به یک فرمان خاص: ۱. در <code>~/.ssh/authorized_keys</code> قبل از کلید: <code>command=\"/usr/bin/backup\" ssh-rsa AAAA...</code> (کاربر فقط می‌تواند فرمان backup را اجرا کند). ۲. در <code>/etc/ssh/sshd_config</code> با <code>Match User username</code> و <code>ForceCommand /usr/bin/backup</code> (اجرای اجباری فرمان برای کاربر). این روش برای کاربران محدود (مثلاً بکاپ) بسیار مفید است و از دسترسی به شل جلوگیری می‌کند. همچنین <code>no-pty</code> و <code>no-port-forwarding</code> در authorized_keys برای محدودیت‌های بیشتر وجود دارد."
+    },
+    {
+      "id": 498,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل‌های <code>/etc/profile</code>، <code>/etc/bash.bashrc</code> و <code>~/.bashrc</code> چه تفاوتی دارند و هرکدام چه زمانی اجرا می‌شوند؟",
+      "options": [
+        "/etc/profile (سیستمی، لاگین شل)، /etc/bash.bashrc (سیستمی، غیرلاگین شل)، ~/.bashrc (کاربری، غیرلاگین شل مانند ترمینال‌های GUI)",
+        "همه یکسان هستند",
+        "~/.bashrc برای لاگین است",
+        "/etc/profile برای غیرلاگین است"
+      ],
+      "correct": 0,
+      "explanation": "در bash: <code>/etc/profile</code> (سیستمی، برای همه کاربران) در شل‌های لاگین (login shell) مانند ورود از کنسول یا SSH اجرا می‌شود. <code>/etc/bash.bashrc</code> (سیستمی) در شل‌های غیرلاگین (non-login) مانند ترمینال در محیط GUI اجرا می‌شود. <code>~/.bashrc</code> (کاربری) در شل‌های غیرلاگین اجرا می‌شود و برای تنظیمات شخصی مانند alias، PATH، و PS1 استفاده می‌شود. <code>~/.bash_profile</code> یا <code>~/.profile</code> نیز در لاگین شل کاربر اجرا می‌شود."
+    },
+    {
+      "id": 499,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "برای ایجاد یک Alias دائمی در bash که در همه نشست‌ها (شامل لاگین و غیرلاگین) در دسترس باشد، آن را در کدام فایل قرار می‌دهیم؟",
+      "options": [
+        "در <code>~/.bashrc</code> (برای کاربر) و <code>/etc/bash.bashrc</code> (برای همه کاربران)، یا <code>/etc/profile.d/alias.sh</code>",
+        "فقط <code>~/.bashrc</code>",
+        "فقط <code>/etc/profile</code>",
+        "فقط <code>~/.bash_profile</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای Alias دائمی: <code>~/.bashrc</code> (کاربر) یا <code>/etc/bash.bashrc</code> (سیستمی، همه کاربران) بهترین گزینه‌ها هستند زیرا در شل‌های غیرلاگین (ترمینال GUI) نیز اجرا می‌شوند. <code>/etc/profile.d/</code> با فایل‌های <code>.sh</code> نیز برای تنظیمات سیستمی کار می‌کند. <code>~/.bash_profile</code> فقط در لاگین شل اجرا می‌شود و اگر <code>~/.bashrc</code> را source نکند، alias در ترمینال GUI موجود نخواهد بود. مثال: <code>echo \"alias ll='ls -alh'\" >> ~/.bashrc</code>."
+    },
+    {
+      "id": 500,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، کدام یک از موارد زیر بهترین روش برای مدیریت بسته‌ها در توزیع‌های مبتنی بر RedHat (مانند AlmaLinux) است؟",
+      "options": [
+        "استفاده از <code>dnf</code> برای نصب، بروزرسانی و حذف بسته‌ها از مخازن، و <code>rpm</code> برای مدیریت بسته‌های محلی (آفلاین)",
+        "فقط <code>rpm</code>",
+        "فقط <code>yum</code>",
+        "فقط <code>dnf</code>"
+      ],
+      "correct": 0,
+      "explanation": "در RedHat-family، <code>dnf</code> ابزار اصلی مدیریت بسته‌ها از مخازن آنلاین است (نصب، بروزرسانی، حذف). <code>rpm</code> برای نصب مستقیم فایل‌های <code>.rpm</code> (آفلاین) و مدیریت پایین‌سطح (مثل <code>rpm -qa</code> برای لیست نصب‌شده‌ها، <code>rpm -qf</code> برای جستجو) استفاده می‌شود. <code>yum</code> قدیمی است و <code>dnf</code> جایگزین آن شده است. ترکیب <code>dnf</code> و <code>rpm</code> (با احتیاط) کارآمدترین روش است."
+    }
+  ]
+}

@@ -1,0 +1,706 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی نهایی (بخش 701 تا 750)",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - ادامه سوالات 701 تا 750",
+  "questions": [
+    {
+      "id": 701,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای مانت کردن یک سیستم فایل به‌صورت خودکار در زمان بوت، از کدام فایل استفاده می‌شود و ساختار هر خط در آن چگونه است؟",
+      "options": [
+        "فایل <code>/etc/fstab</code> با شش ستون: <code>device mountpoint fstype options dump pass</code>",
+        "فایل <code>/etc/mtab</code> با ساختار مشابه",
+        "فایل <code>/etc/fstab</code> با پنج ستون",
+        "فایل <code>/etc/mount.conf</code>"
+      ],
+      "correct": 0,
+      "explanation": "فایل <code>/etc/fstab</code> (File Systems Table) شامل شش ستون است: ۱. Device (UUID یا /dev/sdX)، ۲. Mount Point (نقطه اتصال)، ۳. File System Type (نوع فایل‌سیستم)، ۴. Options (گزینه‌های مانت مانند defaults, noatime)، ۵. Dump (بکاپ با dump، معمولاً ۰)، ۶. Pass (ترتیب بررسی با fsck، ۰=نخیر، ۱=ریشه، ۲=سایر پارتیشن‌ها). <code>mtab</code> فایل پویا برای مانت‌های فعلی است و نباید ویرایش شود."
+    },
+    {
+      "id": 702,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای افزودن یک پارتیشن جدید به <code>/etc/fstab</code> با استفاده از UUID به‌جای نام دستگاه، چگونه می‌توان UUID را پیدا کرد و چه مزیتی دارد؟",
+      "options": [
+        "با <code>blkid /dev/sdX</code> یا <code>lsblk -f</code>؛ مزیت: UUID پایدار است و با تغییر ترتیب دیسک‌ها تغییر نمی‌کند",
+        "با <code>ls -l /dev/disk/by-uuid/</code>؛ مزیت: خوانایی بهتر",
+        "با <code>df -h</code>؛ مزیت: سرعت بیشتر",
+        "با <code>mount</code>؛ مزیت: سادگی"
+      ],
+      "correct": 0,
+      "explanation": "برای یافتن UUID: <code>blkid /dev/sdX</code>، <code>lsblk -f</code>، یا <code>ls -l /dev/disk/by-uuid/</code>. مزیت استفاده از UUID این است که نام دستگاه (مانند sda, sdb) ممکن است با تغییر ترتیب دیسک‌ها تغییر کند، اما UUID منحصربه‌فرد و ثابت است. خط در fstab: <code>UUID=xxxx-xxxx /mnt ext4 defaults 0 2</code>."
+    },
+    {
+      "id": 703,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای مانت کردن یک سیستم فایل با گزینه‌های <code>noatime</code> و <code>nodiratime</code> در <code>/etc/fstab</code>، از چه ساختاری استفاده می‌شود و این گزینه‌ها چه تأثیری بر عملکرد دارند؟",
+      "options": [
+        "<code>/dev/sdX /mnt ext4 defaults,noatime,nodiratime 0 2</code>؛ این گزینه‌ها زمان دسترسی فایل‌ها را به‌روز نمی‌کنند و باعث کاهش I/O و افزایش کارایی می‌شوند",
+        "فقط <code>noatime</code> کافی است",
+        "این گزینه‌ها باعث کاهش امنیت می‌شوند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "گزینه <code>noatime</code> از به‌روزرسانی زمان دسترسی (atime) برای همه فایل‌ها جلوگیری می‌کند و <code>nodiratime</code> آن را برای دایرکتوری‌ها غیرفعال می‌کند. این کار تعداد عملیات نوشتن روی دیسک را کاهش داده و عملکرد را بهبود می‌بخشد، به‌ویژه در سرورها با I/O بالا. در fstab به‌صورت <code>defaults,noatime,nodiratime</code> نوشته می‌شود. معمولاً <code>noatime</code> به‌تنهایی کافی است و <code>nodiratime</code> ضمنی است."
+    },
+    {
+      "id": 704,
+      "category": "مدیریت دیسک - فایل‌سیستم",
+      "level": 4,
+      "text": "برای اعمال تغییرات در <code>/etc/fstab</code> بدون نیاز به ری‌استارت، از چه دستوری استفاده می‌شود و چگونه می‌توان یک پارتیشن را بدون unmount دوباره مانت (Remount) کرد؟",
+      "options": [
+        "<code>mount -a</code> (همه ورودی‌های fstab را مانت می‌کند) و <code>mount -o remount /mnt</code> (تغییر گزینه‌های مانت بدون unmount)",
+        "فقط <code>mount -a</code>",
+        "فقط <code>mount -o remount</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>mount -a</code> (all) همه پارتیشن‌های تعریف‌شده در <code>/etc/fstab</code> را که با گزینه <code>noauto</code> مشخص نشده‌اند، مانت می‌کند (برای اعمال تغییرات در fstab بدون ری‌استارت). <code>mount -o remount,rw /mnt</code> (remount) گزینه‌های مانت را تغییر می‌دهد (مثلاً از ro به rw) بدون نیاز به unmount و mount مجدد. این برای تغییر گزینه‌های مانت در حال اجرا مفید است."
+    },
+    {
+      "id": 705,
+      "category": "امنیت - SELinux",
+      "level": 4,
+      "text": "در SELinux، مفهوم <code>Boolean</code> چیست و چگونه می‌توان آن‌ها را مشاهده و تغییر داد؟",
+      "options": [
+        "Booleanها تنظیمات باینری (روشن/خاموش) هستند که رفتار SELinux را برای سرویس‌های خاص کنترل می‌کنند؛ با <code>getsebool -a</code> مشاهده و با <code>setsebool NAME on|off</code> تغییر می‌شوند",
+        "فقط با <code>semanage boolean</code>",
+        "فقط با <code>setsebool</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "Booleanهای SELinux تنظیمات باینری هستند که به‌جای تعریف context پیچیده، امکان تغییر رفتار سرویس‌ها را فراهم می‌کنند (مثلاً <code>httpd_can_network_connect</code>). <code>getsebool -a</code> (همه) و <code>getsebool NAME</code> (مشاهده یک). <code>setsebool NAME on|off</code> (موقت) و با <code>-P</code> (دائمی). همچنین <code>semanage boolean -l</code> و <code>semanage boolean -m --on NAME</code> برای مدیریت پیشرفته. Booleanها برای حل سریع مشکلات SELinux بدون تغییر context مفید هستند."
+    },
+    {
+      "id": 706,
+      "category": "امنیت - SELinux",
+      "level": 4,
+      "text": "برای غیرفعال کردن SELinux به‌صورت موقت (برای دیباگ) و دائمی، از چه دستوراتی استفاده می‌شود و کدام روش نیاز به ری‌استارت دارد؟",
+      "options": [
+        "موقت: <code>setenforce 0</code> (Permissive) و <code>setenforce 1</code> (Enforcing)؛ دائمی: ویرایش <code>/etc/selinux/config</code> و تنظیم <code>SELINUX=disabled</code> که نیاز به ری‌استارت دارد",
+        "فقط <code>setenforce</code>",
+        "فقط <code>/etc/selinux/config</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "تغییر موقت (نیاز به ری‌استارت ندارد): <code>setenforce 0</code> (Permissive: لاگ می‌کند اما مسدود نمی‌کند) و <code>setenforce 1</code> (Enforcing: اعمال می‌کند). تغییر دائمی: ویرایش <code>/etc/selinux/config</code>، تنظیم <code>SELINUX=disabled</code> (غیرفعال، نیاز به ری‌استارت دارد) یا <code>SELINUX=permissive</code> (نیاز به ری‌استارت ندارد اما پس از ری‌استارت در حالت Permissive می‌ماند). توجه: تغییر از <code>disabled</code> به <code>enforcing</code> نیاز به relabel دارد."
+    },
+    {
+      "id": 707,
+      "category": "امنیت - SELinux",
+      "level": 4,
+      "text": "در SELinux، ابزار <code>audit2allow</code> چه کاربردی دارد و چگونه می‌توان از آن برای ایجاد یک ماژول سیاست سفارشی استفاده کرد؟",
+      "options": [
+        "خطاهای DENIED را از لاگ audit می‌خواند و یک ماژول سیاست (Type Enforcement) برای اجازه‌دهی به آن فعالیت خاص تولید می‌کند: <code>grep denied /var/log/audit/audit.log | audit2allow -M mymodule && semodule -i mymodule.pp</code>",
+        "فقط خطاها را نمایش می‌دهد",
+        "فقط ماژول را نصب می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>audit2allow</code> از لاگ‌های SELinux (معمولاً <code>/var/log/audit/audit.log</code>) خطاهای دسترسی را استخراج کرده و ماژول سیاست مناسب را تولید می‌کند. مراحل: ۱. <code>grep denied /var/log/audit/audit.log | audit2allow -M mymodule</code> (تولید فایل‌های <code>mymodule.te</code> و <code>mymodule.pp</code>). ۲. <code>semodule -i mymodule.pp</code> (نصب ماژول). این روش برای رفع مشکلات SELinux بدون غیرفعال کردن آن توصیه می‌شود. همچنین <code>audit2allow -a</code> (همه خطاهای audit) و <code>audit2allow -d</code> (برای دایرکتوری) وجود دارد."
+    },
+    {
+      "id": 708,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای بررسی تاریخ انقضای یک گواهی SSL با استفاده از <code>openssl</code> و نمایش فقط تاریخ، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>openssl x509 -in cert.pem -enddate -noout</code>",
+        "<code>openssl x509 -in cert.pem -dates -noout</code>",
+        "<code>openssl x509 -in cert.pem -text -noout | grep \"Not After\"</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>openssl x509 -in cert.pem -enddate -noout</code> (فقط تاریخ انقضا) و <code>-startdate</code> (تاریخ شروع). <code>-dates</code> هر دو تاریخ را نشان می‌دهد. <code>-text -noout | grep \"Not After\"</code> نیز کار می‌کند اما verboseتر است. برای گواهی‌های سرور زنده: <code>echo | openssl s_client -connect host:443 -servername host 2>/dev/null | openssl x509 -enddate -noout</code>."
+    },
+    {
+      "id": 709,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای نمایش زنجیره گواهی (Certificate Chain) کامل یک وب‌سرور با استفاده از <code>openssl s_client</code> و ذخیره هر گواهی در یک فایل جداگانه، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>openssl s_client -connect host:443 -showcerts -servername host < /dev/null 2>/dev/null | sed -n '/-----BEGIN/,/-----END/p' > certs.pem</code> (همه در یک فایل) و سپس با <code>csplit</code> یا <code>awk</code> می‌توان جدا کرد",
+        "فقط <code>openssl s_client</code>",
+        "فقط <code>sed</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>openssl s_client -connect host:443 -showcerts -servername host </dev/null 2>/dev/null</code> گواهی‌ها را خروجی می‌دهد. با <code>sed -n '/-----BEGIN/,/-----END/p'</code> می‌توان بخش‌های PEM را استخراج کرد. برای جداسازی هر گواهی به فایل جداگانه، از <code>csplit -f cert- certs.pem '/-----BEGIN CERTIFICATE-----/' '{*}'</code> یا <code>awk</code> استفاده می‌شود. گواهی‌های زنجیره برای تأیید اعتبار ضروری هستند."
+    },
+    {
+      "id": 710,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای مشاهده لاگ‌های (Logs) یک سرویس خاص با فیلتر بر اساس اولویت (Priority) و زمان، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>journalctl -u service -p err --since \"1 hour ago\"</code>",
+        "<code>journalctl -u service -p 3</code> (سطح ۳ = Error)",
+        "هر دو گزینه",
+        "<code>journalctl -u service -f</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>journalctl -u service</code> (unit) لاگ‌های سرویس را نمایش می‌دهد. <code>-p</code> (priority) برای فیلتر بر اساس سطح (۰=emerg, ۱=alert, ۲=crit, ۳=err, ۴=warning, ۵=notice, ۶=info, ۷=debug). <code>--since</code> و <code>--until</code> برای بازه زمانی. <code>-f</code> (follow) برای دنبال‌کردن زنده. مثال: <code>journalctl -u sshd -p 3 --since \"1 hour ago\"</code> (خطاهای SSH در یک ساعت گذشته)."
+    },
+    {
+      "id": 711,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای تنظیم یک سرویس به‌گونه‌ای که پس از راه‌اندازی شبکه (<code>network.target</code>) و قبل از شروع سرویس دیگری (<code>httpd.service</code>) شروع شود، از چه دستوراتی در فایل unit استفاده می‌شود؟",
+      "options": [
+        "<code>After=network.target httpd.service</code> و <code>Before=httpd.service</code> در بخش [Unit]",
+        "فقط <code>After=network.target</code>",
+        "فقط <code>Before=httpd.service</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در بخش [Unit] فایل سرویس: <code>After=network.target httpd.service</code> (سرویس بعد از network و httpd شروع می‌شود). <code>Before=httpd.service</code> (سرویس قبل از httpd شروع می‌شود). همچنین <code>Wants</code> (وابستگی ضعیف) و <code>Requires</code> (وابستگی قوی) برای کنترل وابستگی‌ها. ترتیب با <code>After</code> و <code>Before</code> مدیریت می‌شود، نه با <code>Requires</code>."
+    },
+    {
+      "id": 712,
+      "category": "سیستم - خدمات",
+      "level": 4,
+      "text": "در systemd، برای ایجاد یک سرویس که در زمان بوت اجرا شود و در صورت خرابی (Restart) با تأخیر ۱۰ ثانیه دوباره شروع شود، از چه تنظیماتی در فایل unit استفاده می‌شود؟",
+      "options": [
+        "<code>Restart=always</code> و <code>RestartSec=10</code> در بخش [Service] و <code>WantedBy=multi-user.target</code> در بخش [Install]",
+        "فقط <code>Restart=always</code>",
+        "فقط <code>RestartSec=10</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در بخش [Service]: <code>Restart=always</code> (همیشه ری‌استارت، حتی اگر با کد ۰ خارج شود) یا <code>on-failure</code> (فقط در صورت خطا). <code>RestartSec=10</code> (تأخیر ۱۰ ثانیه بین ری‌استارت‌ها). <code>StartLimitIntervalSec</code> و <code>StartLimitBurst</code> برای محدود کردن تعداد ری‌استارت‌ها. در بخش [Install]: <code>WantedBy=multi-user.target</code> (فعال‌سازی در بوت). سپس <code>systemctl enable service</code>."
+    },
+    {
+      "id": 713,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش محتوای یک فایل با شماره خطوط و همچنین شماره خطوط خالی، از چه ترکیبی از دستورات می‌توان استفاده کرد؟",
+      "options": [
+        "<code>cat -n file</code> (شماره خطوط) و <code>cat -b file</code> (فقط خطوط غیرخالی)",
+        "<code>nl file</code> (شماره خطوط با فرمت دلخواه)",
+        "هر دو گزینه",
+        "<code>less -N file</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>cat -n</code> (number) همه خطوط را با شماره نمایش می‌دهد (شامل خطوط خالی). <code>cat -b</code> (body) فقط خطوط غیرخالی را شماره‌گذاری می‌کند. <code>nl file</code> (number lines) مشابه <code>cat -b</code> با فرمت‌های بیشتر (پشتیبانی از شماره‌گذاری بر اساس الگو). <code>less -N file</code> شماره خطوط را در less نمایش می‌دهد. <code>awk '{print NR\": \"$0}' file</code> نیز روش دیگری است."
+    },
+    {
+      "id": 714,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش دو فایل به‌صورت کنار هم (Side-by-Side) با استفاده از <code>pr</code> و تنظیم عرض صفحه، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>pr -m -w 80 file1 file2</code> (با عرض ۸۰ کاراکتر)",
+        "<code>pr -t file1 file2</code>",
+        "<code>pr -d file1 file2</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>pr -m</code> (merge) فایل‌ها را به‌صورت کنار هم (دو ستونی) چاپ می‌کند. <code>-w 80</code> عرض صفحه را به ۸۰ کاراکتر تنظیم می‌کند (پیش‌فرض ۷۲). <code>-t</code> (no header) هدرها را حذف می‌کند. <code>-d</code> فاصله‌گذاری دو برابر. <code>pr</code> برای چاپ و نمایش فرمت‌دهی شده فایل‌ها استفاده می‌شود. همچنین <code>paste file1 file2</code> و <code>diff -y</code> نیز خروجی side-by-side ارائه می‌دهند."
+    },
+    {
+      "id": 715,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای نمایش ۱۰ خط اول و ۱۰ خط آخر یک فایل (بدون اجرای دو دستور جداگانه) و همچنین نمایش خطوط میانی با استفاده از <code>sed</code> یا <code>awk</code>، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>sed -n '1,10p; $p' file</code> (۱۰ خط اول و آخر)، <code>sed -n '11,20p' file</code> (خطوط ۱۱ تا ۲۰)، <code>awk 'NR<=10 || NR>=(NF-10)' file</code>",
+        "فقط <code>sed</code>",
+        "فقط <code>awk</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "با <code>sed</code>: <code>sed -n '1,10p' file</code> (خطوط ۱ تا ۱۰)، <code>sed -n '$p' file</code> (آخرین خط)، <code>sed -n '1,10p; $p' file</code> (ترکیب). با <code>awk</code>: <code>awk 'NR<=10 || NR>=(NR-10)' file</code> (۱۰ خط اول و آخر). همچنین <code>head -10 file; tail -10 file</code> راحت‌ترین است اما دو دستور است. <code>tail -n +11 file | head -10</code> برای خطوط ۱۱ تا ۲۰."
+    },
+    {
+      "id": 716,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای شمارش تعداد وقوع یک کلمه خاص (مثلاً \"error\") در یک فایل با استفاده از <code>grep</code> و <code>wc</code>، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>grep -o 'error' file | wc -l</code> (تعداد وقوع، نه تعداد خطوط)",
+        "<code>grep -c 'error' file</code> (تعداد خطوط حاوی error)",
+        "هر دو گزینه (با تفاوت در خروجی)",
+        "<code>grep 'error' file | wc -l</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>grep -c 'error' file</code> تعداد خطوط حاوی 'error' را شمارش می‌کند (اگر یک خط چند بار error داشته باشد، یک بار شمارش می‌شود). <code>grep -o 'error' file | wc -l</code> با <code>-o</code> (only matching) هر وقوع را جداگانه نمایش می‌دهد و <code>wc -l</code> تعداد کل وقوع‌ها را نمایش می‌دهد. <code>grep 'error' file | wc -l</code> نیز خطوط را شمارش می‌کند. برای شمارش دقیق کلمات، از <code>grep -o -w 'error' file | wc -l</code> (کامل کلمه) استفاده می‌شود."
+    },
+    {
+      "id": 717,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در iptables، برای مسدود کردن ترافیک ورودی از یک آدرس IP خاص و همچنین ثبت (Logging) آن در syslog با یک پیشوند مشخص، از چه دستوراتی استفاده می‌شود و ترتیب آن‌ها چگونه است؟",
+      "options": [
+        "<code>iptables -A INPUT -s 1.2.3.4 -j LOG --log-prefix \"BLOCKED: \" --log-level 4</code> و سپس <code>iptables -A INPUT -s 1.2.3.4 -j DROP</code> (ترتیب: LOG قبل از DROP)",
+        "فقط <code>-j DROP</code>",
+        "فقط <code>-j LOG</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای لاگ و مسدودسازی: ۱. <code>iptables -A INPUT -s 1.2.3.4 -j LOG --log-prefix \"BLOCKED: \" --log-level 4</code> (ثبت در syslog با برچسب). ۲. <code>iptables -A INPUT -s 1.2.3.4 -j DROP</code> (مسدودسازی). ترتیب مهم است (LOG باید قبل از DROP باشد تا لاگ ثبت شود). <code>--log-level 4</code> (warning) سطح syslog را تنظیم می‌کند. برای مشاهده لاگ‌ها: <code>grep \"BLOCKED\" /var/log/messages</code> یا <code>journalctl -k -f</code>."
+    },
+    {
+      "id": 718,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در iptables، برای محدود کردن نرخ (Rate Limiting) اتصالات SSH (مثلاً حداکثر ۳ تلاش در دقیقه) برای جلوگیری از Brute Force، از چه دستوراتی استفاده می‌شود و از کدام ماژول‌ها استفاده می‌شود؟",
+      "options": [
+        "استفاده از ماژول <code>recent</code>: <code>iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 -j DROP</code> و <code>iptables -A INPUT -p tcp --dport 22 -m recent --set -j ACCEPT</code>",
+        "استفاده از ماژول <code>limit</code>",
+        "استفاده از ماژول <code>connlimit</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "ماژول <code>recent</code> برای Rate Limiting بر اساس آدرس IP استفاده می‌شود. قوانین: ۱. <code>iptables -A INPUT -p tcp --dport 22 -m recent --set</code> (اضافه کردن IP به لیست). ۲. <code>iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 -j DROP</code> (اگر بیش از ۳ تلاش در ۶۰ ثانیه، مسدود کن). <code>--hitcount 4</code> به معنی ۴ تلاش (شامل فعلی) است. ماژول <code>limit</code> برای محدود کردن نرخ بسته‌ها (و نه اتصالات) و <code>connlimit</code> برای تعداد اتصالات هم‌زمان استفاده می‌شود."
+    },
+    {
+      "id": 719,
+      "category": "شبکه - فایروال پیشرفته",
+      "level": 4,
+      "text": "در firewalld، برای محدود کردن نرخ (Rate Limiting) اتصالات به یک پورت خاص با استفاده از Rich Rules، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --permanent --add-rich-rule='rule family=\"ipv4\" source address=\"0.0.0.0/0\" service name=\"ssh\" limit value=\"3/m\" accept'</code> (حداکثر ۳ اتصال در دقیقه)",
+        "<code>firewall-cmd --add-rich-rule='rule service name=\"ssh\" limit value=\"3/m\" drop'</code>",
+        "هر دو گزینه",
+        "<code>firewall-cmd --add-limit</code>"
+      ],
+      "correct": 0,
+      "explanation": "در firewalld، Rich Rules با <code>limit</code> برای Rate Limiting: <code>firewall-cmd --permanent --add-rich-rule='rule family=\"ipv4\" source address=\"0.0.0.0/0\" service name=\"ssh\" limit value=\"3/m\" accept'</code> (اجازه ۳ اتصال در دقیقه). همچنین می‌توان با <code>reject</code> یا <code>drop</code> به‌جای <code>accept</code> استفاده کرد. <code>value=\"3/m\"</code> به معنی ۳ در دقیقه، <code>3/s</code> (ثانیه)، <code>3/h</code> (ساعت). سپس <code>firewall-cmd --reload</code>."
+    },
+    {
+      "id": 720,
+      "category": "امنیت - SSH کلید",
+      "level": 4,
+      "text": "در SSH، برای استفاده از یک کلید خصوصی که با رمز عبور (Passphrase) محافظت شده است بدون نیاز به وارد کردن هر بار رمز، از چه ابزاری استفاده می‌شود و چگونه کار می‌کند؟",
+      "options": [
+        "استفاده از <code>ssh-agent</code> و <code>ssh-add</code>؛ رمز عبور یک بار وارد شده و در agent ذخیره می‌شود تا نشست کاربر ادامه داشته باشد",
+        "فقط <code>ssh-add</code>",
+        "فقط <code>ssh-agent</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>ssh-agent</code> یک برنامه پس‌زمینه است که کلیدهای خصوصی را با رمز عبور (Passphrase) در حافظه نگه می‌دارد. <code>ssh-add</code> کلید را به agent اضافه می‌کند و رمز عبور را یک بار می‌پرسد. سپس تا پایان نشست، دیگر نیازی به وارد کردن رمز نیست. <code>ssh-agent bash</code> (شروع agent در شل) و <code>ssh-add ~/.ssh/id_rsa</code> (افزودن کلید). با <code>ssh-add -l</code> می‌توان لیست کلیدهای agent را مشاهده کرد. <code>ssh-add -d</code> برای حذف کلید."
+    },
+    {
+      "id": 721,
+      "category": "امنیت - SSH کلید",
+      "level": 4,
+      "text": "در SSH، برای تغییر رمز عبور (Passphrase) یک کلید خصوصی موجود، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>ssh-keygen -p -f ~/.ssh/id_rsa</code>",
+        "<code>ssh-keygen -P oldpass -N newpass -f key</code>",
+        "هر دو گزینه",
+        "<code>ssh-keygen -r</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>ssh-keygen -p -f ~/.ssh/id_rsa</code> (تغییر رمز عبور کلید، به‌صورت تعاملی). <code>ssh-keygen -P oldpass -N newpass -f key</code> (با مشخص کردن رمز قدیم و جدید در خط فرمان، برای اسکریپت‌ها). <code>-p</code> (change passphrase) و <code>-f</code> (file) مسیر کلید را مشخص می‌کند. بدون <code>-f</code>، کلید پیش‌فرض <code>~/.ssh/id_rsa</code> استفاده می‌شود. <code>-r</code> برای تغییر نام وجود ندارد."
+    },
+    {
+      "id": 722,
+      "category": "امنیت - SSH کلید",
+      "level": 4,
+      "text": "برای کپی کردن کلید عمومی به یک سرور (برای احراز هویت بدون پسورد) با استفاده از <code>ssh-copy-id</code> و همچنین به‌صورت دستی، از چه روش‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>ssh-copy-id user@host</code> (خودکار) و دستی: <code>cat ~/.ssh/id_rsa.pub | ssh user@host \"mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys\"</code>",
+        "فقط <code>ssh-copy-id</code>",
+        "فقط <code>cat</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "روش خودکار: <code>ssh-copy-id user@host</code> (کلید را به <code>~/.ssh/authorized_keys</code> در سرور اضافه می‌کند). روش دستی: <code>cat ~/.ssh/id_rsa.pub | ssh user@host \"mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys\"</code>. همچنین با <code>scp</code> می‌توان کلید را کپی کرد و سپس دستی اضافه کرد. پس از کپی، اتصال با کلید بدون پسورد (یا با passphrase در agent) امکان‌پذیر است. مجوزهای <code>~/.ssh</code> باید ۷۰۰ و <code>authorized_keys</code> ۶۰۰ باشد."
+    },
+    {
+      "id": 723,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای تعریف یک تابع (Function) که آرگومان‌های متغیر (Variable Arguments) بگیرد و یک رشته را به‌عنوان خروجی برگرداند، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "تابع با <code>myfunc() { echo \"$@\"; }</code> و فراخوانی با <code>myfunc arg1 arg2 arg3</code> که <code>$@</code> همه آرگومان‌ها را برمی‌گرداند",
+        "فقط با <code>$*</code>",
+        "فقط با <code>$1</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "در bash، توابع با <code>funcname() { ... }</code> تعریف می‌شوند. <code>$@</code> (هر آرگومان جدا) و <code>$*</code> (همه آرگومان‌ها به‌عنوان یک رشته) برای آرگومان‌های متغیر استفاده می‌شوند. <code>$#</code> تعداد آرگومان‌ها را نشان می‌دهد. برای برگرداندن مقدار، از <code>echo</code> استفاده می‌شود و خروجی با <code>$(myfunc)</code> گرفته می‌شود. مثال: <code>sum() { echo $(($1 + $2)); }</code> و <code>result=$(sum 5 3)</code>."
+    },
+    {
+      "id": 724,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای نوشتن یک تابع که یک آرگومان را به‌عنوان ورودی دریافت کرده و یک کد خروجی (Exit Code) برمی‌گرداند، از چه ساختاری استفاده می‌شود و چگونه کد خروجی را بررسی می‌کنیم؟",
+      "options": [
+        "<code>myfunc() { [ \"$1\" = \"yes\" ] && return 0 || return 1; }</code> و با <code>myfunc yes; echo $?</code> کد خروجی بررسی می‌شود",
+        "فقط با <code>exit</code>",
+        "فقط با <code>return</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "توابع در bash از <code>return</code> برای برگرداندن کد خروجی (Exit Code) استفاده می‌کنند (برخلاف <code>exit</code> که کل اسکریپت را خاتمه می‌دهد). کد خروجی با <code>$?</code> پس از فراخوانی تابع قابل بررسی است. مثال: <code>myfunc() { if [ \"$1\" = \"yes\" ]; then return 0; else return 1; fi; }</code>. سپس <code>myfunc yes && echo \"OK\" || echo \"FAIL\"</code>. <code>return</code> فقط اعداد ۰ تا ۲۵۵ را می‌پذیرد."
+    },
+    {
+      "id": 725,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای ایجاد یک متغیر با ویژگی فقط خواندنی (Readonly) که در سراسر اسکریپت قابل دسترسی باشد، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>readonly VAR=value</code> یا <code>declare -r VAR=value</code>",
+        "فقط <code>readonly</code>",
+        "فقط <code>declare -r</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "هر دو روش متغیر را فقط خواندنی می‌کنند: <code>readonly VAR=value</code> و <code>declare -r VAR=value</code>. تلاش برای تغییر مقدار بعداً با خطا مواجه می‌شود. <code>readonly -p</code> لیست متغیرهای فقط خواندنی را نمایش می‌دهد. همچنین <code>declare -r</code> برای آرایه‌ها نیز کار می‌کند. این ویژگی برای ثابت‌های اسکریپت مفید است."
+    },
+    {
+      "id": 726,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای مشاهده تمام متغیرهای تعریف‌شده در شل جاری (شامل متغیرهای محلی و محیطی)، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>set</code> (متغیرهای محلی و محیطی، شامل توابع)",
+        "<code>env</code> (فقط متغیرهای محیطی)",
+        "هر دو گزینه (با تفاوت در خروجی)",
+        "<code>export</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>set</code> (بدون آرگومان) همه متغیرهای محلی، متغیرهای محیطی، و توابع را در شل جاری نمایش می‌دهد. <code>env</code> (یا <code>printenv</code>) فقط متغیرهای محیطی (export شده) را نمایش می‌دهد. <code>declare</code> با <code>-p</code> نیز متغیرها را نمایش می‌دهد. <code>set | grep VAR</code> برای جستجوی یک متغیر خاص مفید است."
+    },
+    {
+      "id": 727,
+      "category": "اسکریپت‌نویسی - پیشرفته",
+      "level": 4,
+      "text": "در bash، برای اجرای یک فرمان و ذخیره خروجی آن به‌همراه خطاها (STDERR) در یک متغیر، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "<code>output=$(command 2>&1)</code> (هر دو خروجی و خطا)",
+        "<code>output=$(command) 2>&1</code>",
+        "هر دو گزینه",
+        "<code>output=`command 2>&1`</code>"
+      ],
+      "correct": 2,
+      "explanation": "برای ذخیره خروجی و خطا در یک متغیر: <code>output=$(command 2>&1)</code> یا <code>output=`command 2>&1`</code>. <code>2>&1</code> STDERR (۲) را به STDOUT (۱) هدایت می‌کند. برای ذخیره جداگانه: <code>output=$(command) 2>error.log</code>. توجه داشته باشید که <code>$()</code> نسبت به <code>`...`</code> توصیه می‌شود."
+    },
+    {
+      "id": 728,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/security/limits.conf</code> چه نقشی دارد و چگونه می‌توان محدودیت‌های منابع (مانند تعداد فایل‌های باز) را برای یک کاربر خاص تنظیم کرد؟",
+      "options": [
+        "محدودیت‌های منابع سطح کاربر (مانند nofile, nproc, cpu) را تنظیم می‌کند؛ فرمت: <code>domain type item value</code> (مثلاً <code>user soft nofile 4096</code>)",
+        "فقط برای root",
+        "فقط برای گروه‌ها",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/security/limits.conf</code> برای تنظیم محدودیت‌های منابع (ulimit) برای کاربران و گروه‌ها استفاده می‌شود. فرمت: <code>domain type item value</code> (domain: کاربر یا گروه با <code>@</code>، type: soft/hard، item: nofile, nproc, cpu, etc.). مثال: <code>user1 soft nofile 4096</code> (۴۰۹۶ فایل باز)، <code>@admin hard nproc 50</code> (۵۰ پردازش). تغییرات پس از لاگین مجدد اعمال می‌شود. همچنین <code>/etc/security/limits.d/</code> برای تنظیمات جداگانه."
+    },
+    {
+      "id": 729,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/sudoers</code> و ابزار <code>visudo</code> چه نقشی در مدیریت دسترسی‌ها دارند و چرا باید از <code>visudo</code> استفاده کرد؟",
+      "options": [
+        "<code>/etc/sudoers</code> قوانین sudo را تعریف می‌کند؛ <code>visudo</code> فایل را با بررسی سینتکس (Syntax Check) ویرایش می‌کند تا از خطاهای کشنده جلوگیری کند",
+        "فقط <code>visudo</code>",
+        "فقط <code>/etc/sudoers</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/sudoers</code> شامل قوانین مجوز sudo است. هرگز نباید مستقیماً با ویرایشگر معمولی ویرایش شود. <code>visudo</code> ابزار امن برای ویرایش این فایل است که سینتکس را بررسی می‌کند و در صورت خطا از ذخیره جلوگیری می‌کند (در غیر این صورت، sudo کاملاً از کار می‌افتد). <code>visudo</code> همچنین از قفل‌گذاری (locking) برای جلوگیری از ویرایش هم‌زمان استفاده می‌کند. مثال: <code>visudo -f /etc/sudoers.d/custom</code>."
+    },
+    {
+      "id": 730,
+      "category": "سیستم - فایل‌های پیکربندی",
+      "level": 4,
+      "text": "در لینوکس، فایل <code>/etc/login.defs</code> چه تنظیماتی را کنترل می‌کند و چه تأثیری بر ایجاد کاربر جدید دارد؟",
+      "options": [
+        "تنظیمات پیش‌فرض برای ایجاد کاربر (مانند محدوده UID/GID، طول عمر رمز عبور، و umask) را کنترل می‌کند",
+        "فقط برای root",
+        "فقط برای پسورد",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/login.defs</code> تنظیمات سیستمی مدیریت کاربر را تعریف می‌کند: <code>UID_MIN</code>/<code>UID_MAX</code> (محدوده UID برای کاربران معمولی)، <code>GID_MIN</code>/<code>GID_MAX</code>، <code>PASS_MAX_DAYS</code> (انقضای رمز)، <code>PASS_MIN_DAYS</code> (حداقل فاصله بین تغییرات)، <code>UMASK</code> (ماسک پیش‌فرض)، <code>ENCRYPT_METHOD</code> (الگوریتم هش SHA512). همچنین <code>CREATE_HOME</code> برای ساخت هوم دایرکتوری. این تنظیمات بر دستورات <code>useradd</code> و <code>passwd</code> تأثیر می‌گذارند."
+    },
+    {
+      "id": 731,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای نمایش اطلاعات یک ماژول کرنل (مانند وابستگی‌ها، مسیر، و پارامترهای قابل تنظیم) و همچنین تنظیم یک پارامتر برای آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>modinfo module_name</code> (اطلاعات) و <code>modprobe module_name param=value</code> (تنظیم پارامتر هنگام بارگذاری)",
+        "فقط <code>modinfo</code>",
+        "فقط <code>modprobe</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>modinfo module_name</code> اطلاعات ماژول را نمایش می‌دهد: مسیر، لایسنس، توضیحات، وابستگی‌ها (depends)، و پارامترهای قابل تنظیم (parm). <code>modprobe module_name param=value</code> ماژول را با پارامتر مشخص بارگذاری می‌کند. برای تنظیم دائمی پارامتر، فایل <code>/etc/modprobe.d/</code> با <code>options module_name param=value</code> ایجاد می‌شود. همچنین <code>modinfo -p module_name</code> فقط پارامترها را نمایش می‌دهد."
+    },
+    {
+      "id": 732,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای نمایش لیست ماژول‌های کرنل بارگذاری‌شده به‌همراه وابستگی‌ها و تعداد استفاده‌کنندگان، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>lsmod</code>",
+        "<code>cat /proc/modules</code>",
+        "هر دو گزینه (با تفاوت در قالب)",
+        "<code>modinfo -l</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>lsmod</code> (list modules) لیست ماژول‌های بارگذاری‌شده را با سه ستون نمایش می‌دهد: نام ماژول، اندازه، و تعداد استفاده‌کنندگان (و نام ماژول‌های استفاده‌کننده). <code>cat /proc/modules</code> اطلاعات مشابهی را در قالب خام (برای اسکریپت‌ها) نمایش می‌دهد. <code>lsmod</code> خوانا‌تر است. <code>modinfo</code> برای اطلاعات یک ماژول خاص است."
+    },
+    {
+      "id": 733,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای بارگذاری یک ماژول کرنل که به‌طور خودکار شناسایی نمی‌شود (مثلاً درایور سخت‌افزار قدیمی)، از چه دستوری استفاده می‌شود و چگونه می‌توان آن را در زمان بوت بارگذاری کرد؟",
+      "options": [
+        "بارگذاری: <code>modprobe module_name</code>؛ دائمی: افزودن نام ماژول به <code>/etc/modules-load.d/module.conf</code> (در systemd)",
+        "فقط <code>modprobe</code>",
+        "فقط <code>/etc/modules-load.d/</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای بارگذاری دستی: <code>modprobe module_name</code> (با وابستگی‌ها). برای بارگذاری خودکار در بوت: ایجاد فایل <code>/etc/modules-load.d/module.conf</code> با نام ماژول (یک نام در هر خط). در sysvinit قدیمی، فایل <code>/etc/modules</code> استفاده می‌شد. همچنین <code>insmod</code> (بدون وابستگی) و <code>rmmod</code> (حذف) وجود دارند، اما <code>modprobe</code> توصیه می‌شود."
+    },
+    {
+      "id": 734,
+      "category": "سیستم - کرنل و ماژول‌ها",
+      "level": 4,
+      "text": "برای حذف یک ماژول کرنل بارگذاری‌شده و همچنین جلوگیری از بارگذاری مجدد آن، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>rmmod module_name</code> (حذف) و <code>modprobe -r module_name</code> (حذف با وابستگی‌ها)؛ برای جلوگیری: اضافه کردن به <code>/etc/modprobe.d/blacklist.conf</code> با <code>blacklist module_name</code>",
+        "فقط <code>rmmod</code>",
+        "فقط <code>modprobe -r</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای حذف: <code>rmmod module_name</code> (اگر وابستگی نداشته باشد) و <code>modprobe -r module_name</code> (حذف ماژول و وابستگی‌های آن). برای جلوگیری از بارگذاری مجدد (در بوت): <code>blacklist module_name</code> در <code>/etc/modprobe.d/blacklist.conf</code>. توجه: blacklist از بارگذاری خودکار جلوگیری می‌کند اما با <code>modprobe</code> دستی همچنان قابل بارگذاری است. برای جلوگیری کامل، از <code>install /bin/false</code> نیز استفاده می‌شود."
+    },
+    {
+      "id": 735,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "در LVM، برای نمایش اطلاعات یک Physical Volume (PV) مانند اندازه، فضای استفاده‌شده، و Volume Group آن، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>pvdisplay /dev/sdX</code> (اطلاعات کامل) و <code>pvs</code> (خلاصه)",
+        "فقط <code>pvdisplay</code>",
+        "فقط <code>pvs</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>pvdisplay /dev/sdX</code> اطلاعات کامل PV: اندازه کل، فضای استفاده‌شده/آزاد، PE (Physical Extent) size، و Volume Group عضو. <code>pvs</code> خلاصه‌ای از همه PVها را در یک جدول نمایش می‌دهد (مناسب برای اسکریپت‌ها). <code>pvscan</code> نیز PVهای موجود را اسکن می‌کند. <code>pvchange</code> برای تغییر ویژگی‌های PV استفاده می‌شود."
+    },
+    {
+      "id": 736,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "در LVM، برای افزایش اندازه یک Volume Group (VG) با افزودن یک Physical Volume جدید، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>pvcreate /dev/sdX</code> (ایجاد PV جدید) و سپس <code>vgextend vg_name /dev/sdX</code> (افزودن به VG)",
+        "فقط <code>vgextend</code>",
+        "فقط <code>pvcreate</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "مراحل افزایش VG: ۱. <code>pvcreate /dev/sdX</code> (ایجاد Physical Volume روی دیسک جدید). ۲. <code>vgextend vg_name /dev/sdX</code> (افزودن PV به Volume Group). ۳. <code>vgs</code> یا <code>vgdisplay vg_name</code> برای تأیید فضای جدید. ۴. سپس می‌توان LV را با <code>lvextend</code> بزرگ کرد. <code>vgreduce</code> برای حذف PV از VG استفاده می‌شود."
+    },
+    {
+      "id": 737,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "در LVM، برای تغییر نام یک Logical Volume (LV) و همچنین تغییر نام Volume Group، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>lvrename vg_name old_lv new_lv</code> و <code>vgrename old_vg new_vg</code>",
+        "فقط <code>lvrename</code>",
+        "فقط <code>vgrename</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>lvrename</code> نام Logical Volume را تغییر می‌دهد (مثلاً <code>lvrename vg0 lv_old lv_new</code>). <code>vgrename</code> نام Volume Group را تغییر می‌دهد (مثلاً <code>vgrename vg_old vg_new</code>). پس از تغییر نام، باید فایل‌های پیکربندی مانند <code>/etc/fstab</code> و <code>/boot/grub2/grub.cfg</code> (در صورت استفاده) به‌روزرسانی شوند تا از نام‌های جدید استفاده کنند."
+    },
+    {
+      "id": 738,
+      "category": "مدیریت دیسک - LVM",
+      "level": 4,
+      "text": "در LVM، برای حذف یک Logical Volume و سپس حذف Volume Group و Physical Volume به‌صورت کامل، ترتیب صحیح دستورات چیست؟",
+      "options": [
+        "۱. <code>lvremove /dev/vg/lv</code> (حذف LV) ۲. <code>vgremove vg</code> (حذف VG) ۳. <code>pvremove /dev/sdX</code> (حذف PV) ۴. <code>wipefs -a /dev/sdX</code> (پاک کردن کامل)",
+        "۱. <code>vgremove</code> ۲. <code>lvremove</code> ۳. <code>pvremove</code>",
+        "هر دو گزینه",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "ترتیب صحیح حذف LVM: ۱. حذف Logical Volume (<code>lvremove</code>). ۲. حذف Volume Group (<code>vgremove</code>) که شامل PVهاست. ۳. حذف Physical Volume (<code>pvremove</code>). ۴. (اختیاری) پاک کردن امضای دیسک با <code>wipefs -a /dev/sdX</code> تا دیسک کاملاً خالی شود. این ترتیب از وابستگی‌های LVM پیروی می‌کند (LV درون VG و VG روی PVها). اگر معکوس شود، خطا می‌دهد."
+    },
+    {
+      "id": 739,
+      "category": "امنیت - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، برای اجرای یک کانتینر با کاربر غیر-root (برای افزایش امنیت) و تنظیم کاربر در زمان اجرا، از چه سوییچ‌هایی استفاده می‌شود؟",
+      "options": [
+        "<code>docker run --user 1000:1000 image</code> (با UID:GID) یا <code>--user username</code> (اگر در ایمیج تعریف شده باشد)",
+        "فقط <code>--user</code>",
+        "فقط <code>--user 1000</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای افزایش امنیت، از <code>--user</code> برای اجرای کانتینر با کاربر غیر-root استفاده می‌شود: <code>docker run --user 1000:1000 image</code> (UID:GID) یا <code>--user myuser</code> (اگر کاربر در ایمیج وجود داشته باشد). همچنین <code>--group-add</code> برای اضافه کردن گروه‌های اضافی. همچنین می‌توان با <code>USER</code> در Dockerfile کاربر را تعریف کرد. اجرای کانتینر با کاربر non-root از افزایش امتیاز (Privilege Escalation) جلوگیری می‌کند."
+    },
+    {
+      "id": 740,
+      "category": "امنیت - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، برای اجرای یک کانتینر در حالت Host Network (اشتراک شبکه هاست) و همچنین با دسترسی به دستگاه‌های هاست، از چه سوییچ‌هایی استفاده می‌شود و چه خطراتی دارد؟",
+      "options": [
+        "<code>docker run --network host --privileged image</code> (دسترسی کامل به شبکه و دستگاه‌های هاست، بسیار خطرناک)",
+        "فقط <code>--network host</code>",
+        "فقط <code>--privileged</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>--network host</code> کانتینر را از شبکه هاست استفاده می‌کند (بدون ایزولاسیون شبکه). <code>--privileged</code> به کانتینر دسترسی کامل به دستگاه‌های هاست (مانند /dev) و قابلیت‌های root را می‌دهد. این گزینه‌ها امنیت را کاهش می‌دهند و باید با احتیاط استفاده شوند (معمولاً برای ابزارهای مانیتورینگ یا اشکال‌زدایی). برای دسترسی محدودتر، از <code>--cap-add</code> و <code>--device</code> استفاده می‌شود."
+    },
+    {
+      "id": 741,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در KVM، برای ایجاد یک ماشین مجازی با استفاده از <code>virt-install</code> و نصب سیستمعامل از یک ISO با تنظیمات شبکه (Bridge) و دیسک به‌صورت qcow2، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>virt-install --name vm1 --memory 2048 --vcpus 2 --disk path=/var/lib/libvirt/images/vm1.qcow2,size=20,format=qcow2 --cdrom /path/to/install.iso --network bridge=br0 --os-type linux</code>",
+        "فقط <code>virt-install</code>",
+        "فقط <code>--disk</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "دستور کامل ایجاد VM با virt-install: <code>virt-install --name vm1 --memory 2048 --vcpus 2 --disk path=/var/lib/libvirt/images/vm1.qcow2,size=20,format=qcow2 --cdrom /path/to/install.iso --network bridge=br0 --os-type linux --graphics vnc</code>. <code>--disk</code> فرمت qcow2 (با snapshot و thin provisioning) را مشخص می‌کند. <code>--network bridge=br0</code> VM را به پل شبکه متصل می‌کند. پس از نصب، با <code>virsh</code> مدیریت می‌شود."
+    },
+    {
+      "id": 742,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در KVM، برای تغییر مقدار حافظه (Memory) یک VM در حال اجرا (Live) و همچنین ذخیره آن در پیکربندی دائمی، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>virsh setmem vm_name 2G --live</code> (موقت) و <code>virsh setmem vm_name 2G --config</code> (دائمی) یا <code>virsh setmem vm_name 2G --live --config</code> (هر دو)",
+        "فقط <code>virsh setmem</code>",
+        "فقط <code>virsh edit</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>virsh setmem vm_name 2G --live</code> (تغییر حافظه در حال اجرا، بدون ذخیره دائمی). <code>--config</code> تغییرات را در فایل XML پیکربندی ذخیره می‌کند (برای بوت‌های بعدی). <code>--live --config</code> هر دو را انجام می‌دهد. همچنین <code>virsh edit vm_name</code> برای ویرایش دستی XML و تغییر مقدار <code><memory></code> استفاده می‌شود (نیاز به ری‌استارت VM). <code>virsh setmem</code> نیازی به ری‌استارت ندارد."
+    },
+    {
+      "id": 743,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در KVM، برای ایجاد یک Snapshot از یک VM با استفاده از <code>virsh</code> و سپس بازگردانی به آن، از چه دستوراتی استفاده می‌شود و چه پیش‌نیازهایی دارد؟",
+      "options": [
+        "<code>virsh snapshot-create-as vm_name snap1</code> (ایجاد)، <code>virsh snapshot-list vm_name</code> (مشاهده)، <code>virsh snapshot-revert vm_name snap1</code> (بازگردانی). نیاز به فرمت دیسک qcow2 دارد",
+        "فقط <code>snapshot-create-as</code>",
+        "فقط <code>snapshot-revert</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای Snapshot با virsh: ۱. <code>virsh snapshot-create-as vm_name snap1</code> (ایجاد snapshot با نام). ۲. <code>virsh snapshot-list vm_name</code> (مشاهده لیست). ۳. <code>virsh snapshot-revert vm_name snap1</code> (بازگردانی). ۴. <code>virsh snapshot-delete vm_name snap1</code> (حذف). پیش‌نیاز: دیسک VM باید فرمت qcow2 باشد (نه raw) و VM می‌تواند در حال اجرا باشد (با <code>--disk-only</code> برای snapshot دیسک). همچنین می‌توان با <code>--memspec</code> حافظه را نیز snapshot کرد."
+    },
+    {
+      "id": 744,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld، برای افزودن یک پورت سفارشی (مثلاً ۸۰۸۰ TCP) به یک سرویس موجود (مثلاً http) و ایجاد یک سرویس جدید، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "ایجاد فایل <code>/etc/firewalld/services/myservice.xml</code> با پورت‌های مورد نیاز و سپس <code>firewall-cmd --add-service=myservice --permanent</code>",
+        "فقط <code>firewall-cmd --add-port=8080/tcp</code>",
+        "فقط <code>firewall-cmd --add-service</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "برای ایجاد سرویس سفارشی: ۱. ایجاد فایل XML در <code>/etc/firewalld/services/myservice.xml</code> با محتوای: <code>&lt;service&gt;\\n  &lt;short&gt;My Service&lt;/short&gt;\\n  &lt;port protocol=\"tcp\" port=\"8080\"/&gt;\\n&lt;/service&gt;</code>. ۲. <code>firewall-cmd --reload</code>. ۳. <code>firewall-cmd --add-service=myservice --permanent</code>. همچنین می‌توان با <code>firewall-cmd --add-port=8080/tcp</code> مستقیماً پورت را اضافه کرد (بدون سرویس). سرویس‌ها برای گروه‌بندی پورت‌ها مفید هستند."
+    },
+    {
+      "id": 745,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld، برای مشاهده قوانین فعال و Rich Rules در یک zone خاص (مثلاً public) و همچنین حذف یک Rich Rule، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>firewall-cmd --zone=public --list-all</code> (مشاهده) و <code>firewall-cmd --zone=public --remove-rich-rule='rule ...' --permanent</code> (حذف) و سپس <code>firewall-cmd --reload</code>",
+        "فقط <code>--list-all</code>",
+        "فقط <code>--remove-rich-rule</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>firewall-cmd --zone=public --list-all</code> (یا <code>--list-rich-rules</code>) قوانین فعال zone را نمایش می‌دهد. <code>firewall-cmd --zone=public --remove-rich-rule='rule ...' --permanent</code> یک Rich Rule را حذف می‌کند (با همان سینتکس دقیق). سپس <code>firewall-cmd --reload</code> برای اعمال. برای حذف سرویس: <code>--remove-service</code>، حذف پورت: <code>--remove-port</code>."
+    },
+    {
+      "id": 746,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تبدیل یک فایل با فرمت DOS (خطوط با CRLF) به فرمت UNIX (LF) و برعکس، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "از <code>dos2unix file</code> و <code>unix2dos file</code> (از بسته dos2unix) یا با <code>sed 's/\\r$//' file</code> و <code>sed 's/$/\\r/' file</code>",
+        "فقط <code>dos2unix</code>",
+        "فقط <code>unix2dos</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "ابزارهای اختصاصی: <code>dos2unix file.txt</code> (تبدیل CRLF به LF) و <code>unix2dos file.txt</code> (تبدیل LF به CRLF). روش‌های دستی: با <code>sed 's/\\r$//' file</code> (حذف CR) و <code>sed 's/$/\\r/' file</code> (افزودن CR). همچنین <code>tr -d '\\r' < file > newfile</code> (حذف CR). <code>file</code> نیز نوع خطوط فایل را نمایش می‌دهد: <code>file file.txt</code>."
+    },
+    {
+      "id": 747,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای تولید یک فایل با اندازه مشخص (مثلاً ۱۰۰ مگابایت) پر از داده تصادفی یا صفر، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>dd if=/dev/urandom of=file.bin bs=1M count=100</code> (داده تصادفی) و <code>dd if=/dev/zero of=file.bin bs=1M count=100</code> (داده صفر)",
+        "فقط <code>dd</code>",
+        "فقط <code>fallocate -l 100M file.bin</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "برای ایجاد فایل با اندازه مشخص: <code>dd if=/dev/urandom of=file.bin bs=1M count=100</code> (۱۰۰ مگابایت داده تصادفی)، <code>dd if=/dev/zero of=file.bin bs=1M count=100</code> (۱۰۰ مگابایت صفر). <code>fallocate -l 100M file.bin</code> (فضا را تخصیص می‌دهد بدون نوشتن داده، سریع‌تر). <code>truncate -s 100M file.bin</code> نیز فایل خالی با اندازه مشخص ایجاد می‌کند. <code>dd</code> برای داده‌های خاص (تصادفی/صفر) مفید است."
+    },
+    {
+      "id": 748,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "برای ایجاد یک فایل خالی با اندازه مشخص (مثلاً ۵۰ مگابایت) بدون نوشتن داده و به‌صورت فوری، از چه دستوری استفاده می‌شود و چه تفاوتی با <code>dd</code> دارد؟",
+      "options": [
+        "<code>truncate -s 50M file.bin</code> (سریع، فقط تخصیص فضا) و <code>fallocate -l 50M file.bin</code> (مشابه). <code>dd</code> داده می‌نویسد و کندتر است",
+        "فقط <code>truncate</code>",
+        "فقط <code>fallocate</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>truncate -s 50M file.bin</code> (فایل را به اندازه ۵۰ مگابایت تغییر می‌دهد، بدون نوشتن داده، بسیار سریع). <code>fallocate -l 50M file.bin</code> (مشابه، اما برخی فایل‌سیستم‌ها پشتیبانی می‌کنند). <code>dd</code> داده می‌نویسد (از /dev/zero یا /dev/urandom) و کندتر است اما برای داده‌های واقعی مفید است. <code>truncate</code> و <code>fallocate</code> برای ایجاد فایل‌های اسپارس (Sparse Files) نیز استفاده می‌شوند."
+    },
+    {
+      "id": 749,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای تنظیم پارامترهای کرنل مربوط به شبکه (مانند IP Forwarding و TCP Timeout) در زمان اجرا و مشاهده آن‌ها، از چه دستوراتی استفاده می‌شود؟",
+      "options": [
+        "<code>sysctl net.ipv4.ip_forward</code> (مشاهده) و <code>sysctl -w net.ipv4.ip_forward=1</code> (تنظیم) و <code>sysctl -a | grep tcp</code> (جستجو)",
+        "فقط <code>sysctl</code>",
+        "فقط <code>cat /proc/sys/</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "<code>sysctl</code> ابزار اصلی برای مدیریت پارامترهای کرنل است. <code>sysctl net.ipv4.ip_forward</code> (مشاهده)، <code>sysctl -w net.ipv4.ip_forward=1</code> (تنظیم موقت). <code>sysctl -a</code> (همه پارامترها). <code>cat /proc/sys/net/ipv4/ip_forward</code> نیز دسترسی مستقیم. برای دائمی، پارامترها را به <code>/etc/sysctl.conf</code> یا <code>/etc/sysctl.d/</code> اضافه کنید و با <code>sysctl -p</code> اعمال کنید."
+    },
+    {
+      "id": 750,
+      "category": "سیستم - خلاصه",
+      "level": 3,
+      "text": "در لینوکس، کدام یک از موارد زیر بهترین روش برای مدیریت لاگ‌ها در توزیع‌های مدرن با systemd است؟",
+      "options": [
+        "استفاده از <code>journalctl</code> برای مشاهده، فیلتر و مدیریت لاگ‌ها (با قابلیت ذخیره دائمی در <code>/var/log/journal</code>)",
+        "استفاده از <code>syslog</code> و <code>/var/log/messages</code>",
+        "استفاده از <code>logrotate</code> به‌تنهایی",
+        "همه موارد (اما journalctl توصیه می‌شود)"
+      ],
+      "correct": 0,
+      "explanation": "در توزیع‌های با systemd، <code>journalctl</code> ابزار مدرن برای مدیریت لاگ‌ها است. مزایا: یکپارچگی با systemd، فیلتر بر اساس سرویس و زمان، خروجی JSON، و قابلیت ذخیره دائمی با تنظیم <code>Storage=persistent</code>. <code>syslog</code> و <code>/var/log/messages</code> روش‌های قدیمی هستند و هنوز پشتیبانی می‌شوند (با rsyslog). <code>logrotate</code> برای چرخش فایل‌های لاگ استفاده می‌شود اما <code>journalctl</code> مدیریت یکپارچه‌تری ارائه می‌دهد. <code>journalctl -u service -f</code> برای دنبال‌کردن زنده لاگ‌های یک سرویس."
+    }
+  ]
+}

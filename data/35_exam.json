@@ -1,0 +1,496 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی نهایی",
+  "description": "سوالات پیشرفته و ترکیبی از تمامی فصول LPIC-1 - بخش پایانی",
+  "questions": [
+    {
+      "id": 363,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 3,
+      "text": "مفهوم Paravirtualization در مجازی‌سازی چیست و چه تفاوتی با Full Virtualization دارد؟",
+      "options": [
+        "Paravirtualization نیاز به تغییر کرنل میهمان (Guest OS) برای ارتباط مستقیم با هایپروایزر دارد (کارایی بالاتر)، Full Virtualization بدون تغییر کرنل کار می‌کند اما کندتر است",
+        "هر دو یکسان هستند",
+        "Full Virtualization نیاز به تغییر کرنل دارد",
+        "Paravirtualization کندتر است"
+      ],
+      "correct": 0,
+      "explanation": "در Paravirtualization، سیستمعامل میهمان آگاه است که در محیط مجازی اجرا می‌شود و از API هایپروایزر برای عملیات‌های خاص استفاده می‌کند که کارایی بالاتری دارد (مثلاً Xen). در Full Virtualization (مانند KVM با VT-x)، سیستمعامل میهمان هیچ تغییری نمی‌کند و هایپروایزر همه چیز را شبیه‌سازی می‌کند که کارایی کمتری دارد اما سازگاری بیشتری دارد."
+    },
+    {
+      "id": 364,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در KVM، ابزار <code>virsh</code> چه کاربردی دارد و چه عملیاتی می‌توان با آن انجام داد؟",
+      "options": [
+        "یک ابزار خط فرمان برای مدیریت ماشین‌های مجازی KVM/QEMU است؛ می‌توان VMها را لیست، استارت، استاپ، خاموش، و پیکربندی کرد",
+        "یک ابزار گرافیکی است",
+        "فقط برای نصب VMهاست",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>virsh</code> (Virtualization Shell) یک رابط خط فرمان قدرتمند برای مدیریت VMهای مبتنی بر libvirt است (KVM، QEMU، Xen). عملیات: <code>virsh list</code> (لیست VMها)، <code>virsh start VM</code> (استارت)، <code>virsh shutdown VM</code> (خاموشی ایمن)، <code>virsh destroy VM</code> (خاموشی فوری)، <code>virsh edit VM</code> (ویرایش XML پیکربندی). همچنین می‌تواند از طریق SSH به سرورهای راه‌دور متصل شود."
+    },
+    {
+      "id": 365,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، تفاوت بین <code>docker run</code>، <code>docker start</code> و <code>docker exec</code> چیست؟",
+      "options": [
+        "<code>docker run</code> یک کانتینر جدید از یک ایمیج ایجاد و شروع می‌کند، <code>docker start</code> یک کانتینر متوقف‌شده را دوباره راه‌اندازی می‌کند، <code>docker exec</code> یک فرمان جدید در یک کانتینر در حال اجرا اجرا می‌کند",
+        "هر سه یکسان هستند",
+        "<code>docker run</code> فقط ایمیج را دانلود می‌کند",
+        "<code>docker exec</code> کانتینر را متوقف می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>docker run</code> = ایجاد + شروع کانتینر جدید. <code>docker start</code> = راه‌اندازی مجدد کانتینر موجود (که قبلاً با <code>docker stop</code> متوقف شده). <code>docker exec</code> = اجرای یک فرمان (مثلاً bash) در یک کانتینر در حال اجرا برای تعامل با آن (<code>docker exec -it container bash</code>). هر سه برای سناریوهای مختلف مدیریت کانتینرها استفاده می‌شوند."
+    },
+    {
+      "id": 366,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 4,
+      "text": "در Docker، تفاوت بین Dockerfile و Docker Compose چیست؟",
+      "options": [
+        "Dockerfile برای ساخت ایمیج‌های سفارشی استفاده می‌شود، Docker Compose برای تعریف و اجرای چندین کانتینر هم‌زمان (به‌صورت سرویس‌های مجزا) با یک فایل YAML",
+        "هر دو یکسان هستند",
+        "Docker Compose برای ساخت ایمیج است",
+        "Dockerfile برای اجرای چندین کانتینر است"
+      ],
+      "correct": 0,
+      "explanation": "Dockerfile یک فایل متنی است که مراحل ساخت یک ایمیج Docker را تعریف می‌کند (FROM، RUN، COPY، CMD). Docker Compose یک ابزار برای تعریف و اجرای برنامه‌های چند کانتینری با فایل <code>docker-compose.yml</code> است که سرویس‌ها، شبکه‌ها و حجم‌ها را مشخص می‌کند. برای برنامه‌های پیچیده با چندین سرویس (مثلاً وب‌سرور + دیتابیس) استفاده می‌شود."
+    },
+    {
+      "id": 367,
+      "category": "سیستم - مجازی‌سازی",
+      "level": 3,
+      "text": "در Proxmox VE، برای ذخیره‌سازی VMها، کدام نوع ذخیره‌سازی پشتیبانی می‌شود؟",
+      "options": [
+        "دایرکتوری محلی (Local Directory)، LVM، ZFS، NFS، iSCSI، Ceph RBD و ...",
+        "فقط دایرکتوری محلی",
+        "فقط ZFS",
+        "فقط NFS"
+      ],
+      "correct": 0,
+      "explanation": "Proxmox VE از انواع مختلف ذخیره‌سازی پشتیبانی می‌کند: Local (دایرکتوری و LVM)، Network (NFS، SMB/CIFS)، Block (iSCSI، FC)، Distributed (Ceph RBD)، و ZFS. این انعطاف‌پذیری برای محیط‌های مختلف (از یک سرور کوچک تا کلاسترهای بزرگ) امکان‌پذیر است. هر نوع ذخیره‌سازی مزایا و کاربردهای خاص خود را دارد."
+    },
+    {
+      "id": 368,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "برای ایجاد یک گواهی SSL خودامضا (Self-Signed) برای استفاده در وب‌سرور، از چه دستوری استفاده می‌شود؟",
+      "options": [
+        "<code>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes</code>",
+        "<code>openssl genrsa</code>",
+        "<code>openssl s_client</code>",
+        "<code>openssl verify</code>"
+      ],
+      "correct": 0,
+      "explanation": "دستور <code>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes</code> یک گواهی خودامضا تولید می‌کند. توضیح: <code>-x509</code> (گواهی خودامضا)، <code>-newkey rsa:2048</code> (کلید RSA ۲۰۴۸ بیتی)، <code>-keyout key.pem</code> (فایل کلید خصوصی)، <code>-out cert.pem</code> (فایل گواهی)، <code>-days 365</code> (اعتبار یک سال)، <code>-nodes</code> (بدون رمزگذاری کلید). این برای محیط‌های تست یا داخلی استفاده می‌شود."
+    },
+    {
+      "id": 369,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "در یک وب‌سرور (مانند Apache یا Nginx)، برای استفاده از گواهی SSL، چه فایل‌هایی مورد نیاز است و در پیکربندی کجا مشخص می‌شوند؟",
+      "options": [
+        "گواهی (Certificate) و کلید خصوصی (Private Key)؛ در Apache با SSLCertificateFile و SSLCertificateKeyFile، در Nginx با ssl_certificate و ssl_certificate_key",
+        "فقط گواهی",
+        "فقط کلید",
+        "نیاز به هیچ فایلی نیست"
+      ],
+      "correct": 0,
+      "explanation": "برای راه‌اندازی HTTPS، دو فایل اصلی نیاز است: گواهی (Certificate) و کلید خصوصی (Private Key). در Apache: <code>SSLCertificateFile /path/to/cert.pem</code> و <code>SSLCertificateKeyFile /path/to/key.pem</code>. در Nginx: <code>ssl_certificate /path/to/cert.pem;</code> و <code>ssl_certificate_key /path/to/key.pem;</code>. در صورت استفاده از CA (مرجع گواهی) ممکن است فایل زنجیره (Chain) نیز نیاز باشد."
+    },
+    {
+      "id": 370,
+      "category": "امنیت - SSL/TLS",
+      "level": 4,
+      "text": "ابزار <code>openssl s_client</code> چه کاربردی در بررسی اتصالات SSL/TLS دارد؟",
+      "options": [
+        "برای اتصال به یک سرور SSL/TLS و نمایش جزئیات گواهی، زنجیره اعتماد و مذاکره TLS استفاده می‌شود (مفید برای عیب‌یابی)",
+        "برای تولید گواهی",
+        "برای نصب گواهی",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>openssl s_client</code> یک کلاینت SSL/TLS برای خط فرمان است که به سرور متصل شده و جزئیات مذاکره (Cipher Suite، گواهی، زنجیره اعتماد، زمان انقضا) را نمایش می‌دهد. مثال: <code>openssl s_client -connect google.com:443 -showcerts</code>. برای عیب‌یابی مسائل SSL و بررسی گواهی‌ها بسیار مفید است و نیازی به مرورگر ندارد."
+    },
+    {
+      "id": 371,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 3,
+      "text": "دستور <code>install</code> در لینوکس چه کاربردی دارد و تفاوت آن با <code>cp</code> چیست؟",
+      "options": [
+        "<code>install</code> برای کپی فایل‌ها با تنظیم مجوزها و مالکیت به‌صورت یکجا استفاده می‌شود (معمولاً در Makefileها)، در حالی که <code>cp</code> فقط کپی می‌کند",
+        "هر دو یکسان هستند",
+        "<code>install</code> فقط برای نصب بسته‌هاست",
+        "<code>install</code> کندتر است"
+      ],
+      "correct": 0,
+      "explanation": "<code>install</code> یک دستور قدرتمند شبیه <code>cp</code> است اما قابلیت‌های اضافه دارد: تنظیم مجوزها (<code>-m</code>)، مالکیت (<code>-o</code>, <code>-g</code>) و ایجاد دایرکتوری‌های مقصد (<code>-d</code>). معمولاً در Makefileها برای نصب فایل‌های کامپایل شده به دایرکتوری‌های سیستم استفاده می‌شود. مثال: <code>install -m 755 file /usr/local/bin/</code> فایل را با مجوز ۷۵۵ کپی می‌کند."
+    },
+    {
+      "id": 372,
+      "category": "مدیریت فایل‌ها - دستورات",
+      "level": 4,
+      "text": "دستور <code>mktemp</code> چه کاربردی دارد و چه مزیتی نسبت به ایجاد فایل موقت دستی دارد؟",
+      "options": [
+        "یک فایل یا دایرکتوری موقت با نام یکتا (Unique) ایجاد می‌کند که از تداخل و مشکلات امنیتی (مانند حملات Race Condition) جلوگیری می‌کند",
+        "فایل را حذف می‌کند",
+        "فایل را فشرده می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>mktemp</code> یک فایل یا دایرکتوری موقت با نام منحصربه‌فرد در <code>/tmp</code> یا مسیر مشخص ایجاد می‌کند (مثلاً <code>/tmp/tmp.XXXXXX</code>). مزایا: جلوگیری از تداخل نام، ایجاد امن (با مجوزهای مناسب، فقط برای کاربر جاری)، و کاهش خطر حملات Symlink یا Race Condition. در اسکریپت‌ها برای ذخیره‌سازی موقت داده‌ها بسیار مفید است."
+    },
+    {
+      "id": 373,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، تفاوت بین <code>grub2-install</code> و <code>grub2-mkconfig</code> چیست؟",
+      "options": [
+        "<code>grub2-install</code> بوت‌لودر را روی دیسک (MBR یا EFI) نصب می‌کند، <code>grub2-mkconfig</code> فایل پیکربندی <code>grub.cfg</code> را تولید می‌کند",
+        "هر دو یکسان هستند",
+        "<code>grub2-mkconfig</code> بوت‌لودر را نصب می‌کند",
+        "<code>grub2-install</code> فایل پیکربندی را تولید می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>grub2-install</code> برنامه بوت‌لودر GRUB را روی دیسک (در Boot Sector برای BIOS یا پارتیشن EFI برای UEFI) نصب می‌کند. این کار پس از نصب GRUB یا تغییر دیسک بوت انجام می‌شود. <code>grub2-mkconfig</code> (یا <code>grub-mkconfig</code>) فایل پیکربندی <code>/boot/grub2/grub.cfg</code> را از تنظیمات <code>/etc/default/grub</code> و اسکریپت‌های <code>/etc/grub.d/</code> تولید می‌کند. هر دو برای راه‌اندازی GRUB ضروری هستند."
+    },
+    {
+      "id": 374,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، پارامترهای <code>ro</code> و <code>rw</code> در خط کرنل چه معنایی دارند و چه تأثیری در فرآیند بوت دارند؟",
+      "options": [
+        "<code>ro</code> (read-only) سیستم فایل ریشه را به‌صورت فقط خواندنی mount می‌کند (برای بررسی و بازیابی)، <code>rw</code> (read-write) آن را قابل نوشتن mount می‌کند (حالت عادی)",
+        "هر دو یکسان هستند",
+        "<code>ro</code> سریع‌تر است",
+        "<code>rw</code> فقط در Single User Mode کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "پارامترهای <code>ro</code> و <code>rw</code> در خط کرنل مشخص می‌کنند که سیستم فایل ریشه (<code>/</code>) چگونه mount شود. <code>ro</code> (همراه با <code>fsck</code> بررسی) برای بازیابی و بررسی دیسک استفاده می‌شود. <code>rw</code> (حالت پیش‌فرض) برای عملکرد عادی سیستم است. در برخی توزیع‌ها، سیستم ابتدا با <code>ro</code> بوت می‌شود و سپس remount به <code>rw</code> می‌شود (برای بررسی سیستم فایل)."
+    },
+    {
+      "id": 375,
+      "category": "شبکه - ابزارها",
+      "level": 3,
+      "text": "دستور <code>netstat</code> چه تفاوتی با <code>ss</code> دارد و چرا <code>ss</code> جایگزین آن شده است؟",
+      "options": [
+        "<code>ss</code> (Socket Statistics) سریع‌تر است، اطلاعات بیشتری از سوکت‌های kernel ارائه می‌دهد و جایگزین مدرن <code>netstat</code> است که قدیمی و کندتر است",
+        "هر دو یکسان هستند",
+        "<code>netstat</code> مدرن‌تر است",
+        "<code>ss</code> فقط روی دبیان کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>ss</code> از لایه‌های پایین‌تر کرنل اطلاعات را می‌گیرد و سریع‌تر از <code>netstat</code> است (به‌ویژه با تعداد زیاد اتصالات). <code>ss</code> همچنین اطلاعات دقیق‌تری مانند زمان‌های TCP ارائه می‌دهد. <code>netstat</code> قدیمی است و در بسیاری از توزیع‌ها به‌تدریج حذف می‌شود. با این حال، <code>netstat</code> همچنان در بسته <code>net-tools</code> موجود است اما <code>ss</code> توصیه می‌شود."
+    },
+    {
+      "id": 376,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>arp</code> چه کاربردی دارد و جدول ARP چیست؟",
+      "options": [
+        "نمایش و مدیریت جدول ARP (Address Resolution Protocol) که نگاشت آدرس‌های IP به آدرس‌های MAC را در شبکه محلی ذخیره می‌کند",
+        "فقط برای نمایش مسیریابی",
+        "برای تغییر IP",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "ARP پروتکلی است که آدرس IP را به آدرس MAC (لایه ۲) در شبکه محلی تبدیل می‌کند. جدول ARP کش‌شده این نگاشت‌ها را ذخیره می‌کند تا از پرس‌وجوهای مکرر جلوگیری کند. دستور <code>arp -a</code> جدول را نمایش می‌دهد، <code>arp -d IP</code> یک ورودی را حذف می‌کند. در سیستم‌های جدید، <code>ip neigh</code> جایگزین <code>arp</code> شده است (جدول همسایگان را نشان می‌دهد)."
+    },
+    {
+      "id": 377,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "دستور <code>ethtool</code> چه کاربردی در مدیریت کارت‌های شبکه دارد؟",
+      "options": [
+        "برای مشاهده و تغییر تنظیمات کارت شبکه (مانند سرعت، Duplex، Wake-on-LAN، و ویژگی‌های پیشرفته) استفاده می‌شود",
+        "فقط برای نمایش آدرس MAC",
+        "فقط برای فعال/غیرفعال کردن کارت",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>ethtool</code> ابزار قدرتمندی برای مدیریت تنظیمات کارت شبکه است: نمایش سرعت و Duplex (<code>ethtool eth0</code>)، تغییر سرعت (<code>ethtool -s eth0 speed 1000 duplex full</code>)، نمایش آمار (<code>-S</code>)، مدیریت Wake-on-LAN (<code>-w</code>) و تنظیمات ring buffer. برای عیب‌یابی مشکلات شبکه و بهینه‌سازی عملکرد بسیار مفید است و نیاز به دسترسی root دارد."
+    },
+    {
+      "id": 378,
+      "category": "شبکه - NAT",
+      "level": 4,
+      "text": "در iptables، تفاوت بین MASQUERADE و SNAT در NAT چیست و هرکدام چه موقعی استفاده می‌شود؟",
+      "options": [
+        "MASQUERADE برای رابط‌های با IP پویا (مانند DHCP) استفاده می‌شود و IP را به‌طور خودکار تنظیم می‌کند، SNAT برای IP ثابت استفاده می‌شود و آدرس مبدا را به‌طور مشخص تغییر می‌دهد",
+        "هر دو یکسان هستند",
+        "SNAT برای IP پویا است",
+        "MASQUERADE برای IP ثابت است"
+      ],
+      "correct": 0,
+      "explanation": "هر دو برای Source NAT (تغییر آدرس مبدا) استفاده می‌شوند. MASQUERADE آدرس مبدا را به آدرس رابط خروجی (که ممکن است تغییر کند) تنظیم می‌کند و برای اتصالات پویا (مانند DHCP، PPPoE) مناسب است. SNAT آدرس مبدا را به یک آدرس ثابت مشخص تغییر می‌دهد و برای IP ثابت مناسب است. MASQUERADE کمی سنگین‌تر است زیرا IP را در زمان اجرا تشخیص می‌دهد اما انعطاف‌پذیرتر است."
+    },
+    {
+      "id": 379,
+      "category": "شبکه - NAT",
+      "level": 4,
+      "text": "برای اشتراک اینترنت (فوروارد کردن ترافیک از یک شبکه داخلی به اینترنت) با iptables، از چه قوانینی استفاده می‌شود؟",
+      "options": [
+        "فعال‌سازی IP Forwarding و تنظیم MASQUERADE در زنجیره POSTROUTING: <code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code>",
+        "فقط فعال‌سازی IP Forwarding",
+        "فقط تنظیم SNAT",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای اشتراک اینترنت: ۱. فعال‌سازی IP Forwarding (<code>sysctl net.ipv4.ip_forward=1</code>). ۲. تنظیم قانون NAT در iptables: <code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code> (جایی که eth0 رابط اینترنت است). ۳. (اختیاری) تنظیم قوانین فایروال برای جلوگیری از ترافیک ناخواسته. همچنین ممکن است نیاز به قوانین FORWARD برای اجازه ترافیک بین شبکه‌ها باشد."
+    },
+    {
+      "id": 380,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در Debian-family، تفاوت بین <code>apt</code>، <code>apt-get</code> و <code>aptitude</code> چیست؟",
+      "options": [
+        "<code>apt</code> یک رابط مدرن و کاربرپسند با خروجی رنگی و پیشرفت بهتر است، <code>apt-get</code> ابزار قدیمی‌تر با گزینه‌های بیشتر برای اسکریپت‌ها، <code>aptitude</code> یک ابزار پیشرفته با رابط TUI و قابلیت‌های مدیریت وابستگی پیشرفته",
+        "هر سه یکسان هستند",
+        "<code>aptitude</code> فقط برای نصب است",
+        "<code>apt-get</code> مدرن‌تر است"
+      ],
+      "correct": 0,
+      "explanation": "<code>apt</code> (نسخه جدید) ترکیبی از پرکاربردترین دستورات <code>apt-get</code> و <code>apt-cache</code> است با خروجی بهتر برای کاربران. <code>apt-get</code> ابزار اصلی مدیریت بسته‌ها با گزینه‌های کامل‌تر و پایدار (مناسب برای اسکریپت‌ها). <code>aptitude</code> یک ابزار پیشرفته با رابط متنی (TUI) و قابلیت‌های حل وابستگی قوی‌تر (و همچنین خط فرمان). هر سه از همان پایگاه داده APT استفاده می‌کنند."
+    },
+    {
+      "id": 381,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، تفاوت بین <code>dnf</code> و <code>yum</code> چیست و چرا <code>dnf</code> جایگزین <code>yum</code> شده است؟",
+      "options": [
+        "dnf (Dandified YUM) نسخه مدرن با کارایی بهتر، کدبیس جدید (libdnf) و وابستگی کمتر است، yum قدیمی است و توسعه آن متوقف شده",
+        "هر دو یکسان هستند",
+        "yum مدرن‌تر است",
+        "dnf فقط روی Fedora کار می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "dnf جانشین yum در RedHat-family است. مزایا: سرعت بالاتر، مدیریت بهتر وابستگی‌ها، کدبیس جدید (C++ با libdnf)، مصرف حافظه کمتر، و پشتیبانی بهتر از API. dnf از سینتکس مشابه yum استفاده می‌کند و در Fedora ۲۲ و RHEL ۸ به بعد پیش‌فرض است. yum هنوز در برخی سیستم‌های قدیمی وجود دارد اما توسعه آن متوقف شده است."
+    },
+    {
+      "id": 382,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در RedHat-family، دستور <code>rpm -V package</code> چه کاری انجام می‌دهد و چه کاربردی دارد؟",
+      "options": [
+        "فایل‌های نصب‌شده بسته را با نسخه اصلی از مخزن مقایسه می‌کند تا تغییرات، حذف‌ها یا خرابی‌ها را شناسایی کند (Verify)",
+        "بسته را نصب می‌کند",
+        "بسته را حذف می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>rpm -V</code> (verify) فایل‌های نصب‌شده توسط یک بسته را با اطلاعات ذخیره شده در پایگاه داده RPM (هش فایل‌ها، مجوزها، مالکیت) مقایسه می‌کند. خروجی مانند <code>S.M5...T</code> نشان‌دهنده تغییرات است (مثلاً S برای اندازه، M برای مجوز). این برای بررسی یکپارچگی سیستم و تشخیص تغییرات ناخواسته (مانند هک) مفید است."
+    },
+    {
+      "id": 383,
+      "category": "سیستم - پکیج‌منیجمنت",
+      "level": 4,
+      "text": "در دبیان، دستور <code>dpkg -S /path/to/file</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "جستجو می‌کند که کدام بسته (Package) دارای فایل مشخص شده است (Search)",
+        "فایل را نصب می‌کند",
+        "فایل را حذف می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>dpkg -S</code> (search) از پایگاه داده dpkg برای یافتن بسته‌ای که یک فایل خاص را نصب کرده است استفاده می‌کند. مثال: <code>dpkg -S /etc/ssh/sshd_config</code> نشان می‌دهد که این فایل متعلق به بسته <code>openssh-server</code> است. این برای عیب‌یابی و شناسایی فایل‌های سیستمی بسیار مفید است."
+    },
+    {
+      "id": 384,
+      "category": "سیستم - لاگ",
+      "level": 4,
+      "text": "در systemd-journald، چگونه می‌توان لاگ‌ها را به‌صورت دائمی ذخیره کرد (نه فقط در حافظه) و فایل‌های لاگ در کجا قرار می‌گیرند؟",
+      "options": [
+        "با تنظیم <code>Storage=persistent</code> در <code>/etc/systemd/journald.conf</code>، فایل‌ها در <code>/var/log/journal/</code> ذخیره می‌شوند",
+        "با تنظیم <code>Storage=volatile</code>",
+        "فایل‌ها در <code>/tmp</code> ذخیره می‌شوند",
+        "غیرممکن است"
+      ],
+      "correct": 0,
+      "explanation": "برای ذخیره دائمی لاگ‌های journald، باید <code>Storage=persistent</code> را در <code>/etc/systemd/journald.conf</code> تنظیم کرد. سپس لاگ‌ها در <code>/var/log/journal/</code> ذخیره می‌شوند و با ری‌استارت از بین نمی‌روند. پیش‌فرض <code>Storage=auto</code> است که اگر <code>/var/log/journal</code> وجود داشته باشد از آن استفاده می‌کند. با <code>Storage=volatile</code> لاگ‌ها فقط در حافظه (RAM) ذخیره می‌شوند."
+    },
+    {
+      "id": 385,
+      "category": "سیستم - لاگ",
+      "level": 4,
+      "text": "برای محدود کردن حجم لاگ‌های journald (مثلاً حداکثر ۱۰۰ مگابایت)، چه تنظیمی در <code>/etc/systemd/journald.conf</code> باید انجام داد؟",
+      "options": [
+        "<code>SystemMaxUse=100M</code>",
+        "<code>MaxFileSize=100M</code>",
+        "<code>Storage=100M</code>",
+        "<code>SystemMaxFileSize=100M</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای محدود کردن حجم کل لاگ‌های journald، از <code>SystemMaxUse=100M</code> استفاده می‌شود. سایر گزینه‌های مرتبط: <code>SystemKeepFree</code> (فضای آزاد نگه‌داشته شود)، <code>SystemMaxFileSize</code> (حداکثر حجم هر فایل)، <code>MaxRetentionSec</code> (حداکثر زمان نگهداری لاگ). پس از تغییر، سرویس را با <code>systemctl restart systemd-journald</code> ری‌استارت کنید."
+    },
+    {
+      "id": 386,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای کامپایل یک ماژول کرنل خارجی (مانند درایور اختصاصی) در لینوکس، به چه فایل‌ها و ابزارهایی نیاز است؟",
+      "options": [
+        "هدرهای کرنل (kernel-devel یا linux-headers)، ابزارهای کامپایل (gcc، make) و Makefile مناسب برای ماژول",
+        "فقط gcc",
+        "فقط هدرهای کرنل",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "برای کامپایل یک ماژول کرنل خارجی، به هدرهای کرنل (kernel-devel در ردهت، linux-headers در دبیان) که شامل فایل‌های مورد نیاز برای ساخت ماژول است، ابزارهای کامپایل (gcc، make، binutils) و یک Makefile که ماژول را کامپایل کند، نیاز است. مسیر هدرها معمولاً <code>/lib/modules/$(uname -r)/build/</code> است. پس از کامپایل، با <code>insmod</code> یا <code>modprobe</code> بارگذاری می‌شود."
+    },
+    {
+      "id": 387,
+      "category": "شبکه - VPN",
+      "level": 4,
+      "text": "برای ایجاد یک تونل VPN با WireGuard در لینوکس، مراحل اصلی چیست؟",
+      "options": [
+        "نصب WireGuard، تولید کلیدهای عمومی/خصوصی با <code>wg genkey</code> و <code>wg pubkey</code>، پیکربندی فایل <code>/etc/wireguard/wg0.conf</code> با رابط و همتایان، و فعال‌سازی با <code>wg-quick up wg0</code>",
+        "فقط نصب WireGuard",
+        "فقط تولید کلید",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "WireGuard یک VPN مدرن و ساده است. مراحل: ۱. نصب بسته WireGuard. ۲. تولید کلید خصوصی و عمومی برای سرور و کلاینت. ۳. ایجاد فایل پیکربندی <code>/etc/wireguard/wg0.conf</code> با بخش [Interface] (کلید خصوصی، آدرس IP) و [Peer] (کلید عمومی، آدرس‌های مجاز). ۴. فعال‌سازی با <code>wg-quick up wg0</code>. ۵. (در صورت نیاز) تنظیم فایروال و IP Forwarding. WireGuard ساده، سریع و امن است."
+    },
+    {
+      "id": 388,
+      "category": "شبکه - VPN",
+      "level": 4,
+      "text": "تفاوت بین VPN و SSH Tunneling از نظر کاربرد و سطح امنیت چیست؟",
+      "options": [
+        "VPN ترافیک شبکه کامل (کل دستگاه یا شبکه) را رمزنگاری و مسیریابی می‌کند، SSH Tunneling فقط ترافیک برنامه‌های خاص (از طریق پورت‌های مشخص) را عبور می‌دهد و امنیت کمتری دارد",
+        "هر دو یکسان هستند",
+        "SSH Tunneling امن‌تر است",
+        "VPN فقط برای وب است"
+      ],
+      "correct": 0,
+      "explanation": "VPN (مثل WireGuard، OpenVPN) کل ترافیک شبکه را در لایه ۳ (IP) رمزنگاری و از طریق تونل هدایت می‌کند و برای کل سیستم یا شبکه استفاده می‌شود. SSH Tunneling (پورت فورواردینگ) فقط ترافیک پورت‌های خاص را از طریق SSH هدایت می‌کند و برای برنامه‌های خاص (مثل مرورگر با SOCKS) استفاده می‌شود. SSH Tunneling معمولاً سریع‌تر و ساده‌تر است اما پوشش کامل شبکه را ندارد."
+    },
+    {
+      "id": 389,
+      "category": "سیستم - نصب",
+      "level": 4,
+      "text": "در فرآیند نصب لینوکس، تفاوت بین Minimal Install، Server Install و Desktop Install چیست و هرکدام برای چه کاربردی مناسب است؟",
+      "options": [
+        "Minimal فقط بسته‌های ضروری (بدون GUI، کمترین حجم)، Server با ابزارهای مدیریتی (بدون GUI)، Desktop با محیط گرافیکی و برنامه‌های کاربردی",
+        "هر سه یکسان هستند",
+        "Desktop بدون GUI است",
+        "Minimal با GUI است"
+      ],
+      "correct": 0,
+      "explanation": "Minimal Install حداقل بسته‌های مورد نیاز برای بوت و خط فرمان را نصب می‌کند (مناسب برای سرورهای با منابع محدود یا کانتینرها). Server Install شامل ابزارهای مدیریت سرور (وب‌سرور، دیتابیس و ... بدون GUI) است. Desktop Install شامل محیط گرافیکی (GNOME، KDE) و برنامه‌های کاربردی (مرورگر، آفیس) است. انتخاب بستگی به استفاده از سیستم دارد."
+    },
+    {
+      "id": 390,
+      "category": "سیستم - نصب",
+      "level": 4,
+      "text": "در نصب خودکار (Kickstart برای ردهت، Preseed برای دبیان)، فایل‌های پیکربندی چه اطلاعاتی را شامل می‌شوند و هدف از آن چیست؟",
+      "options": [
+        "پاسخ‌های از پیش تعیین‌شده برای مراحل نصب (زبان، پارتیشن‌بندی، بسته‌ها) برای نصب بدون دخالت کاربر (Unattended Installation) در چندین سیستم",
+        "تنظیمات پس از نصب",
+        "تنظیمات شبکه",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "Kickstart (ردهت) و Preseed (دبیان) فایل‌های پیکربندی برای نصب خودکار هستند. آن‌ها شامل تنظیمات زبان، کیبورد، پارتیشن‌بندی، بسته‌های نصب، کاربران و اسکریپت‌های پس از نصب هستند. هدف: نصب چندین سیستم با پیکربندی یکسان بدون نیاز به ورود دستی، که در محیط‌های بزرگ (دیتاسنترها، کلاسترها) بسیار مفید است."
+    },
+    {
+      "id": 391,
+      "category": "سیستم - نصب",
+      "level": 4,
+      "text": "در نصب AlmaLinux (ردهت)، گزینه‌های پارتیشن‌بندی Automatic (LVM) و Manual چه تفاوتی دارند و LVM چه مزیتی دارد؟",
+      "options": [
+        "Automatic از LVM با حجم‌های منطقی برای انعطاف‌پذیری (تغییر اندازه، افزودن دیسک) استفاده می‌کند، Manual امکان پارتیشن‌بندی سنتی یا LVM دستی را می‌دهد",
+        "هر دو یکسان هستند",
+        "Manual از LVM استفاده می‌کند",
+        "Automatic از پارتیشن‌بندی سنتی استفاده می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "نصب خودکار (Automatic) معمولاً از LVM با یک Volume Group و Logical Volumeهای ریشه، swap و home استفاده می‌کند که انعطاف‌پذیری برای تغییر اندازه و افزودن دیسک را فراهم می‌کند. نصب دستی (Manual) به کاربر اجازه می‌دهد پارتیشن‌ها را به‌صورت سنتی (EXT4 روی /dev/sdX) یا با LVM دستی تعریف کند. LVM برای سرورها که نیاز به مدیریت پویای دیسک دارند توصیه می‌شود."
+    },
+    {
+      "id": 392,
+      "category": "مدیریت فایل‌ها - بکاپ",
+      "level": 4,
+      "text": "برای بکاپ‌گیری افزایشی (Incremental) با <code>tar</code>، از کدام سوییچ استفاده می‌شود و فایل اسنپ‌شات (Snapshot) چه نقشی دارد؟",
+      "options": [
+        "سوییچ <code>-g</code> با فایل اسنپ‌شات که زمان و تغییرات فایل‌ها را ذخیره می‌کند تا فقط فایل‌های تغییر یافته در بکاپ بعدی قرار گیرند",
+        "<code>-u</code>",
+        "<code>-i</code>",
+        "<code>-s</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>tar -g snapshot-file -cf backup.tar files</code> با استفاده از فایل اسنپ‌شات، بکاپ افزایشی ایجاد می‌کند. اسنپ‌شات شامل متادیتا (زمان تغییر، سایز) فایل‌های بکاپ‌شده است. در بکاپ بعدی با همان فایل اسنپ‌شات، tar فقط فایل‌هایی که تغییر کرده‌اند یا جدید هستند را اضافه می‌کند. این روش برای بکاپ‌های منظم با حجم کم مفید است."
+    },
+    {
+      "id": 393,
+      "category": "مدیریت فایل‌ها - بکاپ",
+      "level": 4,
+      "text": "تفاوت بین بکاپ Full، Incremental و Differential در چیست و هرکدام چه مزایا و معایبی دارند؟",
+      "options": [
+        "Full: همه داده‌ها (حجم زیاد، زمان بازیابی کم). Incremental: فقط تغییرات از آخرین بکاپ (حجم کم، زمان بازیابی زیاد). Differential: تغییرات از آخرین Full (حجم متوسط، زمان بازیابی متوسط)",
+        "هر سه یکسان هستند",
+        "Incremental حجم زیاد دارد",
+        "Differential زمان بازیابی کم دارد"
+      ],
+      "correct": 0,
+      "explanation": "Full Backup: پشتیبان کامل از همه داده‌ها (حجم زیاد، زمان طولانی، بازیابی سریع). Incremental: فقط تغییرات نسبت به آخرین بکاپ (هر نوع، full یا incremental) را ذخیره می‌کند (حجم کم، زمان بازیابی طولانی‌تر چون باید همه incrementalها اعمال شوند). Differential: تغییرات نسبت به آخرین Full Backup را ذخیره می‌کند (حجم متوسط، بازیابی با Full + آخرین Differential). انتخاب بستگی به نیاز به فضای ذخیره‌سازی و سرعت بازیابی دارد."
+    },
+    {
+      "id": 394,
+      "category": "سیستم - زمان",
+      "level": 4,
+      "text": "دستور <code>ntpdate</code> چه کاربردی دارد و چه تفاوتی با <code>chrony</code> یا <code>ntpd</code> دارد؟",
+      "options": [
+        "<code>ntpdate</code> یک ابزار قدیمی برای تنظیم یک‌باره زمان از یک سرور NTP است (قبل از راه‌اندازی سرویس)، در حالی که <code>chrony</code>/<code>ntpd</code> به‌صورت دیمن و مداوم زمان را سینک می‌کنند",
+        "هر دو یکسان هستند",
+        "<code>ntpdate</code> یک دیمن است",
+        "<code>chrony</code> فقط یک بار زمان را تنظیم می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>ntpdate</code> برای تنظیم یک‌باره زمان سیستم از یک سرور NTP استفاده می‌شود (معمولاً در زمان بوت قبل از راه‌اندازی ntpd). اما منسوخ شده و توصیه نمی‌شود. <code>chrony</code> و <code>ntpd</code> دیمن‌هایی هستند که به‌طور مداوم زمان را سینک کرده و تغییرات تدریجی اعمال می‌کنند. <code>chrony</code> برای سیستم‌های با اتصال شبکه ناپایدار (مانند لپ‌تاپ) و سرورهای مجازی مناسب‌تر است."
+    },
+    {
+      "id": 395,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در firewalld (ردهت)، تفاوت بین zones (مناطق) و services (سرویس‌ها) چیست و چگونه از آن‌ها استفاده می‌شود؟",
+      "options": [
+        "Zones مجموعه‌ای از قوانین برای سطوح مختلف اعتماد (مثل public، internal) هستند، Services تعاریف از پیش ساخته برای باز کردن پورت‌های یک سرویس خاص (مثل http، ssh) هستند",
+        "هر دو یکسان هستند",
+        "Services برای zones هستند",
+        "Zones برای سرویس‌ها هستند"
+      ],
+      "correct": 0,
+      "explanation": "در firewalld، Zone (منطقه) یک مجموعه قوانین فایروال برای یک سطح اعتماد خاص است (public برای اینترنت، internal برای شبکه داخلی، trusted برای شبکه امن). هر رابط شبکه به یک zone اختصاص می‌یابد. Service یک تعریف از پیش ساخته است که پورت‌ها و پروتکل‌های مورد نیاز یک سرویس را مشخص می‌کند (مثلاً http شامل پورت ۸۰ TCP). با <code>firewall-cmd --add-service=http --zone=public</code> سرویس HTTP را به zone عمومی اضافه می‌کنید."
+    },
+    {
+      "id": 396,
+      "category": "امنیت - فایروال",
+      "level": 4,
+      "text": "در iptables، زنجیره‌های (Chains) INPUT، OUTPUT و FORWARD چه نقشی در فیلتر کردن بسته‌ها دارند؟",
+      "options": [
+        "INPUT برای بسته‌های ورودی به سیستم، OUTPUT برای بسته‌های خروجی از سیستم، FORWARD برای بسته‌هایی که از سیستم عبور می‌کنند (مسیریابی)",
+        "هر سه یکسان هستند",
+        "INPUT برای خروجی است",
+        "FORWARD برای ورودی است"
+      ],
+      "correct": 0,
+      "explanation": "در iptables (فیلتر کردن بسته‌ها): زنجیره INPUT ترافیک ورودی به سیستم را کنترل می‌کند (مثلاً SSH از بیرون). زنجیره OUTPUT ترافیک خروجی از سیستم را کنترل می‌کند (مثلاً درخواست‌های DNS). زنجیره FORWARD ترافیک عبوری از سیستم (مسیریابی) را کنترل می‌کند (زمانی که سیستم به عنوان روتر عمل می‌کند). هر زنجیره شامل قوانینی است که بسته‌ها را ACCEPT، DROP یا REJECT می‌کنند."
+    },
+    {
+      "id": 397,
+      "category": "مدیریت فایل‌ها - پرمیشن",
+      "level": 4,
+      "text": "عدد ۱۷۵۵ در <code>chmod 1755 dir</code> به چه معناست و چه سطوح دسترسی ویژه‌ای را فعال می‌کند؟",
+      "options": [
+        "Sticky Bit (۱) روی دایرکتوری فعال است به این معنا که فقط مالک فایل می‌تواند آن را حذف کند، و مجوزهای ۷۵۵ برای مالک/گروه/دیگران",
+        "SUID (۱) فعال است",
+        "SGID (۱) فعال است",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "عدد ۱۷۵۵: رقم اول (۱) Sticky Bit را فعال می‌کند (دایرکتوری‌های اشتراکی مانند /tmp). سه رقم بعدی ۷۵۵: مالک (۷ = rwx)، گروه (۵ = r-x)، دیگران (۵ = r-x). با Sticky Bit روی دایرکتوری، کاربران می‌توانند در آن فایل ایجاد کنند اما فقط مالک هر فایل می‌تواند آن را حذف یا تغییر نام دهد، حتی اگر دیگران دسترسی Write داشته باشند."
+    }
+  ]
+}

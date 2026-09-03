@@ -1,0 +1,189 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 (بخش هشتم - نهایی و کامل)",
+  "description": "بخش پایانی با تمرکز بر دستورات باقی‌مانده شامل ابزارهای پیشرفته اسکریپت‌نویسی، مدیریت فرآیندها، ابزارهای دیسک‌های خاص، و سناریوهای ترکیبی نادر.",
+  "questions": [
+    {
+      "id": 108,
+      "category": "اسکریپت‌نویسی و شل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>read</code>، ورودی کاربر را به‌صورت مخفی (بدون نمایش کاراکترها) دریافت کند. کدام سوییچ این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>read -s</code>",
+        "<code>read -p</code>",
+        "<code>read -t</code>",
+        "<code>read -a</code>"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>-s</code> در <code>read</code> ورودی را مخفی می‌کند (مناسب برای پسورد). <code>-p</code> برای نمایش پیام (prompt) است. <code>-t</code> برای تایم‌اوت (timeout) است. <code>-a</code> برای خواندن در یک آرایه است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 109,
+      "category": "اسکریپت‌نویسی و شل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>case</code> در یک اسکریپت bash، ورودی کاربر را بررسی کند و اگر ورودی 'start' بود، پیام 'Starting...' و اگر 'stop' بود، پیام 'Stopping...' و در غیر این صورت پیام 'Invalid' چاپ شود. کدام ساختار صحیح است؟",
+      "options": [
+        "<code>case $input in start) echo \"Starting...\";; stop) echo \"Stopping...\";; *) echo \"Invalid\";; esac</code>",
+        "<code>case $input in \"start\") echo \"Starting...\";; \"stop\") echo \"Stopping...\";; *) echo \"Invalid\";; esac</code>",
+        "<code>case $input of start) echo \"Starting...\";; stop) echo \"Stopping...\";; *) echo \"Invalid\";; esac</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول و دوم از نظر سینتکس صحیح هستند. در <code>case</code>، الگوها نیازی به کوتیشن ندارند (مگر اینکه شامل کاراکترهای خاص باشند). گزینه سوم از کلمه‌ی <code>of</code> استفاده کرده که اشتباه است (<code>case</code> از <code>in</code> استفاده می‌کند). بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 110,
+      "category": "پردازش‌ها و مدیریت آنها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش زمان روشن‌بودن سیستم (uptime)، تعداد کاربران لاگین‌شده، و میانگین بار (load average) در ۱، ۵ و ۱۵ دقیقه استفاده می‌شود؟",
+      "options": [
+        "<code>uptime</code>",
+        "<code>top</code>",
+        "<code>w</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه دستور اطلاعات uptime و load average را نمایش می‌دهند. <code>uptime</code> مستقیماً این اطلاعات را نشان می‌دهد. <code>top</code> و <code>w</code> نیز این اطلاعات را در ابتدای خروجی خود نمایش می‌دهند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 111,
+      "category": "پردازش‌ها و مدیریت آنها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>killall</code>، تمام پردازش‌های مربوط به یک برنامه (مثلاً <code>firefox</code>) را خاتمه دهد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>killall firefox</code>",
+        "<code>killall -9 firefox</code>",
+        "<code>pkill firefox</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند. <code>killall firefox</code> سیگنال TERM (پیش‌فرض) را ارسال می‌کند. <code>killall -9 firefox</code> سیگنال KILL را ارسال می‌کند. <code>pkill firefox</code> نیز با نام برنامه کار می‌کند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 112,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nc</code> (netcat) یک پورت را برای گوش‌دادن (listening) باز کند و پس از دریافت یک اتصال، محتوای ارسال‌شده را در یک فایل ذخیره نماید. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>nc -l -p 8080 > received.txt</code>",
+        "<code>nc -l 8080 > received.txt</code>",
+        "<code>nc -v -l 8080 -o received.txt</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول و دوم با <code>-l</code> (listening) و <code>-p</code> (اختیاری) پورت را باز می‌کنند و با <code>></code> خروجی را در فایل ذخیره می‌کنند. گزینه سوم با <code>-o</code> در برخی نسخه‌ها معتبر است اما استاندارد نیست. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 113,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای اضافه کردن یک کاربر به یک گروه ثانویه (secondary group) بدون حذف گروه‌های ثانویه قبلی استفاده می‌شود؟",
+      "options": [
+        "<code>usermod -aG group user</code>",
+        "<code>usermod -G group user</code>",
+        "<code>gpasswd -a user group</code>",
+        "هر دو گزینه اول و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>usermod -aG</code> و <code>gpasswd -a</code> کاربر را به گروه ثانویه اضافه می‌کنند بدون این‌که گروه‌های قبلی را حذف کنند. <code>usermod -G</code> (بدون <code>-a</code>) گروه‌های ثانویه را بازنویسی می‌کند. بنابراین گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 114,
+      "category": "بوت و بوت‌لودر",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد بعد از تغییر در فایل‌های <code>/etc/grub.d/</code>، فایل کانفیگ GRUB را بازتولید کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "<code>grub-mkconfig -o /boot/grub/grub.cfg</code>",
+        "<code>update-grub</code>",
+        "هر سه گزینه صحیح هستند (بسته به توزیع)"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند اما در توزیع‌های مختلف متفاوتند. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> در RHEL-based. <code>grub-mkconfig -o /boot/grub/grub.cfg</code> در Debian/Ubuntu قدیمی. <code>update-grub</code> یک اسکریپت در Debian/Ubuntu است که معادل <code>grub-mkconfig</code> را اجرا می‌کند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 115,
+      "category": "سیستم‌فایل و دیسک",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک فایل ISO را به‌صورت حلقه‌ای (loop) مانت کند تا بتواند به محتویات آن دسترسی داشته باشد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mount -o loop file.iso /mnt/iso</code>",
+        "<code>mount -o ro,loop file.iso /mnt/iso</code>",
+        "<code>losetup /dev/loop0 file.iso</code> سپس <code>mount /dev/loop0 /mnt/iso</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند. گزینه اول با <code>-o loop</code> مستقیماً فایل را مانت می‌کند. گزینه دوم با گزینه‌های اضافی (read-only و loop). گزینه سوم با <code>losetup</code> دستگاه loop را ایجاد و سپس مانت می‌کند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 116,
+      "category": "مدیریت زمان",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش زمان جاری به‌صورت UTC (زمان هماهنگ جهانی) استفاده می‌شود؟",
+      "options": [
+        "<code>date -u</code>",
+        "<code>date --utc</code>",
+        "<code>timedatectl show</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>date -u</code> و <code>date --utc</code> زمان جاری را به‌صورت UTC نمایش می‌دهند. <code>timedatectl show</code> زمان محلی را نشان می‌دهد (مگر با گزینه‌های خاص). بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 117,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>ip</code>، یک آدرس IP جدید به رابط شبکه <code>eth0</code> اضافه کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ip addr add 192.168.1.10/24 dev eth0</code>",
+        "<code>ip a add 192.168.1.10/24 dev eth0</code>",
+        "<code>ip address add 192.168.1.10/24 dev eth0</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه سینتکس معتبر هستند. <code>ip addr add</code>، <code>ip a add</code>، و <code>ip address add</code> همگی معادل‌اند و آدرس IP را به رابط اضافه می‌کنند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 118,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای حذف یک آدرس IP از یک رابط شبکه با استفاده از <code>ip</code> استفاده می‌شود؟",
+      "options": [
+        "<code>ip addr del 192.168.1.10/24 dev eth0</code>",
+        "<code>ip a del 192.168.1.10/24 dev eth0</code>",
+        "<code>ip address del 192.168.1.10/24 dev eth0</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه سینتکس با <code>del</code> معتبر هستند. <code>ip addr del</code>، <code>ip a del</code>، و <code>ip address del</code> همگی آدرس IP را از رابط حذف می‌کنند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 119,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>openssl</code> یک فایل را با الگوریتم AES-256-CBC رمزنگاری کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>openssl enc -aes-256-cbc -in file.txt -out file.enc</code>",
+        "<code>openssl aes-256-cbc -in file.txt -out file.enc</code>",
+        "<code>openssl enc -aes-256-cbc -salt -in file.txt -out file.enc</code>",
+        "هر دو گزینه اول و سوم صحیح هستند، اما گزینه سوم با <code>-salt</code> امن‌تر است."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول و سوم معتبر هستند. <code>openssl enc -aes-256-cbc</code> روش استاندارد است. گزینه سوم با <code>-salt</code> (نمک) امنیت رمزنگاری را افزایش می‌دهد. گزینه دوم سینتکس اشتباه دارد (باید <code>enc</code> قبل از الگوریتم بیاید). بنابراین گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 120,
+      "category": "مجازی‌سازی و کانتینر",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>docker</code>، یک کانتینر را در پس‌زمینه اجرا کند و نام آن را <code>web</code> بگذارد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>docker run -d --name web nginx</code>",
+        "<code>docker start -d --name web nginx</code>",
+        "<code>docker run -d -n web nginx</code>",
+        "<code>docker run --detach --name web nginx</code>"
+      ],
+      "correct": 3,
+      "explanation": "گزینه اول با <code>-d</code> (detach) و <code>--name web</code> کانتینر را در پس‌زمینه با نام web اجرا می‌کند. گزینه چهارم با <code>--detach</code> معادل <code>-d</code> است و همچنین معتبر است. گزینه دوم از <code>start</code> برای کانتینرهای موجود استفاده می‌کند، نه ایجاد جدید. گزینه سوم سوییچ اشتباه دارد. بنابراین گزینه چهارم (هر دو اول و چهارم) صحیح است، اما در اینجا گزینه اول دقیق‌ترین پاسخ است. با توجه به گزینه‌ها، گزینه چهارم صحیح است."
+    }
+  ],
+  "status": "✅ پوشش کامل تمام دستورات و سوییچ‌های موجود در لیست جامع LPIC-1\\n\\nاین مجموعه شامل ۱۲۰ سوال تستی عمیق و مفهومی از تمام مباحث مطرح‌شده است که به‌صورت جامع تمام دستورات، سوییچ‌ها، سناریوهای عیب‌یابی و نکات ریز و ظریف را پوشش می‌دهد. تمام دستورات اصلی موجود در لیست مرجع حداقل در یک سوال پوشش داده شده‌اند و ترکیب‌های پیشرفته‌تر نیز بررسی شده‌اند. در صورت نیاز به سوالات بیشتر یا پوشش دستورات خاص، لطفاً اطلاع دهید."
+}

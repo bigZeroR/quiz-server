@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل کاربری | LPIC Quiz</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <!-- سایدبار -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-icon">🐧</span>
+                <h2>LPIC Dashboard</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="nav-item active">📊 نمای کلی</a>
+                <a href="/" class="nav-item">📚 لیست آزمون‌ها</a>
+                <a href="/create" class="nav-item">🛠️ ساخت آزمون</a>
+                <a href="#" class="nav-item" onclick="exportData()">💾 خروجی از داده‌ها</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-sm" onclick="resetAllData()">🗑️ پاک کردن تمام داده‌ها</button>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div>
+                    <h1>خوش آمدید، <span id="userName">کاربر عزیز</span> 👋</h1>
+                    <p class="subtitle">اینجا خلاصه‌ای از عملکرد و پیشرفت شما در آزمون‌ها نمایش داده می‌شود.</p>
+                </div>
+                <a href="/" class="btn btn-primary">شروع آزمون جدید →</a>
+            </header>
+
+            <!-- کارت‌های آمار -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--info-bg); color: var(--info);">📝</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalQuizzesTaken">0</span>
+                        <span class="stat-label">آزمون شرکت‌شده</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--accent-subtle); color: var(--accent);">✅</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalQuestionsAnswered">0</span>
+                        <span class="stat-label">کل سوالات پاسخ‌داده‌شده</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--success-bg); color: var(--success);">🎯</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="overallAccuracy">0%</span>
+                        <span class="stat-label">میانگین دقت (Accuracy)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--warning-bg); color: var(--warning);">⭐</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalBookmarks">0</span>
+                        <span class="stat-label">سوالات نشان‌شده</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش‌های پایین -->
+            <div class="dashboard-grid">
+                <!-- فعالیت‌های اخیر -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>📈 پیشرفت در آزمون‌ها</h3>
+                    </div>
+                    <div id="recentActivity" class="activity-list">
+                        <!-- با جاوااسکریپت پر می‌شود -->
+                    </div>
+                </div>
+
+                <!-- نقاط ضعف -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>⚠️ نیاز به مرور (غلط‌های بیشتر)</h3>
+                    </div>
+                    <div id="weakAreas" class="weak-areas-list">
+                        <!-- با جاوااسکریپت پر می‌شود -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>

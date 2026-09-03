@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if quiz %}{{ quiz.title }}{% else %}سامانه آزمون LPIC و Network+{% endif %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    {% if quiz %}
+    <!-- ═══════════════════════════════════════════ QUIZ PAGE ═══════════════════════════════════════════ -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="stats-bar">
+        <div class="stat-item" id="aiTimerStat" style="display: none;">
+            <span class="stat-icon">⏱️</span>
+            <span class="stat-label">زمان</span>
+            <span class="stat-value" id="aiTimer">0s</span>
+        </div>
+        <div class="stat-item" id="aiLevelStat" style="display: none;">
+            <span class="stat-icon">📊</span>
+            <span class="stat-label">سطح</span>
+            <span class="stat-value" id="aiCurrentLevel" style="color: var(--network);">-</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-icon">📝</span>
+            <span class="stat-label">سوال</span>
+            <span class="stat-value"><span id="currentQ">1</span>/<span id="totalQ">0</span></span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-icon">✅</span>
+            <span class="stat-label">صحیح</span>
+            <span class="stat-value stat-correct" id="correctCount">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-icon">❌</span>
+            <span class="stat-label">غلط</span>
+            <span class="stat-value stat-wrong" id="wrongCount">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-icon">📊</span>
+            <span class="stat-label">پیشرفت</span>
+            <span class="stat-value stat-progress" id="progressPercent">0%</span>
+        </div>
+    </div>
+
+    <header class="quiz-header">
+        <a href="/" class="back-btn" title="بازگشت به خانه">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+        <div class="quiz-header-content">
+            <h1>{{ quiz.title }} <span id="aiBadge" style="display:none; font-size: 0.6em; background: var(--network); color: white; padding: 2px 8px; border-radius: 12px; vertical-align: middle;">🤖 AI Mode</span></h1>
+            <p class="subtitle">{{ quiz.description }}</p>
+        </div>
+        <div class="header-spacer"></div>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 جستجو در سوالات..." onkeyup="searchQuestions()">
+    </div>
+
+    <div class="category-filter" id="categoryFilter"></div>
+
+    <div class="questions-wrapper">
+        <div id="questionsContainer"></div>
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🔍</div>
+            <p>سوالی با این مشخصات یافت نشد.</p>
+        </div>
+    </div>
+
+    <nav class="nav-controls">
+        <button class="btn btn-nav" onclick="prevQuestion()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            <span>قبلی</span>
+        </button>
+        <button class="btn btn-nav btn-primary" onclick="showRandomQuestion()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+            <span>تصادفی</span>
+        </button>
+        <button class="btn btn-nav" onclick="nextQuestion()">
+            <span>بعدی</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+    </nav>
+
+    <div class="action-controls">
+        <button class="btn btn-info" onclick="showBookmarks()"><span>⭐</span> نشان‌شده‌ها</button>
+        <button class="btn btn-warning" onclick="showWrongOnes()"><span>❌</span> مرور غلط‌ها</button>
+        <button class="btn btn-danger" onclick="resetAll()"><span>↺</span> ریست کامل</button>
+        <a href="/" class="btn btn-ghost"><span>⌂</span> خانه</a>
+    </div>
+
+    <script>
+        const QUIZ_DATA = {{ quiz | tojson | safe }};
+        const QUIZ_NAME = "{{ quiz_name }}";
+        const QUIZ_TYPE = "{{ quiz_type }}";
+        const URL_PARAMS = new URLSearchParams(window.location.search);
+        const IS_ADAPTIVE_MODE = URL_PARAMS.get('mode') === 'adaptive';
+    </script>
+    <script src="/static/script.js"></script>
+
+    {% else %}
+    <!-- ═══════════════════════════════════════════ HOME PAGE ═══════════════════════════════════════════ -->
+    <div class="home-bg-glow"></div>
+
+    <header class="home-header">
+        <div class="home-logo">
+            <span class="logo-icon">🐧</span>
+            <h1 class="home-title">سامانه آزمون LPIC و Network+</h1>
+        </div>
+        <p class="home-subtitle">مجموعه‌ای از آزمون‌های تستی برای آمادگی آزمون‌های LPIC-1 و Network+</p>
+        
+        <div class="home-actions">
+<a href="/dashboard" class="btn btn-info" style="margin-left: 12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+        <span>پنل کاربری</span>
+    </a>
+            <a href="/create" class="btn btn-create">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>ساخت آزمون جدید</span>
+            </a>
+            <a href="?mode=adaptive" class="btn btn-ai-mode" onclick="startAdaptiveMode(event)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12 2.1 12.1"/></svg>
+                <span>شروع آزمون هوشمند تطبیقی (AI)</span>
+            </a>
+        </div>
+
+        <div class="home-stats-row">
+            <div class="home-stat-chip">
+                <span class="chip-number">{{ quizzes | length }}</span>
+                <span class="chip-label">آزمون</span>
+            </div>
+            <div class="home-stat-chip">
+                <span class="chip-number">{{ quizzes | sum(attribute='count') }}</span>
+        
+        <span class="chip-label">سوال</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="home-container">
+        {% set general = quizzes | selectattr('type', 'equalto', 'general') | list %}
+        {% set commands = quizzes | selectattr('type', 'equalto', 'command') | list %}
+        {% set network = quizzes | selectattr('type', 'equalto', 'network') | list %}
+
+        {% if general %}
+        <section class="quiz-section">
+            <div class="section-header">
+                <span class="section-icon">📘</span>
+                <h2 class="section-title">آزمون‌های عمومی LPIC</h2>
+                <span class="section-count">{{ general | length }} آزمون</span>
+            </div>
+            <div class="quiz-grid">
+                {% for q in general %}
+                <a href="/quiz/{{ q.file }}" class="quiz-card">
+                    <div class="card-glow"></div>
+                    <div class="card-top">
+                        <span class="card-type-badge general-badge">عمومی</span>
+                        <span class="card-level">L{{ q.level | default('1') }}</span>
+                    </div>
+                    <h3 class="quiz-card-title">{{ q.title }}</h3>
+                    <p class="quiz-card-desc">{{ q.description }}</p>
+                    <div class="card-footer">
+                        <span class="quiz-card-count">📝 {{ q.count }} سوال</span>
+                        <span class="card-arrow">←</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if commands %}
+        <section class="quiz-section">
+            <div class="section-header">
+                <span class="section-icon">🐧</span>
+                <h2 class="section-title">آزمون‌های دستورات لینوکس</h2>
+                <span class="section-count">{{ commands | length }} آزمون</span>
+            </div>
+            <div class="quiz-grid">
+                {% for q in commands %}
+                <a href="/quiz/{{ q.file }}" class="quiz-card command-card">
+                    <div class="card-glow"></div>
+                    <div class="card-top">
+                        <span class="card-type-badge command-badge">دستورات</span>
+                        <span class="card-level">L{{ q.level | default('1') }}</span>
+                    </div>
+                    <h3 class="quiz-card-title"><span class="cmd-prompt">$</span> {{ q.title }}</h3>
+                    <p class="quiz-card-desc">{{ q.description }}</p>
+                    <div class="card-footer">
+                        <span class="quiz-card-count">📝 {{ q.count }} سوال</span>
+                        <span class="card-arrow">←</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if network %}
+        <section class="quiz-section">
+            <div class="section-header">
+                <span class="section-icon">🌐</span>
+                <h2 class="section-title">آزمون‌های Network+</h2>
+                <span class="section-count">{{ network | length }} آزمون</span>
+            </div>
+            <div class="quiz-grid">
+                {% for q in network %}
+                <a href="/quiz/{{ q.file }}" class="quiz-card network-card">
+                    <div class="card-glow"></div>
+                    <div class="card-top">
+                        <span class="card-type-badge network-badge">شبکه</span>
+                        <span class="card-level">L{{ q.level | default('1') }}</span>
+                    </div>
+                    <h3 class="quiz-card-title">{{ q.title }}</h3>
+                    <p class="quiz-card-desc">{{ q.description }}</p>
+                    <div class="card-footer">
+                        <span class="quiz-card-count">📝 {{ q.count }} سوال</span>
+                        <span class="card-arrow">←</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if not general and not commands and not network %}
+        <div class="empty-home">
+            <div class="empty-icon">📂</div>
+            <h3>هنوز آزمونی اضافه نشده است!</h3>
+            <p>لطفاً فایل‌های JSON خود را در پوشه <code>data</code> قرار دهید یا از دکمه بالا آزمون جدیدی بسازید.</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer class="home-footer">
+        <p>ساخته شده با ❤️ برای یادگیری لینوکس و شبکه</p>
+    </footer>
+
+    <script>
+        function startAdaptiveMode(event) {
+            event.preventDefault();
+            const quizList = {{ quizzes | tojson | safe }};
+            if (quizList.length === 0) {
+                alert('هیچ آزمونی موجود نیست! ابتدا یک آزمون اضافه کنید.');
+                return;
+            }
+            const firstQuiz = quizList[0];
+            if (confirm(`آزمون هوشمند تطبیقی با "${firstQuiz.title}" شروع می‌شود.\n\nدر این حالت:\n• ۴ سوال اول از سطوح مختلف نمایش داده می‌شوند\n• تایمر برای هر سوال فعال است\n• سطح دشواری بر اساس پاسخ‌های شما تنظیم می‌شود\n\nآیا آماده‌اید؟`)) {
+                window.location.href = `/quiz/${firstQuiz.file}?mode=adaptive`;
+            }
+        }
+    </script>
+    {% endif %}
+
+</body>
+</html>

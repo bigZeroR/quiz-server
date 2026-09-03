@@ -1,0 +1,218 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 (بخش ششم - پوشش کامل)",
+  "description": "بخش نهایی سوالات برای پوشش کامل تمام دستورات و سوییچ‌های باقی‌مانده، با تمرکز بر ترکیب‌های پیشرفته، سناریوهای عیب‌یابی، و دستورات کمتر مطرح‌شده مانند ابزارهای مشاهده فایل‌های فشرده، مدیریت کاربران پیشرفته، و ابزارهای شبکه‌ای تخصصی.",
+  "questions": [
+    {
+      "id": 81,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>find</code>، تمام فایل‌هایی را که در ۷ روز گذشته تغییر یافته‌اند (modified) و متعلق به کاربر <code>www-data</code> هستند، پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>find / -user www-data -mtime -7</code>",
+        "<code>find / -user www-data -mtime +7</code>",
+        "<code>find / -user www-data -atime -7</code>",
+        "<code>find / -uid www-data -ctime -7</code>"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>-mtime -7</code> فایل‌هایی را پیدا می‌کند که در ۷ روز گذشته تغییر یافته‌اند (کمتر از ۷ روز). <code>-user www-data</code> فایل‌های متعلق به آن کاربر را فیلتر می‌کند. گزینه دوم (<code>+7</code>) فایل‌های تغییر‌یافته بیش از ۷ روز پیش را نشان می‌دهد. گزینه سوم (<code>-atime</code>) مربوط به زمان دسترسی (access time) است، نه تغییر (modify). گزینه چهارم (<code>-ctime</code>) مربوط به تغییر وضعیت (change time) است و <code>-uid</code> عددی است، نه نام کاربری. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 82,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش اطلاعات متادیتای کامل یک فایل، از جمله زمان دسترسی، زمان تغییر، شماره inode و نوع فایل، استفاده می‌شود؟",
+      "options": [
+        "<code>stat file</code>",
+        "<code>ls -l file</code>",
+        "<code>file file</code>",
+        "<code>ls -i file</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>stat</code> اطلاعات کامل متادیتا (شامل inode، اندازه، زمان دسترسی، تغییر، و تغییر وضعیت، و نوع فایل) را نمایش می‌دهد. <code>ls -l</code> فقط بخشی از اطلاعات را نشان می‌دهد. <code>file</code> نوع فایل را تشخیص می‌دهد اما متادیتای کامل را نشان نمی‌دهد. <code>ls -i</code> فقط شماره inode را نشان می‌دهد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 83,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>grep</code>، خطوطی را که با حرف 's' شروع می‌شوند و به حرف 't' ختم می‌شوند، از یک فایل استخراج کند. کدام دستور این کار را با استفاده از عبارت منظم (regex) صحیح انجام می‌دهد؟",
+      "options": [
+        "<code>grep '^s.t$' file</code>",
+        "<code>grep 's.*t' file</code>",
+        "<code>grep '^s+.*t$' file</code>",
+        "<code>grep -E '^s.t$' file</code>"
+      ],
+      "correct": 3,
+      "explanation": "برای استفاده از عبارت منظم گسترده (Extended Regex)، باید از <code>-E</code> استفاده کرد. الگوی <code>^s.*t$</code> به‌معنی خطوطی است که با 's' شروع و با 't' ختم می‌شوند (هر تعداد کاراکتر در بین). گزینه اول بدون <code>-E</code> کار می‌کند اما <code>.*</code> در حالت پایه نیز تفسیر می‌شود، اما برای اطمینان از تطابق کامل و استفاده از عبارات منظم پیشرفته، <code>-E</code> توصیه می‌شود. گزینه دوم فاقد <code>^</code> و <code>$</code> است و خطوطی که شامل 's' و 't' باشند را پیدا می‌کند. گزینه سوم از <code>+</code> استفاده کرده که نیاز به <code>-E</code> دارد و بدون آن کار نمی‌کند. پس گزینه چهارم صحیح است."
+    },
+    {
+      "id": 84,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>sed</code>، خطوط شماره ۳ تا ۷ یک فایل را حذف کرده و تغییرات را مستقیماً روی فایل اعمال کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>sed '3,7d' file</code>",
+        "<code>sed -i '3,7d' file</code>",
+        "<code>sed '3,7!d' file</code>",
+        "<code>sed -n '3,7d' file</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>sed -i '3,7d' file</code> با سوییچ <code>-i</code> تغییرات را مستقیماً روی فایل اعمال می‌کند و با الگوی <code>'3,7d'</code> خطوط ۳ تا ۷ را حذف می‌کند. گزینه اول تغییرات را فقط روی خروجی استاندارد اعمال می‌کند (فایل تغییر نمی‌کند). گزینه سوم (<code>!d</code>) همه خطوط به جز ۳ تا ۷ را حذف می‌کند. گزینه چهارم با <code>-n</code> خروجی را سرکوب می‌کند و بی‌اثر است. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 85,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>ss</code>، تمام اتصالات TCP را که در وضعیت <code>ESTABLISHED</code> هستند و به پورت ۴۴۳ (HTTPS) متصل شده‌اند، نمایش دهد. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>ss -t state established '( dport = :443 )'</code>",
+        "<code>ss -t state established sport = :443</code>",
+        "<code>ss -t state established '( sport = :443 )'</code>",
+        "<code>ss -tn state established '( dport = :443 )'</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-t</code> (TCP)، <code>state established</code>، و فیلتر <code>( dport = :443 )</code> برای پورت مقصد ۴۴۳، دقیقاً نیاز را برآورده می‌کند. گزینه دوم از <code>sport</code> (پورت مبدأ) استفاده می‌کند که برای اتصالات خروجی است، نه ورودی. گزینه سوم نیز پورت مبدأ را فیلتر می‌کند. گزینه چهارم با <code>-n</code> عددی است اما فیلتر پورت درست است، اما گزینه اول کامل‌تر است (پورت مقصد). پس گزینه اول صحیح است."
+    },
+    {
+      "id": 86,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش جدول مسیریابی (routing table) در سیستم‌های لینوکس با استفاده از ابزار قدیمی <code>route</code> استفاده می‌شود؟",
+      "options": [
+        "<code>route -n</code>",
+        "<code>route</code>",
+        "<code>ip route</code>",
+        "هر دو گزینه اول و دوم صحیح هستند، اما <code>-n</code> از تبدیل آدرس به نام جلوگیری می‌کند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>route</code> و <code>route -n</code> جدول مسیریابی را نمایش می‌دهند. <code>-n</code> از انجام DNS lookup برای آدرس‌های IP جلوگیری می‌کند و نمایش را سریع‌تر و عددی می‌کند. <code>ip route</code> نیز معادل جدید است. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 87,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>lsof</code>، تمام فایل‌هایی را که توسط یک کاربر خاص (مثلاً <code>www-data</code>) باز شده‌اند، پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>lsof -u www-data</code>",
+        "<code>lsof -U www-data</code>",
+        "<code>lsof -p www-data</code>",
+        "<code>lsof -i -u www-data</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>lsof -u www-data</code> تمام فایل‌های باز شده توسط کاربر <code>www-data</code> را نمایش می‌دهد. گزینه دوم سوییچ اشتباه دارد (<code>-U</code> برای سوکت‌های UNIX است). گزینه سوم برای PID است، نه نام کاربری. گزینه چهارم با <code>-i</code> فقط فایل‌های شبکه را نشان می‌دهد، نه همه فایل‌ها. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 88,
+      "category": "امنیت و احراز هویت",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای کپی کردن کلید عمومی SSH به یک سرور راه‌دور و اضافه کردن آن به <code>~/.ssh/authorized_keys</code> استفاده می‌شود؟",
+      "options": [
+        "<code>ssh-copy-id user@server</code>",
+        "<code>scp ~/.ssh/id_rsa.pub user@server:~/.ssh/authorized_keys</code>",
+        "<code>ssh user@server 'echo \"$(cat ~/.ssh/id_rsa.pub)",
+        "ssh/authorized_keys'</code>",
+        "هر سه گزینه صحیح هستند، اما گزینه اول ساده‌ترین و استانداردترین روش است."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند. <code>ssh-copy-id</code> به‌طور خاص برای این کار طراحی شده است. روش دوم با <code>scp</code> فایل را کپی می‌کند اما ممکن است فایل موجود را بازنویسی کند (باید از <code>>></code> استفاده کرد). روش سوم با <code>ssh</code> و <code>echo</code> نیز کار می‌کند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 89,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک کاربر جدید با شناسه UID مشخص (مثلاً ۱۰۰۱) و گروه اصلی (primary group) با GID مشخص (مثلاً ۱۰۰۱) ایجاد کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>useradd -u 1001 -g 1001 newuser</code>",
+        "<code>useradd -u 1001 -G 1001 newuser</code>",
+        "<code>useradd -u 1001 -g mygroup newuser</code>",
+        "<code>useradd -U 1001 -g 1001 newuser</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>useradd -u 1001 -g 1001</code> با <code>-u</code> UID و با <code>-g</code> گروه اصلی (primary group) را تنظیم می‌کند. GID ۱۰۰۱ باید از قبل وجود داشته باشد یا گروهی با این نام ایجاد شود. گزینه دوم از <code>-G</code> برای گروه‌های ثانویه استفاده می‌کند، نه اصلی. گزینه سوم با نام گروه کار می‌کند اما GID مشخص نشده است. گزینه چهارم سوییچ اشتباه دارد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 90,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تغییر شل پیش‌فرض یک کاربر موجود از <code>/bin/bash</code> به <code>/bin/zsh</code> استفاده می‌شود؟",
+      "options": [
+        "<code>usermod -s /bin/zsh user</code>",
+        "<code>chsh -s /bin/zsh user</code>",
+        "<code>useradd -s /bin/zsh user</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>usermod -s</code> و <code>chsh -s</code> می‌توانند شل کاربر را تغییر دهند. <code>usermod</code> نیاز به دسترسی root دارد، در حالی که <code>chsh</code> را کاربر عادی نیز می‌تواند اجرا کند (با محدودیت). گزینه سوم برای ایجاد کاربر جدید است، نه تغییر کاربر موجود. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 91,
+      "category": "مدیریت زمان",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>chronyc</code> وضعیت همگام‌سازی زمان با سرورهای NTP را بررسی کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>chronyc tracking</code>",
+        "<code>chronyc sources</code>",
+        "<code>chronyc activity</code>",
+        "هر دو گزینه اول و دوم صحیح هستند، اما <code>tracking</code> وضعیت کلی را نشان می‌دهد و <code>sources</code> لیست سرورها را."
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>chronyc tracking</code> (وضعیت کلی همگام‌سازی، offset، و مرجع) و <code>chronyc sources</code> (لیست سرورهای NTP و وضعیت هرکدام) برای بررسی وضعیت استفاده می‌شوند. <code>chronyc activity</code> تعداد سرورهای آنلاین/آفلاین را نشان می‌دهد. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 92,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تولید دنباله‌ای از اعداد (مثلاً ۱ تا ۱۰) در خط فرمان استفاده می‌شود؟",
+      "options": [
+        "<code>seq 10</code>",
+        "<code>echo {1..10}</code>",
+        "<code>for i in {1..10}; do echo $i; done</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای تولید دنباله اعداد معتبر هستند. <code>seq 10</code> اعداد ۱ تا ۱۰ را چاپ می‌کند. <code>echo {1..10}</code> از brace expansion استفاده می‌کند. <code>for</code> نیز همان کار را با حلقه انجام می‌دهد. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 93,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>firewall-cmd</code> یک سرویس (مثلاً <code>http</code>) را به‌طور دائمی به فایروال اضافه کند و سپس تنظیمات را فعال نماید. کدام دنباله از دستورات این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>firewall-cmd --add-service=http --permanent</code> سپس <code>firewall-cmd --reload</code>",
+        "<code>firewall-cmd --add-service=http</code> سپس <code>firewall-cmd --permanent</code>",
+        "<code>firewall-cmd --add-service=http --permanent</code> (بدون نیاز به reload)",
+        "<code>firewall-cmd --add-service=http --runtime-to-permanent</code>"
+      ],
+      "correct": 0,
+      "explanation": "ترتیب صحیح: ابتدا با <code>--add-service=http --permanent</code> سرویس را به تنظیمات دائمی اضافه می‌کنیم، سپس با <code>--reload</code> تنظیمات را فعال می‌کنیم. گزینه دوم ترتیب اشتباه است. گزینه سوم بدون reload تنظیمات اعمال نمی‌شود. گزینه چهارم تنظیمات زمان اجرا را دائمی می‌کند اما برای افزودن سرویس جدید مناسب نیست. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 94,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش وضعیت فعلی NetworkManager و اطلاعات مربوط به دستگاه‌های شبکه استفاده می‌شود؟",
+      "options": [
+        "<code>nmcli general status</code>",
+        "<code>nmcli device status</code>",
+        "<code>nmcli connection show</code>",
+        "هر سه گزینه اطلاعات مختلفی از NetworkManager نمایش می‌دهند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه زیردستور <code>nmcli</code> اطلاعات متفاوتی را نمایش می‌دهند: <code>general status</code> وضعیت کلی NetworkManager، <code>device status</code> وضعیت دستگاه‌های شبکه، و <code>connection show</code> لیست اتصالات تعریف‌شده. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 95,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>gpg</code> یک فایل را رمزگشایی (decrypt) کند و خروجی را در یک فایل جدید ذخیره نماید. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>gpg --decrypt file.gpg > file.txt</code>",
+        "<code>gpg -d file.gpg > file.txt</code>",
+        "<code>gpg --output file.txt --decrypt file.gpg</code>",
+        "هر سه گزینه صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای رمزگشایی معتبر هستند. <code>gpg --decrypt file.gpg</code> خروجی را به stdout می‌فرستد که با <code>></code> می‌توان آن را ذخیره کرد. <code>gpg -d</code> معادل <code>--decrypt</code> است. <code>gpg --output file.txt --decrypt file.gpg</code> نیز مستقیماً خروجی را در فایل مشخص شده ذخیره می‌کند. بنابراین گزینه چهارم صحیح است."
+    }
+  ],
+  "status": "✅ تمام دستورات و سوییچ‌های اصلی موجود در لیست جامع LPIC-1 پوشش داده شده‌اند.\\n\\nاین مجموعه شامل ۹۵ سوال تستی عمیق و مفهومی از تمام مباحث مطرح‌شده در لیست دستورات است که به‌صورت جامع تمام دستورات، سوییچ‌ها و سناریوهای کاربردی را پوشش می‌دهد. در صورت نیاز به سوالات بیشتر در مورد دستورات خاص یا مباحث تکمیلی، لطفاً مشخص کنید."
+}

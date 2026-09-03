@@ -1,0 +1,147 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 بر اساس لیست دستورات و سوییچ‌ها (بخش پنجم - تکمیلی)",
+  "description": "بخش تکمیلی با تمرکز بر دستورات خاص و کمتر پوشش‌داده‌شده مانند dd, cpio, split, ابزارهای مشاهده فایل‌های فشرده, دستورات مدیریت زمان سخت‌افزاری, ابزارهای شبکه قدیمی, و ابزارهای مجازی‌سازی و گرافیکی.",
+  "questions": [
+    {
+      "id": 71,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>dd</code> یک فایل ۱ گیگابایتی حاوی صفر ایجاد کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>dd if=/dev/zero of=file.img bs=1M count=1024</code>",
+        "<code>dd if=/dev/null of=file.img bs=1M count=1024</code>",
+        "<code>dd if=/dev/random of=file.img bs=1M count=1024</code>",
+        "<code>dd if=/dev/zero of=file.img bs=1G count=1</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول صحیح است زیرا از <code>/dev/zero</code> به‌عنوان ورودی برای تولید صفر استفاده می‌کند و با <code>bs=1M</code> و <code>count=1024</code> دقیقاً ۱ گیگابایت فایل ایجاد می‌کند. گزینه دوم از <code>/dev/null</code> استفاده می‌کند که خروجی ندارد. گزینه سوم از <code>/dev/random</code> برای داده‌های تصادفی استفاده می‌کند، نه صفر. گزینه چهارم با <code>bs=1G</code> و <code>count=1</code> نیز معادل ۱ گیگابایت است، اما <code>bs=1M count=1024</code> استانداردتر است و در برخی سیستم‌ها <code>bs=1G</code> ممکن است پشتیبانی نشود. بنابراین گزینه اول دقیق‌ترین پاسخ است."
+    },
+    {
+      "id": 72,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>cpio</code> تمام فایل‌های یک دایرکتوری را آرشیو کند و سپس آنها را در جای دیگری استخراج نماید. کدام دنباله از دستورات این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>find . -type f | cpio -ov > archive.cpio</code> سپس <code>cpio -idv < archive.cpio</code>",
+        "<code>ls -R | cpio -ov > archive.cpio</code> سپس <code>cpio -idv < archive.cpio</code>",
+        "<code>cpio -ov * > archive.cpio</code> سپس <code>cpio -idv < archive.cpio</code>",
+        "<code>find . -type f | cpio -ov > archive.cpio</code> سپس <code>cpio -idv -d < archive.cpio</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول صحیح است. <code>find . -type f</code> لیست فایل‌ها را به <code>cpio -ov</code> می‌دهد تا آرشیو ایجاد شود. سپس <code>cpio -idv</code> برای استخراج استفاده می‌شود. گزینه دوم با <code>ls -R</code> کار می‌کند اما شامل متادیتا نمی‌شود. گزینه سوم با wildcard کار می‌کند اما ممکن است برخی فایل‌ها را از دست بدهد. گزینه چهارم <code>-d</code> اضافی دارد که در <code>cpio -idv</code> به‌طور پیش‌فرض وجود دارد. بنابراین گزینه اول صحیح است."
+    },
+    {
+      "id": 73,
+      "category": "آرشیو و فشرده‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای مشاهده محتوای یک فایل فشرده با پسوند <code>.bz2</code> بدون خارج کردن از حالت فشرده استفاده می‌شود؟",
+      "options": [
+        "<code>zcat file.bz2</code>",
+        "<code>bzcat file.bz2</code>",
+        "<code>xzcat file.bz2</code>",
+        "<code>cat file.bz2</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>bzcat</code> مخصوص فایل‌های <code>.bz2</code> است و محتوا را بدون خارج‌سازی نمایش می‌دهد. <code>zcat</code> برای <code>.gz</code> است. <code>xzcat</code> برای <code>.xz</code> است. <code>cat</code> محتوای خام فشرده را نشان می‌دهد که قابل‌خواندن نیست. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 74,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای اجرای دوره‌ای یک فرمان و نمایش خروجی آن در ترمینال با فاصله زمانی ۲ ثانیه استفاده می‌شود؟",
+      "options": [
+        "<code>watch -n 2 command</code>",
+        "<code>watch 2 command</code>",
+        "<code>repeat 2 command</code>",
+        "<code>while true; do command; sleep 2; done</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>watch -n 2</code> دقیقاً این کار را انجام می‌دهد و خروجی را به‌روز می‌کند. گزینه دوم سینتکس اشتباه دارد. گزینه سوم معتبر نیست. گزینه چهارم نیز کار می‌کند اما طولانی‌تر و غیراستاندارد است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 75,
+      "category": "مدیریت زمان",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد زمان سخت‌افزاری (RTC) را با زمان سیستمی (system clock) همگام‌سازی کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>hwclock --systohc</code>",
+        "<code>hwclock --hctosys</code>",
+        "<code>timedatectl set-local-rtc 1</code>",
+        "<code>date -s \"$(hwclock -r)\"</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>hwclock --systohc</code> زمان سیستم را به سخت‌افزار می‌نویسد. <code>--hctosys</code> برعکس است (سخت‌افزار به سیستم). گزینه سوم برای تنظیم RTC به زمان محلی است، نه همگام‌سازی. گزینه چهارم یک روش غیراستاندارد است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 76,
+      "category": "مدیریت زمان",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش وضعیت همگام‌سازی زمان با سرور NTP در سیستم‌هایی که از <code>ntpd</code> استفاده می‌کنند، به کار می‌رود؟",
+      "options": [
+        "<code>chronyc sources</code>",
+        "<code>ntpstat</code>",
+        "<code>timedatectl show</code>",
+        "<code>date -u</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>ntpstat</code> به‌طور خاص وضعیت همگام‌سازی NTP را نمایش می‌دهد. <code>chronyc sources</code> برای <code>chrony</code> است، نه <code>ntpd</code>. <code>timedatectl show</code> اطلاعات عمومی زمان را نمایش می‌دهد. <code>date -u</code> زمان UTC را نشان می‌دهد. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 77,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از ابزار قدیمی <code>netstat</code>، تمام اتصالات TCP و UDP در حال گوش‌دادن (listening) را به‌همراه PID و نام برنامه نمایش دهد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>netstat -tulpn</code>",
+        "<code>netstat -tuln</code>",
+        "<code>netstat -tupn</code>",
+        "<code>netstat -tulpe</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-t</code> (TCP)، <code>-u</code> (UDP)، <code>-l</code> (listening)، <code>-p</code> (PID/برنامه)، <code>-n</code> (عددی) دقیقاً نیاز را برآورده می‌کند. گزینه دوم <code>-p</code> ندارد. گزینه سوم <code>-l</code> ندارد. گزینه چهارم سوییچ اشتباه دارد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 78,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای ارسال یک درخواست ARP به یک آدرس IP خاص و دریافت پاسخ MAC استفاده می‌شود؟",
+      "options": [
+        "<code>arp -a</code>",
+        "<code>arping IP</code>",
+        "<code>ip neigh</code>",
+        "<code>ping IP</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>arping</code> به‌طور خاص درخواست ARP ارسال می‌کند و آدرس MAC را دریافت می‌کند. <code>arp -a</code> جدول ARP را نمایش می‌دهد. <code>ip neigh</code> نیز جدول ARP را نمایش می‌دهد. <code>ping</code> برای تست اتصال ICMP است. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 79,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "در سیستم‌های RHEL، بعد از تغییر پورت SSH از ۲۲ به ۲۲۲۲، کدام دستور برای افزودن پورت جدید به policy SELinux ضروری است؟",
+      "options": [
+        "<code>semanage port -a -t ssh_port_t -p tcp 2222</code>",
+        "<code>firewall-cmd --add-port=2222/tcp --permanent</code>",
+        "<code>setsebool -P ssh_port_t 1</code>",
+        "<code>chcon -t ssh_port_t /etc/ssh/sshd_config</code>"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>semanage port -a -t ssh_port_t -p tcp 2222</code> به‌طور خاص پورت جدید را به نوع <code>ssh_port_t</code> در SELinux اضافه می‌کند. گزینه دوم مربوط به فایروال است، نه SELinux. گزینه سوم یک boolean اشتباه است. گزینه چهارم برای تغییر context فایل است، نه پورت. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 80,
+      "category": "مجازی‌سازی و کانتینر",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>virsh</code> یک ماشین مجازی را که در حال اجرا است، متوقف (shutdown) کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>virsh shutdown vm_name</code>",
+        "<code>virsh destroy vm_name</code>",
+        "<code>virsh stop vm_name</code>",
+        "<code>virsh suspend vm_name</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>virsh shutdown</code> یک خاموشی نرم (ACPI) به ماشین مجازی ارسال می‌کند. <code>virsh destroy</code> ماشین را به‌زور خاموش می‌کند (معادل قطع برق). <code>virsh stop</code> یک سوییچ معتبر نیست. <code>virsh suspend</code> ماشین را متوقف (pause) می‌کند، نه خاموش. پس گزینه اول صحیح است."
+    }
+  ],
+  "status": "با این بخش، اکثر دستورات اصلی و سوییچ‌های مهم از لیست جامع LPIC-1 پوشش داده شده‌اند. در صورت نیاز به سوالات بیشتر در مورد دستورات خاص، لطفاً مشخص کنید."
+}

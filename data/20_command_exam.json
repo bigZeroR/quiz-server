@@ -1,0 +1,288 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 بر اساس لیست دستورات و سوییچ‌ها (بخش چهارم - نهایی)",
+  "description": "بخش نهایی سوالات با تمرکز بر دستورات باقی‌مانده از جمله ابزارهای بوت، سیگنال‌ها، ابزارهای شبکه قدیمی، مدیریت لاگ، دستورات سیستمی و ابزارهای رمزنگاری که در بخش‌های قبلی کمتر پوشش داده شده‌اند.",
+  "questions": [
+    {
+      "id": 51,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>gpg</code> یک فایل را با کلید عمومی کاربر مقصد رمزنگاری کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>gpg --encrypt --recipient user@example.com file.txt</code>",
+        "<code>gpg -e -r user@example.com file.txt</code>",
+        "<code>gpg --encrypt --sign user@example.com file.txt</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو سینتکس <code>--encrypt --recipient</code> و کوتاه‌شده‌ی آن <code>-e -r</code> برای رمزنگاری با کلید عمومی معتبر هستند. گزینه سوم شامل <code>--sign</code> نیز می‌شود که امضا را اضافه می‌کند، اما برای رمزنگاری صرف ضروری نیست. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 52,
+      "category": "امنیت و احراز هویت",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش تاریخچه تلاش‌های ناموفق ورود به سیستم (failed login attempts) استفاده می‌شود؟",
+      "options": [
+        "<code>last</code>",
+        "<code>lastb</code>",
+        "<code>who</code>",
+        "<code>w</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>lastb</code> به‌طور خاص تلاش‌های ناموفق ورود را نمایش می‌دهد (از فایل <code>/var/log/btmp</code> می‌خواند). <code>last</code> ورودهای موفق را نشان می‌دهد. <code>who</code> و <code>w</code> کاربران فعلی را نمایش می‌دهند. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 53,
+      "category": "ابزارهای سخت‌افزاری و سیستم",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد نام هاست سیستم را به‌طور دائمی تغییر دهد. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>hostnamectl set-hostname newhost</code>",
+        "<code>hostname newhost</code>",
+        "<code>echo newhost > /etc/hostname</code>",
+        "هر سه گزینه صحیح هستند، اما گزینه اول روش استاندارد systemd است."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش معتبر هستند. <code>hostnamectl set-hostname</code> روش استاندارد در سیستم‌های systemd است که هم نام موقت و هم دائمی را تغییر می‌دهد. <code>hostname newhost</code> فقط نام موقت را تغییر می‌دهد (تا ری‌استارت بعدی). <code>echo newhost > /etc/hostname</code> فایل پیکربندی را تغییر می‌دهد که در بوت بعدی اعمال می‌شود. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 54,
+      "category": "ابزارهای سخت‌افزاری و سیستم",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش ماژول‌های کرنل بارگذاری‌شده به‌همراه وابستگی‌های آنها استفاده می‌شود؟",
+      "options": [
+        "<code>lsmod</code>",
+        "<code>modinfo</code>",
+        "<code>modprobe</code>",
+        "<code>insmod</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>lsmod</code> لیست ماژول‌های بارگذاری‌شده را به‌همراه وابستگی‌هایشان نمایش می‌دهد. <code>modinfo</code> اطلاعات یک ماژول خاص را نشان می‌دهد. <code>modprobe</code> و <code>insmod</code> برای بارگذاری ماژول استفاده می‌شوند. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 55,
+      "category": "بوت و بوت‌لودر",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد پسوردی برای منوی GRUB تنظیم کند تا از تغییرات غیرمجاز در پارامترهای بوت جلوگیری شود. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>grub2-setpassword</code>",
+        "<code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "<code>grub2-install /dev/sda</code>",
+        "<code>echo 'password' > /boot/grub2/user.cfg</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>grub2-setpassword</code> به‌طور خاص برای تنظیم پسورد در GRUB طراحی شده است و فایل <code>/boot/grub2/user.cfg</code> را ایجاد می‌کند. گزینه دوم برای بازتولید فایل کانفیگ GRUB است. گزینه سوم برای نصب GRUB روی دیسک است. گزینه چهارم روش دستی است اما استاندارد نیست و ممکن است کار نکند. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 56,
+      "category": "بوت و بوت‌لودر",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای خاموش کردن سیستم به‌صورت فوری (بدون等待) استفاده می‌شود؟",
+      "options": [
+        "<code>shutdown -h now</code>",
+        "<code>halt</code>",
+        "<code>poweroff</code>",
+        "هر سه گزینه سیستم را خاموش می‌کنند، اما <code>halt</code> ممکن است سخت‌افزار را خاموش نکند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه دستور می‌توانند سیستم را خاموش کنند، اما تفاوت‌هایی دارند: <code>shutdown -h now</code> استانداردترین روش است و پیام‌های مناسب ارسال می‌کند. <code>poweroff</code> معادل <code>shutdown -h now</code> است. <code>halt</code> در سیستم‌های قدیمی فقط پردازنده را متوقف می‌کرد و سخت‌افزار را خاموش نمی‌کرد (امروزه معمولاً معادل <code>poweroff</code> است). بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 57,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>route</code> یک مسیر پیش‌فرض (default gateway) به جدول مسیریابی اضافه کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>route add default gw 192.168.1.1</code>",
+        "<code>route add -net 0.0.0.0 gw 192.168.1.1</code>",
+        "<code>ip route add default via 192.168.1.1</code>",
+        "هر دو گزینه اول و دوم با <code>route</code> صحیح هستند، و گزینه سوم با <code>ip</code> نیز معادل است."
+      ],
+      "correct": 3,
+      "explanation": "هر دو سینتکس با <code>route</code> معتبر هستند: <code>route add default gw</code> و <code>route add -net 0.0.0.0 gw</code>. گزینه سوم با <code>ip route</code> نیز معادل است و روش جدیدتر محسوب می‌شود. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 58,
+      "category": "شبکه",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش جدول ARP فعلی سیستم استفاده می‌شود؟",
+      "options": [
+        "<code>arp -a</code>",
+        "<code>ip neigh</code>",
+        "<code>arping</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>arp -a</code> (ابزار قدیمی) و <code>ip neigh</code> (ابزار جدید) جدول ARP را نمایش می‌دهند. <code>arping</code> برای ارسال درخواست ARP به یک آدرس خاص استفاده می‌شود، نه نمایش جدول. پس گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 59,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم با استفاده از <code>gpg</code> یک کلید عمومی را از یک فایل وارد (import) کرده است. برای اعتماد به این کلید و استفاده از آن برای رمزنگاری، کدام مرحله ضروری است؟",
+      "options": [
+        "کلید باید با <code>gpg --edit-key</code> و سپس <code>trust</code> امضا شود.",
+        "کلید باید با <code>gpg --sign-key</code> امضا شود.",
+        "فقط <code>gpg --import</code> کافی است و نیازی به trust نیست.",
+        "کلید باید با <code>gpg --export</code> دوباره صادر شود."
+      ],
+      "correct": 0,
+      "explanation": "پس از <code>gpg --import</code>، کلید عمومی وارد می‌شود اما برای استفاده در رمزنگاری باید به آن اعتماد کرد (trust). این کار با <code>gpg --edit-key</code> و سپس دستور <code>trust</code> انجام می‌شود. گزینه دوم امضای کلید است که برای اعتبارسنجی هویت است، نه صرفاً اعتماد برای رمزنگاری. گزینه سوم نادرست است. گزینه چهارم برای صادرات است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 60,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای اجرای دوره‌ای یک فرمان با فاصله زمانی مشخص (مثلاً هر ۲ ثانیه) استفاده می‌شود؟",
+      "options": [
+        "<code>watch -n 2 command</code>",
+        "<code>repeat 2 command</code>",
+        "<code>while true; do command; sleep 2; done</code>",
+        "هر دو گزینه اول و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "<code>watch -n 2</code> یک ابزار استاندارد برای اجرای دوره‌ای فرمان است. گزینه سوم با <code>while</code> و <code>sleep</code> نیز همین کار را انجام می‌دهد (هر چند طولانی‌تر). گزینه دوم معتبر نیست. پس گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 61,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>sed</code>، تمام خطوط خالی یک فایل را حذف کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>sed '/^$/d' file</code>",
+        "<code>sed -i '/^$/d' file</code>",
+        "<code>sed '/^[[:space:]]$/d' file</code>",
+        "هر سه گزینه صحیح هستند، اما گزینه دوم تغییرات را مستقیماً روی فایل اعمال می‌کند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه سینتکس معتبر هستند. الگوی <code>^$</code> خطوط خالی را تشخیص می‌دهد. الگوی <code>^[[:space:]]$</code> خطوطی که فقط شامل فاصله یا تب هستند را نیز حذف می‌کند. گزینه دوم با <code>-i</code> تغییرات را مستقیماً روی فایل اعمال می‌کند. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 62,
+      "category": "پردازش‌ها و مدیریت آنها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای متوقف کردن موقت (suspend) یک پردازش در حال اجرا در پیش‌زمینه و ارسال آن به پس‌زمینه استفاده می‌شود؟",
+      "options": [
+        "<code>Ctrl+Z</code> سپس <code>bg</code>",
+        "<code>Ctrl+C</code> سپس <code>bg</code>",
+        "<code>kill -STOP PID</code> سپس <code>bg</code>",
+        "هر دو گزینه اول و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "<code>Ctrl+Z</code> پردازش پیش‌زمینه را متوقف (suspend) می‌کند و با <code>bg</code> می‌توان آن را در پس‌زمینه ادامه داد. همچنین با <code>kill -STOP PID</code> می‌توان یک پردازش را متوقف کرد و سپس با <code>bg</code> آن را به پس‌زمینه فرستاد. <code>Ctrl+C</code> پردازش را خاتمه می‌دهد، نه متوقف. پس گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 63,
+      "category": "مدیریت زمان",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد زمان سخت‌افزاری (hardware clock) را با زمان سیستمی (system clock) همگام‌سازی کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>hwclock --systohc</code>",
+        "<code>hwclock --hctosys</code>",
+        "<code>timedatectl set-local-rtc 1</code>",
+        "<code>date -s \"$(hwclock -r)",
+        "ode>"
+      ],
+      "correct": 0,
+      "explanation": "<code>hwclock --systohc</code> زمان سیستم را به سخت‌افزار (RTC) می‌نویسد. <code>--hctosys</code> برعکس است (سخت‌افزار به سیستم). گزینه سوم برای تنظیم RTC به زمان محلی است، نه همگام‌سازی. گزینه چهارم یک روش غیراستاندارد است. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 64,
+      "category": "مدیریت زمان",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش زمان جاری به‌صورت Epoch (تعداد ثانیه از ۱۹۷۰-۰۱-۰۱) استفاده می‌شود؟",
+      "options": [
+        "<code>date +%s</code>",
+        "<code>date -u</code>",
+        "<code>timedatectl show</code>",
+        "<code>epoch</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>date +%s</code> زمان جاری را به‌صورت Epoch Time نمایش می‌دهد. <code>date -u</code> زمان UTC را نشان می‌دهد. <code>timedatectl show</code> اطلاعات زمان را نمایش می‌دهد اما نه به‌صورت Epoch. <code>epoch</code> یک دستور استاندارد نیست. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 65,
+      "category": "شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nmcli</code> اتصال شبکه فعلی را غیرفعال کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>nmcli connection down eth0</code>",
+        "<code>nmcli device disconnect eth0</code>",
+        "<code>nmcli connection delete eth0</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>nmcli connection down</code> و <code>nmcli device disconnect</code> می‌توانند یک اتصال را غیرفعال کنند. گزینه اول اتصال را پایین می‌آورد، گزینه دوم دستگاه را قطع می‌کند. گزینه سوم اتصال را حذف می‌کند (نه فقط غیرفعال). بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 66,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای پاک کردن کامل صفحه ترمینال استفاده می‌شود؟",
+      "options": [
+        "<code>clear</code>",
+        "<code>reset</code>",
+        "<code>Ctrl+L</code>",
+        "هر سه گزینه صفحه را پاک می‌کنند، اما <code>reset</code> ترمینال را نیز بازنشانی می‌کند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش صفحه ترمینال را پاک می‌کنند. <code>clear</code> صفحه را پاک می‌کند. <code>reset</code> علاوه بر پاک کردن، ترمینال را بازنشانی (reset) می‌کند. <code>Ctrl+L</code> میانبر صفحه‌کلید برای پاک کردن است. بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 67,
+      "category": "امنیت و احراز هویت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>openssl</code> یک گواهی خودامضا (self-signed certificate) برای وب‌سرور تولید کند. کدام دنباله از دستورات این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes</code>",
+        "<code>openssl genrsa -out key.pem 2048</code> سپس <code>openssl req -new -key key.pem -out csr.pem</code> سپس <code>openssl x509 -req -in csr.pem -signkey key.pem -out cert.pem -days 365</code>",
+        "<code>openssl req -new -x509 -days 365 -keyout key.pem -out cert.pem</code>",
+        "هر سه گزینه صحیح هستند، اما گزینه اول ساده‌ترین روش است."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای تولید گواهی خودامضا معتبر هستند. گزینه اول با یک دستور همه‌کاره (<code>-x509</code> و <code>-newkey</code>) گواهی و کلید را یکجا تولید می‌کند. گزینه دوم سه مرحله‌ای است (تولید کلید، درخواست امضا، امضای گواهی). گزینه سوم نیز مشابه گزینه اول است اما <code>-nodes</code> را ندارد (پسورد برای کلید می‌خواهد). بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 68,
+      "category": "دستورات عمومی و مدیریت فایل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای ایجاد یک نام مستعار (alias) دائمی برای یک فرمان استفاده می‌شود؟",
+      "options": [
+        "<code>alias ll='ls -l'</code> در ترمینال",
+        "اضافه کردن <code>alias ll='ls -l'</code> به <code>~/.bashrc</code>",
+        "اضافه کردن <code>alias ll='ls -l'</code> به <code>/etc/bashrc</code>",
+        "همه گزینه‌ها می‌توانند alias ایجاد کنند، اما گزینه دوم برای کاربر جاری دائمی است."
+      ],
+      "correct": 3,
+      "explanation": "گزینه اول alias موقتی است و فقط برای نشست فعلی معتبر است. گزینه دوم alias را به فایل <code>~/.bashrc</code> اضافه می‌کند که برای کاربر جاری دائمی می‌شود. گزینه سوم برای همه کاربران سیستم دائمی است (نیاز به root دارد). بنابراین گزینه چهارم صحیح است."
+    },
+    {
+      "id": 69,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش وضعیت پسورد یک کاربر (مثلاً قفل بودن یا نبودن) استفاده می‌شود؟",
+      "options": [
+        "<code>passwd -S user</code>",
+        "<code>passwd --status user</code>",
+        "<code>chage -l user</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>passwd -S</code> و <code>passwd --status</code> وضعیت پسورد کاربر را نمایش می‌دهند (قفل، تاریخ آخرین تغییر، و غیره). <code>chage -l</code> اطلاعات انقضای پسورد را نشان می‌دهد، نه وضعیت قفل. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 70,
+      "category": "مدیریت کاربران و گروه‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد کاربری را که لاگین است و به‌طور مستقیم به ترمینال متصل است، از سیستم خارج کند (kill session). کدام دستور این کار را با استفاده از PID نشست (session) انجام می‌دهد؟",
+      "options": [
+        "<code>pkill -u user</code>",
+        "<code>kill -9 PID</code>",
+        "<code>logout user</code>",
+        "<code>skill -9 user</code>"
+      ],
+      "correct": 1,
+      "explanation": "برای خارج کردن یک نشست خاص، باید PID آن نشست را با <code>who -a</code> یا <code>w</code> پیدا کرد و سپس با <code>kill -9 PID</code> آن را خاتمه داد. <code>pkill -u user</code> همه پردازش‌های کاربر را می‌کشد، که ممکن است شدید باشد. <code>logout</code> یک فرمان برای خروج از شل جاری است، نه برای کاربر دیگر. <code>skill</code> یک ابزار قدیمی است. پس گزینه دوم صحیح است."
+    }
+  ],
+  "status": "تمام دستورات و سوییچ‌های اصلی موجود در لیست، در طول این چهار بخش پوشش داده شده‌اند. در صورت نیاز به سوالات بیشتر یا بررسی دستورات خاص، می‌توانید درخواست دهید."
+}

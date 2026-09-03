@@ -1,0 +1,161 @@
+{
+  "title": "مجموعه سوالات تستی جامع LPIC-1 (بخش هفتم - تکمیلی و تخصصی)",
+  "description": "بخش تکمیلی با تمرکز بر دستورات مدیریت مجوزها، مالکیت فایل، ابزارهای دیسک پیشرفته، سیستم‌فایل، ماژول‌های کرنل، systemd، و سناریوهای عیب‌یابی ترکیبی.",
+  "questions": [
+    {
+      "id": 96,
+      "category": "مدیریت مجوزها و مالکیت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد به‌صورت بازگشتی (recursive) مالکیت تمام فایل‌های داخل دایرکتوری <code>/var/www</code> را به کاربر <code>www-data</code> و گروه <code>www-data</code> تغییر دهد، اما فقط فایل‌های معمولی (نه دایرکتوری‌ها) را شامل شود. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>chown -R www-data:www-data /var/www</code>",
+        "<code>find /var/www -type f -exec chown www-data:www-data {} \\;</code>",
+        "<code>chown www-data:www-data /var/www/*</code>",
+        "<code>find /var/www -type d -exec chown www-data:www-data {} \\;</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه دوم با <code>find -type f</code> فقط فایل‌های معمولی را انتخاب می‌کند و با <code>-exec chown</code> مالکیت آنها را تغییر می‌دهد. گزینه اول با <code>-R</code> همه چیز (فایل و دایرکتوری) را تغییر می‌دهد. گزینه سوم فقط فایل‌های سطح اول را تغییر می‌دهد (نه بازگشتی). گزینه چهارم فقط دایرکتوری‌ها را تغییر می‌دهد. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 97,
+      "category": "مدیریت مجوزها و مالکیت",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تغییر گروه یک فایل بدون تغییر مالکیت آن استفاده می‌شود؟",
+      "options": [
+        "<code>chown :group file</code>",
+        "<code>chgrp group file</code>",
+        "<code>chmod g+s file</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>chown :group file</code> و <code>chgrp group file</code> گروه فایل را تغییر می‌دهند. <code>chmod g+s</code> برای تنظیم SGID است، نه تغییر گروه. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 98,
+      "category": "مدیریت مجوزها و مالکیت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک دایرکتوری اشتراکی ایجاد کند که هر فایل جدیدی که در آن ساخته می‌شود، به‌طور خودکار به گروه <code>developers</code> تعلق داشته باشد (صرف نظر از گروه کاربر سازنده). کدام سطح دسترسی ویژه باید روی این دایرکتوری تنظیم شود؟",
+      "options": [
+        "SUID",
+        "SGID",
+        "Sticky Bit",
+        "Read-only"
+      ],
+      "correct": 1,
+      "explanation": "SGID (Set Group ID) روی یک دایرکتوری باعث می‌شود که هر فایل جدید ساخته شده در آن دایرکتوری، به گروه دایرکتوری تعلق بگیرد، نه گروه کاربر سازنده. SUID روی فایل‌های اجرایی اعمال می‌شود. Sticky Bit مانع از حذف فایل‌های سایر کاربران می‌شود. Read-only اجازه‌ی نوشتن نمی‌دهد. پس گزینه دوم (SGID) صحیح است."
+    },
+    {
+      "id": 99,
+      "category": "مدیریت مجوزها و مالکیت",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای تنظیم Sticky Bit روی دایرکتوری <code>/tmp</code> (به‌صورت عددی) استفاده می‌شود؟",
+      "options": [
+        "<code>chmod 1777 /tmp</code>",
+        "<code>chmod 777 /tmp</code>",
+        "<code>chmod +t /tmp</code>",
+        "هر دو گزینه اول و سوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "عدد ۱ در ابتدای ۱۷۷۷ نشان‌دهنده‌ی Sticky Bit است (۱). گزینه دوم فاقد Sticky Bit است. گزینه سوم با <code>+t</code> نیز Sticky Bit را تنظیم می‌کند. بنابراین گزینه چهارم (هر دو اول و سوم) صحیح است."
+    },
+    {
+      "id": 100,
+      "category": "سیستم‌فایل و دیسک",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد پارتیشن <code>/dev/sdb1</code> را با فایل‌سیستم <code>xfs</code> فرمت کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mkfs.xfs /dev/sdb1</code>",
+        "<code>mkfs -t xfs /dev/sdb1</code>",
+        "<code>mkfs.ext4 /dev/sdb1</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>mkfs.xfs</code> و <code>mkfs -t xfs</code> برای ایجاد فایل‌سیستم xfs معتبر هستند. گزینه سوم برای ext4 است. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 101,
+      "category": "سیستم‌فایل و دیسک",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک دیسک USB را به دایرکتوری <code>/mnt/usb</code> مانت کند، اما با گزینه‌های فقط خواندنی (read-only) و بدون اجرای برنامه‌ها (noexec). کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mount -o ro,noexec /dev/sdc1 /mnt/usb</code>",
+        "<code>mount -o rw,noexec /dev/sdc1 /mnt/usb</code>",
+        "<code>mount -o ro,exec /dev/sdc1 /mnt/usb</code>",
+        "<code>mount /dev/sdc1 /mnt/usb</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-o ro,noexec</code> هر دو گزینه‌ی فقط خواندنی و عدم اجرا را فعال می‌کند. گزینه دوم <code>rw</code> دارد که نوشتن را مجاز می‌کند. گزینه سوم <code>exec</code> دارد که اجرا را مجاز می‌کند. گزینه چهارم بدون گزینه است و از پیش‌فرض‌ها استفاده می‌کند. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 102,
+      "category": "سیستم‌فایل و دیسک",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش UUID (Universal Unique Identifier) پارتیشن‌های دیسک استفاده می‌شود؟",
+      "options": [
+        "<code>blkid</code>",
+        "<code>lsblk -f</code>",
+        "<code>fdisk -l</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>blkid</code> و <code>lsblk -f</code> UUID پارتیشن‌ها را نمایش می‌دهند. <code>fdisk -l</code> UUID را نشان نمی‌دهد. بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    },
+    {
+      "id": 103,
+      "category": "ماژول‌های کرنل",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک ماژول کرنل را که در حال حاضر بارگذاری شده است، از کرنل خارج کند. کدام دستور این کار را با اطمینان از بسته شدن وابستگی‌ها انجام می‌دهد؟",
+      "options": [
+        "<code>rmmod module</code>",
+        "<code>modprobe -r module</code>",
+        "<code>insmod -r module</code>",
+        "<code>modinfo -r module</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>modprobe -r</code> ماژول را به‌همراه وابستگی‌هایش (در صورت عدم استفاده توسط ماژول‌های دیگر) از کرنل خارج می‌کند. <code>rmmod</code> فقط ماژول مشخص را حذف می‌کند و در صورت وجود وابستگی خطا می‌دهد. <code>insmod</code> برای بارگذاری است و سوییچ <code>-r</code> ندارد. <code>modinfo</code> برای نمایش اطلاعات است. پس گزینه دوم صحیح است."
+    },
+    {
+      "id": 104,
+      "category": "ماژول‌های کرنل",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش اطلاعات کامل یک ماژول کرنل، از جمله مسیر فایل، وابستگی‌ها، و توضیحات، استفاده می‌شود؟",
+      "options": [
+        "<code>modinfo module</code>",
+        "<code>lsmod | grep module</code>",
+        "<code>modprobe --info module</code>",
+        "<code>insmod --info module</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>modinfo</code> اطلاعات کاملی از ماژول (مسیر، وابستگی‌ها، لایسنس، و توضیحات) نمایش می‌دهد. <code>lsmod</code> فقط ماژول‌های بارگذاری‌شده را لیست می‌کند. <code>modprobe --info</code> معادل <code>modinfo</code> است اما کمتر استفاده می‌شود. <code>insmod</code> سوییچ <code>--info</code> ندارد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 105,
+      "category": "systemd و مدیریت سرویس‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد وضعیت یک سرویس (مثلاً <code>sshd</code>) را بررسی کند و همچنین لاگ‌های مربوط به آن سرویس را در ۱۰ خط آخر مشاهده نماید. کدام دستور این کار را به‌طور هم‌زمان انجام می‌دهد؟",
+      "options": [
+        "<code>systemctl status sshd</code>",
+        "<code>journalctl -u sshd -n 10</code>",
+        "<code>systemctl status sshd -n 10</code>",
+        "<code>systemctl show sshd --property=Status</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>systemctl status sshd</code> به‌طور پیش‌فرض وضعیت سرویس و ۱۰ خط آخر لاگ آن را نمایش می‌دهد. گزینه دوم فقط لاگ را نشان می‌دهد (بدون وضعیت سرویس). گزینه سوم سوییچ <code>-n</code> ندارد. گزینه چهارم فقط یک property خاص را نمایش می‌دهد. پس گزینه اول صحیح است."
+    },
+    {
+      "id": 106,
+      "category": "systemd و مدیریت سرویس‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای فعال کردن یک سرویس به‌گونه‌ای که در زمان بوت به‌طور خودکار شروع شود، و همچنین بلافاصله آن را استارت کند، استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl enable --now service</code>",
+        "<code>systemctl start service</code> سپس <code>systemctl enable service</code>",
+        "<code>systemctl enable service</code>",
+        "هر دو گزینه اول و دوم صحیح هستند"
+      ],
+      "correct": 3,
+      "explanation": "هر دو روش معتبر هستند. <code>systemctl enable --now</code> هم enable و هم start را یکجا انجام می‌دهد. روش دوم با دو دستور جداگانه نیز کار می‌کند. گزینه سوم فقط enable را انجام می‌دهد (بدون start). بنابراین گزینه چهارم (هر دو اول و دوم) صحیح است."
+    }
+  ],
+  "status": "این بخش شامل ۱۱ سوال جدید است که مباحث تکمیلی را پوشش می‌دهد. اکنون مجموع سوالات به ۱۰۷ رسیده است. در صورت نیاز به پوشش کامل‌تر، لطفاً مشخص کنید کدام دستورات خاص هنوز پوشش داده نشده‌اند."
+}

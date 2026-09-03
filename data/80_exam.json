@@ -1,0 +1,1126 @@
+{
+  "title": "مبانی شل و خط فرمان LPIC-1",
+  "description": "جزوه جامع فصل ۱ - از ترمینال تا xargs و چالش‌ها",
+  "questions": [
+    {
+      "id": 31,
+      "category": "ترمینال، شل و کامند",
+      "level": 1,
+      "text": "سه مفهوم اصلی ترمینال، شل و کامند را به‌درستی تعریف کنید.",
+      "options": [
+        "ترمینال سخت‌افزار، شل رابط گرافیکی، کامند زبان برنامه‌نویسی",
+        "ترمینال محیط تعاملی، شل واسط اجرای دستورات، کامند دستوری که به کرنل ارسال می‌شود",
+        "هر سه یک مفهوم هستند",
+        "ترمینال و شل یکی هستند و کامند یک ابزار جانبی است"
+      ],
+      "correct": 1,
+      "explanation": "ترمینال ابزاری است که کاربر در آن تایپ می‌کند، شل (مثل bash) دستورات را تفسیر می‌کند و کامند دستوری است که به کرنل ارسال می‌شود."
+    },
+    {
+      "id": 32,
+      "category": "ترمینال، شل و کامند",
+      "level": 2,
+      "text": "کدام شل به‌طور پیش‌فرض در اکثر توزیع‌های لینوکسی استفاده می‌شود؟",
+      "options": [
+        "sh (Bourne Shell)",
+        "csh",
+        "zsh",
+        "bash"
+      ],
+      "correct": 3,
+      "explanation": "bash (Bourne Again Shell) شل پیش‌فرض اکثر توزیع‌های لینوکسی است و از sh الهام گرفته شده است."
+    },
+    {
+      "id": 33,
+      "category": "ترمینال، شل و کامند",
+      "level": 2,
+      "text": "کدام یک از شل‌های زیر قابلیت Auto-Complete با کلید Tab را دارد؟",
+      "options": [
+        "sh",
+        "bash",
+        "csh",
+        "همه‌ی موارد"
+      ],
+      "correct": 3,
+      "explanation": "اکثر شل‌های مدرن مانند bash، zsh و حتی csh قابلیت تکمیل خودکار با Tab را دارند."
+    },
+    {
+      "id": 34,
+      "category": "ترمینال، شل و کامند",
+      "level": 3,
+      "text": "اگر در bash باشید و دستور <code>bash</code> را اجرا کنید، چه اتفاقی می‌افتد؟",
+      "options": [
+        "سیستم ری‌استارت می‌شود",
+        "یک شل جدید (Subshell) باز می‌شود",
+        "هیچ اتفاقی نمی‌افتد",
+        "از bash خارج می‌شوید"
+      ],
+      "correct": 1,
+      "explanation": "اجرای <code>bash</code> یک شل جدید (فرزند) باز می‌کند که با <code>exit</code> از آن خارج می‌شوید. متغیر <code>$SHLVL</code> یک واحد افزایش می‌یابد."
+    },
+    {
+      "id": 35,
+      "category": "آدرس‌دهی",
+      "level": 1,
+      "text": "آدرس مطلق در لینوکس با چه کاراکتری شروع می‌شود؟",
+      "options": [
+        "<code>.</code> (نقطه)",
+        "<code>..</code> (دونقطه)",
+        "<code>/</code> (اسلش)",
+        "<code>~</code> (تیلدا)"
+      ],
+      "correct": 2,
+      "explanation": "آدرس مطلق (Absolute) همیشه با <code>/</code> شروع می‌شود، مثل <code>/home/abdini</code>."
+    },
+    {
+      "id": 36,
+      "category": "آدرس‌دهی",
+      "level": 1,
+      "text": "دستور <code>pwd</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "مسیر جاری را با آدرس نسبی نشان می‌دهد",
+        "مسیر جاری را با آدرس مطلق نشان می‌دهد",
+        "لیست فایل‌ها را نشان می‌دهد",
+        "دایرکتوری را تغییر می‌دهد"
+      ],
+      "correct": 1,
+      "explanation": "<code>pwd</code> (Print Working Directory) مسیر جاری را به‌صورت مطلق نمایش می‌دهد."
+    },
+    {
+      "id": 37,
+      "category": "آدرس‌دهی",
+      "level": 2,
+      "text": "کدام گزینه آدرس نسبی است؟",
+      "options": [
+        "<code>/etc/passwd</code>",
+        "<code>../Desktop</code>",
+        "<code>/home/user/file</code>",
+        "<code>~/file</code>"
+      ],
+      "correct": 1,
+      "explanation": "آدرس نسبی با <code>/</code> شروع نمی‌شود. <code>../Desktop</code> نسبت به مسیر جاری است."
+    },
+    {
+      "id": 38,
+      "category": "آدرس‌دهی",
+      "level": 2,
+      "text": "تفاوت آدرس مطلق و نسبی در چیست؟",
+      "options": [
+        "آدرس مطلق همیشه با <code>/</code> شروع می‌شود، نسبی با <code>/</code> شروع نمی‌شود",
+        "آدرس نسبی همیشه با <code>~</code> شروع می‌شود",
+        "آدرس مطلق فقط برای فایل‌هاست",
+        "هیچ تفاوتی ندارند"
+      ],
+      "correct": 0,
+      "explanation": "آدرس مطلق از ریشه (<code>/</code>) شروع می‌شود. آدرس نسبی بر اساس موقعیت فعلی است."
+    },
+    {
+      "id": 39,
+      "category": "cd و ls",
+      "level": 1,
+      "text": "دستور <code>cd ..</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "به دایرکتوری قبلی برمی‌گردد",
+        "یک دایرکتوری بالاتر می‌رود",
+        "به هوم دایرکتوری می‌رود",
+        "به ریشه می‌رود"
+      ],
+      "correct": 1,
+      "explanation": "<code>cd ..</code> به دایرکتوری والد (یک سطح بالاتر) می‌رود."
+    },
+    {
+      "id": 40,
+      "category": "cd و ls",
+      "level": 1,
+      "text": "دستور <code>ls -a</code> چه تفاوتی با <code>ls</code> دارد؟",
+      "options": [
+        "فایل‌های مخفی را هم نشان می‌دهد",
+        "فایل‌ها را با جزئیات نشان می‌دهد",
+        "فایل‌ها را بر اساس زمان مرتب می‌کند",
+        "فقط دایرکتوری‌ها را نشان می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>-a</code> (all) فایل‌های مخفی (شروع با <code>.</code>) را هم نمایش می‌دهد."
+    },
+    {
+      "id": 41,
+      "category": "cd و ls",
+      "level": 2,
+      "text": "کدام دستور به هوم دایرکتوری کاربر جاری می‌رود؟ (چند گزینه)",
+      "options": [
+        "<code>cd</code>",
+        "<code>cd ~</code>",
+        "<code>cd /home/user</code>",
+        "همه‌ی موارد"
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش به هوم دایرکتوری می‌روند: <code>cd</code> بدون آرگومان، <code>cd ~</code> و <code>cd /home/username</code>."
+    },
+    {
+      "id": 42,
+      "category": "cd و ls",
+      "level": 2,
+      "text": "دستور <code>cd -</code> چه کاربردی دارد؟",
+      "options": [
+        "به دایرکتوری قبلی برمی‌گردد (Back)",
+        "به هوم می‌رود",
+        "دایرکتوری را حذف می‌کند",
+        "فایل‌ها را لیست می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>cd -</code> به دایرکتوری قبلی (OLDPWD) برمی‌گردد، مشابه دکمه Back در مرورگر."
+    },
+    {
+      "id": 43,
+      "category": "cd و ls",
+      "level": 3,
+      "text": "در لینوکس، چگونه یک فایل را مخفی می‌کنیم؟",
+      "options": [
+        "با تنظیم Attribute خاص",
+        "با شروع نام با <code>.</code> (نقطه)",
+        "با تغییر سطح دسترسی",
+        "با انتقال به پوشه خاص"
+      ],
+      "correct": 1,
+      "explanation": "در لینوکس، فایل‌های مخفی فقط با شروع نام با نقطه (<code>.</code>) مشخص می‌شوند، برخلاف ویندوز که Attribute دارد."
+    },
+    {
+      "id": 44,
+      "category": "نمایش فایل",
+      "level": 1,
+      "text": "کدام دستور محتوای کامل یک فایل را در ترمینال نمایش می‌دهد؟",
+      "options": [
+        "<code>head</code>",
+        "<code>tail</code>",
+        "<code>cat</code>",
+        "<code>less</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>cat</code> (concatenate) کل محتوای فایل را در خروجی استاندارد نمایش می‌دهد."
+    },
+    {
+      "id": 45,
+      "category": "نمایش فایل",
+      "level": 2,
+      "text": "دستور <code>tail -f /var/log/messages</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "فقط ۱۰ خط آخر را نمایش می‌دهد",
+        "فایل را زنده (Live) دنبال می‌کند و تغییرات جدید را نمایش می‌دهد",
+        "فایل را ویرایش می‌کند",
+        "فایل را حذف می‌کند"
+      ],
+      "correct": 1,
+      "explanation": "سوییچ <code>-f</code> (follow) باعث می‌شود tail فایل را دنبال کند و هر خط جدیدی که به فایل اضافه شود را نمایش دهد، بسیار کاربردی در بررسی لاگ‌ها."
+    },
+    {
+      "id": 46,
+      "category": "نمایش فایل",
+      "level": 1,
+      "text": "تفاوت <code>less</code> و <code>more</code> در چیست؟",
+      "options": [
+        "هیچ تفاوتی ندارند",
+        "<code>less</code> درصد پیشرفت نشان می‌دهد، <code>more</code> نه",
+        "<code>more</code> درصد پیشرفت نشان می‌دهد، <code>less</code> نه",
+        "<code>less</code> فقط برای فایل‌های باینری است"
+      ],
+      "correct": 2,
+      "explanation": "<code>more</code> درصد پیشرفت فایل را نشان می‌دهد (مثلاً ۴۸٪) و در انتها خودکار خارج می‌شود، اما <code>less</code> این ویژگی را ندارد."
+    },
+    {
+      "id": 47,
+      "category": "نمایش فایل",
+      "level": 2,
+      "text": "در <code>less</code> و <code>more</code>، چگونه می‌توان یک عبارت را جستجو کرد؟",
+      "options": [
+        "با <code>/</code> و عبارت جستجو",
+        "با <code>?</code> و عبارت جستجو",
+        "با <code>Ctrl+F</code>",
+        "با <code>search</code>"
+      ],
+      "correct": 0,
+      "explanation": "در هر دو ابزار، با زدن <code>/</code> و تایپ عبارت، می‌توان جستجو کرد. خروج از این ابزارها با کلید <code>q</code> انجام می‌شود."
+    },
+    {
+      "id": 48,
+      "category": "ساخت فایل",
+      "level": 1,
+      "text": "دستور <code>touch file.txt</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "فایل را ویرایش می‌کند",
+        "اگر فایل وجود نداشته باشد، یک فایل خالی می‌سازد",
+        "فایل را حذف می‌کند",
+        "تاریخ فایل را به روز نمی‌کند"
+      ],
+      "correct": 1,
+      "explanation": "وظیفه اصلی <code>touch</code> بروزرسانی زمان (Timestamp) فایل است، اما اگر فایل وجود نداشته باشد، آن را خالی ایجاد می‌کند."
+    },
+    {
+      "id": 49,
+      "category": "ساخت فایل",
+      "level": 2,
+      "text": "علامت <code>&gt;</code> در دستور <code>echo \"text\" &gt; file</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "خروجی را به انتهای فایل اضافه می‌کند",
+        "خروجی را به فایل هدایت می‌کند و محتوای قبلی را پاک می‌کند",
+        "ورودی را از فایل می‌خواند",
+        "هیچ کاری نمی‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>&gt;</code> خروجی را به فایل Redirect می‌کند. اگر فایل وجود داشته باشد، محتوای قبلی کاملاً پاک (Overwrite) می‌شود."
+    },
+    {
+      "id": 50,
+      "category": "ساخت فایل",
+      "level": 2,
+      "text": "چگونه می‌توان محتوای یک فایل موجود را بدون باز کردن ویرایشگر، کاملاً خالی کرد؟",
+      "options": [
+        "<code>rm file</code>",
+        "<code>&gt; file</code>",
+        "<code>cat file</code>",
+        "<code>touch file</code>"
+      ],
+      "correct": 1,
+      "explanation": "با دستور <code>&gt; file</code> می‌توان فایل را خالی کرد (بدون اینکه آن را حذف کنید). این کار محتوای فایل را پاک می‌کند."
+    },
+    {
+      "id": 51,
+      "category": "متغیرها",
+      "level": 1,
+      "text": "دستور <code>env</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "همه‌ی متغیرهای محیطی (Global) را نمایش می‌دهد",
+        "یک متغیر جدید تعریف می‌کند",
+        "یک متغیر را حذف می‌کند",
+        "متغیرهای لوکال را نمایش می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>env</code> (environment) تمام متغیرهای محیطی (گلوبال) را که در شل جاری تنظیم شده‌اند نمایش می‌دهد."
+    },
+    {
+      "id": 52,
+      "category": "متغیرها",
+      "level": 1,
+      "text": "برای نمایش مقدار یک متغیر به نام <code>USER</code> از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>echo USER</code>",
+        "<code>echo $USER</code>",
+        "<code>env USER</code>",
+        "<code>print USER</code>"
+      ],
+      "correct": 1,
+      "explanation": "برای نمایش مقدار یک متغیر، باید علامت <code>$</code> قبل از نام متغیر قرار گیرد: <code>echo $USER</code>."
+    },
+    {
+      "id": 53,
+      "category": "متغیرها",
+      "level": 2,
+      "text": "تفاوت متغیر Local و Global در چیست؟",
+      "options": [
+        "متغیر Local فقط در همان شل در دسترس است، Global با <code>export</code> در شل‌های فرزند هم در دسترس است",
+        "متغیر Global فقط در همان شل در دسترس است",
+        "هیچ تفاوتی ندارند",
+        "Local در تمام شل‌ها در دسترس است"
+      ],
+      "correct": 0,
+      "explanation": "متغیرهای محلی (Local) فقط در همان شل قابل استفاده هستند. برای در دسترس بودن در شل‌های فرزند، باید با <code>export</code> آن را Global کرد."
+    },
+    {
+      "id": 54,
+      "category": "متغیرها",
+      "level": 2,
+      "text": "کدام متغیر مسیر جستجوی فایل‌های اجرایی را مشخص می‌کند؟",
+      "options": [
+        "<code>$HOME</code>",
+        "<code>$PATH</code>",
+        "<code>$SHELL</code>",
+        "<code>$PS1</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>$PATH</code> شامل لیست دایرکتوری‌هایی است که سیستم برای یافتن فایل‌های اجرایی جستجو می‌کند."
+    },
+    {
+      "id": 55,
+      "category": "متغیرها",
+      "level": 3,
+      "text": "اگر متغیر <code>name=abdini</code> را تعریف کنید و سپس <code>export name</code> را اجرا کنید، چه اتفاقی می‌افتد؟",
+      "options": [
+        "متغیر حذف می‌شود",
+        "متغیر از Local به Global تبدیل می‌شود",
+        "متغیر فقط خواندنی می‌شود",
+        "هیچ اتفاقی نمی‌افتد"
+      ],
+      "correct": 1,
+      "explanation": "<code>export</code> یک متغیر لوکال را به متغیر محیطی (Global) تبدیل می‌کند تا در شل‌های فرزند هم قابل دسترسی باشد."
+    },
+    {
+      "id": 56,
+      "category": "متغیرها",
+      "level": 3,
+      "text": "متغیر <code>$SHLVL</code> چه چیزی را نشان می‌دهد؟",
+      "options": [
+        "سطح شل جاری (چند شل تو در تو باز شده)",
+        "تعداد کاربران لاگین‌شده",
+        "نسخه شل",
+        "مسیر شل جاری"
+      ],
+      "correct": 0,
+      "explanation": "<code>$SHLVL</code> (Shell Level) تعداد شل‌های تو در تو را نشان می‌دهد. هر بار که <code>bash</code> اجرا شود، این مقدار یک واحد افزایش می‌یابد."
+    },
+    {
+      "id": 57,
+      "category": "history",
+      "level": 1,
+      "text": "دستور <code>history</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "لیست فرمان‌های اجرا شده را با شماره نشان می‌دهد",
+        "فرمان‌ها را حذف می‌کند",
+        "فرمان‌ها را ذخیره می‌کند",
+        "تنظیمات تاریخچه را تغییر می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>history</code> لیست فرمان‌های قبلی را با شماره خط نمایش می‌دهد."
+    },
+    {
+      "id": 58,
+      "category": "history",
+      "level": 2,
+      "text": "چگونه می‌توان یک فرمان را با شماره خط آن از history دوباره اجرا کرد؟",
+      "options": [
+        "<code>history N</code>",
+        "<code>!N</code>",
+        "<code>run N</code>",
+        "<code>exec N</code>"
+      ],
+      "correct": 1,
+      "explanation": "با <code>!N</code> (علامت تعجب به‌علاوه شماره خط) می‌توان فرمان شماره N را دوباره اجرا کرد."
+    },
+    {
+      "id": 59,
+      "category": "history",
+      "level": 2,
+      "text": "فایل <code>.bash_history</code> در کجا قرار دارد و چه کاربردی دارد؟",
+      "options": [
+        "در <code>/etc</code> و شامل history کل سیستم",
+        "در هوم دایرکتوری کاربر و شامل تاریخچه فرمان‌های همان کاربر",
+        "در <code>/var/log</code> و شامل لاگ‌های سیستم",
+        "در <code>/tmp</code> و موقتی است"
+      ],
+      "correct": 1,
+      "explanation": "<code>.bash_history</code> یک فایل مخفی در هوم دایرکتوری هر کاربر است و history فرمان‌های آن کاربر را ذخیره می‌کند."
+    },
+    {
+      "id": 60,
+      "category": "history",
+      "level": 3,
+      "text": "برای پاک کردن کامل history و فایل <code>.bash_history</code>، کدام ترکیب درست است؟",
+      "options": [
+        "<code>history -c</code> و سپس <code>&gt; ~/.bash_history</code>",
+        "فقط <code>history -c</code>",
+        "فقط <code>rm ~/.bash_history</code>",
+        "<code>history -w</code>"
+      ],
+      "correct": 0,
+      "explanation": "ابتدا با <code>history -c</code> لیست حافظه پاک می‌شود، سپس با <code>&gt; ~/.bash_history</code> فایل فیزیکی خالی می‌شود."
+    },
+    {
+      "id": 61,
+      "category": "system man",
+      "level": 1,
+      "text": "دستور <code>man ls</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "کتابچه راهنمای فرمان <code>ls</code> را نمایش می‌دهد",
+        "فرمان <code>ls</code> را اجرا می‌کند",
+        "نسخه <code>ls</code> را نشان می‌دهد",
+        "ls را حذف می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>man</code> (manual) صفحات راهنمای فرمان را نمایش می‌دهد. خروجی با <code>q</code> امکان‌پذیر است."
+    },
+    {
+      "id": 62,
+      "category": "system man",
+      "level": 2,
+      "text": "سوییچ <code>--help</code> چه تفاوتی با <code>man</code> دارد؟",
+      "options": [
+        "هیچ تفاوتی ندارند",
+        "<code>--help</code> خلاصه‌ای سریع از گزینه‌ها و کاربرد اصلی را نشان می‌دهد، <code>man</code> جزئیات کامل دارد",
+        "<code>--help</code> فقط برای فرمان‌های داخلی است",
+        "<code>man</code> فقط برای فرمان‌های خارجی است"
+      ],
+      "correct": 1,
+      "explanation": "<code>--help</code> یک راهنمای مختصر و سریع است، در حالی که <code>man</code> صفحات کامل و دقیق را نمایش می‌دهد."
+    },
+    {
+      "id": 63,
+      "category": "system man",
+      "level": 2,
+      "text": "دستور <code>man 5 passwd</code> چه تفاوتی با <code>man passwd</code> دارد؟",
+      "options": [
+        "هیچ تفاوتی ندارد",
+        "<code>man 5 passwd</code> فرمت فایل <code>/etc/passwd</code> را توضیح می‌دهد، در حالی که <code>man passwd</code> فرمان passwd را توضیح می‌دهد",
+        "<code>man 5 passwd</code> نسخه قدیمی‌تر را نشان می‌دهد",
+        "<code>man passwd</code> کار نمی‌کند"
+      ],
+      "correct": 1,
+      "explanation": "شماره بخش (Section) مشخص می‌کند چه نوع مستندی نمایش داده شود. <code>5</code> مربوط به فایل‌های پیکربندی است."
+    },
+    {
+      "id": 64,
+      "category": "system man",
+      "level": 3,
+      "text": "کدام بخش (Section) از صفحات man مربوط به فرامینی است که فقط Super User (root) اجرا می‌کند؟",
+      "options": [
+        "1",
+        "5",
+        "8",
+        "9"
+      ],
+      "correct": 2,
+      "explanation": "بخش ۸ شامل فرامین مدیریتی است که معمولاً فقط با دسترسی root قابل اجرا هستند."
+    },
+    {
+      "id": 65,
+      "category": "ویرایشگرها",
+      "level": 1,
+      "text": "برای باز کردن یک فایل با ویرایشگر vi، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>vi filename</code>",
+        "<code>edit filename</code>",
+        "<code>open filename</code>",
+        "<code>vim filename</code>"
+      ],
+      "correct": 0,
+      "explanation": "دستور اصلی برای باز کردن فایل در vi، <code>vi filename</code> است. <code>vim</code> نسخه بهبودیافته vi است."
+    },
+    {
+      "id": 66,
+      "category": "ویرایشگرها",
+      "level": 2,
+      "text": "در ویرایشگر vi، برای وارد شدن به حالت Insert (درج) از کدام کلید استفاده می‌شود؟",
+      "options": [
+        "<code>Esc</code>",
+        "<code>i</code>",
+        "<code>:</code>",
+        "<code>a</code>"
+      ],
+      "correct": 1,
+      "explanation": "کلید <code>i</code> (Insert) شما را از حالت Command به حالت Insert می‌برد تا بتوانید تایپ کنید."
+    },
+    {
+      "id": 67,
+      "category": "ویرایشگرها",
+      "level": 2,
+      "text": "در vi، چگونه می‌توان فایل را ذخیره و از ویرایشگر خارج شد؟",
+      "options": [
+        "<code>:wq</code>",
+        "<code>:q</code>",
+        "<code>Ctrl+S</code>",
+        "<code>ZZ</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>:wq</code> (write and quit) فایل را ذخیره کرده و خارج می‌شود. <code>ZZ</code> هم در حالت Command معادل آن است."
+    },
+    {
+      "id": 68,
+      "category": "ویرایشگرها",
+      "level": 3,
+      "text": "در vi، چگونه یک خط کامل را پاک می‌کنیم؟",
+      "options": [
+        "<code>dd</code>",
+        "<code>dw</code>",
+        "<code>yy</code>",
+        "<code>x</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>dd</code> (delete line) خط جاری را پاک می‌کند. <code>dw</code> یک کلمه را پاک می‌کند و <code>yy</code> کپی می‌کند."
+    },
+    {
+      "id": 69,
+      "category": "ویرایشگرها",
+      "level": 3,
+      "text": "در vi، خروجی یک فرمان را چگونه می‌توان داخل فایل جاری قرار داد؟",
+      "options": [
+        "<code>:!command</code>",
+        "<code>:r !command</code>",
+        "<code>:read command</code>",
+        "<code>:exec command</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>:r !command</code> خروجی فرمان را در محل جاری (بافر) قرار می‌دهد. <code>:!command</code> فقط اجرا می‌کند و داخل فایل نمی‌ریزد."
+    },
+    {
+      "id": 70,
+      "category": "ویرایشگرها",
+      "level": 2,
+      "text": "در ویرایشگر nano، کلید <code>^</code> در پایین صفحه چه معنایی دارد؟",
+      "options": [
+        "کلید Shift",
+        "کلید Ctrl",
+        "کلید Alt",
+        "کلید Meta"
+      ],
+      "correct": 1,
+      "explanation": "در nano، <code>^</code> نشان‌دهنده کلید Ctrl است (مثلاً <code>^X</code> یعنی Ctrl+X)."
+    },
+    {
+      "id": 71,
+      "category": "ویرایشگرها",
+      "level": 3,
+      "text": "در nano، برای جستجو و جایگزینی (Search & Replace) از کدام کلید ترکیبی استفاده می‌شود؟",
+      "options": [
+        "<code>Ctrl+F</code>",
+        "<code>Ctrl+G</code>",
+        "<code>Ctrl+\\</code> (Ctrl+Backslash)",
+        "<code>Ctrl+A</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>Ctrl+\\</code> (Ctrl+Backslash) در nano برای جستجو و جایگزینی استفاده می‌شود."
+    },
+    {
+      "id": 72,
+      "category": "پردازش فایل",
+      "level": 1,
+      "text": "دستور <code>cat file1 file2</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "محتوای دو فایل را به‌صورت ستونی (کنار هم) نمایش می‌دهد",
+        "محتوای دو فایل را پشت سر هم (عمودی) نمایش می‌دهد",
+        "دو فایل را با هم مقایسه می‌کند",
+        "فایل‌ها را حذف می‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>cat</code> محتوای فایل‌ها را به‌صورت پشت سر هم (یکی بعد از دیگری) نمایش می‌دهد."
+    },
+    {
+      "id": 73,
+      "category": "پردازش فایل",
+      "level": 2,
+      "text": "دستور <code>paste file1 file2</code> چه تفاوتی با <code>cat</code> دارد؟",
+      "options": [
+        "<code>paste</code> محتوای دو فایل را به‌صورت ستونی (کنار هم) قرار می‌دهد",
+        "<code>paste</code> فایل‌ها را مقایسه می‌کند",
+        "هیچ تفاوتی ندارند",
+        "<code>paste</code> فقط فایل‌های متنی را می‌پذیرد"
+      ],
+      "correct": 0,
+      "explanation": "<code>paste</code> خطوط متناظر دو فایل را به‌صورت کنار هم (ستونی) نمایش می‌دهد."
+    },
+    {
+      "id": 74,
+      "category": "پردازش فایل",
+      "level": 3,
+      "text": "دستور <code>od -c file</code> چه اطلاعاتی را نمایش می‌دهد؟",
+      "options": [
+        "محتوای فایل را به‌صورت هگزادسیمال",
+        "کاراکترهای ASCII فایل را به‌صورت خوانا نمایش می‌دهد",
+        "فایل را به‌صورت باینری نمایش می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 1,
+      "explanation": "<code>od -c</code> (octal dump) کاراکترهای فایل را به‌صورت ASCII و با کاراکترهای کنترلی مانند newline نمایش می‌دهد."
+    },
+    {
+      "id": 75,
+      "category": "پردازش فایل",
+      "level": 2,
+      "text": "دستور <code>split -l 4 file</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "فایل را به بخش‌های ۴ بایتی تقسیم می‌کند",
+        "فایل را به بخش‌های ۴ خطی تقسیم می‌کند",
+        "فایل را فشرده می‌کند",
+        "فایل را ادغام می‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>split -l 4</code> فایل را به فایل‌های کوچکتر با ۴ خط در هر کدام تقسیم می‌کند (نام‌های <code>xaa</code>، <code>xab</code> و ...)."
+    },
+    {
+      "id": 76,
+      "category": "پردازش فایل",
+      "level": 2,
+      "text": "برای شمارش تعداد خطوط یک فایل، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>wc -l</code>",
+        "<code>wc -w</code>",
+        "<code>wc -c</code>",
+        "<code>wc -m</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>wc -l</code> (word count - lines) تعداد خطوط فایل را نشان می‌دهد."
+    },
+    {
+      "id": 77,
+      "category": "پردازش فایل",
+      "level": 3,
+      "text": "دستور <code>sort -n numbers | uniq -c</code> چه خروجی می‌دهد؟",
+      "options": [
+        "اعداد را به‌صورت عددی مرتب کرده و تعداد تکرار هر کدام را نشان می‌دهد",
+        "اعداد را به‌صورت متنی مرتب می‌کند",
+        "فقط اعداد تکراری را حذف می‌کند",
+        "فقط اعداد یکتا را نمایش می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "ابتدا <code>sort -n</code> اعداد را به‌صورت عددی مرتب می‌کند، سپس <code>uniq -c</code> تعداد تکرار هر مقدار را نمایش می‌دهد."
+    },
+    {
+      "id": 78,
+      "category": "خلاصه‌سازی فایل",
+      "level": 2,
+      "text": "دستور <code>cut -d: -f1,7 /etc/passwd</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "فیلدهای اول و هفتم (با جداکننده :) را از هر خط استخراج می‌کند",
+        "فایل passwd را ویرایش می‌کند",
+        "فقط فیلد اول را نمایش می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>cut</code> با <code>-d:</code> جداکننده دو نقطه و <code>-f1,7</code> فیلدهای اول (نام کاربر) و هفتم (شل) را استخراج می‌کند."
+    },
+    {
+      "id": 79,
+      "category": "خلاصه‌سازی فایل",
+      "level": 3,
+      "text": "فایل <code>/etc/shadow</code> چه تفاوتی با <code>/etc/passwd</code> دارد؟",
+      "options": [
+        "<code>/etc/shadow</code> حاوی رمزهای عبور هش‌شده است و فقط root می‌تواند آن را بخواند",
+        "هر دو یکسان هستند",
+        "<code>/etc/shadow</code> فقط گروه‌ها را ذخیره می‌کند",
+        "<code>/etc/shadow</code> قابل ویرایش نیست"
+      ],
+      "correct": 0,
+      "explanation": "<code>/etc/shadow</code> محل ذخیره‌سازی رمزهای عبور (هش‌شده) است و فقط کاربر root دسترسی خواندن دارد."
+    },
+    {
+      "id": 80,
+      "category": "grep",
+      "level": 1,
+      "text": "دستور <code>grep root /etc/passwd</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "خطوط حاوی 'root' را در فایل passwd جستجو می‌کند",
+        "فایل passwd را ویرایش می‌کند",
+        "همه‌ی خطوط را نمایش می‌دهد",
+        "فایل passwd را حذف می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>grep</code> (Global Regular Expression Print) خطوطی که با الگوی داده شده مطابقت دارند را نمایش می‌دهد."
+    },
+    {
+      "id": 81,
+      "category": "grep",
+      "level": 2,
+      "text": "سوییچ <code>-w</code> در grep چه کاربردی دارد؟",
+      "options": [
+        "جستجوی کل کلمه (Whole Word) را انجام می‌دهد",
+        "جستجوی بدون توجه به بزرگی/کوچکی حروف",
+        "تعداد موارد مطابق را نمایش می‌دهد",
+        "جستجوی معکوس"
+      ],
+      "correct": 0,
+      "explanation": "<code>-w</code> (word) باعث می‌شود grep فقط کلمه کامل را جستجو کند، نه بخشی از کلمه دیگر."
+    },
+    {
+      "id": 82,
+      "category": "grep",
+      "level": 2,
+      "text": "برای جستجوی عبارت 'root' بدون توجه به بزرگی/کوچکی حروف (Case-Insensitive)، از کدام سوییچ استفاده می‌شود؟",
+      "options": [
+        "<code>-w</code>",
+        "<code>-i</code>",
+        "<code>-c</code>",
+        "<code>-v</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>-i</code> (ignore case) حساسیت به بزرگی/کوچکی حروف را نادیده می‌گیرد."
+    },
+    {
+      "id": 83,
+      "category": "grep",
+      "level": 3,
+      "text": "دستور <code>grep -v sh$ /etc/passwd</code> چه کاربردی دارد؟",
+      "options": [
+        "خطوطی که به 'sh' ختم می‌شوند را نمایش می‌دهد",
+        "خطوطی که به 'sh' ختم نمی‌شوند را نمایش می‌دهد (معکوس)",
+        "تعداد خطوط را نشان می‌دهد",
+        "فایل را ویرایش می‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>-v</code> (invert) خطوطی که با الگو مطابقت ندارند را نمایش می‌دهد. <code>sh$</code> به معنی خطوطی که با 'sh' تمام می‌شوند."
+    },
+    {
+      "id": 84,
+      "category": "grep",
+      "level": 3,
+      "text": "نقش <code>^</code> و <code>$</code> در الگوهای grep چیست؟",
+      "options": [
+        "<code>^</code> ابتدا و <code>$</code> انتهای خط را نشان می‌دهد",
+        "<code>^</code> انتها و <code>$</code> ابتدا را نشان می‌دهد",
+        "هر دو نشان‌دهنده هر کاراکتر هستند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>^</code> (caret) ابتدای خط و <code>$</code> (dollar) انتهای خط را مشخص می‌کنند."
+    },
+    {
+      "id": 85,
+      "category": "Redirection",
+      "level": 2,
+      "text": "علامت <code>2&gt;</code> در ری‌دایرکشن چه کاربردی دارد؟",
+      "options": [
+        "خروجی استاندارد (STDOUT) را Redirect می‌کند",
+        "خطاهای استاندارد (STDERR) را Redirect می‌کند",
+        "ورودی استاندارد (STDIN) را Redirect می‌کند",
+        "همه‌ی خروجی‌ها را Redirect می‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>2&gt;</code> فقط خروجی خطا (STDERR، شماره 2) را به فایل هدایت می‌کند."
+    },
+    {
+      "id": 86,
+      "category": "Redirection",
+      "level": 2,
+      "text": "برای نادیده گرفتن خطاها و ارسال آن‌ها به 'ناکجاآباد' (<code>/dev/null</code>)، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>command &gt; /dev/null</code>",
+        "<code>command 2&gt; /dev/null</code>",
+        "<code>command &lt; /dev/null</code>",
+        "<code>command /dev/null</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>2&gt; /dev/null</code> خطاها را به <code>/dev/null</code> می‌فرستد تا نمایش داده نشوند."
+    },
+    {
+      "id": 87,
+      "category": "Redirection",
+      "level": 3,
+      "text": "تفاوت <code>&gt;</code> و <code>&gt;&gt;</code> در چیست؟",
+      "options": [
+        "<code>&gt;</code> محتوای قبلی را پاک می‌کند (Overwrite)، <code>&gt;&gt;</code> به انتها اضافه می‌کند (Append)",
+        "هر دو یکسان هستند",
+        "<code>&gt;</code> فقط برای خطاهاست",
+        "<code>&gt;&gt;</code> فقط برای ورودی است"
+      ],
+      "correct": 0,
+      "explanation": "<code>&gt;</code> فایل را بازنویسی می‌کند و محتوای قبلی را از بین می‌برد. <code>&gt;&gt;</code> به انتهای فایل اضافه می‌کند."
+    },
+    {
+      "id": 88,
+      "category": "Redirection",
+      "level": 3,
+      "text": "دستور <code>tr ' ' '\\\n' &lt; file</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "همه‌ی فاصله‌ها را به خط جدید (newline) تبدیل می‌کند",
+        "همه‌ی خطوط جدید را به فاصله تبدیل می‌کند",
+        "فایل را حذف می‌کند",
+        "فایل را ویرایش می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>tr</code> (translate) کاراکتر اول را با کاراکتر دوم جایگزین می‌کند. <code>&lt;</code> ورودی را از فایل می‌گیرد."
+    },
+    {
+      "id": 89,
+      "category": "Pipe و tee",
+      "level": 1,
+      "text": "نماد <code>|</code> (Pipe) در خط فرمان چه کاری انجام می‌دهد؟",
+      "options": [
+        "خروجی فرمان اول را به ورودی فرمان دوم می‌دهد",
+        "فرمان‌ها را به‌صورت موازی اجرا می‌کند",
+        "خروجی را به فایل ذخیره می‌کند",
+        "خطاها را نمایش می‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "Pipe (<code>|</code>) خروجی استاندارد فرمان سمت چپ را به ورودی استاندارد فرمان سمت راست متصل می‌کند."
+    },
+    {
+      "id": 90,
+      "category": "Pipe و tee",
+      "level": 2,
+      "text": "دستور <code>cat /etc/passwd | grep root | cut -d: -f1</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "خطوط حاوی root را پیدا کرده و سپس نام کاربری (فیلد اول) را استخراج می‌کند",
+        "فایل passwd را ویرایش می‌کند",
+        "همه‌ی خطوط را نمایش می‌دهد",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "این یک Pipeline است: ابتدا محتوای passwd، سپس فیلتر با grep، سپس استخراج فیلد اول با cut."
+    },
+    {
+      "id": 91,
+      "category": "Pipe و tee",
+      "level": 3,
+      "text": "دستور <code>tee</code> چه کاربردی در Pipeline دارد؟",
+      "options": [
+        "خروجی را هم به پایپ بعدی می‌دهد و هم در یک فایل ذخیره می‌کند",
+        "فقط خروجی را در فایل ذخیره می‌کند",
+        "فقط خروجی را به پایپ بعدی می‌دهد",
+        "خروجی را نمایش نمی‌دهد"
+      ],
+      "correct": 0,
+      "explanation": "<code>tee</code> خروجی را به دو مسیر هدایت می‌کند: هم به استاندارد خروجی (یا پایپ بعدی) و هم به یک فایل."
+    },
+    {
+      "id": 92,
+      "category": "sed",
+      "level": 1,
+      "text": "دستور <code>sed 's/root/admin/' /etc/passwd</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "اولین 'root' در هر خط را با 'admin' جایگزین می‌کند",
+        "همه‌ی 'root'ها را با 'admin' جایگزین می‌کند",
+        "فایل passwd را ویرایش می‌کند",
+        "هیچ کاری نمی‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>sed</code> با ساختار <code>s/old/new/</code> جایگزینی انجام می‌دهد. به‌طور پیش‌فرض فقط اولین مورد در هر خط جایگزین می‌شود."
+    },
+    {
+      "id": 93,
+      "category": "sed",
+      "level": 2,
+      "text": "برای جایگزینی همه‌ی موارد یک الگو در هر خط با sed، از کدام سوییچ استفاده می‌شود؟",
+      "options": [
+        "<code>-i</code>",
+        "<code>g</code> (global)",
+        "<code>-n</code>",
+        "<code>-e</code>"
+      ],
+      "correct": 1,
+      "explanation": "سوییچ <code>g</code> (global) در انتهای دستور sed باعث می‌شود همه‌ی موارد در هر خط جایگزین شوند."
+    },
+    {
+      "id": 94,
+      "category": "sed",
+      "level": 3,
+      "text": "دستور <code>sed -i 's/old/new/' file</code> چه تفاوتی با بدون <code>-i</code> دارد؟",
+      "options": [
+        "<code>-i</code> تغییرات را مستقیماً روی فایل اعمال می‌کند (In-place)",
+        "<code>-i</code> تغییرات را در خروجی استاندارد نمایش می‌دهد",
+        "هیچ تفاوتی ندارد",
+        "<code>-i</code> فایل را پشتیبان می‌گیرد"
+      ],
+      "correct": 0,
+      "explanation": "سوییچ <code>-i</code> (in-place) باعث می‌شود sed فایل اصلی را ویرایش کند. بدون آن، نتیجه فقط در خروجی استاندارد نمایش داده می‌شود."
+    },
+    {
+      "id": 95,
+      "category": "sed",
+      "level": 3,
+      "text": "برای حذف خط اول یک فایل با sed، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>sed '1d' file</code>",
+        "<code>sed '1p' file</code>",
+        "<code>sed '/1/d' file</code>",
+        "<code>sed '1,1d' file</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>1d</code> در sed به معنی حذف (delete) خط شماره ۱ است."
+    },
+    {
+      "id": 96,
+      "category": "xargs",
+      "level": 2,
+      "text": "دستور <code>find . -name \"*.log\" | xargs rm</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "همه‌ی فایل‌های .log را یک‌جا حذف می‌کند",
+        "فایل‌های .log را به‌صورت خط‌به‌خط به rm می‌دهد تا حذف شوند",
+        "فقط لیست فایل‌ها را نمایش می‌دهد",
+        "هیچ کاری نمی‌کند"
+      ],
+      "correct": 1,
+      "explanation": "<code>xargs</code> خروجی find را خط‌به‌خط به عنوان آرگومان به <code>rm</code> می‌دهد، که برای تعداد زیاد فایل‌ها ضروری است."
+    },
+    {
+      "id": 97,
+      "category": "xargs",
+      "level": 3,
+      "text": "چرا گاهی به جای <code>rm *</code> از <code>find | xargs rm</code> استفاده می‌شود؟",
+      "options": [
+        "برای سرعت بیشتر",
+        "برای جلوگیری از خطای 'Argument list too long' در تعداد زیاد فایل‌ها",
+        "چون <code>rm *</code> کار نمی‌کند",
+        "برای نمایش خروجی"
+      ],
+      "correct": 1,
+      "explanation": "وقتی تعداد فایل‌ها خیلی زیاد است، <code>rm *</code> با خطای 'Argument list too long' مواجه می‌شود. <code>xargs</code> این محدودیت را برطرف می‌کند."
+    },
+    {
+      "id": 98,
+      "category": "چالش‌ها",
+      "level": 2,
+      "text": "اگر از دایرکتوری <code>/var/log</code> باشید، با کدام دستور به هوم دایرکتوری برمی‌گردید؟ (چالش ۱)",
+      "options": [
+        "<code>cd</code>",
+        "<code>cd -</code>",
+        "هر دو (<code>cd</code> و <code>cd -</code>)",
+        "فقط <code>cd ..</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>cd</code> به هوم می‌رود و <code>cd -</code> به دایرکتوری قبلی برمی‌گردد (که در اینجا هر دو به یک جا ختم می‌شوند)."
+    },
+    {
+      "id": 99,
+      "category": "چالش‌ها",
+      "level": 3,
+      "text": "دستور <code>compgen -c | grep find</code> چه کاربردی دارد؟ (چالش ۳)",
+      "options": [
+        "لیست همه‌ی فرمان‌های موجود را نمایش می‌دهد و سپس آن‌هایی که 'find' دارند را فیلتر می‌کند",
+        "فقط فرمان find را اجرا می‌کند",
+        "فرمان‌های پیدا شده را حذف می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>compgen -c</code> همه‌ی فرمان‌های موجود روی سیستم را لیست می‌کند و سپس با grep جستجو می‌شود."
+    },
+    {
+      "id": 100,
+      "category": "چالش‌ها",
+      "level": 3,
+      "text": "برای غیرفعال کردن (Disable) فرمان Built-in <code>cd</code> در bash، از کدام دستور استفاده می‌شود؟ (چالش ۴)",
+      "options": [
+        "<code>disable cd</code>",
+        "<code>enable -n cd</code>",
+        "<code>unset cd</code>",
+        "<code>rm cd</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>enable -n cd</code> فرمان Built-in cd را غیرفعال می‌کند. برای فعال کردن مجدد، <code>enable cd</code> استفاده می‌شود."
+    },
+    {
+      "id": 101,
+      "category": "چالش‌ها",
+      "level": 4,
+      "text": "چگونه می‌توان یک اسکریپت را از هر مسیری بدون نوشتن مسیر کامل اجرا کرد؟ (چالش ۵)",
+      "options": [
+        "با کپی کردن آن در <code>/bin</code>",
+        "با اضافه کردن مسیر اسکریپت به متغیر <code>$PATH</code>",
+        "با تغییر نام اسکریپت",
+        "با اجرای <code>bash script.sh</code>"
+      ],
+      "correct": 1,
+      "explanation": "با افزودن دایرکتوری حاوی اسکریپت به <code>$PATH</code> (مثلاً <code>PATH=$PATH:~/scripts</code>)، می‌توان آن را از هر مسیری اجرا کرد."
+    },
+    {
+      "id": 102,
+      "category": "چالش‌ها",
+      "level": 4,
+      "text": "در چالش history، پس از گرفتن بکاپ از history، چگونه می‌توان آن را دوباره به history جاری بازگرداند؟",
+      "options": [
+        "<code>history -r backup</code>",
+        "<code>history -w backup</code>",
+        "<code>history -c backup</code>",
+        "<code>history -a backup</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>history -r</code> (read) محتوای یک فایل را به history جاری اضافه می‌کند."
+    },
+    {
+      "id": 103,
+      "category": "چالش‌ها",
+      "level": 3,
+      "text": "در vi، تفاوت <code>:!command</code> و <code>:r !command</code> چیست؟ (چالش ۷)",
+      "options": [
+        "<code>:!command</code> فقط اجرا می‌کند، <code>:r !command</code> خروجی را داخل فایل قرار می‌دهد",
+        "هر دو یکسان هستند",
+        "<code>:r !command</code> فقط اجرا می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>:!command</code> فرمان را اجرا می‌کند اما خروجی را به فایل نمی‌ریزد. <code>:r !command</code> خروجی را در بافر فایل جاری قرار می‌دهد."
+    },
+    {
+      "id": 104,
+      "category": "چالش‌ها",
+      "level": 3,
+      "text": "در چالش tr، دستور <code>tr ':' '.' &lt; mohammad &gt; mohammad2</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "همه‌ی دو نقطه‌ها را به نقطه تبدیل کرده و در فایل جدید ذخیره می‌کند",
+        "فایل mohammad را ویرایش می‌کند",
+        "نقطه‌ها را به دو نقطه تبدیل می‌کند",
+        "هیچ کاری نمی‌کند"
+      ],
+      "correct": 0,
+      "explanation": "ورودی از <code>mohammad</code> خوانده می‌شود، <code>:</code> به <code>.</code> تبدیل و خروجی در <code>mohammad2</code> ذخیره می‌شود."
+    },
+    {
+      "id": 105,
+      "category": "چالش‌ها",
+      "level": 4,
+      "text": "در چالش sed، دستور <code>sed -n 's/unix/linux/p' file</code> چه تفاوتی با حالت عادی دارد؟",
+      "options": [
+        "فقط خطوطی که تغییر کرده‌اند را نمایش می‌دهد (با <code>-n</code> و <code>p</code>)",
+        "همه‌ی خطوط را نمایش می‌دهد",
+        "فایل را ویرایش می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>-n</code> خروجی پیش‌فرض را غیرفعال می‌کند و <code>p</code> فقط خطوطی که جایگزینی در آن‌ها انجام شده را چاپ می‌کند."
+    },
+    {
+      "id": 106,
+      "category": "مبانی تکمیلی",
+      "level": 2,
+      "text": "علامت <code>~</code> (تیلدا) در مسیرها به چه معناست؟",
+      "options": [
+        "دایرکتوری ریشه",
+        "هوم دایرکتوری کاربر جاری",
+        "دایرکتوری قبلی",
+        "دایرکتوری فعلی"
+      ],
+      "correct": 1,
+      "explanation": "<code>~</code> مخفف هوم دایرکتوری کاربر جاری است (مثلاً <code>/home/abdini</code>)."
+    },
+    {
+      "id": 107,
+      "category": "مبانی تکمیلی",
+      "level": 2,
+      "text": "دستور <code>type</code> چه کاربردی دارد؟",
+      "options": [
+        "نوع فرمان را مشخص می‌کند (Built-in یا External)",
+        "فایل را تایپ می‌کند",
+        "نوع فایل را نشان می‌دهد",
+        "فرمان را اجرا می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "<code>type</code> مشخص می‌کند که یک فرمان Built-in (داخلی شل) است یا یک فایل اجرایی خارجی."
+    },
+    {
+      "id": 108,
+      "category": "مبانی تکمیلی",
+      "level": 2,
+      "text": "Exit Status (<code>$?</code>) چه چیزی را نشان می‌دهد؟",
+      "options": [
+        "خروجی آخرین فرمان",
+        "کد خروجی (وضعیت) آخرین فرمان اجرا شده (۰ = موفقیت)",
+        "شماره خط آخرین فرمان",
+        "تاریخچه فرمان"
+      ],
+      "correct": 1,
+      "explanation": "<code>$?</code> کد وضعیت آخرین فرمان اجرا شده را نشان می‌دهد. عدد ۰ به معنای موفقیت و اعداد غیرصفر نشان‌دهنده خطا هستند."
+    },
+    {
+      "id": 109,
+      "category": "مبانی تکمیلی",
+      "level": 3,
+      "text": "چگونه می‌توان محتوای یک فایل فشرده <code>.gz</code> را بدون خارج‌سازی از حالت فشرده مشاهده کرد؟",
+      "options": [
+        "<code>cat file.gz</code>",
+        "<code>zcat file.gz</code>",
+        "<code>gzcat file.gz</code>",
+        "<code>less file.gz</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>zcat</code> محتوای فایل‌های فشرده با gzip را بدون نیاز به دیکامپرس نمایش می‌دهد."
+    },
+    {
+      "id": 110,
+      "category": "مبانی تکمیلی",
+      "level": 3,
+      "text": "چگونه می‌توان یک Alias را دائمی کرد؟",
+      "options": [
+        "با قرار دادن آن در <code>~/.bashrc</code>",
+        "با اجرای <code>alias -p</code>",
+        "با اجرای <code>export alias</code>",
+        "با قرار دادن آن در <code>/etc/aliases</code>"
+      ],
+      "correct": 0,
+      "explanation": "Aliasهای تعریف شده در <code>~/.bashrc</code> یا <code>~/.bash_profile</code> در هر نشست جدید بارگذاری می‌شوند و دائمی می‌شوند."
+    }
+  ]
+}

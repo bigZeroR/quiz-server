@@ -1,0 +1,454 @@
+{
+  "title": "LPIC-1 دوره جامع - سوالات تکمیلی و پیشرفته",
+  "description": "سوالات ترکیبی و عمیق‌تر از تمامی فصول LPIC-1",
+  "questions": [
+    {
+      "id": 301,
+      "category": "شبکه - عیب‌یابی",
+      "level": 4,
+      "text": "اگر <code>ping 8.8.8.8</code> کار کند اما <code>ping google.com</code> کار نکند، مشکل از کجاست؟",
+      "options": [
+        "مشکل DNS است، سرور DNS پیکربندی نشده یا پاسخ نمی‌دهد",
+        "مشکل اینترنت است",
+        "مشکل کارت شبکه است",
+        "مشکل فایروال است"
+      ],
+      "correct": 0,
+      "explanation": "اگر پینگ به یک IP (مثل ۸.۸.۸.۸) موفق باشد اما پینگ به نام دامنه (مثل google.com) ناموفق باشد، یعنی لایه شبکه (IP) کار می‌کند اما لایه DNS مشکل دارد. باید فایل <code>/etc/resolv.conf</code> یا تنظیمات DNS در NetworkManager را بررسی کرد."
+    },
+    {
+      "id": 302,
+      "category": "شبکه - عیب‌یابی",
+      "level": 3,
+      "text": "ترتیب صحیح عیب‌یابی اتصال شبکه در لینوکس کدام است؟",
+      "options": [
+        "لوپ‌بک → گیت‌وی → IP اینترنتی → نام دامنه",
+        "نام دامنه → IP اینترنتی → گیت‌وی → لوپ‌بک",
+        "گیت‌وی → لوپ‌بک → IP اینترنتی → نام دامنه",
+        "IP اینترنتی → گیت‌وی → لوپ‌بک → نام دامنه"
+      ],
+      "correct": 0,
+      "explanation": "مراحل استاندارد: ۱. لوپ‌بک (127.0.0.1) برای تست پشته TCP/IP، ۲. دیفالت گیت‌وی برای تست شبکه محلی، ۳. یک IP اینترنتی (مثل 8.8.8.8) برای تست اتصال اینترنت، ۴. یک نام دامنه (مثل google.com) برای تست DNS. این روش به شناسایی دقیق محل مشکل کمک می‌کند."
+    },
+    {
+      "id": 303,
+      "category": "شبکه - ابزارها",
+      "level": 3,
+      "text": "کدام ابزار برای نمایش مسیر رسیدن به یک هاست به‌صورت زنده (Live) و همراه با Packet Loss استفاده می‌شود؟",
+      "options": [
+        "<code>mtr</code>",
+        "<code>traceroute</code>",
+        "<code>ping</code>",
+        "<code>tcpdump</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>mtr</code> (My TraceRoute) ترکیبی از <code>ping</code> و <code>traceroute</code> است که به‌صورت زنده مسیر، تأخیر و درصد Packet Loss را به‌روزرسانی می‌کند و برای عیب‌یابی شبکه بسیار مفید است."
+    },
+    {
+      "id": 304,
+      "category": "شبکه - ابزارها",
+      "level": 4,
+      "text": "برای مشاهده همه اتصالات TCP فعال روی سیستم با جزئیات (شامل PID و نام برنامه)، کدام دستور مناسب است؟",
+      "options": [
+        "<code>ss -tunp</code>",
+        "<code>netstat -tunp</code>",
+        "هر دو <code>ss -tunp</code> و <code>netstat -tunp</code>",
+        "<code>ip a</code>"
+      ],
+      "correct": 2,
+      "explanation": "هر دو دستور <code>ss</code> (جایگزین مدرن) و <code>netstat</code> (قدیمی) با سوییچ‌های <code>-t</code> (TCP)، <code>-u</code> (UDP)، <code>-n</code> (numeric)، <code>-p</code> (process) اتصالات را با جزئیات نمایش می‌دهند. <code>ss</code> سریع‌تر و مدرن‌تر است، اما <code>netstat</code> هنوز در بسیاری از سیستم‌ها موجود است."
+    },
+    {
+      "id": 305,
+      "category": "امنیت - SSH",
+      "level": 3,
+      "text": "برای افزایش امنیت SSH، کدام گزینه‌ها را باید در <code>/etc/ssh/sshd_config</code> تغییر داد؟",
+      "options": [
+        "PermitRootLogin no, PasswordAuthentication no, Port 2222 (غیراستاندارد)",
+        "PermitRootLogin yes, PasswordAuthentication yes",
+        "فقط Port را تغییر داد",
+        "فقط PasswordAuthentication را غیرفعال کرد"
+      ],
+      "correct": 0,
+      "explanation": "اقدامات استاندارد هاردن SSH: ۱. تغییر پورت پیش‌فرض (۲۲ به ۲۲۰۰ یا دیگر)، ۲. غیرفعال کردن ورود root (<code>PermitRootLogin no</code>)، ۳. غیرفعال کردن احراز هویت با پسورد (<code>PasswordAuthentication no</code>) و استفاده از کلید SSH. همچنین محدود کردن کاربران مجاز با <code>AllowUsers</code> و فعال کردن <code>PubkeyAuthentication yes</code> توصیه می‌شود."
+    },
+    {
+      "id": 306,
+      "category": "امنیت - SSH",
+      "level": 4,
+      "text": "پس از تغییر پورت SSH در <code>/etc/ssh/sshd_config</code>، در سیستم‌های با SELinux فعال چه اقدام دیگری لازم است؟",
+      "options": [
+        "با <code>semanage port -a -t ssh_port_t -p tcp NEW_PORT</code> پورت جدید را به context SSH اضافه کنید",
+        "فقط سرویس را ری‌استارت کنید",
+        "SELinux را غیرفعال کنید",
+        "هیچ کاری لازم نیست"
+      ],
+      "correct": 0,
+      "explanation": "SELinux سرویس SSH را فقط روی پورت‌های مجاز (با context <code>ssh_port_t</code>) اجازه می‌دهد. با <code>semanage port -a -t ssh_port_t -p tcp NEW_PORT</code> پورت جدید را به لیست مجاز اضافه می‌کنید. پس از آن، سرویس را ری‌استارت کنید. همچنین باید پورت جدید را در فایروال باز کنید."
+    },
+    {
+      "id": 307,
+      "category": "امنیت - GPG",
+      "level": 3,
+      "text": "برای تأیید هویت فرستنده و یکپارچگی یک فایل در GPG، از کدام عملیات استفاده می‌شود؟",
+      "options": [
+        "امضای دیجیتال (Signing) با کلید خصوصی فرستنده و سپس تأیید (Verify) با کلید عمومی فرستنده",
+        "رمزگذاری با کلید عمومی گیرنده",
+        "رمزگذاری با کلید خصوصی فرستنده",
+        "فقط هش کردن فایل"
+      ],
+      "correct": 0,
+      "explanation": "برای تأیید هویت و یکپارچگی، فرستنده فایل را با کلید خصوصی خود امضا (Sign) می‌کند. گیرنده با کلید عمومی فرستنده، امضا را تأیید (Verify) می‌کند. این کار نشان می‌دهد فایل واقعاً از فرستنده آمده و تغییر نکرده است. رمزگذاری برای محرمانگی است نه تأیید هویت."
+    },
+    {
+      "id": 308,
+      "category": "امنیت - GPG",
+      "level": 4,
+      "text": "دستور <code>gpg --verify file.sig file</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "امضای فایل (file.sig) را با فایل اصلی (file) تطابق می‌دهد تا صحت و هویت فرستنده تأیید شود",
+        "فایل را رمزگشایی می‌کند",
+        "فایل را رمزگذاری می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>gpg --verify</code> با استفاده از کلید عمومی فرستنده (که در keyring موجود است) امضای فایل را بررسی می‌کند. اگر امضا معتبر باشد، یعنی فایل توسط فرستنده واقعی امضا شده و تغییر نکرده است. اگر کلید عمومی موجود نباشد، پیام خطا می‌دهد."
+    },
+    {
+      "id": 309,
+      "category": "اسکریپت‌نویسی - اشکال‌زدایی",
+      "level": 3,
+      "text": "برای اجرای یک اسکریپت به‌گونه‌ای که هر خط قبل از اجرا نمایش داده شود (حالت دیباگ)، از کدام روش استفاده می‌شود؟",
+      "options": [
+        "<code>bash -x script.sh</code>",
+        "<code>bash -v script.sh</code>",
+        "<code>bash -n script.sh</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>bash -x</code> (xtrace) هر خط از اسکریپت را قبل از اجرا با علامت <code>+</code> نمایش می‌دهد. <code>-v</code> (verbose) خطوط را همان‌طور که خوانده می‌شوند نمایش می‌دهد (قبل از تفسیر). <code>-n</code> (noexec) فقط سینتکس را بررسی می‌کند و اجرا نمی‌کند. <code>-x</code> رایج‌ترین برای دیباگ است."
+    },
+    {
+      "id": 310,
+      "category": "اسکریپت‌نویسی - اشکال‌زدایی",
+      "level": 4,
+      "text": "در bash، چگونه می‌توان فقط بخش خاصی از یک اسکریپت را در حالت دیباگ (<code>-x</code>) اجرا کرد، نه کل اسکریپت؟",
+      "options": [
+        "با استفاده از <code>set -x</code> در شروع بخش و <code>set +x</code> در پایان بخش مورد نظر",
+        "با استفاده از <code>bash -x</code> در فراخوانی تابع",
+        "غیرممکن است",
+        "با <code>debug</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>set -x</code> حالت دیباگ را برای خطوط بعدی فعال می‌کند و <code>set +x</code> آن را غیرفعال می‌کند. این امکان را می‌دهد فقط بخش‌های خاصی از اسکریپت را در حالت xtrace اجرا کنید بدون اینکه کل اسکریپت دیباگ شود."
+    },
+    {
+      "id": 311,
+      "category": "اسکریپت‌نویسی - خطاها",
+      "level": 3,
+      "text": "برای این که در صورت بروز خطا در یک اسکریپت، اسکریپت متوقف شود (و ادامه ندهد)، از کدام تنظیم استفاده می‌شود؟",
+      "options": [
+        "<code>set -e</code>",
+        "<code>set -x</code>",
+        "<code>set -u</code>",
+        "<code>set -v</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>set -e</code> (errexit) باعث می‌شود اسکریپت بلافاصله پس از اولین خطایی که با Exit Status غیرصفر مواجه شود، متوقف شود. این بسیار مفید برای جلوگیری از ادامه اجرا پس از خطا است. <code>set -u</code> برای متغیرهای تعریف‌نشده خطا می‌دهد، <code>set -x</code> برای دیباگ است."
+    },
+    {
+      "id": 312,
+      "category": "اسکریپت‌نویسی - اینترنال فیلد جداکننده",
+      "level": 4,
+      "text": "متغیر <code>IFS</code> (Internal Field Separator) در bash چه کاربردی دارد و چگونه می‌توان آن را تغییر داد؟",
+      "options": [
+        "جداکننده‌ای برای تقسیم کلمات در خواندن و حلقه‌هاست؛ با <code>IFS=','</code> می‌توان آن را به کاما تغییر داد",
+        "تنظیمات فایل‌سیستم را مشخص می‌کند",
+        "برای نمایش خطاهاست",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>IFS</code> تعیین می‌کند که bash چگونه کلمات را در هنگام خواندن (مثلاً با <code>read</code>) یا حلقه‌های <code>for</code> تقسیم کند. مقدار پیش‌فرض شامل فاصله، تب و خط جدید است. با تغییر آن (مثلاً <code>IFS=','</code>) می‌توان رشته‌های جدا شده با کاما را تجزیه کرد. معمولاً قبل از استفاده، مقدار قبلی را ذخیره و پس از استفاده بازمی‌گردانند."
+    },
+    {
+      "id": 313,
+      "category": "اسکریپت‌نویسی - اینترنال فیلد جداکننده",
+      "level": 4,
+      "text": "دستور <code>while IFS= read -r line</code> در یک حلقه چه کاری انجام می‌دهد؟",
+      "options": [
+        "هر خط از ورودی را به‌صورت کامل (بدون حذف فاصله‌های ابتدا و انتها) در متغیر <code>line</code> می‌خواند و با <code>-r</code> از تفسیر بک‌اسلش جلوگیری می‌کند",
+        "خط را به کلمات تقسیم می‌کند",
+        "فقط خط اول را می‌خواند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "این الگو (<code>while IFS= read -r line; do ...; done &lt; file</code>) یک روش استاندارد برای خواندن خط‌به‌خط فایل‌ها در bash است. <code>IFS=</code> از حذف فاصله‌های ابتدا و انتها جلوگیری می‌کند، <code>-r</code> (raw) از تفسیر بک‌اسلش‌ها جلوگیری می‌کند و <code>read</code> یک خط را در <code>line</code> ذخیره می‌کند."
+    },
+    {
+      "id": 314,
+      "category": "مدیریت فایل‌ها - diff و patch",
+      "level": 3,
+      "text": "دستور <code>diff -u file1 file2</code> چه خروجی تولید می‌کند و چه کاربردی دارد؟",
+      "options": [
+        "تفاوت دو فایل را به‌صورت unified (با زمینه) نمایش می‌دهد که برای ایجاد patch قابل استفاده است",
+        "فایل‌ها را ادغام می‌کند",
+        "تفاوت‌ها را حذف می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>diff -u</code> تفاوت دو فایل را در قالب unified diff نمایش می‌دهد که شامل چند خط زمینه (context) است. این خروجی را می‌توان با <code>patch</code> برای اعمال تغییرات به فایل اصلی استفاده کرد. این روش در توسعه نرم‌افزار و انتقال تغییرات رایج است."
+    },
+    {
+      "id": 315,
+      "category": "مدیریت فایل‌ها - diff و patch",
+      "level": 4,
+      "text": "برای اعمال یک فایل patch (تولید شده با <code>diff</code>) به یک فایل یا دایرکتوری، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>patch &lt; patchfile</code>",
+        "<code>apply patchfile</code>",
+        "<code>patch -i patchfile</code>",
+        "هر دو گزینه اول و سوم"
+      ],
+      "correct": 3,
+      "explanation": "هر دو روش کار می‌کنند: <code>patch &lt; patchfile</code> (ورودی از فایل) و <code>patch -i patchfile</code> (با سوییچ <code>-i</code>). patch فایل اصلی را بر اساس تفاوت‌های ثبت شده در patchfile به‌روزرسانی می‌کند. قبل از اعمال، می‌توان با <code>--dry-run</code> تست کرد که آیا patch بدون خطا اعمال می‌شود."
+    },
+    {
+      "id": 316,
+      "category": "سیستم - کرنل",
+      "level": 3,
+      "text": "برای مشاهده نسخه کرنل در حال اجرا و اطلاعات مربوط به آن، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>uname -a</code>",
+        "<code>cat /proc/version</code>",
+        "<code>hostnamectl</code>",
+        "همه موارد"
+      ],
+      "correct": 3,
+      "explanation": "همه این دستورات اطلاعات کرنل را نشان می‌دهند: <code>uname -a</code> (نام کرنل، هاست، نسخه و ...)، <code>cat /proc/version</code> (نسخه کرنل و اطلاعات کامپایلر)، <code>hostnamectl</code> (اطلاعات سیستم شامل کرنل). هرکدام اطلاعات مشابهی با جزئیات متفاوت ارائه می‌دهند."
+    },
+    {
+      "id": 317,
+      "category": "سیستم - کرنل",
+      "level": 4,
+      "text": "برای به‌روزرسانی کرنل در توزیع‌های RedHat-family بدون ری‌استارت (با استفاده از kpatch یا livepatch)، از چه روشی استفاده می‌شود؟",
+      "options": [
+        "با استفاده از ابزارهای Live Kernel Patching مانند <code>kpatch</code> یا <code>livepatch</code> (نیاز به سرویس و مجوز دارد)",
+        "با <code>dnf update kernel</code> و ری‌استارت",
+        "غیرممکن است",
+        "با <code>modprobe</code>"
+      ],
+      "correct": 0,
+      "explanation": "برخی توزیع‌ها (مانند RHEL با سرویس Live Patching) از ابزارهایی مانند <code>kpatch</code> برای اعمال پچ‌های امنیتی کرنل بدون نیاز به ری‌استارت پشتیبانی می‌کنند. این ابزارها ماژول‌های کرنل را به‌روز می‌کنند در حالی که سیستم در حال اجراست. برای تغییر نسخه اصلی کرنل همچنان نیاز به ری‌استارت است."
+    },
+    {
+      "id": 318,
+      "category": "سیستم - بوت",
+      "level": 4,
+      "text": "در GRUB2، فایل <code>/boot/grub2/grub.cfg</code> معمولاً به‌صورت خودکار تولید می‌شود. برای بازسازی آن پس از تغییرات، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "<code>update-grub</code> (در دبیان)",
+        "هر دو بسته به توزیع",
+        "فقط با ویرایش دستی"
+      ],
+      "correct": 2,
+      "explanation": "در ردهت‌محورها از <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> و در دبیان‌محورها از <code>update-grub</code> (که خود <code>grub-mkconfig -o /boot/grub/grub.cfg</code> را صدا می‌زند) استفاده می‌شود. پس از تغییر در <code>/etc/default/grub</code> یا فایل‌های <code>/etc/grub.d/</code>، باید این دستور اجرا شود."
+    },
+    {
+      "id": 319,
+      "category": "سیستم - systemd",
+      "level": 3,
+      "text": "برای مشاهده همه سرویس‌های فعال (running) در systemd، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl list-units --type=service --state=running</code>",
+        "<code>systemctl status</code>",
+        "<code>systemctl list-services</code>",
+        "<code>systemctl show</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>systemctl list-units</code> با سوییچ‌های <code>--type=service</code> و <code>--state=running</code> فقط سرویس‌های فعال را نمایش می‌دهد. <code>systemctl status</code> وضعیت کلی را نشان می‌دهد. <code>systemctl list-units</code> بدون سوییچ همه واحدهای فعال را نشان می‌دهد."
+    },
+    {
+      "id": 320,
+      "category": "سیستم - systemd",
+      "level": 4,
+      "text": "برای ایجاد یک سرویس سفارشی در systemd، فایل unit را در کدام مسیر قرار می‌دهیم؟",
+      "options": [
+        "<code>/etc/systemd/system/</code> (برای سرویس‌های سفارشی)",
+        "<code>/lib/systemd/system/</code> (فقط برای سرویس‌های نصب‌شده)",
+        "<code>/usr/lib/systemd/system/</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "سرویس‌های سفارشی باید در <code>/etc/systemd/system/</code> قرار گیرند تا با به‌روزرسانی‌های سیستم حذف نشوند. مسیرهای <code>/lib/systemd/system/</code> و <code>/usr/lib/systemd/system/</code> برای سرویس‌های نصب‌شده توسط پکیج‌ها است. پس از ایجاد فایل، با <code>systemctl daemon-reload</code> تغییرات را اعمال کنید."
+    },
+    {
+      "id": 321,
+      "category": "شبکه - DNS",
+      "level": 3,
+      "text": "برای تغییر DNS در NetworkManager به‌صورت دائمی، از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>nmcli connection modify CONN_NAME ipv4.dns DNS_IP</code>",
+        "<code>nmcli device modify dev_name dns DNS_IP</code>",
+        "ویرایش <code>/etc/resolv.conf</code>",
+        "همه موارد"
+      ],
+      "correct": 0,
+      "explanation": "<code>nmcli connection modify</code> با مشخص کردن نام اتصال، DNS را به‌صورت دائمی تغییر می‌دهد. پس از تغییر، با <code>nmcli connection up CONN_NAME</code> تغییرات اعمال می‌شوند. ویرایش مستقیم <code>/etc/resolv.conf</code> در سیستم‌های با NetworkManager ممکن است موقتی باشد و بازنویسی شود."
+    },
+    {
+      "id": 322,
+      "category": "شبکه - DNS",
+      "level": 4,
+      "text": "در systemd-resolved، برای تغییر DNS از کدام دستور استفاده می‌شود؟",
+      "options": [
+        "<code>resolvectl dns INTERFACE DNS_IP</code>",
+        "<code>systemd-resolve --set-dns DNS_IP</code>",
+        "<code>nmcli</code>",
+        "فقط با ویرایش <code>/etc/resolv.conf</code>"
+      ],
+      "correct": 0,
+      "explanation": "در سیستم‌های با systemd-resolved، از <code>resolvectl</code> برای مدیریت DNS استفاده می‌شود. <code>resolvectl dns eth0 8.8.8.8</code> DNS را برای رابط eth0 تنظیم می‌کند. <code>resolvectl status</code> وضعیت فعلی را نشان می‌دهد. این تغییرات دائمی هستند و با <code>networkctl</code> نیز قابل مدیریت هستند."
+    },
+    {
+      "id": 323,
+      "category": "مدیریت فایل‌ها - ACL",
+      "level": 4,
+      "text": "در لینوکس، سطح دسترسی پیشرفته ACL (Access Control List) چه مزیتی نسبت به مجوزهای سنتی (rwx) دارد؟",
+      "options": [
+        "امکان اعطای مجوز به کاربران یا گروه‌های خاص به‌طور جداگانه، فراتر از مالک/گروه/دیگران",
+        "سرعت بیشتری دارد",
+        "امنیت کمتری دارد",
+        "هیچ مزیتی ندارد"
+      ],
+      "correct": 0,
+      "explanation": "ACL به شما اجازه می‌دهد برای یک فایل یا دایرکتوری، مجوزهای خاصی برای کاربران یا گروه‌های متعدد (نه فقط مالک، گروه و دیگران) تعریف کنید. مثلاً می‌توانید به یک کاربر خاص دسترسی Write بدهید بدون اینکه او عضو گروه باشد. ابزارهای <code>getfacl</code> و <code>setfacl</code> برای مدیریت ACL استفاده می‌شوند."
+    },
+    {
+      "id": 324,
+      "category": "مدیریت فایل‌ها - ACL",
+      "level": 4,
+      "text": "دستور <code>setfacl -m u:username:rw file.txt</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "به کاربر username دسترسی خواندن و نوشتن روی file.txt می‌دهد (بدون تأثیر بر مجوزهای دیگر)",
+        "گروه username را حذف می‌کند",
+        "فایل را رمزگذاری می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "<code>setfacl -m</code> (modify) یک ورودی ACL اضافه یا تغییر می‌دهد. <code>u:username:rw</code> یعنی به کاربر username دسترسی Read و Write (rw) بده. این کار مجوزهای سنتی (مالک، گروه، دیگران) را تغییر نمی‌دهد و فقط یک ورودی ACL اضافه می‌کند."
+    },
+    {
+      "id": 325,
+      "category": "امنیت - sudo",
+      "level": 4,
+      "text": "در فایل sudoers، خط <code>%wheel ALL=(ALL) NOPASSWD: /usr/bin/systemctl</code> به چه معناست؟",
+      "options": [
+        "اعضای گروه wheel می‌توانند بدون پسورد، فقط فرمان <code>systemctl</code> را با sudo اجرا کنند (نه سایر فرمان‌ها)",
+        "اعضای group wheel همه فرمان‌ها را بدون پسورد می‌توانند اجرا کنند",
+        "هیچ‌کدام",
+        "فقط root می‌تواند systemctl اجرا کند"
+      ],
+      "correct": 0,
+      "explanation": "این خط به اعضای گروه wheel اجازه می‌دهد فقط فرمان <code>systemctl</code> را با sudo و بدون پسورد اجرا کنند. <code>NOPASSWD</code> یعنی درخواست پسورد نمی‌شود. <code>ALL=(ALL)</code> یعنی از هر هاست و به عنوان هر کاربری (معمولاً root) می‌توانند اجرا کنند. سایر فرمان‌ها مجاز نیستند."
+    },
+    {
+      "id": 326,
+      "category": "امنیت - sudo",
+      "level": 4,
+      "text": "اگر کاربری در فایل sudoers به‌اشتباه ویرایش شود و خطای سینتکس داشته باشد، چه اتفاقی می‌افتد و چگونه می‌توان آن را اصلاح کرد؟",
+      "options": [
+        "sudo از کار می‌افتد و دیگر کار نمی‌کند؛ باید با دسترسی root فایل را با <code>visudo</code> اصلاح کرد (یا با boot recovery)",
+        "هیچ اتفاقی نمی‌افتد",
+        "فایل خودکار اصلاح می‌شود",
+        "سیستم کرش می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "اگر فایل sudoers دارای خطای سینتکس باشد، <code>visudo</code> از ذخیره آن جلوگیری می‌کند. اما اگر به‌طور مستقیم فایل ویرایش شود، sudo از کار می‌افتد. در این حالت باید با دسترسی root (مثلاً از طریق boot recovery یا Single User Mode) فایل را با <code>visudo</code> اصلاح کنید. این خطر نشان می‌دهد چرا همیشه باید از <code>visudo</code> استفاده کرد."
+    },
+    {
+      "id": 327,
+      "category": "اسکریپت‌نویسی - heredoc",
+      "level": 3,
+      "text": "heredoc (<code>&lt;&lt;EOF</code>) در bash چه کاربردی دارد و چه مزیتی نسبت به echo چندخطی دارد؟",
+      "options": [
+        "اجازه می‌دهد چندین خط متن را به‌راحتی به یک فرمان یا فایل وارد کنید، بدون نیاز به echo برای هر خط",
+        "فقط برای نمایش متن است",
+        "متن را فشرده می‌کند",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "heredoc (Here Document) به شما اجازه می‌دهد یک بلوک چندخطی از متن را به عنوان ورودی به یک فرمان بدهید. مثال: <code>cat &lt;&lt; EOF &gt; file.txt\\nخط اول\\nخط دوم\\nEOF</code>. این روش برای ایجاد فایل‌های پیکربندی یا اسکریپت‌های طولانی درون اسکریپت‌های bash بسیار مفید است و از echoهای متعدد جلوگیری می‌کند."
+    },
+    {
+      "id": 328,
+      "category": "اسکریپت‌نویسی - heredoc",
+      "level": 4,
+      "text": "در heredoc، تفاوت بین <code>&lt;&lt;EOF</code> و <code>&lt;&lt;'EOF'</code> چیست؟",
+      "options": [
+        "<code>&lt;&lt;'EOF'</code> از تفسیر متغیرها و دستورات در متن جلوگیری می‌کند (مانند سینگل‌کوتیشن)، در حالی که <code>&lt;&lt;EOF</code> آن‌ها را تفسیر می‌کند",
+        "هیچ تفاوتی ندارد",
+        "<code>&lt;&lt;'EOF'</code> خطا می‌دهد",
+        "<code>&lt;&lt;EOF</code> از تفسیر جلوگیری می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "اگر delimiter (مانند EOF) درون کوتیشن (سینگل یا دابل) قرار گیرد، heredoc از تفسیر متغیرها و جایگزینی دستورات در متن جلوگیری می‌کند و همه چیز را به‌صورت لفظی (literal) در نظر می‌گیرد. بدون کوتیشن، متغیرها (<code>$var</code>) و دستورات (<code>$(command)</code>) تفسیر می‌شوند."
+    },
+    {
+      "id": 329,
+      "category": "سیستم - راه‌اندازی مجدد",
+      "level": 3,
+      "text": "تفاوت بین <code>shutdown -h now</code>، <code>poweroff</code> و <code>halt</code> در لینوکس چیست؟",
+      "options": [
+        "هر سه سیستم را خاموش می‌کنند؛ <code>halt</code> CPU را متوقف می‌کند (اما ممکن است سخت‌افزار را خاموش نکند)، <code>poweroff</code> سیگنال خاموشی سخت‌افزار را می‌فرستد، <code>shutdown -h now</code> همچنین به کاربران پیام می‌دهد",
+        "هر سه یکسان هستند",
+        "<code>halt</code> سیستم را ری‌استارت می‌کند",
+        "<code>poweroff</code> CPU را متوقف می‌کند"
+      ],
+      "correct": 0,
+      "explanation": "هر سه سیستم را خاموش می‌کنند اما جزئیات متفاوت است: <code>halt</code> تمام پردازش‌ها را متوقف کرده و CPU را halt می‌کند (ممکن است سیستم خاموش نشود). <code>poweroff</code> halt را انجام داده و سپس سیگنال ACPI Power Off را به سخت‌افزار می‌فرستد. <code>shutdown -h now</code> زمان‌بندی شده و به کاربران متصل پیام می‌دهد (با <code>-h</code> یعنی halt). در عمل، <code>shutdown -h now</code> و <code>poweroff</code> یکسان عمل می‌کنند."
+    },
+    {
+      "id": 330,
+      "category": "سیستم - راه‌اندازی مجدد",
+      "level": 3,
+      "text": "برای ری‌استارت سیستم در لینوکس، از کدام دستورات می‌توان استفاده کرد؟",
+      "options": [
+        "<code>reboot</code>، <code>shutdown -r now</code>، <code>systemctl reboot</code>",
+        "فقط <code>reboot</code>",
+        "فقط <code>shutdown -r now</code>",
+        "فقط <code>systemctl reboot</code>"
+      ],
+      "correct": 0,
+      "explanation": "هر سه روش سیستم را ری‌استارت می‌کنند: <code>reboot</code> (سنتی)، <code>shutdown -r now</code> (زمان‌بندی شده و پیام‌رسانی)، و <code>systemctl reboot</code> (روش systemd). هرکدام به یک نتیجه می‌رسند، اما <code>shutdown</code> انعطاف‌پذیری بیشتری برای زمان‌بندی و پیام‌رسانی دارد."
+    },
+    {
+      "id": 331,
+      "category": "سیستم - دیمن‌ها",
+      "level": 3,
+      "text": "دیمن (Daemon) در لینوکس چیست و چه تفاوتی با یک پردازش معمولی دارد؟",
+      "options": [
+        "دیمن یک پردازش پس‌زمینه است که به هیچ ترمینالی متصل نیست و معمولاً سرویس‌ها را مدیریت می‌کند (مانند sshd، httpd)",
+        "دیمن یک پردازش پیش‌زمینه است",
+        "هیچ تفاوتی ندارد",
+        "دیمن فقط در زمان بوت اجرا می‌شود"
+      ],
+      "correct": 0,
+      "explanation": "دیمن‌ها پردازش‌هایی هستند که در پس‌زمینه اجرا می‌شوند، به ترمینال متصل نیستند و معمولاً با <code>d</code> ختم می‌شوند (مانند sshd، crond، httpd). آن‌ها توسط init/systemd راه‌اندازی می‌شوند و بدون نیاز به ورود کاربر، به درخواست‌ها پاسخ می‌دهند. پردازش‌های معمولی معمولاً به ترمینال متصل هستند و با خروج کاربر پایان می‌یابند."
+    },
+    {
+      "id": 332,
+      "category": "شبکه - پروکسی",
+      "level": 3,
+      "text": "برای تنظیم پروکسی در محیط خط فرمان لینوکس، از کدام متغیرهای محیطی استفاده می‌شود؟",
+      "options": [
+        "<code>http_proxy</code>، <code>https_proxy</code>، <code>ftp_proxy</code> و <code>no_proxy</code>",
+        "فقط <code>HTTP_PROXY</code>",
+        "<code>proxy</code>",
+        "هیچ‌کدام"
+      ],
+      "correct": 0,
+      "explanation": "متغیرهای محیطی <code>http_proxy</code>، <code>https_proxy</code>، <code>ftp_proxy</code> و <code>no_proxy</code> (برای استثناها) برای تنظیم پروکسی در ابزارهای خط فرمان (مانند curl، wget، dnf، apt) استفاده می‌شوند. مثال: <code>export http_proxy=http://proxy.example.com:8080</code>. برخی برنامه‌ها به نسخه بزرگ (<code>HTTP_PROXY</code>) نیز حساس هستند."
+    }
+  ]
+}
