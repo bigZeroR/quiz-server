@@ -31,8 +31,8 @@
 
 ### ۱. کلون کردن پروژه
 ```bash
-git clone https://github.com/your-username/lpic-quiz-server.git
-cd lpic-quiz-server
+git clone https://github.com/your-username/quiz-server.git
+cd quiz-server
 ```
 
 ### ۲. نصب وابستگی‌ها
@@ -56,7 +56,7 @@ python server.py
 ## 📂 ساختار پروژه
 
 ```text
-lpic-quiz-server/
+quiz-server/
 │
 ├── server.py              # هسته اصلی بک‌اند (Flask) و منطق تشخیص هیبریدی
 ├── data/                  # پوشه‌ای برای ذخیره فایل‌های JSON آزمون‌ها
