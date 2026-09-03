@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════
-# LPIC Quiz Server - Dependencies
+#  Quiz Server - Dependencies
 # ═══════════════════════════════════════════
 
 # Web Framework
