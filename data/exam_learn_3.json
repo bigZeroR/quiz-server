@@ -1,0 +1,286 @@
+{
+  "title": "مجموعه سوالات آموزشی جامع LPIC-1 (بخش سوم - پوشش کامل مباحث تکمیلی)",
+  "description": "این مجموعه شامل ۲۰ سوال آموزشی از مباحث تکمیلی دوره LPIC-1 (فصل‌های ۱ تا ۱۰) است که با هدف پوشش مباحث کمتر مطرح‌شده و تعمیق یادگیری طراحی شده است.",
+  "questions": [
+    {
+      "id": 41,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "یک کاربر می‌خواهد بداند یک فرمان (مثلاً <code>ls</code>) یک Built-in است یا یک فایل اجرایی خارجی. کدام دستور این اطلاعات را نمایش می‌دهد؟",
+      "options": [
+        "<code>which ls</code>",
+        "<code>whereis ls</code>",
+        "<code>type ls</code>",
+        "<code>ls --help</code>"
+      ],
+      "correct": 2,
+      "explanation": "دستور <code>type</code> مشخص می‌کند که یک فرمان Built-in است یا خارجی (External) و مسیر آن را نشان می‌دهد. <code>which</code> فقط مسیر فایل اجرایی را در <code>PATH</code> پیدا می‌کند. <code>whereis</code> علاوه بر باینری، مسیر man page و سورس را نیز نشان می‌دهد. <code>--help</code> راهنمای فرمان را نمایش می‌دهد. نکته: Built-in‌ها مانند <code>cd</code>، <code>echo</code> و <code>type</code> در خود شل تعریف شده‌اند."
+    },
+    {
+      "id": 42,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش ۵ خط آخر یک فایل و سپس دنبال کردن تغییرات جدید آن (مانند لاگ‌ها) استفاده می‌شود؟",
+      "options": [
+        "<code>tail -n 5 file</code>",
+        "<code>tail -f file</code>",
+        "<code>tail -n 5 -f file</code>",
+        "<code>head -n 5 -f file</code>"
+      ],
+      "correct": 2,
+      "explanation": "گزینه <code>tail -n 5 -f file</code> ابتدا ۵ خط آخر را نمایش می‌دهد و سپس تغییرات جدید را دنبال می‌کند. <code>tail -n 5</code> فقط ۵ خط آخر را نمایش می‌دهد (بدون دنبال کردن). <code>tail -f</code> از انتهای فایل شروع می‌کند. <code>head</code> برای ابتدای فایل است و نمی‌تواند دنبال کند. نکته: <code>tail -f</code> برای مشاهده لاگ‌های زنده بسیار کاربردی است."
+    },
+    {
+      "id": 43,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم یک فایل <code>.deb</code> را با <code>dpkg -i package.deb</code> نصب کرده است، اما با خطای وابستگی (Dependency) مواجه شده است. کدام دستور برای رفع وابستگی‌ها و تکمیل نصب استفاده می‌شود؟",
+      "options": [
+        "<code>dpkg --configure -a</code>",
+        "<code>apt install -f</code>",
+        "<code>apt --fix-broken install</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>apt install -f</code> و <code>apt --fix-broken install</code> وابستگی‌های شکسته را تعمیر می‌کنند. <code>dpkg --configure -a</code> پکیج‌های پیکربندی‌نشده را پیکربندی می‌کند اما وابستگی‌ها را به‌طور خودکار نصب نمی‌کند. نکته: <code>apt install -f</code> مخفف <code>--fix-broken</code> است و وابستگی‌های缺失 را از مخازن نصب می‌کند."
+    },
+    {
+      "id": 44,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 2,
+      "text": "در سیستم‌های مبتنی بر RHEL/Alma، کدام دستور برای نصب یک گروه پکیج مانند <code>\"Development Tools\"</code> استفاده می‌شود؟",
+      "options": [
+        "<code>dnf install \"Development Tools\"</code>",
+        "<code>dnf groupinstall \"Development Tools\"</code>",
+        "<code>dnf group install \"Development Tools\"</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو سینتکس <code>dnf groupinstall</code> و <code>dnf group install</code> برای نصب گروه پکیج معتبر هستند. گزینه اول (بدون <code>group</code>) برای نصب پکیج‌های تکی است و گروه را نصب نمی‌کند. نکته: برای مشاهده گروه‌های موجود از <code>dnf group list</code> استفاده می‌شود."
+    },
+    {
+      "id": 45,
+      "category": "فصل ۳: سخت‌افزار، دیسک و پارتیشن‌بندی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد جدول پارتیشن یک دیسک را به‌طور کامل پاک کند و تمام امضاهای (Signature) فایل‌سیستم را حذف نماید. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>fdisk /dev/sdb</code> و حذف دستی پارتیشن‌ها",
+        "<code>wipefs -a /dev/sdb</code>",
+        "<code>dd if=/dev/zero of=/dev/sdb bs=1M count=1</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>wipefs -a</code> و <code>dd</code> می‌توانند دیسک را پاک کنند. <code>wipefs -a</code> به‌طور خاص امضاهای فایل‌سیستم و پارتیشن‌ها را پاک می‌کند. <code>dd if=/dev/zero of=/dev/sdb bs=1M count=1</code> سکتور اول دیسک (شامل MBR/GPT) را با صفر پر می‌کند. گزینه اول زمان‌بر و دستی است. نکته: <code>wipefs</code> روش امن‌تر و سریع‌تری است."
+    },
+    {
+      "id": 46,
+      "category": "فصل ۳: LVM",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک Physical Volume جدید به یک Volume Group موجود اضافه کند. کدام دنباله از دستورات این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>pvcreate /dev/sdb1</code> سپس <code>vgextend vg_name /dev/sdb1</code>",
+        "<code>vgextend vg_name /dev/sdb1</code> (بدون نیاز به <code>pvcreate</code>)",
+        "<code>pvcreate /dev/sdb1</code> سپس <code>lvcreate -L 10G -n lv_name vg_name</code>",
+        "<code>pvs</code> سپس <code>vgextend</code>"
+      ],
+      "correct": 0,
+      "explanation": "قبل از اضافه کردن یک دیسک به Volume Group، ابتدا باید با <code>pvcreate</code> آن را به Physical Volume تبدیل کرد. سپس با <code>vgextend</code> آن را به VG اضافه کرد. گزینه دوم بدون <code>pvcreate</code> خطا می‌دهد. گزینه سوم مربوط به ایجاد Logical Volume جدید است. گزینه چهارم فقط نمایش است. نکته: با <code>vgs</code> می‌توان نتیجه را بررسی کرد."
+    },
+    {
+      "id": 47,
+      "category": "فصل ۴: مدیریت فایل‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>find</code>، تمام فایل‌هایی را که در ۷ روز گذشته تغییر یافته‌اند (Modified) و بزرگ‌تر از ۱۰ مگابایت هستند، در دایرکتوری <code>/var/log</code> پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>find /var/log -mtime -7 -size +10M</code>",
+        "<code>find /var/log -mtime +7 -size +10M</code>",
+        "<code>find /var/log -ctime -7 -size +10M</code>",
+        "<code>find /var/log -mtime -7 -size -10M</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-mtime -7</code> (کمتر از ۷ روز) و <code>-size +10M</code> (بزرگ‌تر از ۱۰ مگابایت) دقیقاً شرایط را برآورده می‌کند. <code>-mtime +7</code> فایل‌های قدیمی‌تر از ۷ روز را نشان می‌دهد. <code>-ctime</code> برای تغییر وضعیت (Change Time) است، نه تغییر محتوا. <code>-size -10M</code> فایل‌های کوچک‌تر از ۱۰ مگابایت را نشان می‌دهد. نکته: <code>mtime</code> = Modify Time، <code>ctime</code> = Change Time."
+    },
+    {
+      "id": 48,
+      "category": "فصل ۴: فشرده‌سازی و آرشیو",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد محتوای یک فایل <code>archive.tar.gz</code> را بدون خارج کردن از حالت فشرده (decompress) مشاهده کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>cat archive.tar.gz</code>",
+        "<code>tar -tzvf archive.tar.gz</code>",
+        "<code>gunzip -c archive.tar.gz | tar -t</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه دوم (<code>tar -tzvf</code>) و سوم (<code>gunzip -c | tar -t</code>) محتوای آرشیو را بدون خارج‌سازی نمایش می‌دهند. <code>cat</code> محتوای خام فشرده را نمایش می‌دهد (قابل‌خواندن نیست). نکته: <code>tar -t</code> برای نمایش محتویات آرشیو (Table of Contents) استفاده می‌شود."
+    },
+    {
+      "id": 49,
+      "category": "فصل ۵: بوت و GRUB",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد پس از تغییرات در فایل‌های <code>/etc/grub.d/</code>، فایل کانفیگ GRUB را بازتولید کند. کدام دستور این کار را در سیستم‌های RHEL/Alma انجام می‌دهد؟",
+      "options": [
+        "<code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>",
+        "<code>update-grub</code>",
+        "<code>grub-mkconfig -o /boot/grub/grub.cfg</code>",
+        "<code>grub2-install /dev/sda</code>"
+      ],
+      "correct": 0,
+      "explanation": "در RHEL/Alma از <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> برای بازتولید فایل کانفیگ GRUB استفاده می‌شود. <code>update-grub</code> مربوط به Debian/Ubuntu است. گزینه سوم مربوط به GRUB Legacy یا Debian قدیمی است. گزینه چهارم برای نصب GRUB روی دیسک است، نه بازتولید کانفیگ. نکته: پس از تغییرات باید این دستور را اجرا کرد تا تغییرات اعمال شوند."
+    },
+    {
+      "id": 50,
+      "category": "فصل ۵: مجازی‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر یک Hypervisor Type 1 (Bare-Metal) محسوب می‌شود؟",
+      "options": [
+        "VMware Workstation",
+        "Oracle VirtualBox",
+        "KVM",
+        "Docker"
+      ],
+      "correct": 2,
+      "explanation": "KVM (Kernel-based Virtual Machine) یک Hypervisor Type 1 است که مستقیماً روی سخت‌افزار اجرا می‌شود. VMware Workstation و VirtualBox Type 2 هستند (روی سیستم‌عامل میزبان). Docker یک Container Engine است، نه Hypervisor. نکته: Type 1 Hypervisor مستقیماً با سخت‌افزار ارتباط دارد و عملکرد بالاتری دارد."
+    },
+    {
+      "id": 51,
+      "category": "فصل ۶: GUI و دسکتاپ",
+      "level": 2,
+      "text": "در محیط دسکتاپ GNOME، کدام Display Manager به‌عنوان پیش‌فرض استفاده می‌شود؟",
+      "options": [
+        "LightDM",
+        "SDDM",
+        "GDM",
+        "KDM"
+      ],
+      "correct": 2,
+      "explanation": "Display Manager پیش‌فرض GNOME، <b>GDM</b> (GNOME Display Manager) است. LightDM در XFCE و Cinnamon استفاده می‌شود. SDDM در KDE استفاده می‌شود. KDM نسخه قدیمی KDE است. نکته: Display Manager صفحه ورود به سیستم را مدیریت می‌کند."
+    },
+    {
+      "id": 52,
+      "category": "فصل ۶: Accessibility",
+      "level": 1,
+      "text": "کدام یک از گزینه‌های زیر یک Screen Reader در لینوکس است که برای کاربران کم‌بینا استفاده می‌شود؟",
+      "options": [
+        "Zoom",
+        "Orca",
+        "On-Screen Keyboard",
+        "Sticky Keys"
+      ],
+      "correct": 1,
+      "explanation": "<b>Orca</b> خواننده صفحه (Screen Reader) در لینوکس است و متن صفحه را برای کاربران کم‌بینا می‌خواند. Zoom برای بزرگنمایی است. On-Screen Keyboard کیبورد مجازی است. Sticky Keys برای کلیدهای چسبنده است. نکته: Orca با صدای eSpeak یا Festival کار می‌کند."
+    },
+    {
+      "id": 53,
+      "category": "فصل ۷: مدیریت کاربران",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد کاربری را که لاگین است و به‌طور مستقیم به ترمینال متصل است، از سیستم خارج کند (kill session). کدام دستور این کار را با استفاده از PID نشست (session) انجام می‌دهد؟",
+      "options": [
+        "<code>pkill -u user</code>",
+        "<code>kill -9 PID</code>",
+        "<code>logout user</code>",
+        "<code>skill -9 user</code>"
+      ],
+      "correct": 1,
+      "explanation": "برای خارج کردن یک نشست خاص، باید PID آن نشست را با <code>who -a</code> یا <code>w</code> پیدا کرد و سپس با <code>kill -9 PID</code> آن را خاتمه داد. <code>pkill -u user</code> همه پردازش‌های کاربر را می‌کشد، که ممکن است شدید باشد. <code>logout</code> یک فرمان برای خروج از شل جاری است، نه برای کاربر دیگر. <code>skill</code> یک ابزار قدیمی است. نکته: با <code>who -a</code> می‌توان PID هر نشست را مشاهده کرد."
+    },
+    {
+      "id": 54,
+      "category": "فصل ۷: ایمیل محلی",
+      "level": 2,
+      "text": "کدام پروتکل برای ارسال ایمیل در لینوکس استفاده می‌شود و روی پورت ۲۵ اجرا می‌شود؟",
+      "options": [
+        "POP3",
+        "IMAP",
+        "SMTP",
+        "HTTP"
+      ],
+      "correct": 2,
+      "explanation": "SMTP (Simple Mail Transfer Protocol) پروتکل ارسال ایمیل است و روی پورت ۲۵ اجرا می‌شود. POP3 (پورت ۱۱۰) و IMAP (پورت ۱۴۳) برای دریافت ایمیل استفاده می‌شوند. HTTP (پورت ۸۰) برای وب است. نکته: Postfix و Sendmail از پیاده‌سازی‌های SMTP هستند."
+    },
+    {
+      "id": 55,
+      "category": "فصل ۸: شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>ss</code>، تمام اتصالات TCP را که در وضعیت <code>ESTABLISHED</code> هستند و به پورت ۴۴۳ (HTTPS) متصل شده‌اند، نمایش دهد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ss -t state established '( dport = :443 )'</code>",
+        "<code>ss -t state established sport = :443</code>",
+        "<code>ss -t state established '( sport = :443 )'</code>",
+        "<code>ss -tn state established '( dport = :443 )'</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>-t</code> (TCP)، <code>state established</code>، و فیلتر <code>( dport = :443 )</code> برای پورت مقصد ۴۴۳، دقیقاً نیاز را برآورده می‌کند. گزینه دوم از <code>sport</code> (پورت مبدأ) استفاده می‌کند. گزینه سوم نیز پورت مبدأ را فیلتر می‌کند. گزینه چهارم با <code>-n</code> عددی است اما فیلتر پورت درست است، اما گزینه اول کامل‌تر است. نکته: <code>dport</code> = Destination Port، <code>sport</code> = Source Port."
+    },
+    {
+      "id": 56,
+      "category": "فصل ۸: عیب‌یابی شبکه",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد مسیر بین سیستم خود و یک سرور را شناسایی کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ping google.com</code>",
+        "<code>traceroute google.com</code>",
+        "<code>nslookup google.com</code>",
+        "<code>dig google.com</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>traceroute</code> مسیر بسته‌ها از سیستم مبدأ تا مقصد را نشان می‌دهد و هر هاست میانی را نمایش می‌دهد. <code>ping</code> فقط اتصال و زمان پاسخ را بررسی می‌کند. <code>nslookup</code> و <code>dig</code> برای جستجوی DNS هستند. نکته: <code>traceroute</code> با <code>-n</code> می‌تواند تبدیل نام به IP را غیرفعال کند."
+    },
+    {
+      "id": 57,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "در یک اسکریپت Bash، یک کاربر می‌خواهد آرگومان‌های ورودی را به یک تابع ارسال کند. کدام یک از گزینه‌های زیر برای دسترسی به آرگومان‌های تابع صحیح است؟",
+      "options": [
+        "<code>$1, $2, ...</code> در داخل تابع",
+        "<code>$@</code> در داخل تابع",
+        "<code>$#</code> در داخل تابع",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه متغیر ویژه در داخل توابع نیز کار می‌کنند. <code>$1, $2, ...</code> آرگومان‌های تابع را نشان می‌دهند. <code>$@</code> همه آرگومان‌ها را نمایش می‌دهد. <code>$#</code> تعداد آرگومان‌های تابع را نشان می‌دهد. نکته: متغیرهای <code>$0</code> و <code>$?` در توابع نیز معتبر هستند اما `$0` نام اسکریپت را نشان می‌دهد."
+    },
+    {
+      "id": 58,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد در یک اسکریپت Bash، از ورودی کاربر با <code>read</code> در مدت زمان حداکثر ۵ ثانیه استفاده کند و در صورت عدم ورود، پیام خطا نمایش دهد. کدام ساختار این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>read -t 5 input</code> و بررسی خالی بودن متغیر",
+        "<code>if read -t 5 input; then echo \"OK\"; else echo \"Timeout\"; fi</code>",
+        "<code>read -p input</code> و سپس <code>sleep 5</code>",
+        "<code>timeout 5 read input</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه دوم با <code>if read -t 5</code> حالت موفقیت (ورود کاربر) و شکست (timeout) را به‌درستی مدیریت می‌کند. گزینه اول فقط زمان می‌دهد اما timeout را تشخیص نمی‌دهد. گزینه سوم زمان‌سنج ندارد و <code>sleep</code> بعد از read اجرا می‌شود. گزینه چهارم سینتکس اشتباه دارد. نکته: <code>$?</code> بعد از <code>read</code> نشان‌دهنده موفقیت (۰) یا timeout (۱) است."
+    },
+    {
+      "id": 59,
+      "category": "فصل ۱۰: امنیت - اسکن پورت‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nmap</code>، سرویس‌های در حال اجرا و نسخه آنها را روی یک سرور شناسایی کند. کدام گزینه از <code>nmap</code> این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>nmap -sS server</code>",
+        "<code>nmap -sV server</code>",
+        "<code>nmap -sU server</code>",
+        "<code>nmap -O server</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>-sV</code> در <code>nmap</code> برای شناسایی نسخه سرویس‌های در حال اجرا استفاده می‌شود. <code>-sS</code> اسکن SYN (Stealth) است. <code>-sU</code> برای اسکن UDP است. <code>-O</code> برای شناسایی سیستم‌عامل است. نکته: <code>-sV</code> معمولاً با <code>-sS</code> یا <code>-sT</code> ترکیب می‌شود."
+    },
+    {
+      "id": 60,
+      "category": "فصل ۱۰: امنیت - لاک کردن کاربر",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد یک کاربر را به‌طور موقت غیرفعال کند تا نتواند وارد سیستم شود، اما اطلاعات و فایل‌های او باقی بماند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>userdel -r user</code>",
+        "<code>passwd -l user</code>",
+        "<code>usermod -L user</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو دستور <code>passwd -l user</code> و <code>usermod -L user</code> حساب کاربری را قفل (Lock) می‌کنند و کاربر نمی‌تواند وارد شود، اما اطلاعات او باقی می‌ماند. <code>userdel -r</code> کاربر را به‌طور کامل حذف می‌کند. نکته: برای باز کردن قفل از <code>passwd -u user</code> یا <code>usermod -U user</code> استفاده می‌شود."
+    }
+  ]
+}

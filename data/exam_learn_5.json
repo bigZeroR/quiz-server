@@ -1,0 +1,286 @@
+{
+  "title": "مجموعه سوالات آموزشی جامع LPIC-1 (بخش چهارم - مباحث تکمیلی و پیشرفته)",
+  "description": "این مجموعه شامل ۲۰ سوال آموزشی از مباحث پیشرفته و تکمیلی دوره LPIC-1 (فصل‌های ۱ تا ۱۰) است که با هدف پوشش مفاهیم کمتر مطرح‌شده و سناریوهای پیچیده‌تر طراحی شده است.",
+  "questions": [
+    {
+      "id": 61,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد خروجی خطاهای یک فرمان را در فایل <code>error.log</code> ذخیره کند و خروجی عادی را در ترمینال نمایش دهد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>command > error.log</code>",
+        "<code>command 2> error.log</code>",
+        "<code>command > error.log 2>&1</code>",
+        "<code>command &> error.log</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>2> error.log</code> خروجی خطا (stderr - شماره ۲) را به فایل <code>error.log</code> هدایت می‌کند و خروجی عادی (stdout - شماره ۱) همچنان در ترمینال نمایش داده می‌شود. گزینه اول (<code>></code>) فقط خروجی عادی را هدایت می‌کند. گزینه سوم هر دو را به یک فایل می‌فرستد. گزینه چهارم نیز هر دو را به یک فایل می‌فرستد. نکته: <code>2></code> برای جدا کردن خطاها از خروجی عادی بسیار کاربردی است."
+    },
+    {
+      "id": 62,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد با استفاده از <code>sed</code>، تمام خطوط خالی یک فایل را حذف کرده و تغییرات را مستقیماً روی فایل اعمال کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>sed '/^$/d' file</code>",
+        "<code>sed -i '/^$/d' file</code>",
+        "<code>sed '/^[[:space:]]*$/d' file</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "گزینه دوم (<code>sed -i '/^$/d'</code>) خطوط خالی را حذف کرده و تغییرات را مستقیماً روی فایل اعمال می‌کند. گزینه سوم (<code>sed '/^[[:space:]]*$/d'</code>) خطوطی که فقط شامل فاصله یا تب هستند را نیز حذف می‌کند. گزینه اول بدون <code>-i</code> فقط خروجی را نمایش می‌دهد (فایل تغییر نمی‌کند). نکته: <code>-i</code> مخفف <code>--in-place</code> است و برای ویرایش مستقیم فایل استفاده می‌شود."
+    },
+    {
+      "id": 63,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 3,
+      "text": "در یک سیستم مبتنی بر RHEL/Alma، یک مدیر سیستم می‌خواهد یک بسته <code>.rpm</code> را با نادیده گرفتن وابستگی‌ها (dependencies) نصب کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>rpm -i package.rpm</code>",
+        "<code>rpm -i --nodeps package.rpm</code>",
+        "<code>dnf install package.rpm</code>",
+        "<code>rpm -Uvh --nodeps package.rpm</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>rpm -i --nodeps</code> بسته را بدون بررسی وابستگی‌ها نصب می‌کند. گزینه اول بدون <code>--nodeps</code> در صورت وجود وابستگی‌های برآورده‌نشده خطا می‌دهد. گزینه سوم با <code>dnf</code> وابستگی‌ها را مدیریت می‌کند. گزینه چهارم (<code>-Uvh --nodeps</code>) نیز کار می‌کند اما <code>-U</code> برای ارتقا (upgrade) است. نکته: نصب با <code>--nodeps</code> ممکن است باعث خرابی برنامه شود و باید با احتیاط استفاده شود."
+    },
+    {
+      "id": 64,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 2,
+      "text": "در یک سیستم مبتنی بر Debian/Ubuntu، کدام دستور برای نمایش اطلاعات کامل یک بسته (توضیحات، نسخه، وابستگی‌ها، اندازه و ...) بدون نصب آن استفاده می‌شود؟",
+      "options": [
+        "<code>apt-cache show package</code>",
+        "<code>apt show package</code>",
+        "<code>dpkg -I package.deb</code>",
+        "همه گزینه‌ها صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه گزینه اطلاعات بسته را نمایش می‌دهند. <code>apt-cache show</code> و <code>apt show</code> اطلاعات بسته را از مخزن نمایش می‌دهند. <code>dpkg -I</code> اطلاعات یک فایل <code>.deb</code> محلی را نشان می‌دهد. نکته: <code>apt show</code> نسخه مدرن‌تر و کوتاه‌تر است."
+    },
+    {
+      "id": 65,
+      "category": "فصل ۳: سخت‌افزار، دیسک و پارتیشن‌بندی",
+      "level": 2,
+      "text": "کدام دستور برای نمایش فضای استفاده‌شده و آزاد روی پارتیشن‌های mount شده، به‌صورت قابل خواندن برای انسان (Human-readable) استفاده می‌شود؟",
+      "options": [
+        "<code>du -h</code>",
+        "<code>df -h</code>",
+        "<code>lsblk -f</code>",
+        "<code>fdisk -l</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>df -h</code> (Disk Free) فضای استفاده‌شده و آزاد روی پارتیشن‌های mount شده را به‌صورت خوانا نمایش می‌دهد. <code>du -h</code> برای نمایش حجم یک دایرکتوری خاص است. <code>lsblk -f</code> دیسک‌ها را با فایل‌سیستم و UUID نمایش می‌دهد. <code>fdisk -l</code> جدول پارتیشن را نمایش می‌دهد. نکته: <code>-h</code> مخفف <code>--human-readable</code> است."
+    },
+    {
+      "id": 66,
+      "category": "فصل ۳: LVM",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد اندازه یک Logical Volume را کاهش دهد. کدام گام قبل از کاهش حجم (Reduce) ضروری است؟",
+      "options": [
+        "فایل‌سیستم را Resize کنید.",
+        "Logical Volume را Unmount کنید.",
+        "ابتدا فایل‌سیستم را Resize و سپس LV را Unmount کنید.",
+        "فایل‌سیستم را Resize کرده و سپس LV را Unmount کنید."
+      ],
+      "correct": 0,
+      "explanation": "برای کاهش حجم (Reduce) یک Logical Volume، ابتدا باید فایل‌سیستم را Resize (کاهش) کرد و سپس Logical Volume را کاهش داد. برخلاف افزایش حجم (Extend) که می‌تواند روی فایل‌سیستم mount شده انجام شود، کاهش حجم معمولاً نیاز به Unmount دارد. نکته: بهترین روش: ۱) بررسی یکپارچگی فایل‌سیستم، ۲) کاهش فایل‌سیستم، ۳) کاهش LV، ۴) Mount مجدد."
+    },
+    {
+      "id": 67,
+      "category": "فصل ۴: مدیریت فایل‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>find</code>، تمام فایل‌های خالی (Zero-size) را در دایرکتوری <code>/home</code> پیدا کرده و آنها را حذف کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>find /home -size 0 -delete</code>",
+        "<code>find /home -size 0 -exec rm {} \\;</code>",
+        "<code>find /home -empty -delete</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای پیدا کردن و حذف فایل‌های خالی معتبر هستند. <code>-size 0</code> فایل‌های با اندازه صفر را پیدا می‌کند. <code>-empty</code> فایل‌های خالی را پیدا می‌کند (معادل <code>-size 0</code>). هر دو روش با <code>-delete</code> یا <code>-exec rm</code> قابل ترکیب هستند. نکته: <code>-delete</code> سریع‌تر و کارآمدتر از <code>-exec rm</code> است."
+    },
+    {
+      "id": 68,
+      "category": "فصل ۴: سطح دسترسی پیشرفته (ACL)",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد به کاربر <code>ahmad</code> دسترسی <code>rw</code> روی فایل <code>data.txt</code> بدهد، بدون اینکه سطح دسترسی Owner یا Group را تغییر دهد. کدام دستور این کار را با استفاده از ACL انجام می‌دهد؟",
+      "options": [
+        "<code>chmod u+rw data.txt</code>",
+        "<code>setfacl -m u:ahmad:rw data.txt</code>",
+        "<code>setfacl -m g:ahmad:rw data.txt</code>",
+        "<code>chown ahmad data.txt</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>setfacl -m u:ahmad:rw data.txt</code> با استفاده از ACL دسترسی <code>rw</code> را به کاربر <code>ahmad</code> می‌دهد بدون اینکه Owner یا Group تغییر کند. گزینه اول (chmod) سطح دسترسی Owner را تغییر می‌دهد. گزینه سوم از گروه استفاده می‌کند. گزینه چهارم مالکیت فایل را تغییر می‌دهد. نکته: با <code>getfacl data.txt</code> می‌توان ACL را مشاهده کرد."
+    },
+    {
+      "id": 69,
+      "category": "فصل ۵: بوت و GRUB",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد پسوردی برای منوی GRUB تنظیم کند تا از تغییرات غیرمجاز در پارامترهای بوت جلوگیری شود. کدام دستور این کار را در سیستم‌های RHEL/Alma انجام می‌دهد؟",
+      "options": [
+        "<code>grub2-setpassword</code>",
+        "<code>grub2-mkpasswd-pbkdf2</code>",
+        "<code>grub2-install /dev/sda</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه برای تنظیم پسورد GRUB در RHEL/Alma معتبر هستند. <code>grub2-setpassword</code> یک روش ساده است که پسورد را تنظیم می‌کند. <code>grub2-mkpasswd-pbkdf2</code> هش پسورد را تولید می‌کند و سپس باید به‌صورت دستی به <code>/etc/grub.d/40_custom</code> اضافه شود. گزینه سوم برای نصب GRUB روی دیسک است. نکته: پس از تنظیم پسورد، باید <code>grub2-mkconfig</code> را اجرا کرد."
+    },
+    {
+      "id": 70,
+      "category": "فصل ۵: systemd timers",
+      "level": 3,
+      "text": "در سیستم‌های مبتنی بر systemd، کدام دستور برای مشاهده لیست Timerهای فعال استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl list-timers</code>",
+        "<code>systemctl list-units --type=timer</code>",
+        "<code>timedatectl show</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>systemctl list-timers</code> و <code>systemctl list-units --type=timer</code> لیست Timerهای فعال را نمایش می‌دهند. <code>list-timers</code> خروجی کامل‌تری با زمان اجرای بعدی دارد. <code>timedatectl show</code> برای نمایش زمان سیستم است، نه Timerها. نکته: Systemd Timers جایگزین مدرن Cron هستند."
+    },
+    {
+      "id": 71,
+      "category": "فصل ۶: CUPS و پرینتر",
+      "level": 2,
+      "text": "در لینوکس، کدام سیستم برای مدیریت پرینترها استفاده می‌شود و از طریق پورت ۶۳۱ قابل دسترسی است؟",
+      "options": [
+        "LPRng",
+        "CUPS",
+        "SPOOL",
+        "Print Manager"
+      ],
+      "correct": 1,
+      "explanation": "CUPS (Common Unix Printing System) سیستم مدیریت پرینتر در لینوکس است و از طریق پورت ۶۳۱ (رابط وب <code>http://localhost:631</code>) قابل دسترسی است. LPRng یک سیستم قدیمی است. SPOOL یک مفهوم کلی است. نکته: CUPS از IPP (Internet Printing Protocol) استفاده می‌کند."
+    },
+    {
+      "id": 72,
+      "category": "فصل ۶: X11 Forwarding",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک برنامه گرافیکی را از یک سرور راه‌دور روی سیستم محلی خود اجرا کند. برای فعال‌سازی X11 Forwarding از طریق SSH، کدام گام‌ها ضروری است؟",
+      "options": [
+        "فعال کردن <code>X11Forwarding yes</code> در <code>/etc/ssh/sshd_config</code> و اتصال با <code>ssh -X user@server</code>",
+        "فقط اتصال با <code>ssh -X user@server</code>",
+        "نصب <code>xorg</code> روی سرور و اتصال با <code>ssh -x user@server</code>",
+        "فعال کردن <code>X11UseLocalhost</code> در <code>/etc/ssh/ssh_config</code>"
+      ],
+      "correct": 0,
+      "explanation": "برای X11 Forwarding، هم در سمت سرور باید <code>X11Forwarding yes</code> در <code>sshd_config</code> تنظیم شود و هم کلاینت باید با <code>ssh -X</code> (یا <code>-Y</code> برای trusted) متصل شود. گزینه دوم فقط سمت کلاینت را پوشش می‌دهد. گزینه سوم از سوییچ اشتباه (<code>-x</code>) استفاده می‌کند که X-Forwarding را غیرفعال می‌کند. گزینه چهارم مربوط به تنظیمات کلاینت است و کافی نیست. نکته: پس از اتصال، متغیر <code>$DISPLAY</code> تنظیم می‌شود."
+    },
+    {
+      "id": 73,
+      "category": "فصل ۷: مدیریت گروه‌ها",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد کاربر <code>ahmad</code> را به گروه <code>developers</code> اضافه کند بدون اینکه گروه‌های ثانویه قبلی او حذف شوند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>usermod -G developers ahmad</code>",
+        "<code>usermod -aG developers ahmad</code>",
+        "<code>gpasswd -a ahmad developers</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>usermod -aG</code> و <code>gpasswd -a</code> کاربر را به گروه ثانویه اضافه می‌کنند بدون اینکه گروه‌های قبلی را حذف کنند. گزینه اول (<code>-G</code> بدون <code>-a</code>) گروه‌های ثانویه را بازنویسی می‌کند (گروه‌های قبلی حذف می‌شوند). نکته: <code>groups ahmad</code> برای تأیید عضویت استفاده می‌شود."
+    },
+    {
+      "id": 74,
+      "category": "فصل ۷: مدیریت پسورد و chage",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد رمز عبور یک کاربر را منقضی کند تا در اولین ورود مجبور به تغییر آن شود. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>passwd -e user</code>",
+        "<code>chage -d 0 user</code>",
+        "<code>passwd -l user</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>passwd -e user</code> و <code>chage -d 0 user</code> رمز عبور کاربر را منقضی می‌کنند و در اولین ورود کاربر مجبور به تغییر آن می‌شود. <code>passwd -l</code> کاربر را قفل می‌کند (غیرفعال). نکته: <code>chage</code> ابزار پیشرفته‌تری برای مدیریت تاریخ انقضای رمز است."
+    },
+    {
+      "id": 75,
+      "category": "فصل ۸: شبکه - ip route",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک مسیر استاتیک به شبکه <code>10.0.0.0/24</code> از طریق گیت‌وی <code>192.168.1.1</code> اضافه کند. کدام دستور با <code>ip route</code> این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ip route add 10.0.0.0/24 via 192.168.1.1</code>",
+        "<code>route add -net 10.0.0.0 netmask 255.255.255.0 gw 192.168.1.1</code>",
+        "<code>ip route add 10.0.0.0/24 dev eth0</code>",
+        "<code>ip route add default via 192.168.1.1</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه <code>ip route add 10.0.0.0/24 via 192.168.1.1</code> یک مسیر استاتیک به شبکه مقصد از طریق گیت‌وی مشخص اضافه می‌کند. گزینه دوم با <code>route</code> روش قدیمی است و نیز معتبر است. گزینه سوم مسیر را روی یک اینترفیس خاص تنظیم می‌کند (بدون گیت‌وی). گزینه چهارم مسیر پیش‌فرض (Default Gateway) را اضافه می‌کند. نکته: با <code>ip route show</code> می‌توان جدول مسیریابی را مشاهده کرد."
+    },
+    {
+      "id": 76,
+      "category": "فصل ۸: عیب‌یابی شبکه",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد آدرس MAC یک دستگاه در شبکه محلی را با استفاده از آدرس IP آن پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ping IP</code>",
+        "<code>arp -a</code>",
+        "<code>arping IP</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>arp -a</code> (مشاهده جدول ARP) و <code>arping IP</code> (ارسال درخواست ARP و دریافت پاسخ) می‌توانند آدرس MAC را نمایش دهند. <code>ping</code> فقط اتصال را بررسی می‌کند و MAC را نشان نمی‌دهد. نکته: <code>arping</code> در لایه ۲ (Data Link) کار می‌کند."
+    },
+    {
+      "id": 77,
+      "category": "فصل ۹: Shell Scripting - while",
+      "level": 3,
+      "text": "در یک اسکریپت Bash، کدام حلقه تا زمانی که یک شرط نادرست باشد اجرا می‌شود (یعنی تا زمانی که شرط برقرار نشود)؟",
+      "options": [
+        "<code>while</code>",
+        "<code>until</code>",
+        "<code>for</code>",
+        "<code>do-while</code>"
+      ],
+      "correct": 1,
+      "explanation": "حلقه <code>until</code> تا زمانی که شرط نادرست باشد (یعنی تا زمانی که شرط به‌درستی برقرار نشود) اجرا می‌شود. <code>while</code> تا زمانی که شرط درست باشد اجرا می‌شود. <code>for</code> برای تکرار روی یک لیست است. <code>do-while</code> در Bash وجود ندارد (به‌صورت مستقیم). نکته: <code>until [ condition ]; do ... done</code> سینتکس آن است."
+    },
+    {
+      "id": 78,
+      "category": "فصل ۹: Shell Scripting - here document",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد چندین خط متن را به یک اسکریپت یا فرمان ارسال کند بدون اینکه آنها را در یک فایل ذخیره کند. کدام ساختار برای این کار استفاده می‌شود؟",
+      "options": [
+        "Pipe (<code>|</code>)",
+        "Here Document (<code><<</code>)",
+        "Redirection (<code>></code>)",
+        "Command Substitution (<code>$()</code>)"
+      ],
+      "correct": 1,
+      "explanation": "Here Document (<code><<</code>) به شما اجازه می‌دهد چندین خط متن را مستقیماً به یک فرمان ارسال کنید. مثال: <code>cat << EOF ... EOF</code>. Pipe خروجی یک فرمان را به فرمان دیگر می‌دهد. Redirection برای هدایت به فایل است. Command Substitution برای ذخیره خروجی فرمان در متغیر است. نکته: در Here Document می‌توان از متغیرها نیز استفاده کرد."
+    },
+    {
+      "id": 79,
+      "category": "فصل ۱۰: امنیت - SELinux",
+      "level": 3,
+      "text": "در سیستم‌های RHEL/Alma با SELinux فعال، یک مدیر سیستم پورت SSH را از ۲۲ به ۲۲۲۲ تغییر داده است، اما سرویس SSH پس از ری‌استارت راه‌اندازی نمی‌شود. مشکل اصلی چیست؟",
+      "options": [
+        "فایروال پورت ۲۲۲۲ را مسدود کرده است.",
+        "SELinux به SSH اجازه نمی‌دهد روی پورت غیراستاندارد گوش دهد.",
+        "پورت ۲۲۲۲ توسط سرویس دیگری استفاده می‌شود.",
+        "فایل پیکربندی SSH خراب است."
+      ],
+      "correct": 1,
+      "explanation": "در سیستم‌های با SELinux فعال، SSH فقط مجاز به گوش‌دادن روی پورت ۲۲ است (پورت پیش‌فرض). برای تغییر پورت، باید SELinux نیز تنظیم شود: <code>semanage port -a -t ssh_port_t -p tcp 2222</code>. گزینه اول (فایروال) نیز ممکن است مشکل باشد اما دلیل اصلی SELinux است. گزینه سوم و چهارم کمتر محتمل هستند. نکته: برای بررسی خطاهای SELinux از <code>audit2why</code> و <code>sealert</code> استفاده می‌شود."
+    },
+    {
+      "id": 80,
+      "category": "فصل ۱۰: امنیت - fail2ban",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد از حملات Brute Force به SSH جلوگیری کند. کدام ابزار می‌تواند پس از چند تلاش ناموفق، IP مهاجم را به‌طور موقت مسدود کند؟",
+      "options": [
+        "<code>firewalld</code>",
+        "<code>fail2ban</code>",
+        "<code>tcp_wrappers</code>",
+        "<code>selinux</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>fail2ban</code> لاگ‌های سرویس‌ها (مانند SSH) را بررسی می‌کند و پس از چند تلاش ناموفق، IP مهاجم را با استفاده از فایروال مسدود می‌کند. <code>firewalld</code> یک فایروال است اما خودکار نیست. <code>tcp_wrappers</code> محدودیت‌های ساده‌ای دارد. <code>selinux</code> برای کنترل دسترسی است، نه جلوگیری از Brute Force. نکته: <code>fail2ban</code> با <code>firewalld</code> یا <code>iptables</code> یکپارچه می‌شود."
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "title": "مجموعه سوالات آموزشی جامع LPIC-1 (بخش پنجم - مباحث پیشرفته و سناریوهای ترکیبی)",
+  "description": "این مجموعه شامل ۲۰ سوال آموزشی از مباحث پیشرفته و سناریوهای ترکیبی دوره LPIC-1 است که با هدف پوشش مباحث کمتر مطرح‌شده و آماده‌سازی برای آزمون‌های عملی طراحی شده است.",
+  "questions": [
+    {
+      "id": 81,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>xargs</code>، تمام فایل‌های <code>.log</code> موجود در دایرکتوری <code>/var/log</code> را پیدا کرده و آنها را با <code>gzip</code> فشرده کند. کدام دستور این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>find /var/log -name \"*.log\" | xargs gzip</code>",
+        "<code>ls /var/log/*.log | xargs gzip</code>",
+        "<code>find /var/log -name \"*.log\" -exec gzip {} \\;</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای فشرده‌سازی فایل‌های <code>.log</code> با <code>gzip</code> معتبر هستند. گزینه اول با <code>find</code> و <code>xargs</code> کار می‌کند و برای تعداد زیاد فایل‌ها مناسب است. گزینه دوم با <code>ls</code> و <code>xargs</code> نیز کار می‌کند اما ممکن است با فایل‌های دارای فاصله در نام مشکل داشته باشد. گزینه سوم با <code>-exec</code> به ازای هر فایل یک بار <code>gzip</code> اجرا می‌کند. نکته: برای فایل‌های با فاصله، از <code>find ... -print0 | xargs -0</code> استفاده کنید."
+    },
+    {
+      "id": 82,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد با استفاده از <code>sed</code>، کلمه <code>old</code> را با <code>new</code> در خطوط ۵ تا ۱۰ یک فایل جایگزین کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>sed '5,10 s/old/new/' file</code>",
+        "<code>sed -i '5,10 s/old/new/' file</code>",
+        "<code>sed '5,10 s/old/new/g' file</code>",
+        "گزینه دوم و سوم هر دو صحیح هستند."
+      ],
+      "correct": 1,
+      "explanation": "گزینه دوم با <code>-i</code> تغییرات را مستقیماً روی فایل اعمال می‌کند و فقط خطوط ۵ تا ۱۰ را جایگزین می‌کند. گزینه سوم بدون <code>-i</code> فقط خروجی را نمایش می‌دهد (فایل تغییر نمی‌کند) اما جایگزینی را در خطوط ۵ تا ۱۰ انجام می‌دهد. گزینه اول نیز کار می‌کند اما بدون <code>-i</code> است. نکته: برای جایگزینی همه موارد در هر خط از <code>g</code> استفاده می‌شود."
+    },
+    {
+      "id": 83,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 3,
+      "text": "در یک سیستم مبتنی بر Debian/Ubuntu، یک مدیر سیستم مخزن جدیدی به <code>sources.list</code> اضافه کرده است. کدام دستور برای به‌روزرسانی لیست بسته‌های موجود از مخزن جدید و سپس نصب یک بسته از آن استفاده می‌شود؟",
+      "options": [
+        "<code>apt update && apt install package</code>",
+        "<code>apt upgrade && apt install package</code>",
+        "<code>apt update && apt upgrade package</code>",
+        "<code>apt install package --update</code>"
+      ],
+      "correct": 0,
+      "explanation": "پس از اضافه کردن مخزن جدید، ابتدا باید <code>apt update</code> را اجرا کرد تا لیست بسته‌های مخزن جدید دانلود شود. سپس <code>apt install package</code> بسته را از مخزن جدید نصب می‌کند. گزینه دوم <code>upgrade</code> برای ارتقای بسته‌های موجود است. گزینه سوم سینتکس اشتباه دارد. گزینه چهارم <code>--update</code> معتبر نیست. نکته: همیشه بعد از تغییر مخازن، <code>apt update</code> را اجرا کنید."
+    },
+    {
+      "id": 84,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 2,
+      "text": "در یک سیستم مبتنی بر RHEL/Alma، کدام دستور برای مشاهده تاریخچه کامل عملیات نصب و حذف بسته‌ها با <code>dnf</code> استفاده می‌شود؟",
+      "options": [
+        "<code>dnf history</code>",
+        "<code>dnf log</code>",
+        "<code>cat /var/log/dnf.log</code>",
+        "هر دو گزینه اول و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>dnf history</code> (خلاصه عملیات) و <code>cat /var/log/dnf.log</code> (لاگ کامل) برای مشاهده تاریخچه عملیات DNF معتبر هستند. <code>dnf history</code> خروجی مرتب‌تری دارد و می‌توان با <code>dnf history undo ID</code> یک عملیات را لغو کرد. گزینه دوم (<code>dnf log</code>) معتبر نیست. نکته: <code>dnf history</code> شامل اطلاعاتی مانند تاریخ، زمان و تعداد بسته‌های تغییر یافته است."
+    },
+    {
+      "id": 85,
+      "category": "فصل ۳: سخت‌افزار و دیسک",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک فایل ISO را به‌صورت حلقه‌ای (Loop) مانت کند تا به محتویات آن دسترسی داشته باشد. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mount -o loop file.iso /mnt/iso</code>",
+        "<code>losetup /dev/loop0 file.iso</code> سپس <code>mount /dev/loop0 /mnt/iso</code>",
+        "<code>mount file.iso /mnt/iso -t iso9660</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای مانت کردن فایل ISO معتبر هستند. گزینه اول با <code>-o loop</code> ساده‌ترین روش است. گزینه دوم با <code>losetup</code> دستگاه loop را ایجاد و سپس مانت می‌کند. گزینه سوم با مشخص کردن نوع فایل‌سیستم <code>iso9660</code> کار می‌کند. نکته: پس از مانت، محتوای ISO در <code>/mnt/iso</code> قابل دسترسی است."
+    },
+    {
+      "id": 86,
+      "category": "فصل ۳: RAID",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک آرایه RAID 5 با ۳ دیسک با استفاده از <code>mdadm</code> ایجاد کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mdadm --create /dev/md0 --level=5 --raid-devices=3 /dev/sdb1 /dev/sdc1 /dev/sdd1</code>",
+        "<code>mdadm --create /dev/md0 --level=raid5 --raid-devices=3 /dev/sdb1 /dev/sdc1 /dev/sdd1</code>",
+        "<code>mdadm --create /dev/md0 -l 5 -n 3 /dev/sdb1 /dev/sdc1 /dev/sdd1</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه گزینه برای ایجاد RAID 5 با <code>mdadm</code> معتبر هستند. گزینه اول با <code>--level=5</code>، گزینه دوم با <code>--level=raid5</code>، و گزینه سوم با <code>-l 5 -n 3</code> (مخفف) کار می‌کند. نکته: RAID 5 حداقل به ۳ دیسک نیاز دارد و یک دیسک را برای Parity اختصاص می‌دهد و تحمل خرابی یک دیسک را دارد."
+    },
+    {
+      "id": 87,
+      "category": "فصل ۴: مدیریت فایل‌ها",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>find</code>، تمام فایل‌هایی را که سطح دسترسی SUID دارند، در سراسر سیستم پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>find / -perm /4000 2>/dev/null</code>",
+        "<code>find / -perm -4000 2>/dev/null</code>",
+        "<code>find / -type f -perm /4000 2>/dev/null</code>",
+        "هر دو گزینه اول و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول (<code>find / -perm /4000</code>) و سوم (<code>find / -type f -perm /4000</code>) فایل‌های با SUID را پیدا می‌کنند. <code>/4000</code> یعنی هر کدام از بیت‌های SUID (۴۰۰۰) تنظیم شده باشد. <code>-4000</code> یعنی دقیقاً ۴۰۰۰ باشد (همه بیت‌ها). گزینه دوم ممکن است نتایج کمتری برگرداند. <code>2>/dev/null</code> خطاهای دسترسی را نادیده می‌گیرد. نکته: SUID در فایل‌هایی مانند <code>/usr/bin/passwd</code> وجود دارد."
+    },
+    {
+      "id": 88,
+      "category": "فصل ۴: فشرده‌سازی و آرشیو",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد یک آرشیو <code>backup.tar</code> را با استفاده از <code>xz</code> فشرده کند و سپس آن را به یک سرور دیگر منتقل کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>xz backup.tar</code>",
+        "<code>tar -cJf backup.tar.xz files</code>",
+        "<code>gzip backup.tar</code>",
+        "گزینه اول و دوم هر دو معتبر هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول (<code>xz backup.tar</code>) و دوم (<code>tar -cJf backup.tar.xz</code>) برای فشرده‌سازی با <code>xz</code> معتبر هستند. گزینه اول فایل <code>backup.tar</code> را با <code>xz</code> فشرده می‌کند و <code>backup.tar.xz</code> ایجاد می‌کند. گزینه دوم همزمان آرشیو و فشرده‌سازی را انجام می‌دهد. گزینه سوم از <code>gzip</code> استفاده می‌کند که نسبت فشرده‌سازی کمتری دارد. نکته: <code>xz</code> بالاترین نسبت فشرده‌سازی را دارد اما کندترین است."
+    },
+    {
+      "id": 89,
+      "category": "فصل ۵: بوت و GRUB",
+      "level": 3,
+      "text": "در سیستم‌های مبتنی بر UEFI، GRUB 2 فایل پیکربندی خود را در کدام مسیر ذخیره می‌کند؟",
+      "options": [
+        "<code>/boot/grub/grub.cfg</code>",
+        "<code>/boot/grub2/grub.cfg</code>",
+        "<code>/boot/efi/EFI/distro/grub.cfg</code>",
+        "<code>/etc/grub.d/</code>"
+      ],
+      "correct": 2,
+      "explanation": "در سیستم‌های UEFI، فایل پیکربندی GRUB 2 در <code>/boot/efi/EFI/distro-name/grub.cfg</code> قرار دارد. گزینه اول مربوط به GRUB Legacy است. گزینه دوم مربوط به سیستم‌های BIOS با GRUB 2 است. گزینه چهارم دایرکتوری اسکریپت‌های تولید <code>grub.cfg</code> است، نه خود فایل. نکته: برای بازتولید فایل از <code>grub2-mkconfig -o /boot/efi/EFI/distro/grub.cfg</code> استفاده می‌شود."
+    },
+    {
+      "id": 90,
+      "category": "فصل ۵: مجازی‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای بررسی پشتیبانی سخت‌افزاری مجازی‌سازی (Intel VT-x یا AMD-V) در CPU استفاده می‌شود؟",
+      "options": [
+        "<code>cat /proc/cpuinfo | grep -E \"vmx|svm\"</code>",
+        "<code>lscpu | grep Virtualization</code>",
+        "<code>grep -E \"vmx|svm\" /proc/cpuinfo</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای بررسی پشتیبانی مجازی‌سازی در CPU معتبر هستند. <code>vmx</code> نشان‌دهنده Intel VT-x و <code>svm</code> نشان‌دهنده AMD-V است. گزینه اول و سوم با <code>grep</code> روی <code>/proc/cpuinfo</code> کار می‌کنند. گزینه دوم با <code>lscpu</code> اطلاعات CPU را نمایش می‌دهد. نکته: برای استفاده از KVM، CPU باید از مجازی‌سازی پشتیبانی کند."
+    },
+    {
+      "id": 91,
+      "category": "فصل ۶: GUI و دسکتاپ",
+      "level": 2,
+      "text": "در محیط دسکتاپ GNOME، کدام کلید میانبر برای باز کردن Activities Overview استفاده می‌شود؟",
+      "options": [
+        "<code>Alt+F1</code>",
+        "<code>Super</code> (کلید ویندوز)",
+        "<code>Ctrl+Alt+T</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو کلید <code>Super</code> (کلید ویندوز) و <code>Alt+F1</code> برای باز کردن Activities Overview در GNOME استفاده می‌شوند. <code>Ctrl+Alt+T</code> برای باز کردن ترمینال است. نکته: Activities Overview شامل دسترسی به برنامه‌ها، فضاهای کاری و جستجو است."
+    },
+    {
+      "id": 92,
+      "category": "فصل ۶: Xorg و Wayland",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر در مورد تفاوت Xorg و Wayland صحیح است؟",
+      "options": [
+        "Wayland از معماری Client/Server استفاده می‌کند.",
+        "Xorg امن‌تر از Wayland است.",
+        "Wayland جدیدتر و امن‌تر از Xorg است.",
+        "Xorg از Compositor استفاده می‌کند، اما Wayland از Server استفاده می‌کند."
+      ],
+      "correct": 2,
+      "explanation": "Wayland جدیدتر (۲۰۰۸) و امن‌تر از Xorg (۲۰۰۴) است. Xorg از معماری Client/Server استفاده می‌کند. Wayland از معماری مستقیم‌تر با Compositor استفاده می‌کند. گزینه اول برعکس است. گزینه دوم نادرست است (Wayland امن‌تر است). گزینه چهارم برعکس است. نکته: بسیاری از توزیع‌ها به سمت Wayland مهاجرت می‌کنند."
+    },
+    {
+      "id": 93,
+      "category": "فصل ۷: مدیریت کاربران",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد کاربر <code>testuser</code> را به‌طور کامل از سیستم حذف کند، به‌طوری که دایرکتوری خانه و تمام فایل‌های آن نیز پاک شوند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>userdel testuser</code>",
+        "<code>userdel -f testuser</code>",
+        "<code>userdel -r testuser</code>",
+        "<code>usermod -d /nonexistent testuser</code>"
+      ],
+      "correct": 2,
+      "explanation": "گزینه <code>userdel -r testuser</code> کاربر و دایرکتوری خانه را به‌همراه تمام فایل‌های آن حذف می‌کند. گزینه اول فقط کاربر را حذف می‌کند (دایرکتوری خانه باقی می‌ماند). گزینه دوم (<code>-f</code>) کاربر را حتی اگر لاگین باشد حذف می‌کند اما دایرکتوری خانه را پاک نمی‌کند. گزینه چهارم مسیر خانه را تغییر می‌دهد اما کاربر را حذف نمی‌کند. نکته: <code>-r</code> مخفف <code>--remove</code> است."
+    },
+    {
+      "id": 94,
+      "category": "فصل ۷: لاگ‌ها و systemd",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد لاگ‌های یک سرویس را از یک بازه زمانی مشخص (مثلاً از ۲ ساعت پیش تا الان) با <code>journalctl</code> مشاهده کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>journalctl --since \"2 hours ago\"</code>",
+        "<code>journalctl --since \"2 hours ago\" --until \"now\"</code>",
+        "<code>journalctl -u service --since \"2 hours ago\"</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای مشاهده لاگ‌های یک سرویس از یک بازه زمانی مشخص معتبر هستند. گزینه اول همه لاگ‌ها را از ۲ ساعت پیش نشان می‌دهد. گزینه دوم بازه زمانی را مشخص می‌کند. گزینه سوم سرویس خاص را نیز فیلتر می‌کند. نکته: <code>--since</code> و <code>--until</code> از فرمت‌های زمانی مختلفی پشتیبانی می‌کنند."
+    },
+    {
+      "id": 95,
+      "category": "فصل ۸: شبکه - DNS",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>dig</code>، مسیر کامل (Trace) یک درخواست DNS را از سرور ریشه تا سرور نهایی دنبال کند. کدام گزینه این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>dig +trace google.com</code>",
+        "<code>dig google.com</code>",
+        "<code>dig @8.8.8.8 google.com</code>",
+        "<code>dig -x 8.8.8.8</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه <code>dig +trace google.com</code> مسیر کامل درخواست DNS را از سرور ریشه (Root) تا سرور نهایی (Authoritative) دنبال می‌کند. گزینه دوم فقط نتیجه نهایی را نمایش می‌دهد. گزینه سوم از یک سرور DNS خاص (۸.۸.۸.۸) استفاده می‌کند اما مسیر را نشان نمی‌دهد. گزینه چهارم جستجوی معکوس (Reverse) است. نکته: <code>+trace</code> برای عیب‌یابی DNS بسیار مفید است."
+    },
+    {
+      "id": 96,
+      "category": "فصل ۸: شبکه - tcpdump",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>tcpdump</code>، بسته‌های ارسال‌شده به پورت ۴۴۳ (HTTPS) روی اینترفیس <code>eth0</code> را برای عیب‌یابی مشکل SSL/TLS ذخیره کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>sudo tcpdump -i eth0 port 443 -w capture.pcap</code>",
+        "<code>sudo tcpdump -i eth0 port 443</code>",
+        "<code>sudo tcpdump -i eth0 dst port 443 -w capture.pcap</code>",
+        "گزینه اول و سوم هر دو معتبر هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول و سوم برای ذخیره بسته‌های پورت ۴۴۳ معتبر هستند. گزینه اول بسته‌های ارسال و دریافت (source و destination) را ذخیره می‌کند. گزینه سوم فقط بسته‌های ارسال‌شده به پورت ۴۴۳ (destination) را ذخیره می‌کند. گزینه دوم بدون <code>-w</code> فقط نمایش می‌دهد و ذخیره نمی‌کند. نکته: فایل <code>.pcap</code> را می‌توان با Wireshark تحلیل کرد."
+    },
+    {
+      "id": 97,
+      "category": "فصل ۹: Shell Scripting - توابع",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد در یک اسکریپت Bash، یک تابع به نام <code>check_user</code> تعریف کند که وجود یک کاربر را بررسی کرده و پیام مناسب را نمایش دهد. کدام تعریف صحیح است؟",
+      "options": [
+        "<code>check_user() { id $1 &>/dev/null && echo \"User exists\" || echo \"User not found\"; }</code>",
+        "<code>function check_user { id $1 &>/dev/null && echo \"User exists\" || echo \"User not found\"; }</code>",
+        "<code>check_user() { if id $1 &>/dev/null; then echo \"User exists\"; else echo \"User not found\"; fi; }</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای تعریف تابع در Bash معتبر هستند. گزینه اول با <code>&&</code> و <code>||</code> کوتاه‌ترین روش است. گزینه دوم با کلمه <code>function</code> نیز کار می‌کند. گزینه سوم با <code>if-else</code> خوانایی بیشتری دارد. نکته: <code>$1</code> در داخل تابع آرگومان اول تابع را نشان می‌دهد."
+    },
+    {
+      "id": 98,
+      "category": "فصل ۹: Shell Scripting - trap",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد در یک اسکریپت Bash، سیگنال <code>SIGINT</code> (Ctrl+C) را مدیریت کند تا قبل از خروج، فایل‌های موقت را پاک کند. کدام دستور <code>trap</code> این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>trap \"cleanup\" SIGINT</code>",
+        "<code>trap \"rm -f /tmp/temp.*; exit\" INT</code>",
+        "<code>trap cleanup INT</code> (با تابع cleanup)",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای مدیریت سیگنال <code>SIGINT</code> با <code>trap</code> معتبر هستند. گزینه اول و سوم با تابع <code>cleanup</code> کار می‌کنند (فرض بر وجود تابع). گزینه دوم مستقیماً دستورات را در <code>trap</code> می‌نویسد. نکته: <code>trap</code> برای مدیریت سیگنال‌ها در اسکریپت‌های حیاتی بسیار مفید است."
+    },
+    {
+      "id": 99,
+      "category": "فصل ۱۰: امنیت - اسکن با nmap",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nmap</code>، همه دستگاه‌های فعال در شبکه <code>192.168.1.0/24</code> را شناسایی کند (بدون اسکن پورت). کدام گزینه این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>nmap -sn 192.168.1.0/24</code>",
+        "<code>nmap -sP 192.168.1.0/24</code>",
+        "<code>nmap -sL 192.168.1.0/24</code>",
+        "گزینه اول و دوم هر دو معتبر هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه <code>nmap -sn</code> و <code>nmap -sP</code> (قدیمی) برای کشف دستگاه‌های فعال بدون اسکن پورت استفاده می‌شوند. <code>-sn</code> (Ping Scan) فقط ICMP echo request، TCP SYN به پورت ۴۴۳ و TCP ACK به پورت ۸۰ را ارسال می‌کند. <code>-sL</code> فقط لیست می‌کند (بدون ارسال بسته). نکته: <code>-sn</code> معادل <code>-sP</code> در نسخه‌های جدید است."
+    },
+    {
+      "id": 100,
+      "category": "فصل ۱۰: امنیت - رمزنگاری با OpenSSL",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>openssl</code> یک گواهی خودامضا (Self-signed Certificate) برای وب‌سرور تولید کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes</code>",
+        "<code>openssl genrsa -out key.pem 2048</code> سپس <code>openssl req -new -key key.pem -out csr.pem</code> سپس <code>openssl x509 -req -in csr.pem -signkey key.pem -out cert.pem -days 365</code>",
+        "<code>openssl req -new -x509 -days 365 -keyout key.pem -out cert.pem</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای تولید گواهی خودامضا با OpenSSL معتبر هستند. گزینه اول یک دستور کامل است و ساده‌ترین روش است. گزینه دوم سه مرحله‌ای است (تولید کلید، درخواست امضا، امضای گواهی). گزینه سوم مشابه گزینه اول است اما <code>-nodes</code> را ندارد (پسورد برای کلید می‌خواهد). نکته: گواهی خودامضا برای محیط‌های توسعه و تست استفاده می‌شود."
+    }
+  ]
+}

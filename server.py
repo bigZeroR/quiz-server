@@ -129,11 +129,64 @@ def reload_cache():
         'success': True, 
         'message': f'کش پاک شد و {len(quizzes)} آزمون بارگذاری شد'
     })
+
 @app.route('/dashboard')
 def dashboard():
     """صفحه داشبورد کاربری"""
     quizzes = load_quiz_files()
     return render_template('dashboard.html', quizzes=quizzes)
+
+# ============================================================
+# API جستجوی جامع بین تمام آزمون‌ها
+# ============================================================
+@app.route('/api/search')
+def search_questions():
+    """جستجوی عبارت در تمام سوالات تمام آزمون‌ها"""
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify({'results': [], 'query': ''})
+    
+    # بارگذاری مجدد برای اطمینان از به‌روز بودن کش
+    load_quiz_files(force_reload=True)
+    
+    results = []
+    query_lower = query.lower()
+    
+    for quiz_name, cached in QUIZ_CACHE.items():
+        quiz_data = cached['data']
+        quiz_title = quiz_data.get('title', quiz_name)
+        questions = quiz_data.get('questions', [])
+        
+        for q in questions:
+            # جستجو در متن سوال، گزینه‌ها و توضیح
+            text = q.get('text', '')
+            options = ' '.join(q.get('options', []))
+            explanation = q.get('explanation', '')
+            combined = f"{text} {options} {explanation}".lower()
+            
+            if query_lower in combined:
+                results.append({
+                    'quiz_name': quiz_name,
+                    'quiz_title': quiz_title,
+                    'question_id': q.get('id', 0),
+                    'question_text': text,
+                    'category': q.get('category', ''),
+                    'level': q.get('level', 1),
+                    'options': q.get('options', []),
+                    'correct': q.get('correct', 0),
+                    'explanation': explanation,
+                    'match_preview': text[:120] + ('...' if len(text) > 120 else '')
+                })
+    
+    # مرتب‌سازی بر اساس طول متن (اختیاری)
+    results.sort(key=lambda x: len(x['question_text']))
+    
+    return jsonify({
+        'query': query,
+        'count': len(results),
+        'results': results[:100]  # حداکثر ۱۰۰ نتیجه
+    })
+
 if __name__ == '__main__':
     os.makedirs(DATA_DIR, exist_ok=True)
     print("=" * 50)

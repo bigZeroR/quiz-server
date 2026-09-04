@@ -28,6 +28,25 @@ function showToast(message, type = 'info') {
 }
 
 function init() {
+    // اگر پارامتر جستجو وجود داشت، آن را در جعبه جستجو قرار بده
+    if (typeof SEARCH_QUERY !== 'undefined' && SEARCH_QUERY) {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = SEARCH_QUERY;
+            searchQuestions();
+        }
+        const hash = window.location.hash;
+        if (hash.startsWith('#q-')) {
+            const qId = parseInt(hash.replace('#q-', ''));
+            setTimeout(() => {
+                const index = filteredQuestions.findIndex(q => q.id === qId);
+                if (index !== -1) {
+                    showQuestion(index);
+                }
+            }, 500);
+        }
+    }
+
     if (isAdaptiveMode) {
         setupAdaptiveMode();
     } else {
@@ -39,7 +58,7 @@ function init() {
 }
 
 // ═══════════════════════════════════════════
-// ADAPTIVE MODE LOGIC
+// ADAPTIVE MODE LOGIC (نسخه بهبودیافته)
 // ═══════════════════════════════════════════
 function setupAdaptiveMode() {
     const timerStat = document.getElementById('aiTimerStat');
@@ -49,9 +68,22 @@ function setupAdaptiveMode() {
     if (levelStat) levelStat.style.display = 'flex';
     if (aiBadge) aiBadge.style.display = 'inline-block';
     
+    // ====== ۱. فیلتر کردن سوالات پاسخ‌داده‌شده ======
+    const answeredIds = new Set(Object.keys(userAnswers).map(Number));
+    answeredIds.forEach(id => usedQuestionIds.add(id));
+    
+    const availableQuestions = QUIZ_DATA.questions.filter(q => !answeredIds.has(q.id));
+    
+    if (availableQuestions.length === 0) {
+        showToast('🎉 شما به تمام سوالات این آزمون پاسخ داده‌اید!', 'success');
+        setTimeout(() => window.location.href = '/', 2000);
+        return;
+    }
+    
+    // ====== ۲. انتخاب ۴ سوال اولیه (از سطوح مختلف) ======
     const initialQuestions = [];
     for (let lvl = 1; lvl <= 4; lvl++) {
-        const pool = QUIZ_DATA.questions.filter(q => q.level == lvl && !usedQuestionIds.has(q.id));
+        const pool = availableQuestions.filter(q => q.level == lvl && !usedQuestionIds.has(q.id));
         if (pool.length > 0) {
             const randomQ = pool[Math.floor(Math.random() * pool.length)];
             initialQuestions.push(randomQ);
@@ -59,12 +91,29 @@ function setupAdaptiveMode() {
         }
     }
     
-    const remaining = QUIZ_DATA.questions.filter(q => !usedQuestionIds.has(q.id));
+    // ====== ۳. بقیه سوالات (به جز پاسخ‌داده‌شده‌ها) ======
+    const remaining = availableQuestions.filter(q => !usedQuestionIds.has(q.id));
     filteredQuestions = [...initialQuestions, ...remaining];
+    
+    // ====== ۴. در صورت خالی بودن، پیام خطا ======
+    if (filteredQuestions.length === 0) {
+        showToast('⚠️ هیچ سوال جدیدی برای نمایش وجود ندارد.', 'warning');
+        setTimeout(() => window.location.href = '/', 2000);
+        return;
+    }
     
     renderQuestions();
     updateStats();
+    updateRemainingCount();
     showQuestion(0);
+}
+
+function updateRemainingCount() {
+    const remaining = filteredQuestions.filter(q => !usedQuestionIds.has(q.id)).length;
+    const el = document.getElementById('remainingCount');
+    const parent = document.getElementById('remainingStat');
+    if (el) el.innerText = remaining;
+    if (parent) parent.style.display = 'flex';
 }
 
 function startTimer() {
@@ -154,6 +203,10 @@ function findNextAdaptiveQuestion() {
         filteredQuestions[nextIndex] = filteredQuestions[foundIndex];
         filteredQuestions[foundIndex] = temp;
         usedQuestionIds.add(filteredQuestions[nextIndex].id);
+        updateRemainingCount();
+    } else {
+        showToast('🎉 شما به تمام سوالات پاسخ داده‌اید!', 'success');
+        setTimeout(() => window.location.href = '/', 2000);
     }
 }
 
@@ -230,7 +283,10 @@ function renderQuestions() {
                     <span class="q-badge">${q.category} • L${q.level}</span>
                     <span class="q-badge">#${index + 1} / ${filteredQuestions.length}</span>
                 </div>
-                <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(${q.id}, this)" title="نشان کردن">⭐</button>
+                <div style="display:flex; gap:4px; align-items:center;">
+                    <button class="ai-explain-btn" onclick="askAIExplanation(${q.id}, this)" title="دریافت توضیح هوشمند با AI">🤖</button>
+                    <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(${q.id}, this)" title="نشان کردن">⭐</button>
+                </div>
             </div>
             <div class="q-text">${q.text}</div>
             ${commandHtml}
@@ -399,6 +455,67 @@ function updateProgressBar() {
     const percent = len > 0 ? ((currentQuestionIndex + 1) / len) * 100 : 0;
     const bar = document.getElementById('progressBar');
     if (bar) bar.style.width = percent + "%";
+}
+
+// ═══════════════════════════════════════════
+// AI EXPLANATION (توضیح هوشمند با AI)
+// ═══════════════════════════════════════════
+function askAIExplanation(qId, btn) {
+    const question = QUIZ_DATA.questions.find(q => q.id === qId);
+    if (!question) {
+        showToast('سوال پیدا نشد!', 'error');
+        return;
+    }
+    
+    const prompt = `(نقش: تو یک مدرس حرفه‌ای لینوکس و شبکه هستی. لطفاً سوال زیر را به طور کامل و دقیق توضیح بده، چرا گزینه صحیح درست است و چرا گزینه‌های دیگر غلط هستند. پاسخ را به فارسی بنویس و از مثال‌های عملی استفاده کن.)
+
+سوال:
+${question.text}
+
+گزینه‌ها:
+${question.options.map((opt, i) => `${['A','B','C','D'][i]}. ${opt}`).join('\n')}
+
+پاسخ صحیح: ${['A','B','C','D'][question.correct]}
+
+توضیح جامع و آموزنده:`;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(prompt).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = '✅ کپی!';
+            btn.style.color = 'var(--success)';
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.color = '';
+            }, 2500);
+            showToast('پرامپت توضیح با AI در کلیپ‌بورد کپی شد. حالا در ChatGPT/Claude پیست کنید.', 'success');
+        }).catch(() => {
+            fallbackCopy(prompt, btn);
+        });
+    } else {
+        fallbackCopy(prompt, btn);
+    }
+}
+
+function fallbackCopy(text, btn) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        const originalText = btn.innerText;
+        btn.innerText = '✅ کپی!';
+        btn.style.color = 'var(--success)';
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.color = '';
+        }, 2500);
+        showToast('پرامپت توضیح با AI کپی شد (روش جایگزین).', 'success');
+    } catch (e) {
+        showToast('خطا در کپی کردن. لطفاً دستی کپی کنید.', 'error');
+    }
+    document.body.removeChild(textarea);
 }
 
 document.addEventListener('keydown', (e) => {

@@ -1,0 +1,286 @@
+{
+  "title": "مجموعه سوالات آموزشی جامع LPIC-1 (بخش دوم - ادامه پوشش تمام ۱۰ فصل)",
+  "description": "این مجموعه شامل ۲۰ سوال آموزشی تکمیلی از تمام مباحث دوره LPIC-1 (فصل‌های ۱ تا ۱۰) است که با هدف یادگیری عمیق و مرور مفاهیم کلیدی طراحی شده است. هر سوال همراه با پاسخ تشریحی کامل ارائه شده است.",
+  "questions": [
+    {
+      "id": 21,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "یک کاربر می‌خواهد آخرین دستوری که با <code>grep</code> شروع می‌شود را از تاریخچه خود اجرا کند. کدام روش این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>history | grep grep</code>",
+        "<code>!grep</code>",
+        "<code>!!</code>",
+        "<code>Ctrl+R</code> و تایپ <code>grep</code>"
+      ],
+      "correct": 1,
+      "explanation": "علامت تعجب با نام دستور (<code>!grep</code>) آخرین دستوری که با <code>grep</code> شروع می‌شود را از تاریخچه اجرا می‌کند. <code>!!</code> آخرین دستور را اجرا می‌کند (نه دستوری که با grep شروع می‌شود). <code>Ctrl+R</code> جستجوی تعاملی است اما مستقیماً دستور را اجرا نمی‌کند (باید Enter بزنید). <code>history | grep</code> فقط نمایش می‌دهد، اجرا نمی‌کند."
+    },
+    {
+      "id": 22,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "کدام یک از کاراکترهای ویژه (Wildcard) برای نمایش فایل‌هایی که با حرف <code>a</code> شروع می‌شوند و دقیقاً ۳ کاراکتر دارند، استفاده می‌شود؟",
+      "options": [
+        "<code>ls a*</code>",
+        "<code>ls a?</code>",
+        "<code>ls a??</code>",
+        "<code>ls a[0-9][0-9]</code>"
+      ],
+      "correct": 2,
+      "explanation": "<code>?</code> دقیقاً یک کاراکتر را نشان می‌دهد، بنابراین <code>a??</code> فایل‌هایی با ۳ کاراکتر که با <code>a</code> شروع می‌شوند را نمایش می‌دهد. <code>a*</code> هر تعداد کاراکتر را نشان می‌دهد. <code>a?</code> فایل‌های ۲ کاراکتری را نشان می‌دهد. <code>a[0-9][0-9]</code> فایل‌هایی با <code>a</code> و دو عدد را نشان می‌دهد."
+    },
+    {
+      "id": 23,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 2,
+      "text": "در یک سیستم مبتنی بر RHEL/Alma، کدام دستور برای نمایش لیست تمام بسته‌های نصب‌شده روی سیستم استفاده می‌شود؟",
+      "options": [
+        "<code>rpm -qa</code>",
+        "<code>dnf list installed</code>",
+        "<code>rpm -ql</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول (<code>rpm -qa</code>) و دوم (<code>dnf list installed</code>) لیست بسته‌های نصب‌شده را نمایش می‌دهند. <code>rpm -ql</code> لیست فایل‌های یک بسته خاص را نشان می‌دهد، نه همه بسته‌ها. نکته: <code>dnf list installed</code> خروجی مرتب‌تر و قابل‌خواندن‌تری دارد."
+    },
+    {
+      "id": 24,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 3,
+      "text": "در یک سیستم مبتنی بر Debian/Ubuntu، کدام دستور یک بسته را به‌طور کامل (همراه با فایل‌های پیکربندی) حذف می‌کند؟",
+      "options": [
+        "<code>apt remove package</code>",
+        "<code>apt purge package</code>",
+        "<code>dpkg -r package</code>",
+        "<code>apt autoremove package</code>"
+      ],
+      "correct": 1,
+      "explanation": "<code>apt purge</code> بسته را به‌همراه تمام فایل‌های پیکربندی حذف می‌کند. <code>apt remove</code> فقط بسته را حذف می‌کند اما فایل‌های پیکربندی را نگه می‌دارد. <code>dpkg -r</code> معادل <code>remove</code> است (نگه‌داری پیکربندی). <code>apt autoremove</code> وابستگی‌های بی‌استفاده را حذف می‌کند."
+    },
+    {
+      "id": 25,
+      "category": "فصل ۳: سخت‌افزار، دیسک و پارتیشن‌بندی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک دیسک USB را با گزینه‌های فقط خواندنی (Read-Only) و بدون اجرای برنامه‌ها (Noexec) به دایرکتوری <code>/mnt/usb</code> مانت کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>mount -o ro,noexec /dev/sdb1 /mnt/usb</code>",
+        "<code>mount -o rw,noexec /dev/sdb1 /mnt/usb</code>",
+        "<code>mount -o ro,exec /dev/sdb1 /mnt/usb</code>",
+        "<code>mount /dev/sdb1 /mnt/usb</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه <code>-o ro,noexec</code> هر دو گزینه‌ی فقط خواندنی و عدم اجرا را فعال می‌کند. گزینه دوم <code>rw</code> دارد که نوشتن را مجاز می‌کند. گزینه سوم <code>exec</code> دارد که اجرا را مجاز می‌کند. گزینه چهارم بدون گزینه است و از پیش‌فرض‌ها استفاده می‌کند. نکته: <code>noexec</code> برای افزایش امنیت در دیسک‌های USB استفاده می‌شود."
+    },
+    {
+      "id": 26,
+      "category": "فصل ۳: RAID",
+      "level": 3,
+      "text": "یک مدیر سیستم یک آرایه RAID-1 با استفاده از <code>mdadm</code> ساخته است. یکی از دیسک‌ها خراب شده است. کدام دنباله از دستورات برای جایگزینی صحیح دیسک خراب و افزودن دیسک جدید به آرایه صحیح است؟",
+      "options": [
+        "<code>mdadm --manage /dev/md0 --fail /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --remove /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "<code>mdadm --manage /dev/md0 --remove /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>",
+        "<code>mdadm --manage /dev/md0 --add /dev/sdb1</code> سپس <code>mdadm --manage /dev/md0 --fail /dev/sda1</code>",
+        "<code>mdadm --manage /dev/md0 --fail /dev/sda1</code> سپس <code>mdadm --manage /dev/md0 --add /dev/sdb1</code>"
+      ],
+      "correct": 0,
+      "explanation": "ترتیب صحیح: ابتدا دیسک خراب را <code>--fail</code> می‌کنیم تا از آرایه خارج شود، سپس آن را <code>--remove</code> می‌کنیم، و در نهایت دیسک جدید را با <code>--add</code> اضافه می‌کنیم. گزینه دوم <code>--fail</code> را ندارد که باعث می‌شود آرایه وضعیت نامشخصی داشته باشد. گزینه سوم ترتیب اشتباه است. گزینه چهارم <code>--remove</code> را ندارد."
+    },
+    {
+      "id": 27,
+      "category": "فصل ۴: مدیریت فایل‌ها",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر تفاوت اصلی بین Hard Link و Soft Link (Symbolic Link) را به‌درستی توضیح می‌دهد؟",
+      "options": [
+        "Hard Link می‌تواند بین پارتیشن‌های مختلف ایجاد شود، اما Soft Link نمی‌تواند.",
+        "Soft Link یک Inode مجزا دارد، در حالی که Hard Link همان Inode فایل اصلی را دارد.",
+        "Hard Link پس از حذف فایل اصلی خراب می‌شود، اما Soft Link خراب نمی‌شود.",
+        "هیچ تفاوتی بین Hard Link و Soft Link وجود ندارد."
+      ],
+      "correct": 1,
+      "explanation": "Soft Link یک فایل جداگانه با Inode مجزا است که به فایل اصلی اشاره می‌کند. Hard Link همان Inode فایل اصلی را دارد و یک نام دیگر برای همان فایل است. گزینه اول نادرست است (Hard Link فقط در همان پارتیشن قابل ایجاد است). گزینه سوم نادرست است (Soft Link پس از حذف فایل اصلی خراب می‌شود، Hard Link نمی‌شود). گزینه چهارم نادرست است."
+    },
+    {
+      "id": 28,
+      "category": "فصل ۴: فشرده‌سازی و آرشیو",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد یک فایل <code>largefile.log</code> را با بالاترین نسبت فشرده‌سازی با استفاده از <code>xz</code> فشرده کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>xz -1 largefile.log</code>",
+        "<code>xz -9 largefile.log</code>",
+        "<code>xz -e -9 largefile.log</code>",
+        "<code>gzip -9 largefile.log</code>"
+      ],
+      "correct": 2,
+      "explanation": "ترکیب <code>-e -9</code> در <code>xz</code> بهترین فشرده‌سازی را فراهم می‌کند (<code>-e</code> برای extreme و <code>-9</code> برای بالاترین سطح). <code>-1</code> سریع‌ترین و کم‌ترین فشرده‌سازی است. <code>-9</code> بدون <code>-e</code> نیز خوب است اما <code>-e -9</code> بهتر است. <code>gzip</code> یک ابزار دیگر است و نسبت فشرده‌سازی کمتری دارد. نکته: فشرده‌سازی بیشتر = زمان و منابع بیشتر."
+    },
+    {
+      "id": 29,
+      "category": "فصل ۵: بوت و systemd",
+      "level": 3,
+      "text": "در سیستم‌های مبتنی بر systemd، کدام دستور برای بررسی وضعیت یک سرویس (مثلاً <code>sshd</code>) و مشاهده ۱۰ خط آخر لاگ آن استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl status sshd</code>",
+        "<code>systemctl show sshd</code>",
+        "<code>journalctl -u sshd -n 10</code>",
+        "هر دو گزینه اول و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>systemctl status sshd</code> (که به‌طور پیش‌فرض ۱۰ خط آخر لاگ را نمایش می‌دهد) و <code>journalctl -u sshd -n 10</code> (که فقط لاگ را نمایش می‌دهد) برای مشاهده وضعیت و لاگ سرویس مناسب هستند. <code>systemctl show</code> فقط اطلاعات Property سرویس را نمایش می‌دهد، نه وضعیت و لاگ."
+    },
+    {
+      "id": 30,
+      "category": "فصل ۵: Single User Mode",
+      "level": 3,
+      "text": "در سیستم‌های RHEL/Alma، برای ورود به Single User Mode و ریست کردن رمز root، کدام پارامتر باید در خط کرنل GRUB اضافه شود؟",
+      "options": [
+        "<code>single</code>",
+        "<code>rd.break</code>",
+        "<code>init=/bin/bash</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای ورود به حالت بازیابی در RHEL/Alma معتبر هستند. <code>single</code> یک روش ساده است. <code>rd.break</code> مخصوص RHEL/Alma است و در مرحله initramfs متوقف می‌شود. <code>init=/bin/bash</code> مستقیماً Bash را به جای init اجرا می‌کند. نکته: در Alma 10 برای <code>rd.break</code> نیاز به رمز root است (امنیت افزایش یافته)."
+    },
+    {
+      "id": 31,
+      "category": "فصل ۶: GUI و دسکتاپ",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر تفاوت اصلی بین Xorg (X11) و Wayland را به‌درستی توضیح می‌دهد؟",
+      "options": [
+        "Xorg جدیدتر از Wayland است.",
+        "Wayland از معماری Client/Server استفاده می‌کند، اما Xorg از معماری مستقیم استفاده می‌کند.",
+        "Wayland جدیدتر، سریع‌تر و امن‌تر از Xorg است.",
+        "هیچ تفاوتی بین Xorg و Wayland وجود ندارد."
+      ],
+      "correct": 2,
+      "explanation": "Wayland جدیدتر (۲۰۰۸) و سریع‌تر و امن‌تر از Xorg (۲۰۰۴) است. Xorg از معماری Client/Server استفاده می‌کند. Wayland از معماری مستقیم‌تر با Compositor استفاده می‌کند. گزینه اول نادرست است (Wayland جدیدتر است). گزینه دوم برعکس است. گزینه چهارم نادرست است. نکته: بسیاری از توزیع‌ها به سمت Wayland مهاجرت می‌کنند."
+    },
+    {
+      "id": 32,
+      "category": "فصل ۶: Localization",
+      "level": 2,
+      "text": "کدام دستور برای مشاهده تنظیمات محلی (Locale) فعلی سیستم، از جمله زبان و منطقه زمانی، استفاده می‌شود؟",
+      "options": [
+        "<code>locale</code>",
+        "<code>localectl</code>",
+        "<code>timedatectl</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو <code>locale</code> (نمایش تنظیمات زبان) و <code>localectl</code> (مدیریت تنظیمات محلی در systemd) برای مشاهده تنظیمات محلی استفاده می‌شوند. <code>timedatectl</code> فقط زمان و منطقه زمانی را نمایش می‌دهد، نه تمام تنظیمات محلی. نکته: برای تغییر زبان از <code>localectl set-locale LANG=fa_IR.UTF-8</code> استفاده می‌شود."
+    },
+    {
+      "id": 33,
+      "category": "فصل ۷: مدیریت کاربران",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک کاربر جدید با دایرکتوری خانه در <code>/custom/home/user</code> و شل <code>/bin/zsh</code> ایجاد کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>useradd -d /custom/home/user -s /bin/zsh user</code>",
+        "<code>useradd -m -d /custom/home/user -s /bin/zsh user</code>",
+        "<code>useradd -d /custom/home/user -s /bin/zsh user</code> و سپس <code>mkdir /custom/home/user</code>",
+        "گزینه دوم و سوم هر دو صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "گزینه دوم با <code>-m</code> دایرکتوری خانه را ایجاد می‌کند و با <code>-d</code> مسیر مشخص را تنظیم می‌کند. گزینه سوم نیز کار می‌کند اما دایرکتوری خانه را دستی ایجاد می‌کند. گزینه اول بدون <code>-m</code> است و دایرکتوری خانه ایجاد نمی‌شود. نکته: <code>-m</code> برای ایجاد هوم دایرکتوری ضروری است مگر اینکه دستی ایجاد شود."
+    },
+    {
+      "id": 34,
+      "category": "فصل ۷: لاگ‌ها",
+      "level": 3,
+      "text": "کدام یک از گزینه‌های زیر برای پیکربندی چرخش (Rotation) لاگ‌ها و تعیین تعداد نسخه‌های نگهداری‌شده در سیستم‌های لینوکس استفاده می‌شود؟",
+      "options": [
+        "<code>/etc/logrotate.conf</code>",
+        "<code>/etc/logrotate.d/</code>",
+        "هر دو گزینه اول و دوم برای پیکربندی استفاده می‌شوند.",
+        "<code>/var/log/rotate</code>"
+      ],
+      "correct": 2,
+      "explanation": "فایل <code>/etc/logrotate.conf</code> تنظیمات اصلی چرخش لاگ‌ها را مشخص می‌کند و دایرکتوری <code>/etc/logrotate.d/</code> شامل تنظیمات اختصاصی هر سرویس است. گزینه سوم نادرست است (چنین مسیری وجود ندارد). نکته: <code>logrotate</code> به‌صورت روزانه توسط Cron اجرا می‌شود و لاگ‌ها را بر اساس تنظیمات چرخش می‌دهد."
+    },
+    {
+      "id": 35,
+      "category": "فصل ۸: شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد مسیر پیش‌فرض (Default Gateway) را با استفاده از <code>ip route</code> اضافه کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>ip route add default via 192.168.1.1</code>",
+        "<code>route add default gw 192.168.1.1</code>",
+        "<code>ip route add 0.0.0.0/0 via 192.168.1.1</code>",
+        "هر سه گزینه صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای اضافه کردن Gateway معتبر هستند. گزینه اول با <code>ip route add default via</code> روش مدرن است. گزینه دوم با <code>route add default gw</code> روش قدیمی است. گزینه سوم با <code>ip route add 0.0.0.0/0 via</code> نیز معادل است (مشخص کردن شبکه ۰.۰.۰.۰/۰). نکته: <code>ip</code> ابزار مدرن‌تر است و جایگزین <code>route</code> شده است."
+    },
+    {
+      "id": 36,
+      "category": "فصل ۸: فایروال",
+      "level": 2,
+      "text": "در سیستم‌های RHEL/Alma با <code>firewalld</code>، کدام دستور سرویس HTTP را به‌طور دائمی به فایروال اضافه می‌کند؟",
+      "options": [
+        "<code>firewall-cmd --add-service=http</code>",
+        "<code>firewall-cmd --add-service=http --permanent</code>",
+        "<code>firewall-cmd --add-port=80/tcp --permanent</code>",
+        "گزینه دوم و سوم هر دو صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه دوم (<code>--add-service=http --permanent</code>) و سوم (<code>--add-port=80/tcp --permanent</code>) سرویس HTTP را به‌طور دائمی به فایروال اضافه می‌کنند. گزینه اول بدون <code>--permanent</code> فقط برای جلسه فعلی اعمال می‌شود. پس از تغییرات، باید <code>firewall-cmd --reload</code> اجرا شود. نکته: <code>--permanent</code> تغییرات را در فایل‌های پیکربندی ذخیره می‌کند."
+    },
+    {
+      "id": 37,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "در یک اسکریپت Bash، کدام حلقه برای تکرار تا زمانی که یک شرط برقرار است استفاده می‌شود (بررسی شرط در ابتدا)؟",
+      "options": [
+        "<code>for</code>",
+        "<code>while</code>",
+        "<code>until</code>",
+        "<code>do-while</code>"
+      ],
+      "correct": 1,
+      "explanation": "حلقه <code>while</code> تا زمانی که شرط برقرار است (درست باشد) اجرا می‌شود و شرط در ابتدا بررسی می‌شود. <code>until</code> برعکس <code>while</code> است و تا زمانی که شرط نادرست باشد اجرا می‌شود. <code>for</code> برای تکرار روی یک لیست است. <code>do-while</code> در Bash وجود ندارد (به‌صورت مستقیم). نکته: می‌توان با <code>while true</code> یک حلقه نامتناهی ایجاد کرد."
+    },
+    {
+      "id": 38,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "در یک اسکریپت Bash، کدام ساختار برای تعریف یک تابع (Function) استفاده می‌شود؟",
+      "options": [
+        "<code>myfunction() { commands; }</code>",
+        "<code>function myfunction { commands; }</code>",
+        "<code>def myfunction() { commands; }</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو روش برای تعریف تابع در Bash معتبر هستند. روش اول (<code>myfunction() { commands; }</code>) استانداردترین است. روش دوم (<code>function myfunction { commands; }</code>) نیز کار می‌کند. گزینه سوم (<code>def</code>) مربوط به زبان‌های دیگر (مثل Python) است. نکته: توابع در Bash برای ماژولار کردن کد استفاده می‌شوند و می‌توانند آرگومان بگیرند."
+    },
+    {
+      "id": 39,
+      "category": "فصل ۱۰: امنیت - SSH",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد امنیت SSH را افزایش دهد و فقط کاربران <code>ahmad</code> و <code>sara</code> اجازه ورود داشته باشند. کدام تنظیم در <code>/etc/ssh/sshd_config</code> این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>AllowUsers ahmad sara</code>",
+        "<code>DenyUsers guest</code>",
+        "<code>AllowGroups wheel</code>",
+        "<code>PermitRootLogin no</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>AllowUsers</code> لیست کاربران مجاز را مشخص می‌کند و فقط کاربران ذکر شده می‌توانند وارد شوند. <code>DenyUsers</code> کاربران غیرمجاز را مشخص می‌کند اما برای محدود کردن به دو کاربر خاص، <code>AllowUsers</code> مناسب‌تر است. <code>AllowGroups</code> برای گروه‌ها است. <code>PermitRootLogin no</code> فقط ورود root را غیرفعال می‌کند."
+    },
+    {
+      "id": 40,
+      "category": "فصل ۱۰: رمزنگاری با GPG",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد با استفاده از <code>gpg</code> یک فایل را امضا کند تا گیرنده بتواند اصالت آن را تأیید کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>gpg --sign file.txt</code>",
+        "<code>gpg --clearsign file.txt</code>",
+        "<code>gpg --detach-sign file.txt</code>",
+        "هر سه گزینه برای امضا معتبر هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر سه روش برای امضای دیجیتال با GPG معتبر هستند. <code>--sign</code> فایل را امضا کرده و در یک فایل باینری ذخیره می‌کند. <code>--clearsign</code> امضا را به‌صورت متنی (قابل خواندن) به فایل اضافه می‌کند. <code>--detach-sign</code> امضا را در یک فایل جداگانه (با پسوند <code>.sig</code>) ذخیره می‌کند. نکته: برای تأیید امضا از <code>gpg --verify</code> استفاده می‌شود."
+    }
+  ]
+}

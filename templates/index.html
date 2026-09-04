@@ -47,6 +47,12 @@
             <span class="stat-label">پیشرفت</span>
             <span class="stat-value stat-progress" id="progressPercent">0%</span>
         </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item" id="remainingStat" style="display: none;">
+            <span class="stat-icon">📌</span>
+            <span class="stat-label">باقی‌مانده</span>
+            <span class="stat-value" id="remainingCount" style="color: var(--info);">0</span>
+        </div>
     </div>
 
     <header class="quiz-header">
@@ -102,6 +108,7 @@
         const QUIZ_TYPE = "{{ quiz_type }}";
         const URL_PARAMS = new URLSearchParams(window.location.search);
         const IS_ADAPTIVE_MODE = URL_PARAMS.get('mode') === 'adaptive';
+        const SEARCH_QUERY = URL_PARAMS.get('q') || '';
     </script>
     <script src="/static/script.js"></script>
 
@@ -117,15 +124,15 @@
         <p class="home-subtitle">مجموعه‌ای از آزمون‌های تستی برای آمادگی آزمون‌های LPIC-1 و Network+</p>
         
         <div class="home-actions">
-<a href="/dashboard" class="btn btn-info" style="margin-left: 12px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
-        <span>پنل کاربری</span>
-    </a>
+            <a href="/dashboard" class="btn btn-info" style="margin-left: 12px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+                <span>پنل کاربری</span>
+            </a>
             <a href="/create" class="btn btn-create">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span>ساخت آزمون جدید</span>
             </a>
-            <a href="?mode=adaptive" class="btn btn-ai-mode" onclick="startAdaptiveMode(event)">
+            <a href="#" class="btn btn-ai-mode" onclick="startAdaptiveMode(event)">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12 2.1 12.1"/></svg>
                 <span>شروع آزمون هوشمند تطبیقی (AI)</span>
             </a>
@@ -138,13 +145,21 @@
             </div>
             <div class="home-stat-chip">
                 <span class="chip-number">{{ quizzes | sum(attribute='count') }}</span>
-        
-        <span class="chip-label">سوال</span>
+                <span class="chip-label">سوال</span>
             </div>
         </div>
     </header>
 
     <main class="home-container">
+        <!-- جستجوی جامع بین تمام آزمون‌ها -->
+        <div class="global-search" style="max-width: 760px; margin: 0 auto var(--space-2xl); padding: 0 var(--space-md);">
+            <div style="display: flex; gap: 8px; align-items: center; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 6px 6px 6px 16px; transition: all var(--transition-fast);">
+                <input type="text" id="globalSearchInput" class="search-input" style="border: none; background: transparent; flex: 1; padding: 10px 0;" placeholder="🔍 جستجوی هوشمند در تمام سوالات (متن، گزینه‌ها، توضیحات)..." oninput="performGlobalSearch()">
+                <button class="btn btn-primary" onclick="performGlobalSearch()" style="border-radius: var(--radius-md); padding: 8px 20px; white-space: nowrap;">جستجو</button>
+            </div>
+            <div id="globalSearchResults" style="margin-top: var(--space-md); display: none;"></div>
+        </div>
+
         {% set general = quizzes | selectattr('type', 'equalto', 'general') | list %}
         {% set commands = quizzes | selectattr('type', 'equalto', 'command') | list %}
         {% set network = quizzes | selectattr('type', 'equalto', 'network') | list %}
@@ -243,19 +258,207 @@
         <p>ساخته شده با ❤️ برای یادگیری لینوکس و شبکه</p>
     </footer>
 
+    <!-- ═══════════════════════════════════════════
+         MODAL انتخاب آزمون هوشمند تطبیقی
+    ═══════════════════════════════════════════ -->
+    <div id="adaptiveModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <span class="modal-icon">🧠</span>
+                    <div>
+                        <h2>آزمون هوشمند تطبیقی</h2>
+                        <p class="modal-subtitle">یک آزمون را انتخاب کنید تا با حالت هوشمند شروع شود</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeAdaptiveModal()" title="بستن">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-features">
+                    <div class="feature-chip">⚡ ۴ سطح دشواری</div>
+                    <div class="feature-chip">⏱️ زمان‌سنجی</div>
+                    <div class="feature-chip">📈 تنظیم سطح بر اساس عملکرد</div>
+                    <div class="feature-chip">🚫 حذف سوالات پاسخ‌داده‌شده</div>
+                </div>
+                
+                <div class="modal-quiz-grid" id="adaptiveQuizGrid">
+                    <!-- کارت‌های آزمون توسط جاوااسکریپت ساخته می‌شوند -->
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-ghost" onclick="closeAdaptiveModal()">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function startAdaptiveMode(event) {
-            event.preventDefault();
+        // ═══════════════════════════════════════════
+        // MODAL انتخاب آزمون هوشمند تطبیقی
+        // ═══════════════════════════════════════════
+        function openAdaptiveModal() {
             const quizList = {{ quizzes | tojson | safe }};
             if (quizList.length === 0) {
                 alert('هیچ آزمونی موجود نیست! ابتدا یک آزمون اضافه کنید.');
                 return;
             }
-            const firstQuiz = quizList[0];
-            if (confirm(`آزمون هوشمند تطبیقی با "${firstQuiz.title}" شروع می‌شود.\n\nدر این حالت:\n• ۴ سوال اول از سطوح مختلف نمایش داده می‌شوند\n• تایمر برای هر سوال فعال است\n• سطح دشواری بر اساس پاسخ‌های شما تنظیم می‌شود\n\nآیا آماده‌اید؟`)) {
-                window.location.href = `/quiz/${firstQuiz.file}?mode=adaptive`;
+            
+            const grid = document.getElementById('adaptiveQuizGrid');
+            grid.innerHTML = quizList.map(q => {
+                let typeLabel = 'عمومی';
+                let typeClass = 'general';
+                if (q.type === 'command') { typeLabel = 'دستورات'; typeClass = 'command'; }
+                else if (q.type === 'network') { typeLabel = 'شبکه'; typeClass = 'network'; }
+                
+                return `
+                    <div class="modal-quiz-card" onclick="selectAdaptiveQuiz('${q.file}')">
+                        <div class="card-top">
+                            <span class="card-type-badge ${typeClass}">${typeLabel}</span>
+                            <span class="card-level-badge">L${q.level || '1'}</span>
+                        </div>
+                        <div class="card-title">${q.title}</div>
+                        <div class="card-desc">${q.description || 'بدون توضیحات'}</div>
+                        <div class="card-footer">
+                            <span class="card-count">📝 ${q.count} سوال</span>
+                            <span class="card-arrow">←</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('adaptiveModal').style.display = 'flex';
+        }
+
+        function closeAdaptiveModal() {
+            document.getElementById('adaptiveModal').style.display = 'none';
+        }
+
+        function selectAdaptiveQuiz(quizFile) {
+            const quizList = {{ quizzes | tojson | safe }};
+            const selected = quizList.find(q => q.file === quizFile);
+            if (!selected) return;
+            
+            closeAdaptiveModal();
+            
+            const confirmMsg = `🧠 **آزمون هوشمند تطبیقی**\n\n` +
+                               `آزمون: "${selected.title}"\n` +
+                               `تعداد سوالات: ${selected.count}\n\n` +
+                               `🔹 **ویژگی‌های این حالت:**\n` +
+                               `• سوالات قبلاً پاسخ‌داده‌شده نمایش داده نمی‌شوند\n` +
+                               `• ۴ سوال اول از سطوح مختلف (۱ تا ۴) انتخاب می‌شوند\n` +
+                               `• زمان پاسخ‌گویی هر سوال ثبت می‌شود\n` +
+                               `• سطح دشواری بر اساس صحت و سرعت پاسخ‌ها تنظیم می‌شود\n` +
+                               `• سوالات بعدی متناسب با سطح فعلی شما انتخاب می‌شوند\n\n` +
+                               `✅ این حالت برای **همه مباحث** قابل اجراست.\n\n` +
+                               `آیا شروع کنیم؟`;
+            
+            if (confirm(confirmMsg)) {
+                window.location.href = `/quiz/${selected.file}?mode=adaptive`;
             }
         }
+
+        function startAdaptiveMode(event) {
+            event.preventDefault();
+            openAdaptiveModal();
+        }
+
+        // بستن مودال با کلیک روی پس‌زمینه
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('adaptiveModal');
+            if (e.target === modal) {
+                closeAdaptiveModal();
+            }
+        });
+
+        // بستن با دکمه Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAdaptiveModal();
+            }
+        });
+
+        // ═══════════════════════════════════════════
+        // جستجوی جامع بین تمام آزمون‌ها
+        // ═══════════════════════════════════════════
+        let globalSearchTimer = null;
+
+        function performGlobalSearch() {
+            const input = document.getElementById('globalSearchInput');
+            const resultsDiv = document.getElementById('globalSearchResults');
+            const query = input.value.trim();
+            
+            if (!query) {
+                resultsDiv.style.display = 'none';
+                resultsDiv.innerHTML = '';
+                return;
+            }
+            
+            clearTimeout(globalSearchTimer);
+            globalSearchTimer = setTimeout(() => {
+                fetch(`/api/search?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.results.length === 0) {
+                            resultsDiv.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-tertiary);">🔍 هیچ نتیجه‌ای برای "<strong>${query}</strong>" یافت نشد.</div>`;
+                            resultsDiv.style.display = 'block';
+                            return;
+                        }
+                        
+                        let html = `<div style="margin-bottom: 12px; color: var(--text-secondary); font-size: 0.9rem;">${data.count} نتیجه برای "<strong>${query}</strong>"</div>`;
+                        html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+                        
+                        data.results.forEach(item => {
+                            const correctLetter = ['A', 'B', 'C', 'D'][item.correct] || '?';
+                            html += `
+                                <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 16px 20px; transition: all var(--transition-fast);">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+                                                <span style="font-size: 0.7rem; background: var(--bg-overlay); padding: 2px 10px; border-radius: 100px; color: var(--text-secondary);">📁 ${item.category || 'عمومی'}</span>
+                                                <span style="font-size: 0.7rem; background: var(--bg-overlay); padding: 2px 10px; border-radius: 100px; color: var(--text-secondary);">📊 سطح ${item.level}</span>
+                                                <span style="font-size: 0.7rem; background: var(--success-bg); color: var(--success); padding: 2px 10px; border-radius: 100px;">پاسخ: ${correctLetter}</span>
+                                            </div>
+                                            <div style="font-weight: 600; color: var(--text-primary); line-height: 1.8; margin-bottom: 4px;">
+                                                ${highlightText(item.question_text, query)}
+                                            </div>
+                                            <div style="font-size: 0.85rem; color: var(--text-tertiary);">
+                                                <span>از آزمون: <a href="/quiz/${item.quiz_name}?q=${encodeURIComponent(query)}#q-${item.question_id}" style="color: var(--accent); text-decoration: none;">${item.quiz_title}</a></span>
+                                            </div>
+                                        </div>
+                                        <a href="/quiz/${item.quiz_name}?q=${encodeURIComponent(query)}#q-${item.question_id}" class="btn btn-ghost" style="flex-shrink: 0; padding: 6px 14px; font-size: 0.8rem;">مشاهده</a>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        html += `</div>`;
+                        resultsDiv.innerHTML = html;
+                        resultsDiv.style.display = 'block';
+                    })
+                    .catch(err => {
+                        resultsDiv.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--error);">خطا در ارتباط با سرور</div>`;
+                        resultsDiv.style.display = 'block';
+                    });
+            }, 400);
+        }
+
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span style="background: var(--accent-subtle); color: var(--accent); padding: 0 4px; border-radius: 4px;">$1</span>');
+        }
+
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const q = urlParams.get('q');
+            if (q) {
+                const input = document.getElementById('globalSearchInput');
+                if (input) {
+                    input.value = q;
+                    performGlobalSearch();
+                }
+            }
+        })();
     </script>
     {% endif %}
 
