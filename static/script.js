@@ -28,7 +28,6 @@ function showToast(message, type = 'info') {
 }
 
 function init() {
-    // اگر پارامتر جستجو وجود داشت، آن را در جعبه جستجو قرار بده
     if (typeof SEARCH_QUERY !== 'undefined' && SEARCH_QUERY) {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
@@ -58,7 +57,7 @@ function init() {
 }
 
 // ═══════════════════════════════════════════
-// ADAPTIVE MODE LOGIC (نسخه بهبودیافته)
+// ADAPTIVE MODE LOGIC
 // ═══════════════════════════════════════════
 function setupAdaptiveMode() {
     const timerStat = document.getElementById('aiTimerStat');
@@ -68,7 +67,6 @@ function setupAdaptiveMode() {
     if (levelStat) levelStat.style.display = 'flex';
     if (aiBadge) aiBadge.style.display = 'inline-block';
     
-    // ====== ۱. فیلتر کردن سوالات پاسخ‌داده‌شده ======
     const answeredIds = new Set(Object.keys(userAnswers).map(Number));
     answeredIds.forEach(id => usedQuestionIds.add(id));
     
@@ -80,7 +78,6 @@ function setupAdaptiveMode() {
         return;
     }
     
-    // ====== ۲. انتخاب ۴ سوال اولیه (از سطوح مختلف) ======
     const initialQuestions = [];
     for (let lvl = 1; lvl <= 4; lvl++) {
         const pool = availableQuestions.filter(q => q.level == lvl && !usedQuestionIds.has(q.id));
@@ -91,11 +88,9 @@ function setupAdaptiveMode() {
         }
     }
     
-    // ====== ۳. بقیه سوالات (به جز پاسخ‌داده‌شده‌ها) ======
     const remaining = availableQuestions.filter(q => !usedQuestionIds.has(q.id));
     filteredQuestions = [...initialQuestions, ...remaining];
     
-    // ====== ۴. در صورت خالی بودن، پیام خطا ======
     if (filteredQuestions.length === 0) {
         showToast('⚠️ هیچ سوال جدیدی برای نمایش وجود ندارد.', 'warning');
         setTimeout(() => window.location.href = '/', 2000);
@@ -274,6 +269,12 @@ function renderQuestions() {
         const isBookmarked = bookmarks.includes(q.id);
         
         let aiIndicator = isAdaptiveMode ? `<div class="ai-difficulty-indicator level-${q.level}">Level ${q.level}</div>` : '';
+        
+        // نمایش دکمه‌های ویرایش و حذف فقط پس از پاسخ دادن
+        const editDeleteButtons = userAnswers[q.id] !== undefined ? `
+            <button class="edit-btn" onclick="openEditModal(${q.id})" title="ویرایش سوال" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; transition:all var(--transition-fast); padding:0 4px; line-height:1;">✏️</button>
+            <button class="delete-btn" onclick="deleteQuestion(${q.id})" title="حذف این سوال" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; transition:all var(--transition-fast); padding:0 4px; line-height:1;">🗑️</button>
+        ` : '';
 
         return `
         <div class="question-card ${index === currentQuestionIndex ? 'active' : ''}" id="q-card-${index}">
@@ -286,6 +287,7 @@ function renderQuestions() {
                 <div style="display:flex; gap:4px; align-items:center;">
                     <button class="ai-explain-btn" onclick="askAIExplanation(${q.id}, this)" title="دریافت توضیح هوشمند با AI">🤖</button>
                     <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(${q.id}, this)" title="نشان کردن">⭐</button>
+                    ${editDeleteButtons}
                 </div>
             </div>
             <div class="q-text">${q.text}</div>
@@ -374,6 +376,10 @@ function selectOption(qIndex, optIndex, correctIndex) {
     if (isAdaptiveMode && adaptiveHistory.length >= 4) {
         calculateNextAdaptiveLevel(isCorrect, timeTaken);
     }
+    
+    // Re-render current question to show edit/delete buttons
+    renderQuestions();
+    showQuestion(currentQuestionIndex);
 }
 
 function showQuestion(index) {
@@ -458,7 +464,7 @@ function updateProgressBar() {
 }
 
 // ═══════════════════════════════════════════
-// AI EXPLANATION (توضیح هوشمند با AI)
+// AI EXPLANATION
 // ═══════════════════════════════════════════
 function askAIExplanation(qId, btn) {
     const question = QUIZ_DATA.questions.find(q => q.id === qId);
@@ -517,6 +523,175 @@ function fallbackCopy(text, btn) {
     }
     document.body.removeChild(textarea);
 }
+
+// ═══════════════════════════════════════════
+// EDIT & DELETE FUNCTIONS
+// ═══════════════════════════════════════════
+
+function openEditModal(qId) {
+    const question = QUIZ_DATA.questions.find(q => q.id === qId);
+    if (!question) {
+        showToast('سوال پیدا نشد!', 'error');
+        return;
+    }
+    
+    document.getElementById('editQuestionId').value = qId;
+    document.getElementById('editQuizName').value = QUIZ_NAME;
+    document.getElementById('editText').value = question.text;
+    document.getElementById('editCategory').value = question.category || '';
+    document.getElementById('editLevel').value = question.level || 1;
+    document.getElementById('editOpt0').value = question.options[0] || '';
+    document.getElementById('editOpt1').value = question.options[1] || '';
+    document.getElementById('editOpt2').value = question.options[2] || '';
+    document.getElementById('editOpt3').value = question.options[3] || '';
+    document.getElementById('editExplanation').value = question.explanation || '';
+    
+    const radios = document.querySelectorAll('input[name="editCorrect"]');
+    radios.forEach(r => r.checked = false);
+    if (radios[question.correct]) radios[question.correct].checked = true;
+    
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+function saveEditedQuestion(event) {
+    event.preventDefault();
+    
+    const qId = parseInt(document.getElementById('editQuestionId').value);
+    const quizName = document.getElementById('editQuizName').value;
+    const text = document.getElementById('editText').value.trim();
+    const category = document.getElementById('editCategory').value.trim() || 'عمومی';
+    const level = parseInt(document.getElementById('editLevel').value) || 1;
+    const options = [
+        document.getElementById('editOpt0').value.trim(),
+        document.getElementById('editOpt1').value.trim(),
+        document.getElementById('editOpt2').value.trim(),
+        document.getElementById('editOpt3').value.trim()
+    ].filter(opt => opt.length > 0);
+    const correct = parseInt(document.querySelector('input[name="editCorrect"]:checked')?.value ?? 0);
+    const explanation = document.getElementById('editExplanation').value.trim() || 'توضیحی ثبت نشده است.';
+    
+    if (!text || options.length < 2) {
+        showToast('متن سوال و حداقل دو گزینه الزامی است.', 'error');
+        return;
+    }
+    
+    const updatedQuestion = {
+        id: qId,
+        category: category,
+        level: level,
+        text: text,
+        options: options,
+        correct: correct >= options.length ? 0 : correct,
+        explanation: explanation
+    };
+    
+    fetch('/api/edit_question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            quiz_name: quizName,
+            question_id: qId,
+            question: updatedQuestion
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showToast('✅ سوال با موفقیت ویرایش شد!', 'success');
+            closeEditModal();
+            
+            const index = QUIZ_DATA.questions.findIndex(q => q.id === qId);
+            if (index !== -1) QUIZ_DATA.questions[index] = updatedQuestion;
+            
+            const fIndex = filteredQuestions.findIndex(q => q.id === qId);
+            if (fIndex !== -1) filteredQuestions[fIndex] = updatedQuestion;
+            
+            renderQuestions();
+            updateStats();
+            
+            if (userAnswers[qId] !== undefined) {
+                const optionsEl = document.querySelectorAll(`#q-card-${currentQuestionIndex} .option`);
+                optionsEl.forEach((opt, idx) => {
+                    opt.classList.remove('correct', 'wrong', 'disabled');
+                    if (idx === updatedQuestion.correct) {
+                        opt.classList.add('correct', 'disabled');
+                    }
+                    if (userAnswers[qId] === idx && idx !== updatedQuestion.correct) {
+                        opt.classList.add('wrong', 'disabled');
+                    }
+                    if (userAnswers[qId] !== idx && idx !== updatedQuestion.correct) {
+                        opt.classList.add('disabled');
+                    }
+                });
+            }
+        } else {
+            showToast('❌ خطا: ' + data.error, 'error');
+        }
+    })
+    .catch(() => showToast('❌ خطا در ارتباط با سرور', 'error'));
+}
+
+function deleteQuestion(qId) {
+    if (!confirm('⚠️ آیا مطمئنید که می‌خواهید این سوال را حذف کنید؟\nاین عمل غیرقابل بازگشت است.')) return;
+    
+    fetch('/api/delete_question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            quiz_name: QUIZ_NAME,
+            question_id: qId
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showToast('✅ سوال با موفقیت حذف شد!', 'success');
+            
+            const index = QUIZ_DATA.questions.findIndex(q => q.id === qId);
+            if (index !== -1) {
+                QUIZ_DATA.questions.splice(index, 1);
+                QUIZ_DATA.questions.forEach((q, i) => q.id = i + 1);
+            }
+            
+            const fIndex = filteredQuestions.findIndex(q => q.id === qId);
+            if (fIndex !== -1) {
+                filteredQuestions.splice(fIndex, 1);
+                filteredQuestions.forEach((q, i) => q.id = i + 1);
+            }
+            
+            delete userAnswers[qId];
+            localStorage.setItem(STORAGE_PREFIX + 'answers', JSON.stringify(userAnswers));
+            
+            renderQuestions();
+            updateStats();
+            
+            if (currentQuestionIndex >= filteredQuestions.length) {
+                currentQuestionIndex = filteredQuestions.length - 1;
+            }
+            if (currentQuestionIndex >= 0) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                window.location.reload();
+            }
+        } else {
+            showToast('❌ خطا: ' + data.error, 'error');
+        }
+    })
+    .catch(() => showToast('❌ خطا در ارتباط با سرور', 'error'));
+}
+
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('editModal');
+    if (e.target === modal) closeEditModal();
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeEditModal();
+});
 
 document.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
