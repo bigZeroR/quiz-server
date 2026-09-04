@@ -15,6 +15,9 @@ let timerInterval = null;
 let adaptiveHistory = [];
 let usedQuestionIds = new Set();
 
+// ═══════════════════════════════════════════
+// TOAST NOTIFICATION
+// ═══════════════════════════════════════════
 function showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -27,6 +30,9 @@ function showToast(message, type = 'info') {
     }, 3000);
 }
 
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 function init() {
     if (typeof SEARCH_QUERY !== 'undefined' && SEARCH_QUERY) {
         const searchInput = document.getElementById('searchInput');
@@ -57,7 +63,7 @@ function init() {
 }
 
 // ═══════════════════════════════════════════
-// ADAPTIVE MODE LOGIC
+// ADAPTIVE MODE
 // ═══════════════════════════════════════════
 function setupAdaptiveMode() {
     const timerStat = document.getElementById('aiTimerStat');
@@ -270,7 +276,6 @@ function renderQuestions() {
         
         let aiIndicator = isAdaptiveMode ? `<div class="ai-difficulty-indicator level-${q.level}">Level ${q.level}</div>` : '';
         
-        // نمایش دکمه‌های ویرایش و حذف فقط پس از پاسخ دادن
         const editDeleteButtons = userAnswers[q.id] !== undefined ? `
             <button class="edit-btn" onclick="openEditModal(${q.id})" title="ویرایش سوال" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; transition:all var(--transition-fast); padding:0 4px; line-height:1;">✏️</button>
             <button class="delete-btn" onclick="deleteQuestion(${q.id})" title="حذف این سوال" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; transition:all var(--transition-fast); padding:0 4px; line-height:1;">🗑️</button>
@@ -377,7 +382,6 @@ function selectOption(qIndex, optIndex, correctIndex) {
         calculateNextAdaptiveLevel(isCorrect, timeTaken);
     }
     
-    // Re-render current question to show edit/delete buttons
     renderQuestions();
     showQuestion(currentQuestionIndex);
 }
@@ -527,7 +531,6 @@ function fallbackCopy(text, btn) {
 // ═══════════════════════════════════════════
 // EDIT & DELETE FUNCTIONS
 // ═══════════════════════════════════════════
-
 function openEditModal(qId) {
     const question = QUIZ_DATA.questions.find(q => q.id === qId);
     if (!question) {
@@ -684,15 +687,118 @@ function deleteQuestion(qId) {
     .catch(() => showToast('❌ خطا در ارتباط با سرور', 'error'));
 }
 
+// ═══════════════════════════════════════════
+// MODAL FUNCTIONS FOR ADAPTIVE MODE (صفحه اصلی)
+// ═══════════════════════════════════════════
+let selectedQuizForAdaptive = null;
+
+function openAdaptiveModal() {
+    // این تابع در صفحه اصلی استفاده می‌شود و quizList از طریق متغیر سراسری در دسترس است
+    // اما چون در script.js تعریف شده، باید از طریق متغیرهای سراسری کار کند.
+    // در صفحه اصلی، متغیر quizList در HTML تعریف شده، اما اینجا نمی‌توانیم از آن استفاده کنیم.
+    // پس باید از طریق فراخوانی از HTML استفاده کنیم که quizList را به عنوان آرگومان بفرستد.
+    // اما برای سادگی، فرض می‌کنیم که در صفحه اصلی این تابع با داده‌های مناسب صدا زده می‌شود.
+    // در HTML فعلی، تابع startAdaptiveMode وجود دارد که این را مدیریت می‌کند.
+    // ما فقط توابع کمکی را تعریف می‌کنیم.
+}
+
+function closeAdaptiveModal() {
+    const modal = document.getElementById('adaptiveModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function selectAdaptiveQuiz(quizFile, quizList) {
+    const selected = quizList.find(q => q.file === quizFile);
+    if (!selected) return;
+    
+    selectedQuizForAdaptive = selected;
+    closeAdaptiveModal();
+    showConfirmModal(selected);
+}
+
+function showConfirmModal(quiz) {
+    const content = document.getElementById('confirmContent');
+    if (!content) return;
+    
+    content.innerHTML = `
+        <div style="background: var(--bg-elevated); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-weight: 700; color: var(--text-primary); font-size: 1.1rem;">${quiz.title}</span>
+                <span style="background: var(--bg-overlay); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-mono);">${quiz.count} سوال</span>
+            </div>
+            <p style="color: var(--text-tertiary); font-size: 0.85rem; margin: 0;">${quiz.description || 'بدون توضیحات'}</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;">
+            <div style="background: var(--bg-overlay); padding: 12px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">🎯</div>
+                <div style="font-size: 0.7rem; color: var(--text-tertiary); font-weight: 500;">حذف سوالات پاسخ‌داده‌شده</div>
+            </div>
+            <div style="background: var(--bg-overlay); padding: 12px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">📊</div>
+                <div style="font-size: 0.7rem; color: var(--text-tertiary); font-weight: 500;">۴ سطح دشواری</div>
+            </div>
+            <div style="background: var(--bg-overlay); padding: 12px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">⏱️</div>
+                <div style="font-size: 0.7rem; color: var(--text-tertiary); font-weight: 500;">زمان‌سنجی هر سوال</div>
+            </div>
+            <div style="background: var(--bg-overlay); padding: 12px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">📈</div>
+                <div style="font-size: 0.7rem; color: var(--text-tertiary); font-weight: 500;">تنظیم سطح بر اساس عملکرد</div>
+            </div>
+        </div>
+    `;
+    
+    const titleEl = document.getElementById('confirmQuizTitle');
+    if (titleEl) titleEl.innerText = `آزمون: ${quiz.title}`;
+    
+    const modal = document.getElementById('confirmModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeConfirmModal() {
+    const modal = document.getElementById('confirmModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function startAdaptiveQuiz() {
+    if (!selectedQuizForAdaptive) return;
+    closeConfirmModal();
+    window.location.href = `/quiz/${selectedQuizForAdaptive.file}?mode=adaptive`;
+}
+
+// بستن مودال‌ها با کلیک روی پس‌زمینه و Escape
 document.addEventListener('click', function(e) {
-    const modal = document.getElementById('editModal');
-    if (e.target === modal) closeEditModal();
+    const adaptiveModal = document.getElementById('adaptiveModal');
+    if (adaptiveModal && e.target === adaptiveModal) {
+        closeAdaptiveModal();
+    }
+    const confirmModal = document.getElementById('confirmModal');
+    if (confirmModal && e.target === confirmModal) {
+        closeConfirmModal();
+    }
+    const editModal = document.getElementById('editModal');
+    if (editModal && e.target === editModal) {
+        closeEditModal();
+    }
 });
 
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeEditModal();
+    if (e.key === 'Escape') {
+        closeAdaptiveModal();
+        closeConfirmModal();
+        closeEditModal();
+    }
 });
 
+// ═══════════════════════════════════════════
+// KEYBOARD SHORTCUTS & TOUCH
+// ═══════════════════════════════════════════
 document.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (e.key === 'ArrowLeft') nextQuestion();
@@ -710,6 +816,9 @@ document.addEventListener('touchend', (e) => {
     }
 }, { passive: true });
 
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 if (typeof QUIZ_DATA !== 'undefined') {
     init();
 }
