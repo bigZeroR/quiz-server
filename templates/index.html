@@ -80,6 +80,93 @@
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════
+         MODAL ویرایش سوال
+    ═══════════════════════════════════════════ -->
+    <div id="editModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container" style="max-width: 700px;">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <span class="modal-icon">✏️</span>
+                    <div>
+                        <h2>ویرایش سوال</h2>
+                        <p class="modal-subtitle">متن، گزینه‌ها، پاسخ صحیح یا توضیح را تغییر دهید</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeEditModal()" title="بستن">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="editForm" onsubmit="saveEditedQuestion(event)">
+                    <input type="hidden" id="editQuestionId">
+                    <input type="hidden" id="editQuizName" value="{{ quiz_name }}">
+                    
+                    <div class="form-group">
+                        <label class="form-label">متن سوال</label>
+                        <textarea id="editText" class="form-textarea" rows="3" placeholder="متن سوال را وارد کنید..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">دسته‌بندی</label>
+                        <input type="text" id="editCategory" class="form-input" placeholder="مثال: مدیریت فایل">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">سطح دشواری</label>
+                        <select id="editLevel" class="form-select">
+                            <option value="1">1 - مقدماتی</option>
+                            <option value="2">2 - متوسط</option>
+                            <option value="3">3 - پیشرفته</option>
+                            <option value="4">4 - فوق‌پیشرفته</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">گزینه‌ها</label>
+                        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div class="option-input-wrapper">
+                                <span class="option-letter">A</span>
+                                <input type="text" id="editOpt0" class="option-input" placeholder="گزینه A">
+                            </div>
+                            <div class="option-input-wrapper">
+                                <span class="option-letter">B</span>
+                                <input type="text" id="editOpt1" class="option-input" placeholder="گزینه B">
+                            </div>
+                            <div class="option-input-wrapper">
+                                <span class="option-letter">C</span>
+                                <input type="text" id="editOpt2" class="option-input" placeholder="گزینه C">
+                            </div>
+                            <div class="option-input-wrapper">
+                                <span class="option-letter">D</span>
+                                <input type="text" id="editOpt3" class="option-input" placeholder="گزینه D">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">پاسخ صحیح</label>
+                        <div class="correct-answer-selector" style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <label class="radio-label"><input type="radio" name="editCorrect" value="0"> A</label>
+                            <label class="radio-label"><input type="radio" name="editCorrect" value="1"> B</label>
+                            <label class="radio-label"><input type="radio" name="editCorrect" value="2"> C</label>
+                            <label class="radio-label"><input type="radio" name="editCorrect" value="3"> D</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">توضیح پاسخ</label>
+                        <textarea id="editExplanation" class="form-textarea" rows="3" placeholder="دلیل درستی این گزینه را توضیح دهید..."></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">💾 ذخیره تغییرات</button>
+                        <button type="button" class="btn btn-ghost" onclick="closeEditModal()">انصراف</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <nav class="nav-controls">
         <button class="btn btn-nav" onclick="prevQuestion()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -258,92 +345,38 @@
         <p>ساخته شده با ❤️ برای یادگیری لینوکس و شبکه</p>
     </footer>
 
-    <!-- ═══════════════════════════════════════════
-         MODAL انتخاب آزمون هوشمند تطبیقی
-    ═══════════════════════════════════════════ -->
-    <div id="adaptiveModal" class="modal-overlay" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-header-left">
-                    <span class="modal-icon">🧠</span>
-                    <div>
-                        <h2>آزمون هوشمند تطبیقی</h2>
-                        <p class="modal-subtitle">یک آزمون را انتخاب کنید تا با حالت هوشمند شروع شود</p>
-                    </div>
-                </div>
-                <button class="modal-close" onclick="closeAdaptiveModal()" title="بستن">✕</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="modal-features">
-                    <div class="feature-chip">⚡ ۴ سطح دشواری</div>
-                    <div class="feature-chip">⏱️ زمان‌سنجی</div>
-                    <div class="feature-chip">📈 تنظیم سطح بر اساس عملکرد</div>
-                    <div class="feature-chip">🚫 حذف سوالات پاسخ‌داده‌شده</div>
-                </div>
-                
-                <div class="modal-quiz-grid" id="adaptiveQuizGrid">
-                    <!-- کارت‌های آزمون توسط جاوااسکریپت ساخته می‌شوند -->
-                </div>
-                
-                <div class="modal-footer">
-                    <button class="btn btn-ghost" onclick="closeAdaptiveModal()">انصراف</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // ═══════════════════════════════════════════
-        // MODAL انتخاب آزمون هوشمند تطبیقی
+        // شروع آزمون هوشمند تطبیقی (AI Adaptive Mode)
         // ═══════════════════════════════════════════
-        function openAdaptiveModal() {
+        function startAdaptiveMode(event) {
+            event.preventDefault();
             const quizList = {{ quizzes | tojson | safe }};
             if (quizList.length === 0) {
                 alert('هیچ آزمونی موجود نیست! ابتدا یک آزمون اضافه کنید.');
                 return;
             }
             
-            const grid = document.getElementById('adaptiveQuizGrid');
-            grid.innerHTML = quizList.map(q => {
-                let typeLabel = 'عمومی';
-                let typeClass = 'general';
-                if (q.type === 'command') { typeLabel = 'دستورات'; typeClass = 'command'; }
-                else if (q.type === 'network') { typeLabel = 'شبکه'; typeClass = 'network'; }
-                
-                return `
-                    <div class="modal-quiz-card" onclick="selectAdaptiveQuiz('${q.file}')">
-                        <div class="card-top">
-                            <span class="card-type-badge ${typeClass}">${typeLabel}</span>
-                            <span class="card-level-badge">L${q.level || '1'}</span>
-                        </div>
-                        <div class="card-title">${q.title}</div>
-                        <div class="card-desc">${q.description || 'بدون توضیحات'}</div>
-                        <div class="card-footer">
-                            <span class="card-count">📝 ${q.count} سوال</span>
-                            <span class="card-arrow">←</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            let options = '🧠 **آزمون هوشمند تطبیقی (AI Adaptive)**\n\n';
+            options += 'لطفاً شماره آزمون مورد نظر را انتخاب کنید:\n\n';
+            quizList.forEach((q, index) => {
+                options += `${index + 1}. ${q.title} (${q.count} سوال)\n`;
+            });
+            options += '\nشماره را وارد کنید (یا برای انصراف OK را خالی بگذارید):';
             
-            document.getElementById('adaptiveModal').style.display = 'flex';
-        }
-
-        function closeAdaptiveModal() {
-            document.getElementById('adaptiveModal').style.display = 'none';
-        }
-
-        function selectAdaptiveQuiz(quizFile) {
-            const quizList = {{ quizzes | tojson | safe }};
-            const selected = quizList.find(q => q.file === quizFile);
-            if (!selected) return;
+            const choice = prompt(options);
+            if (choice === null) return;
+            const selectedIndex = parseInt(choice) - 1;
+            if (isNaN(selectedIndex) || selectedIndex < 0 || selectedIndex >= quizList.length) {
+                alert('❌ شماره نامعتبر! لطفاً دوباره تلاش کنید.');
+                return;
+            }
             
-            closeAdaptiveModal();
+            const selectedQuiz = quizList[selectedIndex];
             
             const confirmMsg = `🧠 **آزمون هوشمند تطبیقی**\n\n` +
-                               `آزمون: "${selected.title}"\n` +
-                               `تعداد سوالات: ${selected.count}\n\n` +
+                               `آزمون: "${selectedQuiz.title}"\n` +
+                               `تعداد سوالات: ${selectedQuiz.count}\n\n` +
                                `🔹 **ویژگی‌های این حالت:**\n` +
                                `• سوالات قبلاً پاسخ‌داده‌شده نمایش داده نمی‌شوند\n` +
                                `• ۴ سوال اول از سطوح مختلف (۱ تا ۴) انتخاب می‌شوند\n` +
@@ -354,29 +387,9 @@
                                `آیا شروع کنیم؟`;
             
             if (confirm(confirmMsg)) {
-                window.location.href = `/quiz/${selected.file}?mode=adaptive`;
+                window.location.href = `/quiz/${selectedQuiz.file}?mode=adaptive`;
             }
         }
-
-        function startAdaptiveMode(event) {
-            event.preventDefault();
-            openAdaptiveModal();
-        }
-
-        // بستن مودال با کلیک روی پس‌زمینه
-        document.addEventListener('click', function(e) {
-            const modal = document.getElementById('adaptiveModal');
-            if (e.target === modal) {
-                closeAdaptiveModal();
-            }
-        });
-
-        // بستن با دکمه Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeAdaptiveModal();
-            }
-        });
 
         // ═══════════════════════════════════════════
         // جستجوی جامع بین تمام آزمون‌ها

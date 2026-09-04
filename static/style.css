@@ -1624,3 +1624,339 @@ body {
 #remainingStat .stat-value {
     color: var(--info) !important;
 }
+/* ═══════════════════════════════════════════
+   دکمه‌های ویرایش و حذف سوال
+═══════════════════════════════════════════ */
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    border-radius: var(--radius-sm);
+}
+
+.question-actions {
+    display: none;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: flex-end;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+}
+
+/* استایل‌های فرم ویرایش در مودال */
+#editForm .form-group {
+    margin-bottom: 14px;
+}
+
+#editForm .form-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+#editForm .form-textarea,
+#editForm .form-input,
+#editForm .form-select {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-fa);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+}
+
+#editForm .form-textarea:focus,
+#editForm .form-input:focus,
+#editForm .form-select:focus {
+    outline: none;
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+#editForm .option-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+}
+
+#editForm .option-letter {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.8rem;
+    min-width: 20px;
+}
+
+#editForm .option-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    outline: none;
+    font-family: var(--font-fa);
+    font-size: 0.85rem;
+    padding: 4px 0;
+}
+
+#editForm .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+#editForm .radio-label input[type="radio"] {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+/* ═══════════════════════════════════════════
+   استایل‌های مودال ویرایش
+═══════════════════════════════════════════ */
+
+/* استایل‌های مودال (قبلاً اضافه شده) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    animation: modalFadeIn 0.3s var(--ease-out);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-container {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    max-width: 780px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 255, 156, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--space-xl) var(--space-xl) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.modal-icon {
+    font-size: 2rem;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.modal-subtitle {
+    margin: 4px 0 0 0;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+.modal-close {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.modal-close:hover {
+    background: var(--error-bg);
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.modal-body {
+    padding: var(--space-lg) var(--space-xl) var(--space-xl);
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* استایل‌های فرم ویرایش */
+#editForm .form-group {
+    margin-bottom: 14px;
+}
+
+#editForm .form-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+#editForm .form-textarea,
+#editForm .form-input,
+#editForm .form-select {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-fa);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+}
+
+#editForm .form-textarea:focus,
+#editForm .form-input:focus,
+#editForm .form-select:focus {
+    outline: none;
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+#editForm .option-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+}
+
+#editForm .option-letter {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.8rem;
+    min-width: 20px;
+}
+
+#editForm .option-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    outline: none;
+    font-family: var(--font-fa);
+    font-size: 0.85rem;
+    padding: 4px 0;
+}
+
+#editForm .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+#editForm .radio-label input[type="radio"] {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+@media (max-width: 600px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: stretch;
+    }
+    
+    .modal-header-left {
+        gap: var(--space-sm);
+    }
+    
+    .modal-close {
+        align-self: flex-end;
+    }
+    
+    .modal-body {
+        padding: var(--space-md);
+    }
+}
+
+/* دکمه‌های ویرایش و حذف */
+.edit-btn, .delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.edit-btn:hover {
+    transform: scale(1.2);
+    color: var(--info);
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+    color: var(--error);
+}

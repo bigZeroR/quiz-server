@@ -187,6 +187,106 @@ def search_questions():
         'results': results[:100]  # حداکثر ۱۰۰ نتیجه
     })
 
+# ============================================================
+# API ویرایش و حذف سوالات (در لحظه)
+# ============================================================
+
+@app.route('/api/edit_question', methods=['POST'])
+def edit_question():
+    global QUIZ_CACHE
+    data = request.json
+    quiz_name = data.get('quiz_name')
+    question_id = data.get('question_id')
+    updated_question = data.get('question')
+    
+    if not quiz_name or question_id is None or not updated_question:
+        return jsonify({'success': False, 'error': 'اطلاعات ناقص'}), 400
+    
+    # بارگذاری مجدد کش
+    load_quiz_files(force_reload=True)
+    
+    if quiz_name not in QUIZ_CACHE:
+        return jsonify({'success': False, 'error': 'آزمون یافت نشد'}), 404
+    
+    file_path = os.path.join(DATA_DIR, f"{quiz_name}.json")
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            quiz_data = json.load(f)
+        
+        # پیدا کردن و ویرایش سوال
+        questions = quiz_data.get('questions', [])
+        found = False
+        for i, q in enumerate(questions):
+            if q.get('id') == question_id:
+                questions[i] = updated_question
+                found = True
+                break
+        
+        if not found:
+            return jsonify({'success': False, 'error': 'سوال یافت نشد'}), 404
+        
+        # ذخیره در فایل
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(quiz_data, f, ensure_ascii=False, indent=2)
+        
+        # پاک کردن کش و بارگذاری مجدد
+        QUIZ_CACHE = {}
+        load_quiz_files(force_reload=True)
+        
+        return jsonify({'success': True, 'message': 'سوال با موفقیت ویرایش شد'})
+    
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/delete_question', methods=['POST'])
+def delete_question():
+    global QUIZ_CACHE
+    data = request.json
+    quiz_name = data.get('quiz_name')
+    question_id = data.get('question_id')
+    
+    if not quiz_name or question_id is None:
+        return jsonify({'success': False, 'error': 'اطلاعات ناقص'}), 400
+    
+    # بارگذاری مجدد کش
+    load_quiz_files(force_reload=True)
+    
+    if quiz_name not in QUIZ_CACHE:
+        return jsonify({'success': False, 'error': 'آزمون یافت نشد'}), 404
+    
+    file_path = os.path.join(DATA_DIR, f"{quiz_name}.json")
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            quiz_data = json.load(f)
+        
+        # پیدا کردن و حذف سوال
+        questions = quiz_data.get('questions', [])
+        new_questions = [q for q in questions if q.get('id') != question_id]
+        
+        if len(new_questions) == len(questions):
+            return jsonify({'success': False, 'error': 'سوال یافت نشد'}), 404
+        
+        # بازسازی IDها
+        for i, q in enumerate(new_questions, 1):
+            q['id'] = i
+        
+        quiz_data['questions'] = new_questions
+        
+        # ذخیره در فایل
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(quiz_data, f, ensure_ascii=False, indent=2)
+        
+        # پاک کردن کش و بارگذاری مجدد
+        QUIZ_CACHE = {}
+        load_quiz_files(force_reload=True)
+        
+        return jsonify({'success': True, 'message': 'سوال با موفقیت حذف شد'})
+    
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     os.makedirs(DATA_DIR, exist_ok=True)
     print("=" * 50)
