@@ -7,251 +7,97 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         .creator-container { max-width: 900px; margin: 40px auto; padding: 0 16px; }
-        .creator-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+        .creator-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle, #ccc); }
         .creator-header h1 { margin: 0; font-size: 1.5rem; text-align: right; }
         .creator-header h1::before { content: '🛠️ '; }
         
-        .form-section { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; }
-        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .form-section { background: var(--bg-surface, #fff); border: 1px solid var(--border-subtle, #eee); border-radius: var(--radius-lg, 12px); padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--accent, #007bff); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .form-group { margin-bottom: 16px; }
         .form-group.full-width { grid-column: 1 / -1; }
         
-        .form-label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+        .form-label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-secondary, #666); font-weight: 500; }
         .form-input, .form-textarea, .form-select { 
-            width: 100%; padding: 10px 14px; background: var(--bg-base); border: 1px solid var(--border-default); 
-            border-radius: var(--radius-md); color: var(--text-primary); font-family: var(--font-fa); font-size: 0.95rem; 
-            transition: all var(--transition-fast);
+            width: 100%; padding: 10px 14px; background: var(--bg-base, #f9f9f9); border: 1px solid var(--border-default, #ddd); 
+            border-radius: var(--radius-md, 8px); color: var(--text-primary, #333); font-family: var(--font-fa, sans-serif); font-size: 0.95rem; 
+            transition: all 0.2s;
+            box-sizing: border-box;
         }
         .form-input:focus, .form-textarea:focus, .form-select:focus { 
-            outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); 
+            outline: none; border-color: var(--accent, #007bff); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); 
         }
         .form-textarea { min-height: 100px; resize: vertical; direction: rtl; }
-        .form-hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
+        .form-hint { font-size: 0.75rem; color: var(--text-tertiary, #999); margin-top: 4px; }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .option-input-wrapper { display: flex; align-items: center; gap: 8px; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px 12px; }
-        .option-letter { font-family: var(--font-mono); font-weight: 700; color: var(--accent); font-size: 0.9rem; }
-        .option-input { flex: 1; background: transparent; border: none; color: var(--text-primary); outline: none; font-family: var(--font-fa); font-size: 0.9rem; }
+        .option-input-wrapper { display: flex; align-items: center; gap: 8px; background: var(--bg-base, #f9f9f9); border: 1px solid var(--border-subtle, #eee); border-radius: 8px; padding: 8px 12px; }
+        .option-letter { font-family: monospace; font-weight: 700; color: var(--accent, #007bff); font-size: 0.9rem; }
+        .option-input { flex: 1; background: transparent; border: none; color: var(--text-primary, #333); outline: none; font-family: var(--font-fa, sans-serif); font-size: 0.9rem; }
 
         .correct-answer-selector { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
-        .radio-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9rem; color: var(--text-secondary); }
-        .radio-label input { accent-color: var(--accent); }
+        .radio-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9rem; color: var(--text-secondary, #666); }
+        .radio-label input { accent-color: var(--accent, #007bff); }
 
-        .btn-add { width: 100%; padding: 12px; background: var(--info-bg); border: 1px solid var(--info); color: var(--info); border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-family: var(--font-fa); transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
-        .btn-add:hover { background: var(--info); color: #fff; }
+        .btn { padding: 10px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: 0.2s; border: 1px solid transparent; }
+        .btn-primary { background: var(--accent, #007bff); color: #fff; border: none; }
+        .btn-ghost { background: transparent; border: 1px solid var(--border-default, #ddd); color: var(--text-secondary, #666); }
+
+        .btn-add { width: 100%; padding: 12px; background: rgba(0, 123, 255, 0.1); border: 1px solid rgba(0, 123, 255, 0.3); color: var(--accent, #007bff); border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+        .btn-add:hover { background: var(--accent, #007bff); color: #fff; }
 
         .questions-list { display: flex; flex-direction: column; gap: 12px; }
-        .question-item { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; transition: var(--transition-fast); }
-        .question-item:hover { border-color: var(--border-default); }
+        .question-item { background: var(--bg-elevated, #fff); border: 1px solid var(--border-subtle, #eee); border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; transition: 0.2s; }
+        .question-item:hover { border-color: var(--border-default, #ddd); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .q-item-info { flex: 1; }
-        .q-item-title { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; font-size: 0.95rem; }
-        .q-item-meta { font-size: 0.8rem; color: var(--text-tertiary); display: flex; gap: 12px; flex-wrap: wrap; }
+        .q-item-title { font-weight: 600; color: var(--text-primary, #333); margin-bottom: 4px; font-size: 0.95rem; }
+        .q-item-meta { font-size: 0.8rem; color: var(--text-tertiary, #999); display: flex; gap: 12px; flex-wrap: wrap; }
         .q-item-actions { display: flex; gap: 8px; flex-shrink: 0; }
-        .btn-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: var(--bg-base); color: var(--text-secondary); cursor: pointer; transition: var(--transition-fast); }
-        .btn-icon:hover { color: var(--text-primary); border-color: var(--border-default); }
-        .btn-icon.delete:hover { color: var(--error); border-color: var(--error); background: var(--error-bg); }
+        .btn-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid var(--border-subtle, #eee); background: var(--bg-base, #f9f9f9); color: var(--text-secondary, #666); cursor: pointer; transition: 0.2s; }
+        .btn-icon:hover { color: var(--text-primary, #333); border-color: var(--border-default, #ddd); }
+        .btn-icon.delete:hover { color: #dc3545; border-color: #dc3545; background: rgba(220, 53, 69, 0.1); }
 
-        .save-bar { position: sticky; bottom: 20px; background: var(--bg-surface); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-lg); backdrop-filter: blur(10px); z-index: 100; }
-        .btn-save { background: var(--accent); color: var(--bg-base); border: none; padding: 12px 32px; border-radius: var(--radius-md); cursor: pointer; font-weight: 800; font-size: 1rem; font-family: var(--font-fa); transition: var(--transition-fast); display: flex; align-items: center; gap: 8px; }
-        .btn-save:hover { background: var(--accent-dim); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+        .save-bar { position: sticky; bottom: 20px; background: var(--bg-surface, #fff); border: 1px solid var(--border-strong, #ccc); border-radius: 12px; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; }
+        .btn-save { background: var(--accent, #007bff); color: #fff; border: none; padding: 12px 32px; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 1rem; font-family: inherit; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-save:hover { background: #0056b3; transform: translateY(-2px); }
         .btn-save:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
         .hidden { display: none !important; }
         
-        .clipboard-btn { background: var(--accent-subtle); border: 1px solid var(--accent-dim); color: var(--accent); padding: 8px 16px; border-radius: var(--radius-md); cursor: pointer; font-family: var(--font-fa); font-size: 0.85rem; font-weight: 600; transition: var(--transition-fast); display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
-        .clipboard-btn:hover { background: var(--accent-glow); }
+        .clipboard-btn { background: rgba(0, 123, 255, 0.1); border: 1px solid rgba(0, 123, 255, 0.3); color: var(--accent, #007bff); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+        .clipboard-btn:hover { background: var(--accent, #007bff); color: #fff; }
 
-        /* ═══════════════════════════════════════════
-           AI GENERATOR TAB STYLES
-        ═══════════════════════════════════════════ */
-        .ai-banner {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.08));
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .ai-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .ai-banner-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--network);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-        }
-        .ai-banner-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            position: relative;
-        }
+        .ai-banner { background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .ai-banner-title { font-size: 1rem; font-weight: 700; color: #8b5cf6; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .ai-banner-desc { font-size: 0.85rem; color: var(--text-secondary, #666); line-height: 1.8; }
+        .ai-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+        .ai-step { background: var(--bg-base, #f9f9f9); border: 1px solid var(--border-subtle, #eee); border-radius: 8px; padding: 14px; position: relative; }
+        .ai-step-number { position: absolute; top: -10px; right: 14px; background: #8b5cf6; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
+        .ai-step-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; margin-top: 4px; }
+        .ai-step-desc { font-size: 0.75rem; color: var(--text-tertiary, #999); line-height: 1.6; }
+        .ai-tools { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+        .ai-tool-btn { background: #fff; border: 1px solid #eee; color: #666; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.8rem; font-weight: 500; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+        .ai-tool-btn:hover { border-color: #8b5cf6; color: #8b5cf6; background: rgba(139, 92, 246, 0.05); }
+        .ai-textarea { min-height: 200px; direction: rtl; }
+        .ai-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .btn-ai { padding: 12px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.88rem; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid; }
+        .btn-ai-primary { background: #8b5cf6; border-color: #8b5cf6; color: #fff; }
+        .btn-ai-primary:hover { background: #7c3aed; }
+        .btn-ai-secondary { background: #fff; border-color: #ddd; color: #333; }
+        .btn-ai-secondary:hover { border-color: #8b5cf6; color: #8b5cf6; }
+        .ai-preview { margin-top: 16px; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 16px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.78rem; color: #d4d4d4; direction: ltr; text-align: left; white-space: pre-wrap; word-break: break-word; line-height: 1.6; }
+        .ai-preview:empty::before { content: 'پیش‌نمایش پرامپت نهایی اینجا نمایش داده می‌شود...'; color: #666; font-style: italic; }
+        .ai-counter { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.75rem; color: var(--text-tertiary, #999); font-family: monospace; }
+        .ai-counter-good { color: #28a745; }
+        .ai-counter-warn { color: #ffc107; }
 
-        .ai-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .ai-step {
-            background: var(--bg-base);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 14px;
-            position: relative;
-        }
-        .ai-step-number {
-            position: absolute;
-            top: -10px;
-            right: 14px;
-            background: var(--network);
-            color: #fff;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            font-family: var(--font-mono);
-        }
-        .ai-step-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            margin-top: 4px;
-        }
-        .ai-step-desc {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            line-height: 1.6;
-        }
-
-        .ai-tools {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 16px 0;
-        }
-        .ai-tool-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            padding: 8px 14px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-family: var(--font-fa);
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: var(--transition-fast);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-        .ai-tool-btn:hover {
-            border-color: var(--network);
-            color: var(--network);
-            background: var(--network-bg);
-        }
-
-        .ai-textarea {
-            min-height: 200px;
-            font-family: var(--font-fa);
-            direction: rtl;
-        }
-
-        .ai-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 16px;
-        }
-        .btn-ai {
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-family: var(--font-fa);
-            font-size: 0.88rem;
-            font-weight: 600;
-            transition: var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: 1px solid;
-        }
-        .btn-ai-primary {
-            background: var(--network);
-            border-color: var(--network);
-            color: #fff;
-        }
-        .btn-ai-primary:hover {
-            background: #7c3aed;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
-        }
-        .btn-ai-secondary {
-            background: var(--bg-elevated);
-            border-color: var(--border-default);
-            color: var(--text-primary);
-        }
-        .btn-ai-secondary:hover {
-            border-color: var(--network);
-            color: var(--network);
-        }
-
-        .ai-preview {
-            margin-top: 16px;
-            background: var(--bg-base);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            direction: ltr;
-            text-align: left;
-            white-space: pre-wrap;
-            word-break: break-word;
-            line-height: 1.6;
-        }
-        .ai-preview:empty::before {
-            content: 'پیش‌نمایش پرامپت نهایی اینجا نمایش داده می‌شود...';
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .ai-counter {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            font-family: var(--font-mono);
-        }
-        .ai-counter-good { color: var(--success); }
-        .ai-counter-warn { color: var(--warning); }
+        /* استایل‌های اضافه شده برای رفع باگ (Toast) */
+        .toast { position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-family: inherit; z-index: 9999; opacity: 0; transform: translateY(20px); transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast-info { background: #17a2b8; }
+        .toast-success { background: #28a745; }
+        .toast-error { background: #dc3545; }
 
         @media (max-width: 768px) {
             .form-grid, .options-grid, .ai-actions { grid-template-columns: 1fr; }
@@ -288,7 +134,6 @@
                     <select id="quizType" class="form-select" onchange="toggleCommandFields()">
                         <option value="general">عمومی (General)</option>
                         <option value="command">دستورات لینوکس (Command)</option>
-                        <option value="network">شبکه (Network)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -297,7 +142,6 @@
                         <option value="1">مقدماتی (Level 1)</option>
                         <option value="2">متوسط (Level 2)</option>
                         <option value="3">پیشرفته (Level 3)</option>
-                        <option value="4">فوق پیشرفته (Level 4)</option>
                     </select>
                 </div>
             </div>
@@ -307,29 +151,29 @@
         <div class="form-section">
             <div class="section-title">➕ افزودن سوال جدید</div>
             
-            <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="switchTab('paste')" id="tab-paste-btn" style="flex:1; min-width: 140px;">📋 چسباندن هوشمند</button>
                 <button class="btn btn-ghost" onclick="switchTab('manual')" id="tab-manual-btn" style="flex:1; min-width: 140px;">✍️ ورود دستی</button>
-                <button class="btn btn-ghost" onclick="switchTab('ai')" id="tab-ai-btn" style="flex:1; min-width: 140px; background: var(--network-bg); color: var(--network); border-color: rgba(139, 92, 246, 0.3);">🤖 تولید با AI</button>
+                <button class="btn btn-ghost" onclick="switchTab('ai')" id="tab-ai-btn" style="flex:1; min-width: 140px; background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border-color: rgba(139, 92, 246, 0.3);">🤖 تولید با AI</button>
             </div>
 
             <input type="hidden" id="editingIndex" value="-1">
 
-            <!-- ═══════════════ تب پیست هوشمند ═══════════════ -->
+            <!-- تب پیست هوشمند -->
             <div id="tab-paste" class="tab-content">
                 <button class="clipboard-btn" onclick="pasteFromClipboard()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
                     چسباندن خودکار از کلیپ‌بورد
                 </button>
                 <div class="form-group">
-                    <label class="form-label">متن خام سوالات (فرمت: Q, A, B, C, D, Answer, Explanation)</label>
-                    <textarea id="rawText" class="form-textarea" placeholder="Q: متن سوال اینجا&#10;A) گزینه اول&#10;B) گزینه دوم&#10;C) گزینه سوم&#10;D) گزینه چهارم&#10;Answer: B&#10;Explanation: دلیل درستی این گزینه..."></textarea>
-                    <div class="form-hint">💡 می‌توانید متن را از فایل Word یا PDF کپی کرده و اینجا پیست کنید.</div>
+                    <label class="form-label">متن خام یا JSON خام هوش مصنوعی</label>
+                    <textarea id="rawText" class="form-textarea" placeholder="می‌توانید فرمت متنی (Q, A, B...) و یا خروجی JSON تولید شده توسط AI را اینجا پیست کنید. سیستم به صورت خودکار تشخیص می‌دهد."></textarea>
+                    <div class="form-hint">💡 سیستم به صورت هوشمند فرمت JSON و فرمت‌های متنی ساده را تفکیک و پردازش می‌کند.</div>
                 </div>
                 <button class="btn-add" onclick="parseRawText()">⚙️ پردازش و افزودن به لیست</button>
             </div>
 
-            <!-- ═══════════════ تب ساخت دستی ═══════════════ -->
+            <!-- تب ساخت دستی -->
             <div id="tab-manual" class="tab-content hidden">
                 <div class="form-grid">
                     <div class="form-group">
@@ -340,23 +184,18 @@
                         <label class="form-label">سطح سوال</label>
                         <select id="qLevel" class="form-select">
                             <option value="1">1</option><option value="2">2</option>
-                            <option value="3">3</option><option value="4">4</option>
+                            <option value="3">3</option>
                         </select>
                     </div>
                     
                     <div class="form-group full-width">
                         <label class="form-label">متن سوال *</label>
                         <textarea id="qText" class="form-textarea" placeholder="متن سوال را اینجا بنویسید..."></textarea>
-                        <div class="form-hint">💡 برای نمایش کد از تگ <code>&lt;code&gt;دستور&lt;/code&gt;</code> استفاده کنید.</div>
                     </div>
 
                     <div id="commandFields" class="form-group full-width hidden">
-                        <label class="form-label">دستور مرتبط (Command)</label>
-                        <input type="text" id="qCommand" class="form-input" placeholder="مثال: ls -la" style="direction: ltr; text-align: left; font-family: var(--font-mono);">
-                    </div>
-                    <div id="exampleFields" class="form-group full-width hidden">
-                        <label class="form-label">مثال خروجی (Example)</label>
-                        <textarea id="qExample" class="form-textarea" placeholder="خروجی نمونه دستور..." style="direction: ltr; text-align: left; font-family: var(--font-mono); min-height: 80px;"></textarea>
+                        <label class="form-label">دستور مرتبط (اختیاری - به توضیحات اضافه می‌شود)</label>
+                        <input type="text" id="qCommand" class="form-input" placeholder="مثال: ls -la" style="direction: ltr; text-align: left; font-family: monospace;">
                     </div>
 
                     <div class="form-group full-width">
@@ -389,21 +228,18 @@
                 </button>
             </div>
 
-            <!-- ═══════════════ تب جدید: تولید هوشمند با AI ═══════════════ -->
+            <!-- تب تولید هوشمند با AI -->
             <div id="tab-ai" class="tab-content hidden">
-                
-                <!-- بنر معرفی -->
                 <div class="ai-banner">
                     <div class="ai-banner-title">
                         <span>🧠</span>
                         <span>تولید خودکار سوالات با هوش مصنوعی</span>
                     </div>
                     <div class="ai-banner-desc">
-                        متن جزوه، کتاب یا یادداشت‌های خود را وارد کنید. سیستم به صورت خودکار یک <strong style="color: var(--network);">پرامپت مهندسی‌شده</strong> می‌سازد که با ارسال آن به ChatGPT، Claude یا Gemini، سوالات JSON با کیفیت بالا و عمق مفهومی تولید می‌کنند.
+                        متن جزوه، کتاب یا یادداشت‌های خود را وارد کنید. سیستم به صورت خودکار یک <strong style="color: #8b5cf6;">پرامپت مهندسی‌شده</strong> می‌سازد که با ارسال آن به ChatGPT، Claude یا Gemini، سوالات JSON با کیفیت بالا و عمق مفهومی تولید می‌کنند.
                     </div>
                 </div>
 
-                <!-- راهنمای گام به گام -->
                 <div class="ai-steps">
                     <div class="ai-step">
                         <div class="ai-step-number">1</div>
@@ -423,80 +259,50 @@
                     <div class="ai-step">
                         <div class="ai-step-number">4</div>
                         <div class="ai-step-title">وارد کردن</div>
-                        <div class="ai-step-desc">JSON دریافتی را در تب «چسباندن هوشمند» پیست کرده یا مستقیماً در <code style="color: var(--accent);">data/</code> ذخیره کنید.</div>
+                        <div class="ai-step-desc">JSON دریافتی را در تب «چسباندن هوشمند» پیست کنید. سیستم خودکار آن را می‌خواند!</div>
                     </div>
                 </div>
 
-                <!-- ابزارهای AI -->
                 <div style="margin-bottom: 16px;">
                     <div class="form-label">🔗 باز کردن مستقیم در ابزار AI:</div>
                     <div class="ai-tools">
-                        <a href="https://chat.openai.com" target="_blank" class="ai-tool-btn">
-                            <span>🟢</span> ChatGPT
-                        </a>
-                        <a href="https://claude.ai" target="_blank" class="ai-tool-btn">
-                            <span>🟠</span> Claude
-                        </a>
-                        <a href="https://gemini.google.com" target="_blank" class="ai-tool-btn">
-                            <span>🔵</span> Gemini
-                        </a>
-                        <a href="https://poe.com" target="_blank" class="ai-tool-btn">
-                            <span>🟣</span> Poe
-                        </a>
-                        <a href="https://chat.deepseek.com" target="_blank" class="ai-tool-btn">
-                            <span>⚫</span> DeepSeek
-                        </a>
+                        <a href="https://chat.openai.com" target="_blank" class="ai-tool-btn"><span>🟢</span> ChatGPT</a>
+                        <a href="https://claude.ai" target="_blank" class="ai-tool-btn"><span>🟠</span> Claude</a>
+                        <a href="https://gemini.google.com" target="_blank" class="ai-tool-btn"><span>🔵</span> Gemini</a>
                     </div>
                 </div>
 
-                <!-- ورودی متن کاربر -->
                 <div class="form-group">
                     <label class="form-label">📄 متن ورودی (جزوه، کتاب یا محتوای آموزشی):</label>
-                    <textarea id="aiInputText" class="form-textarea ai-textarea" oninput="updateAIPreview()" placeholder="متن جزوه، فصل کتاب، یا هر محتوای آموزشی که می‌خواهید از آن سوال استخراج شود را اینجا پیست کنید...
-
-مثال:
-فصل سوم: مدیریت فایل‌ها در لینوکس
-دستور find یکی از قدرتمندترین ابزارهای جستجو در لینوکس است..."></textarea>
+                    <textarea id="aiInputText" class="form-textarea ai-textarea" oninput="updateAIPreview()" placeholder="متن جزوه، فصل کتاب، یا هر محتوای آموزشی که می‌خواهید از آن سوال استخراج شود را اینجا پیست کنید..."></textarea>
                     <div class="ai-counter">
                         <span>تعداد کاراکتر: <span id="charCount" class="ai-counter-good">0</span></span>
                         <span>تعداد کلمات: <span id="wordCount" class="ai-counter-good">0</span></span>
                     </div>
                 </div>
 
-                <!-- دکمه‌های عملیاتی -->
                 <div class="ai-actions">
                     <button class="btn-ai btn-ai-primary" onclick="copyFullPrompt()">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        کپی پرامپت کامل (پرامپت + متن شما)
-                    </button>
-                    <button class="btn-ai btn-ai-secondary" onclick="copySystemPromptOnly()">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                        کپی فقط پرامپت سیستم (بدون متن)
+                        کپی پرامپت کامل
                     </button>
                     <button class="btn-ai btn-ai-secondary" onclick="loadSampleText()">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         بارگذاری متن نمونه
-                    </button>
-                    <button class="btn-ai btn-ai-secondary" onclick="clearAIInput()">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
-                        پاک کردن
                     </button>
                 </div>
 
-                <!-- پیش‌نمایش پرامپت نهایی -->
                 <div class="form-group" style="margin-top: 20px;">
                     <label class="form-label">👁️ پیش‌نمایش پرامپت نهایی:</label>
                     <div class="ai-preview" id="aiPreview"></div>
                 </div>
-
             </div>
         </div>
 
-        <!-- بخش ۳: لیست سوالات اضافه‌شده -->
+        <!-- لیست سوالات -->
         <div class="form-section">
             <div class="section-title">📋 لیست سوالات آماده (<span id="qCount">0</span>)</div>
             <div id="questionsList" class="questions-list">
-                <div class="empty-state" style="padding: 20px; text-align: center; color: var(--text-tertiary);">
+                <div class="empty-state" style="padding: 20px; text-align: center; color: #999;">
                     هنوز سوالی اضافه نشده است.
                 </div>
             </div>
@@ -504,9 +310,9 @@
 
         <div style="height: 100px;"></div>
 
-        <!-- نوار ذخیره شناور -->
+        <!-- نوار ذخیره -->
         <div class="save-bar">
-            <div style="color: var(--text-secondary); font-size: 0.9rem;">
+            <div style="color: #666; font-size: 0.9rem;">
                 <span id="totalQuestions">0</span> سوال آماده ذخیره‌سازی است.
             </div>
             <button class="btn-save" onclick="publishQuiz()" id="publishBtn">
@@ -520,22 +326,16 @@
         let questions = [];
         let editingIndex = -1;
 
-        // ═══════════════════════════════════════════
-        // AI SYSTEM PROMPT (پرامپت سیستم)
-        // ═══════════════════════════════════════════
         const AI_SYSTEM_PROMPT = `(نقش تو: تو یک "معمار ارشد آزمون‌های تخصصی" و "متخصص استخراج داده‌های ساختاریافته (JSON)" هستی.
 
 هدف: استخراج تمام نکات ریز، مفهومی، حفظی، سناریوهای عیب‌یابی و جزئیات فنی از متن ارائه‌شده در پایین و تبدیل آن‌ها به حداکثر تعداد ممکن سوال تستی با کیفیت بسیار بالا و عمیق.
 
 قوانین سخت‌گیرانه تولید (باید مو به مو اجرا شوند):
 1. خروجی ۱۰۰٪ JSON: هیچ متن اضافه‌ای، مقدمه‌ای، نتیجه‌گیری یا توضیحی قبل یا بعد از بلاک کد JSON ننویس. خروجی باید دقیقاً با \`{\` شروع و با \`}\` تمام شود.
-2. حداکثر ظرفیت توکن: تا آخرین حد مجاز توکن‌های خروجی خود سوال تولید کن. اگر به محدودیت توکن رسیدی، خروجی را دقیقاً بعد از بسته شدن یک آبجکت سوال (\`}\`) و قبل از کاما متوقف کن تا من با دستور "ادامه بده" بخش بعدی را دریافت کنم.
-3. عمق یادگیری: سوالات سطحی و حفظی ساده نساز. روی تفاوت‌های ظریف، پارامترهای خاص، سناریوهای شکست (Troubleshooting)، استثناها و نکاتی که در آزمون‌های واقعی دام آموزشی هستند تمرکز کن.
-4. گزینه‌های انحرافی هوشمند: سه گزینه غلط باید کاملاً منطقی، حرفه‌ای و شبیه به اشتباهات رایج کاربران باشند، نه گزینه‌های پرت، تکراری یا بی‌ربط.
-5. پاسخ تشریحی جامع: فیلد \`explanation\` باید دقیقاً توضیح دهد چرا گزینه صحیح درست است و چرا گزینه‌های دیگر غلط هستند. استفاده از تگ‌های \`<code>\` برای اصطلاحات فنی، دستورات یا کدها در متن سوال و توضیحات الزامی است.
-6. دسته‌بندی پویا: بر اساس محتوای متن ورودی، دسته‌بندی‌های (Category) منطقی، دقیق و مرتبط استخراج کن.
-
-ساختار دقیق JSON (دقیقاً همین فرمت را رعایت کن و هیچ فیلدی را حذف یا اضافه نکن):
+2. عمق یادگیری: سوالات سطحی و حفظی ساده نساز. روی تفاوت‌های ظریف، پارامترهای خاص، سناریوهای شکست (Troubleshooting)، استثناها و نکاتی که در آزمون‌های واقعی دام آموزشی هستند تمرکز کن.
+3. گزینه‌های انحرافی هوشمند: سه گزینه غلط باید کاملاً منطقی، حرفه‌ای و شبیه به اشتباهات رایج کاربران باشند.
+4. پاسخ تشریحی جامع: فیلد \`explanation\` باید دقیقاً توضیح دهد چرا گزینه صحیح درست است و چرا گزینه‌های دیگر غلط هستند. استفاده از تگ‌های \`<code>\` برای اصطلاحات فنی الزامی است.
+5. ساختار دقیق JSON (دقیقاً همین فرمت را رعایت کن و هیچ فیلدی را حذف یا اضافه نکن):
 {
   "title": "عنوان کلی مبحث استخراج‌شده از متن",
   "description": "توضیح کوتاه و جامع درباره محتوای پوشش‌داده‌شده",
@@ -559,9 +359,6 @@
 
 متن ورودی برای استخراج سوالات:`;
 
-        // ═══════════════════════════════════════════
-        // TAB SWITCHING
-        // ═══════════════════════════════════════════
         function switchTab(tab) {
             document.getElementById('tab-paste').classList.toggle('hidden', tab !== 'paste');
             document.getElementById('tab-manual').classList.toggle('hidden', tab !== 'manual');
@@ -573,29 +370,18 @@
             const aiBtn = document.getElementById('tab-ai-btn');
             if (tab === 'ai') {
                 aiBtn.className = 'btn btn-primary';
-                aiBtn.style.background = 'var(--network)';
+                aiBtn.style.background = '#8b5cf6';
                 aiBtn.style.color = '#fff';
-                aiBtn.style.borderColor = 'var(--network)';
             } else {
                 aiBtn.className = 'btn btn-ghost';
-                aiBtn.style.background = 'var(--network-bg)';
-                aiBtn.style.color = 'var(--network)';
-                aiBtn.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                aiBtn.style.background = 'rgba(139, 92, 246, 0.1)';
+                aiBtn.style.color = '#8b5cf6';
             }
         }
 
         function toggleCommandFields() {
             const type = document.getElementById('quizType').value;
-            const cmdFields = document.getElementById('commandFields');
-            const exFields = document.getElementById('exampleFields');
-            
-            if (type === 'command') {
-                cmdFields.classList.remove('hidden');
-                exFields.classList.remove('hidden');
-            } else {
-                cmdFields.classList.add('hidden');
-                exFields.classList.add('hidden');
-            }
+            document.getElementById('commandFields').classList.toggle('hidden', type !== 'command');
         }
 
         // ═══════════════════════════════════════════
@@ -607,7 +393,6 @@
             const charCount = document.getElementById('charCount');
             const wordCount = document.getElementById('wordCount');
             
-            // به‌روزرسانی شمارنده‌ها
             charCount.innerText = userText.length;
             charCount.className = userText.length > 500 ? 'ai-counter-good' : 'ai-counter-warn';
             
@@ -615,14 +400,12 @@
             wordCount.innerText = words;
             wordCount.className = words > 100 ? 'ai-counter-good' : 'ai-counter-warn';
             
-            // به‌روزرسانی پیش‌نمایش
             if (!userText.trim()) {
                 preview.innerText = '';
                 return;
             }
             
-            const fullPrompt = AI_SYSTEM_PROMPT + '\n\n' + userText + '\n\nدستور اجرا:\nاکنون بر اساس متن ورودی بالا، شروع به تولید بخش اول سوالات با رعایت تمام قوانین بالا کن. فقط و فقط کد JSON را خروجی بده. اگر به انتهای ظرفیت توکن رسیدی، خروجی را به گونه‌ای قطع کن که با دستور "ادامه بده" بتوانم بخش بعدی آرایه questions را دریافت کنم. شروع کن.';
-            
+            const fullPrompt = AI_SYSTEM_PROMPT + '\n\n' + userText + '\n\nدستور اجرا:\nاکنون بر اساس متن ورودی بالا، شروع به تولید سوالات با رعایت تمام قوانین بالا کن. فقط و فقط کد JSON را خروجی بده.';
             preview.innerText = fullPrompt;
         }
 
@@ -632,99 +415,83 @@
                 showToast('لطفاً ابتدا متن ورودی را وارد کنید.', 'error');
                 return;
             }
-            
-            const fullPrompt = AI_SYSTEM_PROMPT + '\n\n' + userText + '\n\nدستور اجرا:\nاکنون بر اساس متن ورودی بالا، شروع به تولید بخش اول سوالات با رعایت تمام قوانین بالا کن. فقط و فقط کد JSON را خروجی بده. اگر به انتهای ظرفیت توکن رسیدی، خروجی را به گونه‌ای قطع کن که با دستور "ادامه بده" بتوانم بخش بعدی آرایه questions را دریافت کنم. شروع کن.';
-            
+            const fullPrompt = AI_SYSTEM_PROMPT + '\n\n' + userText + '\n\nدستور اجرا:\nاکنون بر اساس متن ورودی بالا، شروع به تولید سوالات با رعایت تمام قوانین بالا کن. فقط و فقط کد JSON را خروجی بده.';
             copyToClipboard(fullPrompt, '✅ پرامپت کامل کپی شد! حالا در ChatGPT/Claude پیست کنید.');
         }
 
-        function copySystemPromptOnly() {
-            copyToClipboard(AI_SYSTEM_PROMPT, '✅ پرامپت سیستم کپی شد. حالا متن خود را به انتهای آن اضافه کنید.');
-        }
-
         function copyToClipboard(text, successMessage) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(successMessage, 'success');
-            }).catch(err => {
-                // Fallback برای مرورگرهای قدیمی
+            navigator.clipboard.writeText(text).then(() => showToast(successMessage, 'success')).catch(() => {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast(successMessage, 'success');
-                } catch (e) {
-                    showToast('❌ خطا در کپی. لطفاً دستی کپی کنید.', 'error');
-                }
+                document.execCommand('copy');
                 document.body.removeChild(textarea);
+                showToast(successMessage, 'success');
             });
         }
 
         function loadSampleText() {
             const sample = `فصل سوم: دستور find در لینوکس
-
-دستور find یکی از قدرتمندترین ابزارهای جستجو در سیستم‌عامل لینوکس است که امکان جستجوی فایل‌ها و دایرکتوری‌ها بر اساس معیارهای مختلف را فراهم می‌کند.
-
-سینتکس کلی:
-find [مسیر] [معیارها] [اکشن‌ها]
-
-معیارهای مهم:
-- -name: جستجو بر اساس نام فایل (پشتیبانی از wildcard)
-- -type: نوع فایل (f برای فایل معمولی، d برای دایرکتوری، l برای لینک)
-- -mtime: زمان تغییر محتوا (بر حسب روز)
-- -atime: زمان آخرین دسترسی
-- -ctime: زمان تغییر متادیتا
-- -size: اندازه فایل (با پسوندهای k, M, G)
-- -user: مالک فایل
-- -group: گروه مالک
-- -perm: مجوزهای فایل
-
-نکات مهم:
-1. استفاده از -mtime -7 یعنی فایل‌هایی که کمتر از 7 روز پیش تغییر کرده‌اند
-2. استفاده از -mtime +7 یعنی فایل‌هایی که بیشتر از 7 روز پیش تغییر کرده‌اند
-3. برای ترکیب معیارها از عملگرهای -a (AND) و -o (OR) استفاده می‌شود
-4. اکشن -exec اجازه می‌دهد دستوری را روی نتایج اجرا کنیم
-5. برای جلوگیری از خطاهای دسترسی، از 2>/dev/null استفاده می‌شود
-
-مثال‌های کاربردی:
-find /var -type f -name "*.log" -mtime -7
-find /home -user www-data -perm 644
-find / -size +100M -exec ls -lh {} \\;`;
-            
+دستور find یکی از قدرتمندترین ابزارهای جستجو در سیستم‌عامل لینوکس است.
+سینتکس کلی: find [مسیر] [معیارها] [اکشن‌ها]
+- -name: جستجو بر اساس نام فایل
+- -type: نوع فایل (f برای فایل معمولی، d برای دایرکتوری)
+- -mtime: زمان تغییر محتوا (بر حسب روز)`;
             document.getElementById('aiInputText').value = sample;
             updateAIPreview();
-            showToast('✅ متن نمونه بارگذاری شد. می‌توانید ویرایش یا جایگزین کنید.', 'success');
-        }
-
-        function clearAIInput() {
-            if (confirm('آیا از پاک کردن متن ورودی اطمینان دارید؟')) {
-                document.getElementById('aiInputText').value = '';
-                updateAIPreview();
-                showToast('متن ورودی پاک شد.', 'info');
-            }
+            showToast('✅ متن نمونه بارگذاری شد.', 'success');
         }
 
         // ═══════════════════════════════════════════
-        // PASTE TAB FUNCTIONS
+        // PASTE TAB FUNCTIONS (پشتیبانی از JSON و متن)
         // ═══════════════════════════════════════════
         async function pasteFromClipboard() {
             try {
                 const text = await navigator.clipboard.readText();
                 document.getElementById('rawText').value = text;
-                showToast('متن از کلیپ‌بورد خوانده شد. در حال پردازش...', 'info');
-                setTimeout(parseRawText, 300);
+                showToast('متن از کلیپ‌بورد خوانده شد.', 'info');
             } catch (err) {
-                showToast('دسترسی به کلیپ‌بورد امکان‌پذیر نیست. لطفاً دستی پیست کنید (Ctrl+V).', 'error');
+                showToast('دسترسی به کلیپ‌بورد امکان‌پذیر نیست. لطفاً دستی (Ctrl+V) پیست کنید.', 'error');
             }
         }
 
         function parseRawText() {
-            const text = document.getElementById('rawText').value;
-            if (!text.trim()) return showToast('متن خالی است!', 'error');
+            const text = document.getElementById('rawText').value.trim();
+            if (!text) return showToast('متن خالی است!', 'error');
 
+            // 1. بررسی اینکه آیا کاربر JSON خروجی AI را پیست کرده است یا خیر
+            try {
+                const jsonData = JSON.parse(text);
+                if (jsonData.questions && Array.isArray(jsonData.questions)) {
+                    let count = 0;
+                    jsonData.questions.forEach(q => {
+                        // اعتبارسنجی فیلدهای جیسون تولید شده
+                        if (q.text && Array.isArray(q.options) && q.options.length >= 2) {
+                            questions.push({
+                                id: questions.length + 1, // ساختار صحیح ID
+                                category: q.category || "عمومی",
+                                level: q.level || parseInt(document.getElementById('quizLevel').value) || 1,
+                                text: q.text,
+                                options: q.options.slice(0, 4), // فقط 4 گزینه می‌گیریم
+                                correct: (typeof q.correct === 'number' && q.correct >= 0 && q.correct < q.options.length) ? q.correct : 0,
+                                explanation: q.explanation || ""
+                            });
+                            count++;
+                        }
+                    });
+                    if (count > 0) {
+                        showToast(`${count} سوال از JSON خروجی AI استخراج شد.`, 'success');
+                        document.getElementById('rawText').value = '';
+                        renderQuestionsList();
+                        return;
+                    }
+                }
+            } catch (e) {
+                // اگر JSON نبود، به عنوان متن ساده پردازش می‌شود
+            }
+
+            // 2. پردازش متن ساده (فرمت Q, A, B, C, D)
             const blocks = text.split(/(?=Q:|Question:|\d+[\.\-]\s)/i);
             let newQuestions = [];
 
@@ -748,7 +515,7 @@ find / -size +100M -exec ls -lh {} \\;`;
                     const correct = ['A', 'B', 'C', 'D'].indexOf(ansLetter);
 
                     newQuestions.push({
-                        id: Date.now() + Math.random(),
+                        id: questions.length + newQuestions.length + 1,
                         category: "عمومی",
                         level: parseInt(document.getElementById('quizLevel').value) || 1,
                         text: qMatch[1].trim(),
@@ -760,11 +527,11 @@ find / -size +100M -exec ls -lh {} \\;`;
             });
 
             if (newQuestions.length === 0) {
-                showToast('سوالی پیدا نشد! فرمت متن را بررسی کنید.', 'error');
+                showToast('فرمت متن نامعتبر است و JSON هم نیست!', 'error');
             } else {
                 questions = [...questions, ...newQuestions];
                 document.getElementById('rawText').value = '';
-                showToast(`${newQuestions.length} سوال با موفقیت پردازش و اضافه شد.`, 'success');
+                showToast(`${newQuestions.length} سوال متنی پردازش شد.`, 'success');
                 renderQuestionsList();
             }
         }
@@ -773,46 +540,51 @@ find / -size +100M -exec ls -lh {} \\;`;
         // MANUAL TAB FUNCTIONS
         // ═══════════════════════════════════════════
         function saveManualQuestion() {
-            const category = document.getElementById('qCategory').value.trim();
-            const level = document.getElementById('qLevel').value;
-            const text = document.getElementById('qText').value.trim();
+            const category = document.getElementById('qCategory').value.trim() || "عمومی";
+            const level = parseInt(document.getElementById('qLevel').value) || 1;
+            let text = document.getElementById('qText').value.trim();
             const command = document.getElementById('qCommand').value.trim();
-            const example = document.getElementById('qExample').value.trim();
             const optA = document.getElementById('optA').value.trim();
             const optB = document.getElementById('optB').value.trim();
             const optC = document.getElementById('optC').value.trim();
             const optD = document.getElementById('optD').value.trim();
-            const explanation = document.getElementById('qExplanation').value.trim();
+            let explanation = document.getElementById('qExplanation').value.trim();
             const correctRadio = document.querySelector('input[name="correctAnswer"]:checked');
 
-            if (!category || !text || !optA || !optB || !correctRadio) {
-                showToast('لطفاً فیلدهای ستاره‌دار (*) را پر کنید.', 'error');
+            if (!text || !optA || !optB || !correctRadio) {
+                showToast('لطفاً متن سوال، حداقل دو گزینه و پاسخ صحیح را مشخص کنید.', 'error');
                 return;
             }
 
+            // ادغام دستور در صورت وجود در متن سوال (چون در ساختار جیسون مدنظر فیلد دستور مجزا نداشتیم)
+            if (command) {
+                text = `${text}<br><code>${command}</code>`;
+            }
+
+            const options = [optA, optB];
+            if (optC) options.push(optC);
+            if (optD) options.push(optD);
+
+            const correctIndex = parseInt(correctRadio.value);
+
             const questionData = {
-                id: editingIndex >= 0 ? questions[editingIndex].id : Date.now() + Math.random(),
+                id: editingIndex >= 0 ? questions[editingIndex].id : questions.length + 1,
                 category,
-                level: parseInt(level),
+                level,
                 text,
-                options: [optA, optB, optC, optD],
-                correct: parseInt(correctRadio.value),
+                options,
+                correct: correctIndex,
                 explanation: explanation || "توضیحی ثبت نشده است."
             };
-
-            if (document.getElementById('quizType').value === 'command') {
-                if (command) questionData.command = command;
-                if (example) questionData.example = example;
-            }
 
             if (editingIndex >= 0) {
                 questions[editingIndex] = questionData;
                 editingIndex = -1;
                 document.getElementById('addBtnText').innerText = '➕ افزودن به لیست سوالات';
-                showToast('سوال با موفقیت ویرایش شد.', 'success');
+                showToast('سوال ویرایش شد.', 'success');
             } else {
                 questions.push(questionData);
-                showToast('سوال به لیست اضافه شد.', 'success');
+                showToast('سوال با موفقیت اضافه شد.', 'success');
             }
 
             clearManualForm();
@@ -820,51 +592,42 @@ find / -size +100M -exec ls -lh {} \\;`;
         }
 
         function clearManualForm() {
-            document.getElementById('qCategory').value = '';
-            document.getElementById('qText').value = '';
-            document.getElementById('qCommand').value = '';
-            document.getElementById('qExample').value = '';
-            document.getElementById('optA').value = '';
-            document.getElementById('optB').value = '';
-            document.getElementById('optC').value = '';
-            document.getElementById('optD').value = '';
-            document.getElementById('qExplanation').value = '';
-            const radios = document.querySelectorAll('input[name="correctAnswer"]');
-            radios.forEach(r => r.checked = false);
+            ['qCategory', 'qText', 'qCommand', 'optA', 'optB', 'optC', 'optD', 'qExplanation'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.querySelectorAll('input[name="correctAnswer"]').forEach(r => r.checked = false);
         }
 
         function editQuestion(index) {
             const q = questions[index];
             editingIndex = index;
-            
             switchTab('manual');
+            
             document.getElementById('qCategory').value = q.category;
             document.getElementById('qLevel').value = q.level;
-            document.getElementById('qText').value = q.text;
-            document.getElementById('qCommand').value = q.command || '';
-            document.getElementById('qExample').value = q.example || '';
-            document.getElementById('optA').value = q.options[0];
-            document.getElementById('optB').value = q.options[1];
-            document.getElementById('optC').value = q.options[2];
-            document.getElementById('optD').value = q.options[3];
+            document.getElementById('qText').value = q.text.replace(/<br><code>.*?<\/code>/, '').trim(); // حذف دستور از متن برای ویرایش
+            document.getElementById('qCommand').value = '';
+            document.getElementById('optA').value = q.options[0] || '';
+            document.getElementById('optB').value = q.options[1] || '';
+            document.getElementById('optC').value = q.options[2] || '';
+            document.getElementById('optD').value = q.options[3] || '';
             document.getElementById('qExplanation').value = q.explanation;
             
             const radios = document.querySelectorAll('input[name="correctAnswer"]');
             if (radios[q.correct]) radios[q.correct].checked = true;
             
-            document.getElementById('addBtnText').innerText = '💾 ذخیره تغییرات سوال';
+            document.getElementById('addBtnText').innerText = '💾 ذخیره تغییرات';
             window.scrollTo({ top: 300, behavior: 'smooth' });
         }
 
         function deleteQuestion(index) {
             if (confirm('آیا از حذف این سوال اطمینان دارید؟')) {
                 questions.splice(index, 1);
+                // مرتب سازی مجدد ID ها
+                questions.forEach((q, i) => q.id = i + 1);
                 if (editingIndex === index) {
                     editingIndex = -1;
                     clearManualForm();
-                    document.getElementById('addBtnText').innerText = '➕ افزودن به لیست سوالات';
-                } else if (editingIndex > index) {
-                    editingIndex--;
                 }
                 renderQuestionsList();
                 showToast('سوال حذف شد.', 'info');
@@ -873,14 +636,11 @@ find / -size +100M -exec ls -lh {} \\;`;
 
         function renderQuestionsList() {
             const list = document.getElementById('questionsList');
-            const countSpan = document.getElementById('qCount');
-            const totalSpan = document.getElementById('totalQuestions');
-            
-            countSpan.innerText = questions.length;
-            totalSpan.innerText = questions.length;
+            document.getElementById('qCount').innerText = questions.length;
+            document.getElementById('totalQuestions').innerText = questions.length;
 
             if (questions.length === 0) {
-                list.innerHTML = '<div class="empty-state" style="padding: 20px; text-align: center; color: var(--text-tertiary);">هنوز سوالی اضافه نشده است.</div>';
+                list.innerHTML = '<div class="empty-state" style="padding: 20px; text-align: center; color: #999;">هنوز سوالی اضافه نشده است.</div>';
                 return;
             }
 
@@ -892,7 +652,6 @@ find / -size +100M -exec ls -lh {} \\;`;
                             <span>📁 ${q.category}</span>
                             <span>📊 سطح ${q.level}</span>
                             <span>✅ پاسخ: ${['A', 'B', 'C', 'D'][q.correct]}</span>
-                            ${q.command ? '<span>💻 دارای دستور</span>' : ''}
                         </div>
                     </div>
                     <div class="q-item-actions">
@@ -904,17 +663,14 @@ find / -size +100M -exec ls -lh {} \\;`;
         }
 
         // ═══════════════════════════════════════════
-        // PUBLISH
+        // PUBLISH (ارسال دقیقاً مطابق ساختار خواسته شده)
         // ═══════════════════════════════════════════
         async function publishQuiz() {
             const title = document.getElementById('quizTitle').value.trim();
-            const desc = document.getElementById('quizDesc').value.trim();
-            const type = document.getElementById('quizType').value;
-            const level = document.getElementById('quizLevel').value;
+            const desc = document.getElementById('quizDesc').value.trim() || "توضیحاتی برای این آزمون ثبت نشده است.";
 
             if (!title) {
                 showToast('لطفاً عنوان آزمون را وارد کنید.', 'error');
-                document.getElementById('quizTitle').focus();
                 return;
             }
             if (questions.length === 0) {
@@ -924,14 +680,21 @@ find / -size +100M -exec ls -lh {} \\;`;
 
             const btn = document.getElementById('publishBtn');
             btn.disabled = true;
-            btn.innerHTML = '<span>در حال ذخیره‌سازی...</span>';
+            btn.innerText = 'در حال ذخیره...';
 
+            // پاکسازی و مرتب‌سازی نهایی جیسون برای ارسال به سرور
             const payload = {
                 title: title,
                 description: desc,
-                type: type,
-                level: level,
-                questions: questions
+                questions: questions.map((q, index) => ({
+                    id: index + 1,
+                    category: q.category,
+                    level: parseInt(q.level),
+                    text: q.text,
+                    options: q.options,
+                    correct: parseInt(q.correct),
+                    explanation: q.explanation
+                }))
             };
 
             try {
@@ -944,19 +707,17 @@ find / -size +100M -exec ls -lh {} \\;`;
                 const result = await response.json();
                 
                 if (result.success) {
-                    showToast('✅ آزمون با موفقیت ذخیره و منتشر شد!', 'success');
-                    setTimeout(() => {
-                        window.location.href = result.redirect;
-                    }, 1500);
+                    showToast('✅ آزمون با موفقیت ذخیره شد!', 'success');
+                    setTimeout(() => { window.location.href = result.redirect; }, 1500);
                 } else {
                     showToast('❌ خطا: ' + result.error, 'error');
                     btn.disabled = false;
-                    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> ذخیره و انتشار آزمون';
+                    btn.innerText = 'ذخیره و انتشار آزمون';
                 }
             } catch (error) {
                 showToast('❌ خطا در ارتباط با سرور', 'error');
                 btn.disabled = false;
-                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> ذخیره و انتشار آزمون';
+                btn.innerText = 'ذخیره و انتشار آزمون';
             }
         }
 
@@ -972,7 +733,7 @@ find / -size +100M -exec ls -lh {} \\;`;
             }, 3000);
         }
 
-        // مقداردهی اولیه
+        // Init
         toggleCommandFields();
     </script>
 </body>

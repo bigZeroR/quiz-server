@@ -1,0 +1,286 @@
+{
+  "title": "مجموعه سوالات آموزشی جامع LPIC-1 (پوشش تمام ۱۰ فصل)",
+  "description": "این مجموعه شامل ۲۰ سوال آموزشی از تمام مباحث دوره LPIC-1 (فصل‌های ۱ تا ۱۰) است که با هدف یادگیری عمیق و مرور مفاهیم کلیدی طراحی شده است. هر سوال همراه با پاسخ تشریحی کامل ارائه شده است.",
+  "questions": [
+    {
+      "id": 1,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "یک کاربر در دایرکتوری <code>/var/log</code> قرار دارد و می‌خواهد به دایرکتوری قبلی خود بازگردد. کدام یک از گزینه‌های زیر این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>cd ..</code>",
+        "<code>cd -</code>",
+        "<code>cd ~</code>",
+        "<code>cd /</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>cd -</code> کاربر را به دایرکتوری قبلی (OLDPWD) برمی‌گرداند. <code>cd ..</code> فقط یک سطح به بالا می‌رود، نه لزوماً به دایرکتوری قبلی. <code>cd ~</code> به دایرکتوری خانه می‌رود و <code>cd /</code> به ریشه سیستم می‌رود. متغیر <code>OLDPWD</code> مسیر قبلی را نگه می‌دارد و <code>cd -</code> دقیقاً از همین متغیر استفاده می‌کند."
+    },
+    {
+      "id": 2,
+      "category": "فصل ۱: مبانی شل و خط فرمان",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای نمایش محتوای یک فایل لاگ بزرگ به‌صورت صفحه‌به‌صفحه، با قابلیت جستجوی الگو، بهترین ابزار است؟",
+      "options": [
+        "<code>cat</code>",
+        "<code>head</code>",
+        "<code>less</code>",
+        "<code>tail -f</code>"
+      ],
+      "correct": 2,
+      "explanation": "ابزار <code>less</code> برای مشاهده فایل‌های بزرگ به‌صورت صفحه‌به‌صفحه طراحی شده است و از جستجو با <code>/</code> پشتیبانی می‌کند. <code>cat</code> کل فایل را یکجا نمایش می‌دهد و برای فایل‌های بزرگ مناسب نیست. <code>head</code> فقط خطوط ابتدایی را نشان می‌دهد و <code>tail -f</code> برای دنبال کردن تغییرات انتهای فایل (مانند لاگ‌های زنده) استفاده می‌شود، نه مشاهده صفحه‌به‌صفحه."
+    },
+    {
+      "id": 3,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 2,
+      "text": "در یک سیستم مبتنی بر Debian/Ubuntu، کدام دستور برای به‌روزرسانی لیست بسته‌های موجود در مخازن (بدون نصب یا ارتقا) استفاده می‌شود؟",
+      "options": [
+        "<code>apt upgrade</code>",
+        "<code>apt update</code>",
+        "<code>apt dist-upgrade</code>",
+        "<code>apt install</code>"
+      ],
+      "correct": 1,
+      "explanation": "دستور <code>apt update</code> لیست بسته‌های موجود در مخازن را به‌روزرسانی می‌کند (metadata را دانلود می‌کند) بدون این‌که بسته‌ای نصب یا ارتقا دهد. <code>apt upgrade</code> بسته‌های نصب‌شده را ارتقا می‌دهد. <code>apt dist-upgrade</code> ارتقای کامل با مدیریت وابستگی‌ها است و <code>apt install</code> برای نصب بسته استفاده می‌شود. نکته مهم: همیشه قبل از <code>install</code> یا <code>upgrade</code>، <code>apt update</code> را اجرا کنید."
+    },
+    {
+      "id": 4,
+      "category": "فصل ۲: نصب برنامه‌ها",
+      "level": 3,
+      "text": "در یک سیستم مبتنی بر RHEL/Alma، کدام دستور برای دانلود یک بسته <code>.rpm</code> به‌همراه تمام وابستگی‌های آن، بدون نصب، استفاده می‌شود؟",
+      "options": [
+        "<code>rpm -q --downloadonly package</code>",
+        "<code>dnf download --resolve package</code>",
+        "<code>yumdownloader --resolve package</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه دوم (<code>dnf download --resolve</code>) و سوم (<code>yumdownloader --resolve</code>) بسته و وابستگی‌های آن را دانلود می‌کنند. <code>rpm</code> به‌تنهایی قابلیت دانلود ندارد. گزینه اول نادرست است. نکته: <code>dnf download</code> نیاز به نصب پلاگین <code>dnf-plugins-core</code> دارد که معمولاً نصب است. <code>yumdownloader</code> در بسته <code>yum-utils</code> قرار دارد."
+    },
+    {
+      "id": 5,
+      "category": "فصل ۳: سخت‌افزار، دیسک و پارتیشن‌بندی",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد یک دیسک جدید را با جدول پارتیشن GPT پارتیشن‌بندی کرده و سپس آن را با فایل‌سیستم XFS فرمت کند. کدام دنباله از دستورات این کار را به‌درستی انجام می‌دهد؟",
+      "options": [
+        "<code>fdisk /dev/sdb</code> سپس <code>mkfs.xfs /dev/sdb1</code>",
+        "<code>gdisk /dev/sdb</code> سپس <code>mkfs.xfs /dev/sdb1</code>",
+        "<code>parted /dev/sdb mklabel gpt</code> سپس <code>mkfs.xfs /dev/sdb1</code>",
+        "گزینه دوم و سوم هر دو صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه دوم (<code>gdisk</code>) و سوم (<code>parted</code>) می‌توانند جدول پارتیشن GPT ایجاد کنند. گزینه اول از <code>fdisk</code> استفاده کرده که برای MBR مناسب‌تر است و با GPT کار می‌کند اما توصیه نمی‌شود. نکته: <code>gdisk</code> به‌صورت پیش‌فرض از GPT پشتیبانی می‌کند و <code>parted</code> با <code>mklabel gpt</code> جدول GPT ایجاد می‌کند. پس از پارتیشن‌بندی، <code>mkfs.xfs /dev/sdb1</code> برای فرمت استفاده می‌شود."
+    },
+    {
+      "id": 6,
+      "category": "فصل ۳: LVM و RAID",
+      "level": 3,
+      "text": "یک مدیر سیستم یک Logical Volume به نام <code>mylv</code> در Volume Group <code>myvg</code> ایجاد کرده است. پس از افزایش فضای Logical Volume با <code>lvextend -L +10G /dev/myvg/mylv</code>، کدام دستور برای اعمال تغییر اندازه روی فایل‌سیستم <code>ext4</code> داخل آن ضروری است؟",
+      "options": [
+        "<code>resize2fs /dev/myvg/mylv</code>",
+        "<code>xfs_growfs /dev/myvg/mylv</code>",
+        "<code>e2fsck -f /dev/myvg/mylv</code>",
+        "<code>fsck /dev/myvg/mylv</code>"
+      ],
+      "correct": 0,
+      "explanation": "پس از <code>lvextend</code>، برای فایل‌سیستم‌های ext2/3/4 باید <code>resize2fs</code> اجرا شود تا فایل‌سیستم از فضای جدید استفاده کند. گزینه دوم (<code>xfs_growfs</code>) برای XFS است، نه ext4. گزینه سوم و چهارم برای بررسی یکپارچگی هستند نه تغییر اندازه. نکته: اگر فایل‌سیستم mount است، <code>resize2fs</code> می‌تواند روی فایل‌سیستم mount شده نیز اجرا شود (در ext4)."
+    },
+    {
+      "id": 7,
+      "category": "فصل ۴: مدیریت فایل‌ها",
+      "level": 2,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>grep</code>، تمام خطوط فایل <code>/etc/passwd</code> را که شامل کلمه <code>root</code> هستند، بدون در نظر گرفتن بزرگی و کوچکی حروف، پیدا کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>grep root /etc/passwd</code>",
+        "<code>grep -i root /etc/passwd</code>",
+        "<code>grep -v root /etc/passwd</code>",
+        "<code>grep -c root /etc/passwd</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>-i</code> (ignore case) باعث می‌شود جستجو به بزرگی و کوچکی حروف حساس نباشد. گزینه اول فقط <code>root</code> کوچک را پیدا می‌کند. گزینه سوم (<code>-v</code>) خطوطی که الگو را ندارند نشان می‌دهد (معکوس). گزینه چهارم (<code>-c</code>) فقط تعداد نتایج را شمارش می‌کند و خطوط را نمایش نمی‌دهد."
+    },
+    {
+      "id": 8,
+      "category": "فصل ۴: لینک‌ها و سطح دسترسی",
+      "level": 3,
+      "text": "یک مدیر سیستم یک دایرکتوری اشتراکی ایجاد کرده است که می‌خواهد هر فایل جدیدی در آن به‌طور خودکار به گروه <code>developers</code> تعلق داشته باشد، صرف‌نظر از گروه کاربر سازنده. کدام سطح دسترسی ویژه باید روی این دایرکتوری تنظیم شود؟",
+      "options": [
+        "SUID",
+        "SGID",
+        "Sticky Bit",
+        "Read-only"
+      ],
+      "correct": 1,
+      "explanation": "SGID (Set Group ID) روی یک دایرکتوری باعث می‌شود که هر فایل جدید ساخته شده در آن دایرکتوری، به گروه دایرکتوری تعلق بگیرد، نه گروه کاربر سازنده. SUID روی فایل‌های اجرایی اعمال می‌شود. Sticky Bit مانع از حذف فایل‌های سایر کاربران می‌شود. Read-only اجازه‌ی نوشتن نمی‌دهد. نکته: برای تنظیم SGID از <code>chmod g+s directory</code> استفاده می‌شود."
+    },
+    {
+      "id": 9,
+      "category": "فصل ۵: بوت و systemd",
+      "level": 3,
+      "text": "در سیستم‌های مبتنی بر systemd، کدام دستور برای تغییر حالت بوت پیش‌فرض سیستم از خط فرمان (multi-user) به محیط گرافیکی (graphical) استفاده می‌شود؟",
+      "options": [
+        "<code>systemctl set-default graphical.target</code>",
+        "<code>systemctl enable graphical.target</code>",
+        "<code>systemctl start graphical.target</code>",
+        "<code>init 5</code>"
+      ],
+      "correct": 0,
+      "explanation": "<code>systemctl set-default</code> برای تنظیم target پیش‌فرض بوت استفاده می‌شود. <code>graphical.target</code> معادل runlevel 5 است. گزینه دوم (<code>enable</code>) برای فعال کردن سرویس‌ها استفاده می‌شود، نه target. گزینه سوم (<code>start</code>) target را یک‌بار اجرا می‌کند اما پیش‌فرض را تغییر نمی‌دهد. گزینه چهارم (<code>init 5</code>) برای SysVinit است. نکته: با <code>systemctl get-default</code> می‌توان target فعلی را مشاهده کرد."
+    },
+    {
+      "id": 10,
+      "category": "فصل ۵: مجازی‌سازی",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر تفاوت اصلی بین Virtual Machine و Container را به‌درستی توضیح می‌دهد؟",
+      "options": [
+        "Containerها سنگین‌تر از VMها هستند.",
+        "VMها از هسته میزبان استفاده می‌کنند، در حالی که Containerها Guest OS کامل دارند.",
+        "Containerها از هسته میزبان استفاده می‌کنند، در حالی که VMها Guest OS کامل دارند.",
+        "هیچ تفاوتی بین VM و Container وجود ندارد."
+      ],
+      "correct": 2,
+      "explanation": "Containerها از هسته میزبان استفاده می‌کنند و سبک‌تر هستند، در حالی که VMها یک Guest OS کامل دارند و سنگین‌تر هستند. گزینه اول نادرست است (Containerها سبک‌ترند). گزینه دوم برعکس است. گزینه چهارم نادرست است. نکته: Containerها از Namespace و Cgroups برای ایزوله‌سازی استفاده می‌کنند، در حالی که VMها از Hypervisor برای مجازی‌سازی سخت‌افزاری استفاده می‌کنند."
+    },
+    {
+      "id": 11,
+      "category": "فصل ۶: GUI و دسکتاپ",
+      "level": 2,
+      "text": "در محیط دسکتاپ GNOME، کدام File Manager به‌عنوان پیش‌فرض استفاده می‌شود؟",
+      "options": [
+        "Dolphin",
+        "Thunar",
+        "Nautilus",
+        "Caja"
+      ],
+      "correct": 2,
+      "explanation": "File Manager پیش‌فرض GNOME، <b>Nautilus</b> (که با نام Files نیز شناخته می‌شود) است. Dolphin مختص KDE است. Thunar مختص XFCE است. Caja مختص MATE است. نکته: هر دسکتاپ File Manager مخصوص خود را دارد و در آزمون LPIC-1 ممکن است سوالات مشابهی مطرح شود."
+    },
+    {
+      "id": 12,
+      "category": "فصل ۶: Localization",
+      "level": 2,
+      "text": "کدام دستور برای تغییر منطقه زمانی سیستم در توزیع‌های مبتنی بر systemd استفاده می‌شود؟",
+      "options": [
+        "<code>date -s</code>",
+        "<code>hwclock</code>",
+        "<code>timedatectl set-timezone</code>",
+        "<code>tzselect</code>"
+      ],
+      "correct": 2,
+      "explanation": "دستور <code>timedatectl set-timezone</code> برای تغییر منطقه زمانی در systemd استفاده می‌شود. مثال: <code>sudo timedatectl set-timezone Asia/Tehran</code>. <code>date -s</code> برای تنظیم زمان است، نه منطقه زمانی. <code>hwclock</code> برای زمان سخت‌افزاری است. <code>tzselect</code> یک ابزار تعاملی است اما تغییرات را به‌طور دائمی اعمال نمی‌کند. نکته: با <code>timedatectl list-timezones</code> می‌توان لیست منطقه‌های زمانی را مشاهده کرد."
+    },
+    {
+      "id": 13,
+      "category": "فصل ۷: مدیریت کاربران",
+      "level": 2,
+      "text": "کدام فایل در لینوکس اطلاعات رمز عبور کاربران را به‌صورت هش‌شده ذخیره می‌کند و فقط با دسترسی root قابل خواندن است؟",
+      "options": [
+        "<code>/etc/passwd</code>",
+        "<code>/etc/shadow</code>",
+        "<code>/etc/group</code>",
+        "<code>/etc/login.defs</code>"
+      ],
+      "correct": 1,
+      "explanation": "فایل <code>/etc/shadow</code> محل ذخیره‌سازی رمزهای عبور هش‌شده کاربران است و فقط با دسترسی root قابل خواندن است. <code>/etc/passwd</code> اطلاعات عمومی کاربران را نگه می‌دارد و برای همه قابل خواندن است (در فیلد دوم آن <code>x</code> قرار دارد که نشان‌دهنده ذخیره رمز در shadow است). <code>/etc/group</code> اطلاعات گروه‌ها را نگه می‌دارد. <code>/etc/login.defs</code> تنظیمات پیش‌فرض مدیریت کاربران را مشخص می‌کند."
+    },
+    {
+      "id": 14,
+      "category": "فصل ۷: لاگ‌ها و زمان",
+      "level": 3,
+      "text": "کدام دستور برای مشاهده لاگ‌های یک سرویس خاص (مانند <code>sshd</code>) در سیستم‌های مبتنی بر systemd استفاده می‌شود؟",
+      "options": [
+        "<code>tail -f /var/log/secure</code>",
+        "<code>journalctl -u sshd</code>",
+        "<code>dmesg | grep sshd</code>",
+        "<code>cat /var/log/syslog | grep sshd</code>"
+      ],
+      "correct": 1,
+      "explanation": "گزینه <code>journalctl -u sshd</code> لاگ‌های سرویس <code>sshd</code> را از سیستم لاگ‌گیری systemd (journald) نمایش می‌دهد. گزینه اول روش سنتی در RHEL است اما به‌طور خاص برای systemd طراحی نشده است. گزینه سوم (<code>dmesg</code>) برای پیام‌های کرنل است و لاگ‌های کاربری را نشان نمی‌دهد. گزینه چهارم روش سنتی در Debian است. نکته: <code>journalctl -u</code> با <code>-f</code> می‌تواند لاگ‌ها را دنبال کند (مشابه <code>tail -f</code>)."
+    },
+    {
+      "id": 15,
+      "category": "فصل ۸: شبکه",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از <code>nmcli</code> یک اتصال شبکه جدید با آدرس IP ثابت (Static) روی رابط <code>eth0</code> ایجاد کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>nmcli connection add type ethernet ifname eth0 ipv4.addresses 192.168.1.10/24 ipv4.method manual</code>",
+        "<code>nmcli device set eth0 ipv4.addresses 192.168.1.10/24</code>",
+        "<code>nmcli connection modify eth0 ipv4.addresses 192.168.1.10/24</code>",
+        "<code>ifconfig eth0 192.168.1.10 netmask 255.255.255.0</code>"
+      ],
+      "correct": 0,
+      "explanation": "گزینه اول با <code>nmcli connection add</code> یک اتصال جدید با تنظیمات Static ایجاد می‌کند. گزینه دوم سینتکس اشتباه دارد. گزینه سوم برای تغییر یک اتصال موجود است، نه ایجاد جدید. گزینه چهارم از <code>ifconfig</code> استفاده کرده که ابزار قدیمی است و در NetworkManager مدیریت نمی‌شود. نکته: پس از ایجاد اتصال، برای اعمال تغییرات باید آن را با <code>nmcli connection up</code> فعال کرد."
+    },
+    {
+      "id": 16,
+      "category": "فصل ۸: DNS",
+      "level": 2,
+      "text": "کدام یک از گزینه‌های زیر برای جستجوی رکورد MX یک دامنه با استفاده از <code>dig</code> صحیح است؟",
+      "options": [
+        "<code>dig google.com</code>",
+        "<code>dig google.com MX</code>",
+        "<code>dig -t MX google.com</code>",
+        "هر دو گزینه دوم و سوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه دوم (<code>dig google.com MX</code>) و سوم (<code>dig -t MX google.com</code>) برای جستجوی رکورد MX معتبر هستند. گزینه اول فقط رکورد A (IP) را نمایش می‌دهد. نکته: <code>dig</code> ابزار مدرن‌تری نسبت به <code>nslookup</code> است و اطلاعات دقیق‌تری مانند زمان پاسخ (Query Time) را نمایش می‌دهد."
+    },
+    {
+      "id": 17,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد با استفاده از یک اسکریپت Bash، یک منوی تعاملی ایجاد کند که با انتخاب هر گزینه، دستور مربوطه اجرا شود. کدام ساختار بهترین گزینه برای پیاده‌سازی این منو است؟",
+      "options": [
+        "استفاده از <code>if-elif-else</code> به همراه <code>read</code>",
+        "استفاده از <code>case</code> به همراه <code>read</code>",
+        "استفاده از <code>select</code> به همراه <code>case</code>",
+        "استفاده از حلقه <code>for</code>"
+      ],
+      "correct": 2,
+      "explanation": "بهترین گزینه ترکیب <code>select</code> و <code>case</code> است. <code>select</code> به‌طور خودکار یک منوی شماره‌دار ایجاد می‌کند و <code>case</code> برای پردازش انتخاب کاربر استفاده می‌شود. گزینه اول و دوم با <code>read</code> کار می‌کنند اما منوی شماره‌دار خودکار ندارند. گزینه چهارم (<code>for</code>) برای تکرار است، نه ایجاد منو. نکته: <code>select</code> از متغیر <code>$REPLY</code> برای ذخیره شماره انتخاب استفاده می‌کند."
+    },
+    {
+      "id": 18,
+      "category": "فصل ۹: Shell Scripting",
+      "level": 3,
+      "text": "در یک اسکریپت Bash، کدام یک از گزینه‌های زیر برای محاسبه مقدار <code>10 / 3</code> و نمایش نتیجه با دو رقم اعشار (مثل <code>3.33</code>) استفاده می‌شود؟",
+      "options": [
+        "<code>$((10 / 3))</code>",
+        "<code>echo \"10 / 3\" | bc</code>",
+        "<code>echo \"scale=2; 10 / 3\" | bc</code>",
+        "<code>expr 10 / 3</code>"
+      ],
+      "correct": 2,
+      "explanation": "گزینه سوم با <code>scale=2</code> در <code>bc</code> نتیجه را با دو رقم اعشار نمایش می‌دهد. <code>$((10 / 3))</code> و <code>expr</code> فقط اعداد صحیح را محاسبه می‌کنند. گزینه دوم <code>bc</code> را بدون <code>scale</code> اجرا می‌کند و نتیجه پیش‌فرض ۳ را نشان می‌دهد. نکته: <code>bc</code> یک ماشین حساب خط فرمان است که می‌تواند محاسبات اعشاری و پیشرفته را انجام دهد."
+    },
+    {
+      "id": 19,
+      "category": "فصل ۱۰: امنیت",
+      "level": 3,
+      "text": "یک مدیر سیستم می‌خواهد سرویس SSH را با استفاده از کلید امن‌سازی کند. پس از تولید کلید با <code>ssh-keygen</code> و کپی آن روی سرور با <code>ssh-copy-id</code>، کدام تنظیم در <code>/etc/ssh/sshd_config</code> باید تغییر کند تا ورود با پسورد به‌طور کامل غیرفعال شود؟",
+      "options": [
+        "<code>PermitRootLogin no</code>",
+        "<code>PasswordAuthentication no</code>",
+        "<code>Port 2222</code>",
+        "<code>AllowUsers user</code>"
+      ],
+      "correct": 1,
+      "explanation": "برای غیرفعال کردن ورود با پسورد، باید <code>PasswordAuthentication no</code> را در <code>/etc/ssh/sshd_config</code> تنظیم کرد. <code>PermitRootLogin no</code> ورود root را غیرفعال می‌کند. <code>Port 2222</code> پورت را تغییر می‌دهد. <code>AllowUsers</code> کاربران مجاز را محدود می‌کند. نکته مهم: قبل از غیرفعال کردن پسورد، حتماً از کارکرد صحیح کلید مطمئن شوید تا دسترسی خود را از دست ندهید. پس از تغییر، سرویس را با <code>systemctl restart sshd</code> ری‌استارت کنید."
+    },
+    {
+      "id": 20,
+      "category": "فصل ۱۰: رمزنگاری با GPG",
+      "level": 3,
+      "text": "یک کاربر می‌خواهد با استفاده از <code>gpg</code> یک فایل را با کلید عمومی گیرنده رمزنگاری کند. کدام دستور این کار را انجام می‌دهد؟",
+      "options": [
+        "<code>gpg --encrypt --recipient user@example.com file.txt</code>",
+        "<code>gpg -e -r user@example.com file.txt</code>",
+        "<code>gpg --symmetric file.txt</code>",
+        "هر دو گزینه اول و دوم صحیح هستند."
+      ],
+      "correct": 3,
+      "explanation": "هر دو گزینه اول (<code>--encrypt --recipient</code>) و دوم (<code>-e -r</code>) برای رمزنگاری با کلید عمومی گیرنده معتبر هستند. گزینه سوم (<code>--symmetric</code>) برای رمزنگاری با رمز متقارن (پسورد) استفاده می‌شود، نه کلید عمومی. نکته: برای رمزنگاری با کلید عمومی، باید کلید عمومی گیرنده قبلاً در سیستم شما وارد (import) شده باشد. خروجی یک فایل با پسوند <code>.gpg</code> خواهد بود."
+    }
+  ]
+}
