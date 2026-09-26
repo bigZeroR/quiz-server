@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if quiz %}{{ quiz.title }}{% else %}سامانه آزمون{% endif %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+{% if quiz %}
+<!-- ═══════════════ QUIZ PAGE ═══════════════ -->
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="stats-bar">
+    <div class="stat-item" id="aiTimerStat" style="display:none;">
+        <span class="stat-icon">⏱️</span>
+        <span class="stat-label">زمان</span>
+        <span class="stat-value" id="aiTimer">0s</span>
+    </div>
+    <div class="stat-item" id="aiLevelStat" style="display:none;">
+        <span class="stat-icon">📊</span>
+        <span class="stat-label">سطح</span>
+        <span class="stat-value" id="aiCurrentLevel">-</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-icon">📝</span>
+        <span class="stat-label">سوال</span>
+        <span class="stat-value"><span id="currentQ">1</span>/<span id="totalQ">0</span></span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-icon">✅</span>
+        <span class="stat-label">صحیح</span>
+        <span class="stat-value stat-correct" id="correctCount">0</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-icon">❌</span>
+        <span class="stat-label">غلط</span>
+        <span class="stat-value stat-wrong" id="wrongCount">0</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-icon">📊</span>
+        <span class="stat-label">پیشرفت</span>
+        <span class="stat-value stat-progress" id="progressPercent">0%</span>
+    </div>
+</div>
+
+<header class="quiz-header">
+    <a href="/" class="back-btn" title="بازگشت">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+    <div class="quiz-header-content">
+        <h1>{{ quiz.title }}</h1>
+        <p class="subtitle">{{ quiz.description }}</p>
+    </div>
+    <div class="header-spacer"></div>
+</header>
+
+<div class="search-bar">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 جستجو در سوالات...">
+</div>
+
+<div class="category-filter" id="categoryFilter"></div>
+
+<div class="questions-wrapper">
+    <div id="questionsContainer"></div>
+</div>
+
+<nav class="nav-controls">
+    <button class="btn btn-nav" id="btnPrev">← قبلی</button>
+    <button class="btn btn-nav btn-primary" id="btnRandom">🎲 تصادفی</button>
+    <button class="btn btn-nav" id="btnNext">بعدی →</button>
+</nav>
+
+<div class="action-controls">
+    <button class="btn btn-info" id="btnBookmarks">⭐ نشان‌شده‌ها</button>
+    <button class="btn btn-warning" id="btnWrong">❌ مرور غلط‌ها</button>
+    <button class="btn btn-danger" id="btnReset">↺ ریست کامل</button>
+    <a href="/" class="btn btn-ghost">⌂ خانه</a>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal-overlay" style="display:none;">
+    <div class="modal-container" style="max-width:700px;">
+        <div class="modal-header">
+            <div class="modal-header-left">
+                <span class="modal-icon">✏️</span>
+                <div><h2>ویرایش سوال</h2></div>
+            </div>
+            <button class="modal-close" id="editModalClose" type="button">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="editForm">
+                <input type="hidden" id="editQuestionId">
+                <div class="form-group">
+                    <label class="form-label">متن سوال</label>
+                    <textarea id="editText" class="form-textarea" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">دسته‌بندی</label>
+                    <input type="text" id="editCategory" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">سطح</label>
+                    <select id="editLevel" class="form-select">
+                        <option value="1">1</option><option value="2">2</option>
+                        <option value="3">3</option><option value="4">4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">گزینه‌ها</label>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <input type="text" id="editOpt0" class="form-input" placeholder="A">
+                        <input type="text" id="editOpt1" class="form-input" placeholder="B">
+                        <input type="text" id="editOpt2" class="form-input" placeholder="C">
+                        <input type="text" id="editOpt3" class="form-input" placeholder="D">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">پاسخ صحیح</label>
+                    <div style="display:flex;gap:16px;">
+                        <label><input type="radio" name="editCorrect" value="0"> A</label>
+                        <label><input type="radio" name="editCorrect" value="1"> B</label>
+                        <label><input type="radio" name="editCorrect" value="2"> C</label>
+                        <label><input type="radio" name="editCorrect" value="3"> D</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">توضیح</label>
+                    <textarea id="editExplanation" class="form-textarea" rows="3"></textarea>
+                </div>
+                <div style="display:flex;gap:12px;margin-top:16px;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">💾 ذخیره</button>
+                    <button type="button" class="btn btn-ghost" id="editCancel">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+window.QUIZ_DATA  = {{ quiz | tojson }};
+window.QUIZ_NAME  = {{ quiz_name | tojson }};
+window.QUIZ_TYPE  = {{ quiz_type | tojson }};
+window.URL_PARAMS = Object.fromEntries(new URLSearchParams(location.search));
+</script>
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/quiz_engine.js"></script>
+<script src="/static/js/quiz_ui.js"></script>
+<script src="/static/js/quiz_page.js"></script>
+
+{% else %}
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="home-bg-glow"></div>
+
+<header class="home-header">
+    <div class="home-logo">
+        <span class="logo-icon">🐧</span>
+        <h1 class="home-title">سامانه آزمون</h1>
+    </div>
+    <p class="home-subtitle">مجموعه‌ای از آزمون‌های تستی</p>
+
+    <div class="home-actions">
+        <a href="/dashboard" class="btn btn-info">📊 پنل کاربری</a>
+        <a href="/create" class="btn btn-create">➕ ساخت آزمون جدید</a>
+        <a href="/mobile" class="btn btn-ai-mode">📱 ورود متن با AI</a>
+        <a href="/audio" class="btn btn-ghost">🎧 ضبط صدا</a>
+    </div>
+</header>
+
+<main class="home-container">
+    {% set groups = quizzes | groupby('type') %}
+    {% for group in groups %}
+    <section class="quiz-section">
+        <div class="section-header">
+            <span class="section-icon">📚</span>
+            <h2 class="section-title">
+                {% if group.grouper == 'general' %}عمومی{% else %}{{ group.grouper | title }}{% endif %}
+            </h2>
+            <span class="section-count">{{ group.list | length }} آزمون</span>
+        </div>
+        <div class="quiz-grid">
+            {% for q in group.list %}
+            <a href="/quiz/{{ q.file }}" class="quiz-card">
+                <div class="card-top">
+                    <span class="card-type-badge">{{ q.type }}</span>
+                    <span class="card-level">سطح {{ q.level }}</span>
+                </div>
+                <h3 class="quiz-card-title">{{ q.title }}</h3>
+                <p class="quiz-card-desc">{{ q.description }}</p>
+                <div class="card-footer">
+                    <span class="quiz-card-count">📝 {{ q.count }} سوال</span>
+                    <span class="card-arrow">←</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+
+    {% if not quizzes %}
+    <div class="empty-home">
+        <div class="empty-icon">📂</div>
+        <h3>هنوز آزمونی اضافه نشده است!</h3>
+        <p>از دکمه بالا آزمون جدید بسازید.</p>
+    </div>
+    {% endif %}
+</main>
+
+<footer class="home-footer">
+    <p>ساخته شده با ❤️</p>
+</footer>
+{% endif %}
+
+</body>
+</html>
