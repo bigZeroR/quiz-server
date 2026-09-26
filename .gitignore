@@ -1,0 +1,73 @@
+# ═══════════════════════════════════════
+#  Python
+# ═══════════════════════════════════════
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ═══════════════════════════════════════
+#  Project-specific
+# ═══════════════════════════════════════
+# Storage (user-generated, not source)
+storage/audio/*
+storage/uploads/*
+storage/tmp/*
+storage/logs/*
+!storage/audio/.gitkeep
+!storage/uploads/.gitkeep
+!storage/tmp/.gitkeep
+!storage/logs/.gitkeep
+
+# User quiz data (optional — uncomment if you don't want quizzes in repo)
+# data/*.json
+# !data/sample_quiz.json
+# !data/.gitkeep
+
+# Backups
+*.bak
+*.tmp
+*.orig
+
+# Vendor dependencies (cloned via script)
+vendor/
+
+# ═══════════════════════════════════════
+#  Environment
+# ═══════════════════════════════════════
+.env
+.env.local
+.env.*.local
+
+# ═══════════════════════════════════════
+#  IDE / Editor
+# ═══════════════════════════════════════
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ═══════════════════════════════════════
+#  OS
+# ═══════════════════════════════════════
+.DS_Store
+Thumbs.db
+desktop.ini

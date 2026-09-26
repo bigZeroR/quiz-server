@@ -1,0 +1,6 @@
+Flask==3.0.0
+Jinja2==3.1.2
+Werkzeug==3.0.1
+python-multipart==0.0.6
+pytest==7.4.3
+-e vendor/audio-recorder
