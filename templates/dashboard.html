@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل کاربری</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">🐧</span>
+            <h2>Dashboard</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard" class="nav-item active">📊 نمای کلی</a>
+            <a href="/" class="nav-item">📚 لیست آزمون‌ها</a>
+            <a href="/create" class="nav-item">🛠️ ساخت آزمون</a>
+            <a href="#" class="nav-item" id="btnExport">💾 خروجی داده‌ها</a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn btn-danger btn-sm" id="btnResetAll">🗑️ پاک کردن همه</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="dashboard-header">
+            <div>
+                <h1>خوش آمدید 👋</h1>
+                <p class="subtitle">خلاصه عملکرد شما در آزمون‌ها</p>
+            </div>
+            <a href="/" class="btn btn-primary">شروع آزمون →</a>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;">📝</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalQuizzesTaken">0</span>
+                    <span class="stat-label">آزمون شرکت‌شده</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(34,197,94,0.15);color:#22c55e;">✅</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalQuestionsAnswered">0</span>
+                    <span class="stat-label">پاسخ داده‌شده</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;">🎯</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="overallAccuracy">—</span>
+                    <span class="stat-label">میانگین دقت</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(244,63,94,0.15);color:#f43f5e;">⭐</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalBookmarks">0</span>
+                    <span class="stat-label">نشان‌شده‌ها</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="panel-card">
+                <div class="panel-header"><h3>📈 پیشرفت در آزمون‌ها</h3></div>
+                <div id="recentActivity" class="activity-list"></div>
+            </div>
+            <div class="panel-card">
+                <div class="panel-header"><h3>⚠️ نیاز به مرور</h3></div>
+                <div id="weakAreas" class="weak-areas-list"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/dashboard_page.js"></script>
+</body>
+</html>

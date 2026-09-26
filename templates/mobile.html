@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود متن و ساخت آزمون با AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div style="max-width:720px;margin:0 auto;padding:16px;">
+    <h2>📱 ورود متن → ساخت آزمون با AI</h2>
+    <textarea id="txt" class="form-textarea" style="min-height:250px;width:100%;"
+              placeholder="متن آموزشی یا سوالات خود را وارد کنید..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <input id="title" class="form-input" placeholder="عنوان آزمون (اختیاری)" style="flex:1;min-width:200px;">
+        <button id="btnCreate" class="btn btn-primary">ساخت Session</button>
+    </div>
+
+    <div id="preview" style="margin-top:20px;"></div>
+
+    <div id="actions" style="display:none;margin-top:16px;gap:8px;flex-wrap:wrap;">
+        <button id="btnAI" class="btn btn-ai-mode">🤖 تولید با AI</button>
+        <input id="quizName" class="form-input" placeholder="نام فایل آزمون" style="flex:1;min-width:200px;">
+        <button id="btnSave" class="btn btn-success" disabled>💾 ذخیره آزمون</button>
+    </div>
+</div>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/sanitize.js"></script>
+<script>
+  const { escapeHtml } = Sanitize;
+  let currentSession = null;
+  let draft = null;
+
+  document.getElementById('btnCreate').onclick = async () => {
+    const text = document.getElementById('txt').value.trim();
+    const title = document.getElementById('title').value.trim();
+    if (text.length < 30) { alert('متن کوتاه است'); return; }
+    try {
+      const r = await API.createSession(text, title);
+      currentSession = r.session;
+      document.getElementById('actions').style.display = 'flex';
+      document.getElementById('preview').innerHTML =
+        `<div style="background:#e7f5ff;padding:12px;border-radius:8px;">Session ساخته شد: <code>${escapeHtml(currentSession.id)}</code></div>`;
+    } catch (e) { alert(e.message); }
+  };
+
+  document.getElementById('btnAI').onclick = async () => {
+    if (!currentSession) return;
+    document.getElementById('preview').innerHTML = '⏳ در حال پردازش با AI...';
+    try {
+      const r = await API.aiGenerate(currentSession.id, 15, []);
+      draft = r.draft;
+      document.getElementById('preview').innerHTML =
+        `<pre style="background:#1e1e1e;color:#ddd;padding:12px;border-radius:8px;overflow:auto;direction:ltr;text-align:left;max-height:400px;">${escapeHtml(JSON.stringify(draft, null, 2))}</pre>`;
+      document.getElementById('btnSave').disabled = false;
+    } catch (e) {
+      document.getElementById('preview').innerHTML = `<div style="color:#c00;">خطا: ${escapeHtml(e.message)}</div>`;
+    }
+  };
+
+  document.getElementById('btnSave').onclick = async () => {
+    if (!draft) return;
+    const name = document.getElementById('quizName').value.trim();
+    if (!name) { alert('نام آزمون را وارد کنید'); return; }
+    try {
+      await API.saveQuiz(name, draft);
+      alert('✅ ذخیره شد');
+      window.location.href = `/quiz/${encodeURIComponent(name)}`;
+    } catch (e) { alert('خطا: ' + e.message); }
+  };
+</script>
+</body>
+</html>

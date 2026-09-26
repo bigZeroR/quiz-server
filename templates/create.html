@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ساخت آزمون جدید</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="creator-container" style="max-width:900px;margin:40px auto;padding:0 16px;">
+    <header class="creator-header" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <a href="/" class="back-btn">←</a>
+        <h1 style="margin:0;">🛠️ ساخت آزمون جدید</h1>
+    </header>
+
+    <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📛 نام آزمون</div>
+        <input type="text" id="quizName" class="form-input"
+               placeholder="linux-basics"
+               style="width:100%;padding:10px 14px;border:1px solid var(--border-subtle);border-radius:8px;direction:ltr;text-align:left;font-family:monospace;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+        <div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">فقط حروف انگلیسی، اعداد، خط تیره و زیرخط</div>
+    </section>
+
+    <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📥 ورود JSON</div>
+
+        <button class="btn btn-primary" id="btnPaste" style="margin-bottom:12px;">📋 چسباندن از کلیپ‌بورد</button>
+        <textarea id="rawText" class="form-textarea"
+                  placeholder='{"title":"...","description":"...","type":"general","level":1,"questions":[...]}'
+                  style="width:100%;min-height:200px;padding:12px;border:1px solid var(--border-subtle);border-radius:8px;font-family:monospace;direction:ltr;text-align:left;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;"></textarea>
+        <button class="btn btn-primary" id="btnParse" style="margin-top:12px;width:100%;">⚙️ پردازش و افزودن</button>
+    </section>
+
+    <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">
+            📋 سوالات (<span id="qCount">0</span>)
+        </div>
+        <div id="questionsList"></div>
+    </section>
+
+    <div style="position:sticky;bottom:20px;background:var(--bg-elevated);border:1px solid var(--border-default);border-radius:12px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+        <span style="color:var(--text-secondary);" id="totalCount">0 سوال</span>
+        <button class="btn btn-primary" id="btnPublish" style="padding:12px 32px;font-weight:800;">💾 ذخیره و انتشار</button>
+    </div>
+</div>
+
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/create_page.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت ضبط صدا | Quiz Server</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="creator-container" style="max-width:900px;margin:40px auto;padding:0 16px;">
+    <header class="creator-header" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <a href="/" class="back-btn">←</a>
+        <h1 style="margin:0;">🎧 مدیریت ضبط صدا</h1>
+    </header>
+
+    <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">🎙️ ضبط جدید</div>
+
+        <div style="margin-bottom:12px;">
+            <label style="display:block;margin-bottom:4px;font-size:0.85rem;color:var(--text-secondary);">نام ضبط *</label>
+            <input type="text" id="recName" class="form-input" placeholder="مثال: درس شبکه جلسه ۳"
+                   style="width:100%;padding:10px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+        </div>
+
+        <div style="margin-bottom:12px;">
+            <label style="display:block;margin-bottom:4px;font-size:0.85rem;color:var(--text-secondary);">دستگاه ورودی</label>
+            <select id="recDevice" class="form-select"
+                    style="width:100%;padding:10px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+                <option value="">پیش‌فرض</option>
+            </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div>
+                <label style="display:block;margin-bottom:4px;font-size:0.85rem;color:var(--text-secondary);">Preset</label>
+                <select id="recPreset" class="form-select"
+                        style="width:100%;padding:10px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+                    <option value="general" selected>general</option>
+                    <option value="speech">speech (نویزگیری قوی)</option>
+                    <option value="lecture">lecture (سخنرانی)</option>
+                    <option value="raw">raw (بدون پردازش)</option>
+                </select>
+            </div>
+            <div>
+                <label style="display:block;margin-bottom:4px;font-size:0.85rem;color:var(--text-secondary);">فرمت</label>
+                <select id="recFormat" class="form-select"
+                        style="width:100%;padding:10px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+                    <option value="mp3" selected>MP3</option>
+                    <option value="wav">WAV</option>
+                    <option value="flac">FLAC</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+            <button class="btn btn-primary" id="btnStart">▶️ شروع ضبط</button>
+            <button class="btn btn-danger" id="btnStop" disabled>⏹️ توقف</button>
+        </div>
+        <div id="recStatus" style="margin-top:12px;color:var(--text-secondary);font-family:monospace;font-size:0.85rem;"></div>
+    </section>
+
+    <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📁 فایل‌های موجود</div>
+        <div id="filesList">در حال بارگذاری...</div>
+    </section>
+</div>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/sanitize.js"></script>
+<script>
+  const { escapeHtml } = Sanitize;
+  const recName = document.getElementById('recName');
+  const recDevice = document.getElementById('recDevice');
+  const recPreset = document.getElementById('recPreset');
+  const recFormat = document.getElementById('recFormat');
+  const btnStart = document.getElementById('btnStart');
+  const btnStop = document.getElementById('btnStop');
+  const recStatus = document.getElementById('recStatus');
+  const filesList = document.getElementById('filesList');
+
+  async function loadDevices() {
+    try {
+      const r = await API.listDevices();
+      recDevice.innerHTML = '<option value="">پیش‌فرض</option>';
+      r.devices.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.id;
+        opt.textContent = `${d.name} (${d.kind})`;
+        if (d.is_default) opt.textContent += ' ⭐';
+        recDevice.appendChild(opt);
+      });
+    } catch (e) {
+      recStatus.textContent = '⚠️ خطا در دریافت دستگاه‌ها: ' + e.message;
+    }
+  }
+
+  async function loadFiles() {
+    try {
+      const r = await API.listAudioFiles();
+      if (!r.files.length) { filesList.textContent = 'هیچ فایلی وجود ندارد.'; return; }
+      filesList.innerHTML = '';
+      r.files.forEach(f => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border-subtle);align-items:center;gap:8px;';
+        const info = document.createElement('span');
+        info.textContent = `${f.filename} (${(f.size_bytes/1024).toFixed(1)} KB)`;
+        info.style.fontSize = '0.85rem';
+        const actions = document.createElement('span');
+        actions.style.display = 'flex';
+        actions.style.gap = '6px';
+        const dl = document.createElement('a');
+        dl.href = `/api/v1/audio/files/${encodeURIComponent(f.filename)}`;
+        dl.textContent = '⬇️';
+        dl.className = 'btn btn-ghost';
+        dl.title = 'دانلود';
+        const del = document.createElement('button');
+        del.textContent = '🗑️';
+        del.className = 'btn btn-danger';
+        del.title = 'حذف';
+        del.onclick = async () => {
+          if (!confirm(`"${f.filename}" حذف شود؟`)) return;
+          try { await API.deleteAudio(f.filename); loadFiles(); }
+          catch (e) { alert(e.message); }
+        };
+        actions.appendChild(dl);
+        actions.appendChild(del);
+        row.appendChild(info);
+        row.appendChild(actions);
+        filesList.appendChild(row);
+      });
+    } catch (e) {
+      filesList.textContent = 'خطا در بارگذاری: ' + e.message;
+    }
+  }
+
+  btnStart.onclick = async () => {
+    const name = recName.value.trim();
+    if (!name) { alert('نام ضبط را وارد کنید'); return; }
+    btnStart.disabled = true;
+    recStatus.textContent = '⏳ در حال شروع...';
+    try {
+      await API.startRecording(name, recDevice.value, recPreset.value, recFormat.value);
+      btnStop.disabled = false;
+      recStatus.textContent = '⏺ در حال ضبط...';
+    } catch (e) {
+      btnStart.disabled = false;
+      recStatus.textContent = '❌ خطا: ' + e.message;
+    }
+  };
+
+  btnStop.onclick = async () => {
+    btnStop.disabled = true;
+    recStatus.textContent = '⏳ در حال پردازش...';
+    try {
+      const r = await API.stopRecording();
+      btnStart.disabled = false;
+      recStatus.textContent = `✅ ذخیره شد: ${r.filename} (${r.duration_seconds}s، ${(r.size_bytes/1024).toFixed(1)}KB)`;
+      loadFiles();
+    } catch (e) {
+      btnStart.disabled = false;
+      recStatus.textContent = '❌ خطا: ' + e.message;
+    }
+  };
+
+  loadDevices();
+  loadFiles();
+</script>
+</body>
+</html>
