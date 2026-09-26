@@ -1,0 +1,33 @@
+{
+  "title": "نمونه آزمون",
+  "description": "یک آزمون نمونه برای تست سیستم",
+  "type": "general",
+  "level": 1,
+  "questions": [
+    {
+      "id": "q1",
+      "text": "دستور <code>ls -la</code> چه کاری انجام می‌دهد؟",
+      "options": [
+        "نمایش تمام فایل‌ها با جزئیات",
+        "حذف فایل‌ها",
+        "ایجاد دایرکتوری",
+        "جستجوی فایل"
+      ],
+      "correct": 0,
+      "category": "لینوکس",
+      "level": 1,
+      "explanation": "گزینه <code>-l</code> نمایش طولانی و <code>-a</code> نمایش فایل‌های مخفی است.",
+      "command": "ls -la",
+      "example": "drwxr-xr-x 2 user user 4096 Jan 1 00:00 dir"
+    },
+    {
+      "id": "q2",
+      "text": "کدام پورت پیش‌فرض HTTP است؟",
+      "options": ["21", "22", "80", "443"],
+      "correct": 2,
+      "category": "شبکه",
+      "level": 1,
+      "explanation": "HTTP روی پورت <code>80</code> و HTTPS روی <code>443</code> کار می‌کند."
+    }
+  ]
+}
