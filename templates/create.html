@@ -16,24 +16,99 @@
     <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
         <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📛 نام آزمون</div>
         <input type="text" id="quizName" class="form-input"
-               placeholder="linux-basics"
+               placeholder="linux-basics-part1"
                style="width:100%;padding:10px 14px;border:1px solid var(--border-subtle);border-radius:8px;direction:ltr;text-align:left;font-family:monospace;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
-        <div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">فقط حروف انگلیسی، اعداد، خط تیره و زیرخط</div>
+        <div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">فقط حروف انگلیسی، اعداد، خط تیره و زیرخط. برای بخش‌های بعدی: <code style="color:var(--accent);">linux-basics-part2</code>، <code style="color:var(--accent);">part3</code>...</div>
     </section>
 
     <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
-        <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📥 ورود JSON</div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--border-subtle);padding-bottom:12px;">
+            <button id="tabAI" class="btn btn-primary" style="flex:1;background:#8b5cf6;border-color:#8b5cf6;color:#fff;">🤖 تولید با AI</button>
+            <button id="tabJSON" class="btn btn-ghost" style="flex:1;">📋 چسباندن JSON</button>
+        </div>
 
-        <button class="btn btn-primary" id="btnPaste" style="margin-bottom:12px;">📋 چسباندن از کلیپ‌بورد</button>
-        <textarea id="rawText" class="form-textarea"
-                  placeholder='{"title":"...","description":"...","type":"general","level":1,"questions":[...]}'
-                  style="width:100%;min-height:200px;padding:12px;border:1px solid var(--border-subtle);border-radius:8px;font-family:monospace;direction:ltr;text-align:left;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;"></textarea>
-        <button class="btn btn-primary" id="btnParse" style="margin-top:12px;width:100%;">⚙️ پردازش و افزودن</button>
+        <!-- ═══════════ TAB: AI ═══════════ -->
+        <div id="panelAI">
+            <div style="background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(59,130,246,0.08));border:1px solid rgba(139,92,246,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
+                <div style="font-size:1rem;font-weight:700;color:#8b5cf6;margin-bottom:8px;">🧠 تولید خودکار سوالات</div>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.9;">
+                    AI حداکثر سوال ممکن را تولید می‌کند و وقتی تمام شد یا به سقف توکن رسید متوقف می‌شود.<br>
+                    اگر ناتمام ماند، با بخش بعدی ادامه دهید (شماره شروع و سوالات قبلی را وارد کنید).
+                </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+                <a href="https://chat.openai.com" target="_blank" class="btn btn-ghost" style="font-size:0.8rem;">🟢 ChatGPT</a>
+                <a href="https://claude.ai" target="_blank" class="btn btn-ghost" style="font-size:0.8rem;">🟠 Claude</a>
+                <a href="https://gemini.google.com" target="_blank" class="btn btn-ghost" style="font-size:0.8rem;">🔵 Gemini</a>
+            </div>
+
+            <!-- Previous questions (continuation) -->
+            <details id="contBox" style="margin-bottom:16px;border:1px solid rgba(139,92,246,0.3);border-radius:10px;padding:12px;background:rgba(139,92,246,0.05);">
+                <summary style="cursor:pointer;font-size:0.9rem;color:#8b5cf6;font-weight:600;">🔗 حالت ادامه (اگر این بخش دوم یا بعد است، باز کنید)</summary>
+
+                <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div>
+                        <label style="display:block;font-size:0.8rem;color:var(--text-secondary);margin-bottom:4px;">عنوان آزمون قبلی (اختیاری)</label>
+                        <input type="text" id="prevTitle" class="form-input"
+                               placeholder="مثال: مدیریت فایل در لینوکس"
+                               style="width:100%;padding:8px 12px;border:1px solid var(--border-subtle);border-radius:6px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:0.8rem;color:var(--text-secondary);margin-bottom:4px;">شماره شروع سوالات</label>
+                        <input type="number" id="startNumber" class="form-input" value="1" min="1"
+                               style="width:100%;padding:8px 12px;border:1px solid var(--border-subtle);border-radius:6px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;font-family:monospace;">
+                    </div>
+                </div>
+
+                <div style="margin-top:12px;">
+                    <label style="display:block;font-size:0.8rem;color:var(--text-secondary);margin-bottom:4px;">
+                        متن سوالات بخش‌های قبلی (هر خط یک سوال — تا AI تکرار نکند)
+                    </label>
+                    <textarea id="prevQuestions" class="form-textarea"
+                              placeholder="دستور ls -la چه کاری انجام می‌دهد؟&#10;کدام پورت پیش‌فرض HTTP است؟&#10;..."
+                              style="width:100%;min-height:100px;padding:10px;border:1px solid var(--border-subtle);border-radius:6px;background:var(--bg-elevated);color:var(--text-primary);font-family:monospace;font-size:0.8rem;box-sizing:border-box;"></textarea>
+                    <div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:4px;">از فایل بخش قبل کپی کنید یا فقط بگویید «بخش قبل را تکرار نکن»</div>
+                </div>
+            </details>
+
+            <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">📄 متن آموزشی:</div>
+            <textarea id="aiInputText" class="form-textarea"
+                      placeholder="متن درس، جزوه، یا محتوای آموزشی خود را اینجا پیست کنید..."
+                      style="width:100%;min-height:200px;padding:12px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;"></textarea>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:0.75rem;color:var(--text-tertiary);font-family:monospace;">
+                <span>کاراکتر: <span id="charCount">0</span></span>
+                <span>کلمه: <span id="wordCount">0</span></span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:16px;">
+                <button class="btn btn-primary" id="btnCopyPrompt" style="background:#8b5cf6;border-color:#8b5cf6;color:#fff;">📋 کپی پرامپت کامل</button>
+                <button class="btn btn-ghost" id="btnCopyPromptOnly">📄 کپی خالی</button>
+            </div>
+
+            <details style="margin-top:20px;">
+                <summary style="cursor:pointer;font-size:0.9rem;color:var(--text-secondary);padding:8px 0;">👁️ پیش‌نمایش پرامپت</summary>
+                <pre id="aiPreview" style="background:#1e1e1e;color:#ddd;padding:16px;border-radius:8px;overflow:auto;direction:ltr;text-align:left;max-height:400px;font-family:monospace;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin-top:8px;"></pre>
+            </details>
+        </div>
+
+        <!-- ═══════════ TAB: JSON ═══════════ -->
+        <div id="panelJSON" style="display:none;">
+            <div style="font-size:1.05rem;font-weight:700;color:var(--accent);margin-bottom:12px;">📥 ورود JSON آزمون</div>
+            <button class="btn btn-primary" id="btnPaste" style="margin-bottom:12px;">📋 چسباندن از کلیپ‌بورد</button>
+            <textarea id="rawText" class="form-textarea"
+                      placeholder='{"title":"...","description":"...","type":"general","level":1,"questions":[...]}'
+                      style="width:100%;min-height:240px;padding:12px;border:1px solid var(--border-subtle);border-radius:8px;font-family:monospace;direction:ltr;text-align:left;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;"></textarea>
+            <button class="btn btn-primary" id="btnParse" style="margin-top:12px;width:100%;">⚙️ پردازش و افزودن</button>
+
+            <div id="parseInfo" style="margin-top:12px;font-size:0.85rem;color:var(--text-secondary);"></div>
+        </div>
     </section>
 
     <section class="form-section" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;margin-bottom:24px;">
         <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">
-            📋 سوالات (<span id="qCount">0</span>)
+            📋 سوالات این بخش (<span id="qCount">0</span>)
         </div>
         <div id="questionsList"></div>
     </section>
