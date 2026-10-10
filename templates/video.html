@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استخراج صدا از ویدیو | Quiz Server</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .video-shell { max-width: 1000px; margin: 40px auto; padding: 0 16px 80px; }
+        .video-head { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+        .video-head h1 { margin:0; flex:1; }
+        .card {
+            background: var(--bg-surface); border: 1px solid var(--border-subtle);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;
+        }
+        .path-row { display:flex; gap:8px; }
+        .path-row input { flex:1; }
+        .quick-dirs {
+            display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
+        }
+        .quick-dirs button {
+            background: var(--bg-elevated); border:1px solid var(--border-subtle);
+            color: var(--text-secondary); padding: 5px 12px; border-radius:6px;
+            cursor:pointer; font-size:0.8rem; font-family:monospace;
+        }
+        .quick-dirs button:hover { color: var(--accent); border-color: var(--accent); }
+        .hint { font-size:0.78rem; color:var(--text-tertiary); margin-top:6px; }
+        .entries { display:flex; flex-direction:column; gap:10px; }
+        .entry {
+            background: var(--bg-elevated); border:1px solid var(--border-subtle);
+            border-radius:10px; padding:14px;
+        }
+        .entry .head {
+            display:flex; justify-content:space-between; gap:12px;
+            align-items:baseline; margin-bottom:8px;
+        }
+        .entry .title { font-weight:600; font-size:0.95rem; }
+        .entry .sub { font-size:0.78rem; color:var(--text-tertiary); font-family:monospace; direction:ltr; text-align:left; }
+        .entry .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+        .entry input.name {
+            flex:1; min-width:180px; padding:6px 10px;
+            background: var(--bg-surface); color: var(--text-primary);
+            border:1px solid var(--border-subtle); border-radius:6px;
+            font-family:monospace; direction:ltr; text-align:left; font-size:0.85rem;
+        }
+        .entry select {
+            padding:6px 10px; border-radius:6px;
+            background: var(--bg-surface); color: var(--text-primary);
+            border:1px solid var(--border-subtle); font-size:0.85rem;
+        }
+        .meta-chips { display:flex; gap:10px; flex-wrap:wrap; font-size:0.75rem; color:var(--text-tertiary); }
+        .meta-chips span { background: var(--bg-surface); padding:2px 8px; border-radius:999px; border:1px solid var(--border-subtle); }
+        .status-box {
+            background: var(--bg-elevated); border:1px solid var(--border-subtle);
+            border-radius:8px; padding:10px 12px; font-family:monospace;
+            font-size:0.82rem; color: var(--text-secondary);
+            margin-top: 12px; min-height:1.4em; white-space:pre-wrap;
+        }
+        .status-box.ok { color:#22c55e; border-color:#22c55e55; }
+        .status-box.err { color:#f43f5e; border-color:#f43f5e55; }
+        .status-box.loading { color:#f59e0b; border-color:#f59e0b55; }
+        .spin::after {
+            content:''; display:inline-block; width:10px; height:10px;
+            border:2px solid currentColor; border-top-color:transparent;
+            border-radius:50%; margin-right:6px;
+            animation: spin .7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+<div class="video-shell">
+    <header class="video-head">
+        <a href="/" class="back-btn">←</a>
+        <h1>🎬 استخراج صدا از ویدیوهای لوکال</h1>
+        <a href="/audio" class="btn btn-ghost">🎧 ضبط صدا</a>
+    </header>
+
+    <section class="card">
+        <div style="font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:12px;">
+            📁 مسیر پوشه یا فایل ویدیو
+        </div>
+        <div class="path-row">
+            <input type="text" id="dirPath" class="form-input mono"
+                   placeholder="/home/user/Videos  یا  /path/to/video.mp4"
+                   autocomplete="off" spellcheck="false"
+                   style="padding:10px 12px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);">
+            <button class="btn btn-primary" id="btnScan">🔍 اسکن</button>
+        </div>
+        <div class="quick-dirs" id="quickDirs"></div>
+        <div class="hint">
+            می‌تونی مسیر یک پوشه بدی (اسکن می‌کنه و همه ویدیوها رو نشون می‌ده) یا مسیر مستقیم یک فایل.
+        </div>
+        <div class="status-box" id="scanStatus" style="display:none;"></div>
+    </section>
+
+    <section class="card" id="entriesCard" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div>
+                <div style="font-size:1rem;font-weight:700;color:var(--accent);" id="entriesTitle">ویدیوها</div>
+                <div style="font-size:0.78rem;color:var(--text-tertiary);font-family:monospace;direction:ltr;" id="entriesMeta"></div>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="btnCollapse">جمع کردن</button>
+        </div>
+        <div class="entries" id="entries"></div>
+    </section>
+
+    <div class="status-box" id="globalStatus" style="display:none;"></div>
+</div>
+
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/video_page.js"></script>
+</body>
+</html>

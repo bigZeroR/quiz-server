@@ -13,6 +13,7 @@ class Config:
     LESSON_DIR: Path = Path(os.getenv("QUIZ_LESSON_DIR", DATA_DIR / "lessons"))
     STORAGE_DIR: Path = Path(os.getenv("QUIZ_STORAGE_DIR", BASE_DIR / "storage"))
     AUDIO_DIR: Path = STORAGE_DIR / "audio"
+    VIDEO_DIR: Path = Path(os.getenv("QUIZ_VIDEO_DIR", STORAGE_DIR / "videos"))
     TMP_DIR: Path = STORAGE_DIR / "tmp"
     UPLOAD_DIR: Path = STORAGE_DIR / "uploads"
     LOG_DIR: Path = STORAGE_DIR / "logs"
@@ -35,6 +36,6 @@ class Config:
 
     @classmethod
     def ensure_dirs(cls) -> None:
-        for p in (cls.DATA_DIR, cls.LESSON_DIR, cls.AUDIO_DIR, cls.TMP_DIR,
+        for p in (cls.DATA_DIR, cls.LESSON_DIR, cls.AUDIO_DIR, cls.VIDEO_DIR, cls.TMP_DIR,
                   cls.UPLOAD_DIR, cls.LOG_DIR):
             p.mkdir(parents=True, exist_ok=True)
