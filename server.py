@@ -10,7 +10,7 @@ from core.errors import AppError
 from core.logging_setup import setup_logging
 from core.repository import QuizRepository
 from core.services.quiz_service import QuizService
-from routes import ai_routes, audio_routes, quiz_routes
+from routes import ai_routes, audio_routes, lesson_routes, quiz_routes
 
 setup_logging(logging.INFO if not Config.DEBUG else logging.DEBUG)
 log = logging.getLogger(__name__)
@@ -27,6 +27,7 @@ def create_app() -> Flask:
     app.register_blueprint(quiz_routes.bp)
     app.register_blueprint(ai_routes.bp)
     app.register_blueprint(audio_routes.bp)
+    app.register_blueprint(lesson_routes.bp)
 
     # Legacy aliases (backward compatibility)
     @app.post("/api/save_quiz")
@@ -90,6 +91,18 @@ def create_app() -> Flask:
     @app.get("/mobile")
     def mobile_page():
         return render_template("mobile.html")
+
+    @app.get("/lessons")
+    def lessons_page():
+        return render_template("lessons.html")
+
+    @app.get("/lessons/<name>")
+    def lesson_view_page(name: str):
+        return render_template("lesson_view.html", lesson_name=name)
+
+    @app.get("/lessons/<name>/edit")
+    def lesson_edit_page(name: str):
+        return render_template("lesson_edit.html", lesson_name=name)
 
     # Error handlers
     @app.errorhandler(AppError)

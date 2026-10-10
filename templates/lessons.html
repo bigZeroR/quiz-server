@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درسنامه‌ها | Quiz Server</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .lessons-hero { padding: 40px 16px 20px; text-align: center; }
+        .lessons-hero h1 { font-size: 2rem; margin: 0 0 8px; }
+        .lessons-hero p { color: var(--text-secondary); margin: 0; }
+        .lessons-actions {
+            display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+            margin: 24px 0 32px;
+        }
+        .lessons-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px; padding: 0 16px 60px;
+        }
+        .lesson-card {
+            background: var(--bg-surface); border: 1px solid var(--border-subtle);
+            border-radius: 12px; padding: 20px; text-decoration: none;
+            color: inherit; display: flex; flex-direction: column;
+            transition: border-color .2s, transform .15s;
+        }
+        .lesson-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .lesson-card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+        .lesson-card .desc { color: var(--text-secondary); font-size: 0.9rem; flex: 1; }
+        .lesson-card .meta {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 14px; font-size: 0.8rem; color: var(--text-tertiary);
+        }
+        .lesson-tag {
+            display: inline-block; background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle); border-radius: 999px;
+            padding: 2px 10px; font-size: 0.75rem; margin: 0 4px 4px 0;
+        }
+        .empty-lessons {
+            text-align: center; padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-lessons .icon { font-size: 4rem; }
+    </style>
+</head>
+<body>
+
+<header class="lessons-hero">
+    <h1>📖 درسنامه‌ها</h1>
+    <p>مجموعه‌ای از درسنامه‌های آموزشی</p>
+
+    <div class="lessons-actions">
+        <a href="/" class="btn btn-ghost">← خانه</a>
+        <a href="/lessons/new/edit" class="btn btn-primary">➕ درسنامه جدید</a>
+    </div>
+
+    <div style="max-width:500px;margin:0 auto;">
+        <input type="text" id="searchInput" class="form-input" placeholder="🔍 جستجو در درسنامه‌ها..."
+               style="width:100%;padding:10px 14px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
+    </div>
+</header>
+
+<main id="lessonsGrid" class="lessons-grid">
+    <div class="empty-lessons" style="grid-column: 1/-1;">در حال بارگذاری...</div>
+</main>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/api_lessons.js"></script>
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/lessons_list.js"></script>
+</body>
+</html>

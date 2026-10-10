@@ -17,6 +17,9 @@
         <div style="font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:16px;">📛 نام آزمون</div>
         <input type="text" id="quizName" class="form-input"
                placeholder="linux-basics-part1"
+               autocomplete="off"
+               spellcheck="false"
+               oninput="this.value = this.value.toLowerCase().replace(/[^a-z0-9_-]/g, '')"
                style="width:100%;padding:10px 14px;border:1px solid var(--border-subtle);border-radius:8px;direction:ltr;text-align:left;font-family:monospace;background:var(--bg-elevated);color:var(--text-primary);box-sizing:border-box;">
         <div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">فقط حروف انگلیسی، اعداد، خط تیره و زیرخط. برای بخش‌های بعدی: <code style="color:var(--accent);">linux-basics-part2</code>، <code style="color:var(--accent);">part3</code>...</div>
     </section>
