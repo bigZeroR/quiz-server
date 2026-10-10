@@ -1,11 +1,27 @@
 # 🧠 Quiz Server
 
-سامانه آزمون‌ساز با معماری لایه‌ای، AI Integration، Audio Subsystem، درسنامه، و Mobile Support.
+سامانه آزمون‌ساز با معماری لایه‌ای، AI Integration، Audio Subsystem، درسنامه، استخراج صدا از ویدیو، و Mobile Support.
 
-## نصب سریع
+## نصب و اجرا
 
 ```bash
-bash run.sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python server.py
+```
+
+## پیش‌نیازها
+
+- Python 3.10+
+- **ffmpeg** و **ffprobe** (برای استخراج صدا از ویدیو و ضبط صدا)
+
+```bash
+# Ubuntu/Debian
+sudo apt install ffmpeg
+
+# macOS
+brew install ffmpeg
 ```
 
 ## ساختار
@@ -23,18 +39,25 @@ bash run.sh
 │   │   ├── quiz_service.py
 │   │   ├── ai_service.py
 │   │   ├── audio_service.py
-│   │   ├── lesson_service.py # ← جدید
+│   │   ├── video_service.py  # استخراج صدا از ویدیوی لوکال
+│   │   ├── lesson_service.py # درسنامه
 │   │   └── text_session_service.py
 │   └── ai/                   # Provider abstraction
 ├── routes/                   # Flask blueprints
 │   ├── quiz_routes.py
 │   ├── ai_routes.py
 │   ├── audio_routes.py
-│   └── lesson_routes.py      # ← جدید
+│   ├── video_routes.py
+│   └── lesson_routes.py
 ├── data/                     # Source of truth (JSON)
 │   ├── *.json                # آزمون‌ها
-│   └── lessons/*.json        # درسنامه‌ها  ← جدید
-├── storage/audio/            # Audio files
+│   └── lessons/*.json        # درسنامه‌ها
+├── storage/
+│   ├── audio/                # فایل‌های صوتی
+│   ├── videos/               # ویدیوهای لوکال (پیش‌فرض اسکن)
+│   ├── tmp/
+│   ├── uploads/
+│   └── logs/
 ├── templates/                # HTML
 ├── static/js/                # JS modules
 ├── vendor/audio-recorder/    # وابستگی محلی
@@ -48,6 +71,7 @@ bash run.sh
 - **Audio Subsystem** — ضبط صدا با preset و فرمت‌های مختلف
 - **درسنامه (Lessons)** — درسنامه‌های مستقل با Markdown، TOC، و اتصال به آزمون
 - **AI Prompt Generator** — برای درسنامه و آزمون، پرامپت آماده برای هر LLM
+- **Local Video → Audio** — استخراج صدا از ویدیوهای لوکال با ffmpeg
 - **Mobile Support** — رابط ورود متن برای موبایل
 
 ## API
@@ -83,6 +107,15 @@ bash run.sh
 | GET | `/api/v1/audio/files/<f>` | دانلود فایل صوتی |
 | DELETE | `/api/v1/audio/files/<f>` | حذف فایل صوتی |
 
+### Video → Audio
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/video/scan` | اسکن پوشه (body: `{dir}` یا خالی) |
+| POST | `/api/v1/video/probe` | اطلاعات یک فایل (body: `{path}`) |
+| POST | `/api/v1/video/extract` | استخراج صدا (body: `{path, name, format}`) |
+| GET | `/api/v1/video/formats` | فرمت‌های پشتیبانی‌شده + پوشه پیش‌فرض |
+
 ### درسنامه‌ها (Lessons)
 
 | Method | Endpoint | Description |
@@ -104,10 +137,30 @@ bash run.sh
 | `/create` | ساخت آزمون جدید (AI / JSON) |
 | `/dashboard` | پنل کاربری |
 | `/audio` | ضبط و مدیریت صدا |
+| `/video` | استخراج صدا از ویدیوی لوکال |
 | `/mobile` | ورود متن با AI |
 | `/lessons` | لیست درسنامه‌ها |
 | `/lessons/<name>` | مشاهدهٔ درسنامه |
 | `/lessons/<name>/edit` | ویرایش / ساخت درسنامه |
+
+## استخراج صدا از ویدیو
+
+1. برو به `/video`
+2. مسیر یکی از اینا رو وارد کن:
+   - **پوشه** (مثلاً `~/Videos`) → همهٔ ویدیوهای داخلش لیست میشن
+   - **فایل مستقیم** (مثلاً `~/Videos/lesson.mp4`) → همون یکی
+   - یا دکمه‌های سریع: `storage/videos/`، `~/Videos`، `~/Downloads`، `.`
+3. **«🔍 اسکن»** → لیست ویدیوها با نام، مدت، حجم
+4. برای هر ویدیو:
+   - **نام خروجی** — از نام فایل استاندارد شده (lowercase، dash-separated). قابل ویرایش.
+   - **فرمت** — `mp3`، `wav`، `flac`، `m4a`، `opus`، `aac`
+5. **«⬇️ استخراج صدا»** → ffmpeg اجرا میشه → فایل توی `storage/audio/` ذخیره میشه
+
+**فرمت‌های ورودی (ویدیو):** `mp4`, `mkv`, `mov`, `avi`, `webm`, `flv`, `wmv`, `m4v`, `ts`, `mpg`, `mpeg`
+
+**محدودیت مدت:** `MAX_AUDIO_SECONDS * 6` (پیش‌فرض: ۱ ساعت)
+**جلوگیری از بازنویسی:** اگه فایل وجود داشته باشه، `<name>_1.mp3` و الی آخر
+**پوشه پیش‌فرض:** `storage/videos/` (قابل تغییر با `QUIZ_VIDEO_DIR`)
 
 ## درسنامه — نحوهٔ استفاده
 
@@ -134,16 +187,6 @@ bash run.sh
 در ادیتور درسنامه، فیلد **«آزمون مرتبط»** را به یک آزمون موجود ست کن.
 بعد از ذخیره، در صفحهٔ آن آزمون، دکمهٔ شناور **📖** نمایش داده می‌شود.
 
-## اسکریپت‌های نصب
-
-| اسکریپت | کار |
-|---------|-----|
-| `run.sh` | venv + pip install + اجرای سرور |
-| `setup_all.sh` | بازنویسی فایل‌های فرانت‌اند |
-| `integrate_audio_recorder.sh` | نصب vendor/audio-recorder |
-| `install_lessons.sh` | نصب زیرسیستم درسنامه |
-| `add_ai_lesson_prompt.sh` | افزودن تب AI به ادیتور درسنامه |
-
 ## تست
 
 ```bash
@@ -165,6 +208,7 @@ export QUIZ_SECRET_KEY="change-me"
 export QUIZ_DATA_DIR="./data"
 export QUIZ_LESSON_DIR="./data/lessons"
 export QUIZ_STORAGE_DIR="./storage"
+export QUIZ_VIDEO_DIR="./storage/videos"
 ```
 
 نمونه در `.env.example` موجود است — کپی کن به `.env`.
