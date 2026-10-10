@@ -56,3 +56,10 @@ def audio_path(filename: str) -> Path:
     safe = sanitize_filename(filename)
     p = (Config.AUDIO_DIR / safe)
     return ensure_within(Config.AUDIO_DIR, p)
+
+
+def lesson_path(name: str) -> Path:
+    """Return a safe path inside LESSON_DIR for ``name``."""
+    safe = sanitize_quiz_name(name)
+    p = (Config.LESSON_DIR / f"{safe}.json")
+    return ensure_within(Config.LESSON_DIR, p)

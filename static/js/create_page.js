@@ -656,12 +656,11 @@ SCHEMA
   });
 
   $('btnPublish').addEventListener('click', async () => {
-    const name = $('quizName').value.trim();
+    let name = $('quizName').value.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    $('quizName').value = name;
+
     if (!name) { toast('نام آزمون الزامی است', 'error'); return; }
-    if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
-      toast('نام آزمون فقط حروف انگلیسی، اعداد، - و _', 'error');
-      return;
-    }
+    if (name.length < 2) { toast('نام آزمون حداقل ۲ کاراکتر', 'error'); return; }
     if (!questions.length) { toast('حداقل یک سوال اضافه کنید', 'error'); return; }
 
     const payload = {

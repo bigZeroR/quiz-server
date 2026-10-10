@@ -152,3 +152,121 @@ def detect_quiz_type(data: dict, filename: str) -> str:
             if "command" in q or "example" in q:
                 return "command"
     return "general"
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Lesson (درسنامه) schema
+# ═══════════════════════════════════════════════════════════════
+
+LESSON_SECTION_MAP: dict[str, tuple[str, ...]] = {
+    "id":           ("id", "slug", "key"),
+    "title":        ("title", "name", "heading", "header"),
+    "content":      ("content", "body", "text", "markdown", "md"),
+    "level":        ("level", "difficulty", "tier"),
+    "tags":         ("tags", "keywords", "labels", "topics"),
+    "question_ids": ("question_ids", "related_question_ids", "questions", "qids"),
+}
+
+
+def _pick_lesson(d: dict, canonical: str, default=None):
+    for alias in LESSON_SECTION_MAP.get(canonical, (canonical,)):
+        if alias in d and d[alias] is not None:
+            return d[alias]
+    return default
+
+
+def normalize_lesson_section(raw, *, salt: str = "", fallback_id: str | None = None) -> dict:
+    if isinstance(raw, str):
+        raw = {"title": "", "content": raw}
+    if not isinstance(raw, dict):
+        raise ValidationError("هر بخش درسنامه باید متن یا آبجکت باشد")
+
+    title = str(_pick_lesson(raw, "title", "") or "").strip()
+    content = str(_pick_lesson(raw, "content", "") or "").strip()
+    if not content and not title:
+        raise ValidationError("بخش درسنامه نمی‌تواند خالی باشد")
+
+    qids_raw = _pick_lesson(raw, "question_ids", []) or []
+    if isinstance(qids_raw, (str, int)):
+        qids = [str(qids_raw)]
+    elif isinstance(qids_raw, (list, tuple)):
+        qids = [str(q).strip() for q in qids_raw if str(q).strip()]
+    else:
+        qids = []
+
+    tags_raw = _pick_lesson(raw, "tags", []) or []
+    if isinstance(tags_raw, str):
+        tags = [t.strip() for t in tags_raw.split(",") if t.strip()]
+    elif isinstance(tags_raw, (list, tuple)):
+        tags = [str(t).strip() for t in tags_raw if str(t).strip()]
+    else:
+        tags = []
+
+    try:
+        level = int(_pick_lesson(raw, "level", DEFAULT_LEVEL))
+    except (TypeError, ValueError):
+        level = DEFAULT_LEVEL
+    level = max(1, min(9, level))
+
+    sec_id = raw.get("id") or fallback_id
+    if not sec_id:
+        seed = (title + "|" + content[:200]).encode("utf-8")
+        h = hashlib.sha1(seed)
+        h.update(salt.encode("utf-8"))
+        sec_id = "s_" + h.hexdigest()[:10]
+
+    return {
+        "id": str(sec_id),
+        "title": title,
+        "content": content,
+        "level": level,
+        "tags": tags,
+        "question_ids": qids,
+    }
+
+
+def normalize_lesson(raw: dict, *, lesson_name: str = "") -> dict:
+    if not isinstance(raw, dict):
+        raise ValidationError("ساختار درسنامه نامعتبر است")
+
+    sections_raw = raw.get("sections") or raw.get("chapters") or raw.get("parts") or []
+    if isinstance(sections_raw, str):
+        sections_raw = [sections_raw]
+    if not isinstance(sections_raw, list) or not sections_raw:
+        raise ValidationError("درسنامه باید حداقل یک بخش داشته باشد")
+
+    seen: set[str] = set()
+    sections: list[dict] = []
+    for i, s in enumerate(sections_raw):
+        fb = f"{lesson_name}_{i+1}" if lesson_name else f"s{i+1}"
+        norm = normalize_lesson_section(s, salt=lesson_name, fallback_id=fb)
+        base = norm["id"]
+        if base in seen:
+            norm["id"] = f"{base}_{i+1}"
+        seen.add(norm["id"])
+        sections.append(norm)
+
+    title = str(raw.get("title", lesson_name or "درسنامه")).strip() or "درسنامه"
+    description = str(raw.get("description", "")).strip()
+    quiz_name = str(raw.get("quiz_name", "") or "").strip()
+    try:
+        level = int(raw.get("level", 1))
+    except (TypeError, ValueError):
+        level = 1
+
+    tags = raw.get("tags") or []
+    if isinstance(tags, str):
+        tags = [t.strip() for t in tags.split(",") if t.strip()]
+    elif isinstance(tags, (list, tuple)):
+        tags = [str(t).strip() for t in tags if str(t).strip()]
+    else:
+        tags = []
+
+    return {
+        "title": title,
+        "description": description,
+        "quiz_name": quiz_name,
+        "level": level,
+        "tags": tags,
+        "sections": sections,
+    }

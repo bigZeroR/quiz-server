@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درسنامه | Quiz Server</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .lesson-layout {
+            display: grid; grid-template-columns: 260px 1fr;
+            gap: 32px; max-width: 1200px; margin: 0 auto;
+            padding: 24px 16px 80px;
+        }
+        @media (max-width: 800px) {
+            .lesson-layout { grid-template-columns: 1fr; }
+            .lesson-toc { position: static !important; }
+        }
+        .lesson-toc {
+            position: sticky; top: 20px; align-self: start;
+            background: var(--bg-surface); border: 1px solid var(--border-subtle);
+            border-radius: 12px; padding: 16px; max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .lesson-toc h4 { margin: 0 0 12px; font-size: 0.85rem; color: var(--text-tertiary);
+                         text-transform: uppercase; letter-spacing: 0.05em; }
+        .lesson-toc a {
+            display: block; padding: 8px 10px; border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.9rem; margin-bottom: 2px;
+            border-right: 3px solid transparent;
+        }
+        .lesson-toc a:hover { background: var(--bg-elevated); color: var(--text-primary); }
+        .lesson-toc a.active { color: var(--accent); border-right-color: var(--accent);
+                                background: var(--bg-elevated); }
+
+        .lesson-main { min-width: 0; }
+        .lesson-header {
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+            padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 24px;
+        }
+        .lesson-header h1 { margin: 0; flex: 1; font-size: 1.8rem; }
+        .lesson-meta {
+            display: flex; gap: 14px; flex-wrap: wrap;
+            font-size: 0.85rem; color: var(--text-tertiary); margin-top: 8px;
+        }
+        .lesson-section {
+            background: var(--bg-surface); border: 1px solid var(--border-subtle);
+            border-radius: 12px; padding: 24px; margin-bottom: 20px;
+            scroll-margin-top: 20px;
+        }
+        .lesson-section h2 {
+            margin: 0 0 16px; font-size: 1.3rem; color: var(--accent);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .lesson-section h2::before {
+            content: '§'; opacity: 0.5; font-size: 1rem;
+        }
+        .lesson-content { line-height: 1.9; color: var(--text-primary); }
+        .lesson-content h1, .lesson-content h2, .lesson-content h3 {
+            margin: 20px 0 10px; color: var(--text-primary);
+        }
+        .lesson-content h1 { font-size: 1.5rem; }
+        .lesson-content h2 { font-size: 1.25rem; }
+        .lesson-content h3 { font-size: 1.1rem; }
+        .lesson-content p { margin: 0 0 14px; }
+        .lesson-content ul, .lesson-content ol { margin: 0 0 14px; padding-right: 24px; }
+        .lesson-content li { margin-bottom: 6px; }
+        .lesson-content code {
+            background: var(--bg-elevated); padding: 2px 6px;
+            border-radius: 4px; font-family: monospace; font-size: 0.9em;
+            color: #f59e0b;
+        }
+        .lesson-content pre {
+            background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+            border-radius: 8px; padding: 14px; overflow-x: auto;
+            direction: ltr; text-align: left;
+        }
+        .lesson-content pre code {
+            background: none; padding: 0; color: var(--text-primary);
+        }
+        .lesson-content blockquote {
+            border-right: 4px solid var(--accent); margin: 14px 0;
+            padding: 8px 16px; background: var(--bg-elevated);
+            border-radius: 0 6px 6px 0; color: var(--text-secondary);
+        }
+        .lesson-content a { color: var(--accent); }
+        .lesson-content hr {
+            border: 0; border-top: 1px solid var(--border-subtle); margin: 20px 0;
+        }
+        .section-actions {
+            display: flex; gap: 8px; margin-top: 16px;
+            padding-top: 12px; border-top: 1px solid var(--border-subtle);
+            font-size: 0.8rem;
+        }
+        .section-actions a { color: var(--text-tertiary); }
+        .section-actions a:hover { color: var(--accent); }
+
+        .section-done-btn {
+            background: none; border: 1px solid var(--border-subtle);
+            color: var(--text-secondary); padding: 4px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 0.8rem;
+        }
+        .section-done-btn.done {
+            background: rgba(34,197,94,0.15); border-color: #22c55e; color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="lesson-layout">
+    <aside class="lesson-toc" id="toc">
+        <h4>فهرست</h4>
+        <div id="tocList">در حال بارگذاری...</div>
+    </aside>
+
+    <main class="lesson-main">
+        <div class="lesson-header">
+            <a href="/lessons" class="back-btn">←</a>
+            <div style="flex:1;min-width:200px;">
+                <h1 id="lessonTitle">...</h1>
+                <div class="lesson-meta" id="lessonMeta"></div>
+            </div>
+            <a href="#" id="editLink" class="btn btn-ghost">✏️ ویرایش</a>
+        </div>
+
+        <div id="sections"></div>
+
+        <div id="lessonFooter" style="margin-top:32px;display:flex;justify-content:space-between;">
+            <a href="/lessons" class="btn btn-ghost">📚 همهٔ درسنامه‌ها</a>
+            <a href="#" id="quizLink" class="btn btn-primary" style="display:none;">📝 آزمون مرتبط</a>
+        </div>
+    </main>
+</div>
+
+<script src="/static/js/sanitize.js"></script>
+<script src="/static/js/md.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/api_lessons.js"></script>
+<script>
+window.LESSON_NAME = {{ lesson_name | tojson }};
+</script>
+<script src="/static/js/lesson_view.js"></script>
+</body>
+</html>
