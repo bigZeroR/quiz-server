@@ -18,7 +18,10 @@ def sanitize_quiz_name(raw: str) -> str:
     name = raw.strip().lower()
     if not name:
         raise ValidationError("نام آزمون الزامی است")
-    name = Path(name).name
+    # Reject path separators before doing anything else — silently
+    # stripping "../etc/passwd" to "passwd" hides user mistakes.
+    if "/" in name or "\\" in name:
+        raise ValidationError("نام آزمون نامعتبر است")
     if name.startswith(".") or name in {"con", "prn", "aux", "nul"}:
         raise ValidationError("نام آزمون نامعتبر است")
     if not _SAFE_NAME.match(name):

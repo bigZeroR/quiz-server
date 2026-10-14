@@ -2,5 +2,12 @@ Flask==3.0.0
 Jinja2==3.1.2
 Werkzeug==3.0.1
 python-multipart==0.0.6
+python-dotenv==1.0.1
 pytest==7.4.3
--e vendor/audio-recorder
+
+# Local editable during development:
+#   pip install -e ../audio-recorder
+#
+# From git (for everyone else):
+# Pin to a commit SHA once stable, e.g. @a1b2c3d
+audio-recorder @ git+https://github.com/bigZeroR/audio-recorder.git@main

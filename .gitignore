@@ -16,3 +16,6 @@ vendor/
 *.tmp
 .DS_Store
 data/
+
+# Local backups created by apply_fixes.sh / fix_and_retest.sh
+.backup_*/
