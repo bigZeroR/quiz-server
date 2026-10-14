@@ -49,8 +49,22 @@ def _safe_output_stem(name: str, fallback: str) -> str:
 
 # ── Path safety ─────────────────────────────────────────────
 
+def _is_under(path: Path, roots: list[Path]) -> bool:
+    try:
+        rp = path.resolve()
+    except OSError:
+        return False
+    for root in roots:
+        try:
+            rp.relative_to(root)
+            return True
+        except ValueError:
+            continue
+    return False
+
+
 def _resolve_local_path(raw_path: str) -> Path:
-    """Expand ~, resolve, and validate the path exists and is a file."""
+    """Expand ~, resolve, and validate the path is a file under an allowed root."""
     if not raw_path or not raw_path.strip():
         raise ValidationError("مسیر فایل الزامی است")
     p = Path(raw_path).expanduser()
@@ -63,6 +77,10 @@ def _resolve_local_path(raw_path: str) -> Path:
     if p.suffix.lower() not in VIDEO_EXTS:
         raise ValidationError(
             f"فرمت پشتیبانی نمی‌شود. مجاز: {', '.join(VIDEO_EXTS)}"
+        )
+    if not _is_under(p, Config.allowed_video_roots()):
+        raise ValidationError(
+            "این مسیر مجاز نیست. برای افزودن مسیر، QUIZ_VIDEO_ROOTS را ست کنید."
         )
     return p
 
@@ -77,10 +95,12 @@ def _resolve_dir(raw_path: str) -> Path:
         raise NotFoundError(f"پوشه یافت نشد: {raw_path}")
     if not p.is_dir():
         raise ValidationError("مسیر باید یک پوشه باشد")
+    if not _is_under(p, Config.allowed_video_roots()):
+        raise ValidationError(
+            "این مسیر مجاز نیست. برای افزودن مسیر، QUIZ_VIDEO_ROOTS را ست کنید."
+        )
     return p
 
-
-# ── Info via ffprobe ────────────────────────────────────────
 
 def probe(path: Path) -> dict:
     """Return duration / size / title for a local video file."""

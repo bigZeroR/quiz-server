@@ -56,7 +56,9 @@ class QuizRepository:
     def save_quiz(self, name: str, raw: dict) -> dict:
         safe_name = security.sanitize_quiz_name(name)
         quiz = normalize_quiz(raw, quiz_name=safe_name)
-        path = security.quiz_path(safe_name)
+        path = security.ensure_within(
+            self._data_dir, self._data_dir / f"{safe_name}.json"
+        )
 
         with _lock_for(safe_name):
             self._atomic_write(path, quiz)
@@ -85,7 +87,17 @@ class QuizRepository:
         quiz["questions"] = [q for q in quiz["questions"] if str(q.get("id")) != str(question_id)]
         if len(quiz["questions"]) == before:
             raise NotFoundError("سوال یافت نشد")
-        return self.save_quiz(name, quiz)
+        # Bypass normalize_quiz so deleting the last question is allowed.
+        safe_name = security.sanitize_quiz_name(name)
+        path = security.ensure_within(
+            self._data_dir, self._data_dir / f"{safe_name}.json"
+        )
+        with _lock_for(safe_name):
+            self._atomic_write(path, quiz)
+            with self._cache_lock:
+                self._cache[safe_name] = quiz
+        log.info("Deleted question %s from %s", question_id, safe_name)
+        return quiz
 
     def append_questions(self, name: str, new_questions: list[dict]) -> dict:
         try:
