@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🧠 Quiz Server
-
+> 🇮🇷 [نسخهٔ فارسی](README.fa.md)
 ### Build quizzes, organize lessons, and turn learning materials into interactive study experiences.
 
 A Flask-based learning workspace combining **quiz management**, **AI-assisted question generation**, **Markdown lessons**, **audio recording**, and **local video-to-audio conversion**.
