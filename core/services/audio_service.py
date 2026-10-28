@@ -21,7 +21,7 @@ from pathlib import Path
 
 from config import Config
 from core import security
-from core.errors import AppError, NotFoundError, ValidationError
+from core.errors import AppError, NotFoundError, SecurityError, ValidationError
 
 # ── audio-recorder imports ──────────────────────────────────────
 # The package is installed editable from vendor/audio-recorder.
@@ -286,11 +286,50 @@ def get_audio_file(filename: str) -> Path:
     return p
 
 
+
+# === Import path safety (additive; existing routes unchanged) ===
+
+_BLOCKED_IMPORT_PREFIXES = ("/etc", "/proc", "/sys", "/dev", "/boot", "/root")
+
+
+def _is_blocked_import_path(p: Path) -> bool:
+    try:
+        rp = p.resolve()
+    except OSError:
+        return True
+    for pref in _BLOCKED_IMPORT_PREFIXES:
+        try:
+            rp.relative_to(pref)
+            return True
+        except ValueError:
+            continue
+    return False
+
+
+def _is_under_any(path: Path, roots: list[Path]) -> bool:
+    try:
+        rp = path.resolve()
+    except OSError:
+        return False
+    for root in roots:
+        try:
+            rp.relative_to(root)
+            return True
+        except ValueError:
+            continue
+    return False
+
+
 def import_audio_from_path(source_path: str, name: str) -> dict:
     """Copy an external audio file into ``Config.AUDIO_DIR``."""
     src = Path(source_path).expanduser()
     if not src.exists() or not src.is_file():
         raise NotFoundError("فایل مبدأ یافت نشد")
+    if _is_blocked_import_path(src):
+        raise SecurityError("دسترسی به این مسیر مجاز نیست")
+    roots = Config.allowed_audio_import_roots()
+    if roots and not _is_under_any(src, roots):
+        raise SecurityError("این مسیر مجاز نیست")
     if src.suffix.lower() not in Config.ALLOWED_AUDIO_EXT:
         raise ValidationError("پسوند فایل مجاز نیست")
 

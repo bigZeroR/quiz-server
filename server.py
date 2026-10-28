@@ -109,6 +109,11 @@ def create_app() -> Flask:
     def lesson_edit_page(name: str):
         return render_template("lesson_edit.html", lesson_name=name)
 
+    @app.get("/healthz")
+    def healthz():
+        """Liveness probe (additive; no existing behavior changed)."""
+        return jsonify({"status": "ok"}), 200
+
     # Error handlers
     @app.errorhandler(AppError)
     def handle_app_error(e: AppError):

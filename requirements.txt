@@ -10,4 +10,4 @@ pytest==7.4.3
 #
 # From git (for everyone else):
 # Pin to a commit SHA once stable, e.g. @a1b2c3d
-audio-recorder @ git+https://github.com/bigZeroR/audio-recorder.git@main
+audio-recorder @ git+https://github.com/bigZeroR/audio-recorder.git@0e1a152919fe264a45559f7f7b600ce555c2b8e6

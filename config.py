@@ -54,6 +54,13 @@ class Config:
         p.strip() for p in os.getenv("QUIZ_VIDEO_ROOTS", "").split(",") if p.strip()
     )
 
+    # ── Audio import roots (optional) ──────────────────────
+    # Comma-separated dirs the audio-import endpoint may copy from.
+    # Empty = legacy behavior, but system dirs are always blocked.
+    AUDIO_IMPORT_ROOTS: tuple[str, ...] = tuple(
+        p.strip() for p in os.getenv("QUIZ_AUDIO_IMPORT_ROOTS", "").split(",") if p.strip()
+    )
+
     # ── AI ──────────────────────────────────────────────────
     AI_PROVIDER: str = os.getenv("QUIZ_AI_PROVIDER", "openai_compatible")
     AI_BASE_URL: str = os.getenv("QUIZ_AI_BASE_URL", "https://api.openai.com/v1")
@@ -66,6 +73,11 @@ class Config:
         for p in (cls.DATA_DIR, cls.LESSON_DIR, cls.AUDIO_DIR, cls.VIDEO_DIR,
                   cls.TMP_DIR, cls.UPLOAD_DIR, cls.LOG_DIR):
             p.mkdir(parents=True, exist_ok=True)
+
+    @classmethod
+    def allowed_audio_import_roots(cls) -> list[Path]:
+        """Resolved dirs the audio-import API may read from."""
+        return [Path(r).expanduser().resolve() for r in cls.AUDIO_IMPORT_ROOTS]
 
     @classmethod
     def allowed_video_roots(cls) -> list[Path]:
