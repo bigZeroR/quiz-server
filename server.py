@@ -8,6 +8,7 @@ from flask import Flask, render_template, jsonify, request
 from config import Config
 from core.errors import AppError
 from core.logging_setup import setup_logging
+from core import rate_limit
 from core.repository import QuizRepository
 from core.services.quiz_service import QuizService
 from routes import ai_routes, audio_routes, lesson_routes, quiz_routes, video_routes
@@ -29,6 +30,9 @@ def create_app() -> Flask:
     app.register_blueprint(audio_routes.bp)
     app.register_blueprint(lesson_routes.bp)
     app.register_blueprint(video_routes.bp)
+
+    if Config.RATE_LIMIT_PER_MIN > 0:
+        rate_limit.install(app, limit=Config.RATE_LIMIT_PER_MIN, window_seconds=60)
 
     # Legacy aliases (backward compatibility)
     @app.post("/api/save_quiz")

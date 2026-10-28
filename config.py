@@ -61,6 +61,10 @@ class Config:
         p.strip() for p in os.getenv("QUIZ_AUDIO_IMPORT_ROOTS", "").split(",") if p.strip()
     )
 
+    # ── Rate limiting (mutating API calls only) ────────────
+    # 0 disables the limiter entirely.
+    RATE_LIMIT_PER_MIN: int = int(os.getenv("QUIZ_RATE_LIMIT_PER_MIN", "120"))
+
     # ── AI ──────────────────────────────────────────────────
     AI_PROVIDER: str = os.getenv("QUIZ_AI_PROVIDER", "openai_compatible")
     AI_BASE_URL: str = os.getenv("QUIZ_AI_BASE_URL", "https://api.openai.com/v1")
