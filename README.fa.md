@@ -10,7 +10,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Tests](https://img.shields.io/badge/tests-111%20passing-brightgreen?logo=pytest&logoColor=white)](#تست)
-[![License](https://img.shields.io/badge/license-not%20set-lightgrey)](#مجوز)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 [English](README.md) · [فارسی](README.fa.md)
 
@@ -300,10 +300,12 @@ docker run --rm -p 5000:5000 \
 
 ## مجوز
 
-**هنوز فایل مجوزی در این ریپو وجود ندارد.** تا زمانی که اضافه نشود،
-قواعد پیش‌فرض کپی‌رایت اعمال می‌شود: کد قابل مشاهده است، اما بازتوزیع و
-استفادهٔ مجدد صریحاً اجازه داده نشده. اگر قصد انتشار پروژه را داری، یک فایل
-`LICENSE` اضافه کن (MIT یا Apache-2.0 انتخاب‌های رایج‌اند) و این بخش را به‌روز کن.
+این پروژه تحت **مجوز MIT** منتشر شده است. متن کامل در فایل [LICENSE](LICENSE) است.
+
+به‌طور خلاصه: استفاده، کپی، تغییر، ادغام، انتشار، توزیع، ساب‌لایسنس و فروش
+نسخه‌های این نرم‌افزار آزاد است، به شرط اینکه اطلاعیهٔ کپی‌رایت و این اطلاعیهٔ
+اجازه در همهٔ نسخه‌ها حفظ شود. نرم‌افزار «همان‌گونه که هست» ارائه می‌شود، بدون
+هیچ نوع ضمانت.
 
 ## قدردانی
 

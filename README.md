@@ -10,7 +10,7 @@ Markdown lessons, audio recording, and local video-to-audio conversion — in on
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Tests](https://img.shields.io/badge/tests-111%20passing-brightgreen?logo=pytest&logoColor=white)](#testing)
-[![License](https://img.shields.io/badge/license-not%20set-lightgrey)](#license)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 [English](README.md) · [فارسی](README.fa.md)
 
@@ -300,10 +300,12 @@ and exposes a `HEALTHCHECK` against `/healthz`.
 
 ## License
 
-**No license file is present in this repository yet.** Until one is added, the
-default copyright rules apply: the code may be viewed, but redistribution and
-reuse are not explicitly granted. If you intend to publish this project, add a
-`LICENSE` file (MIT or Apache-2.0 are common choices) and update this section.
+Released under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+
+In short: you may use, copy, modify, merge, publish, distribute, sublicense,
+and sell copies of this software, provided the copyright notice and this
+permission notice are included. The software is provided "as is", without
+warranty of any kind.
 
 ## Acknowledgements
 
