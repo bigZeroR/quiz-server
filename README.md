@@ -17,6 +17,28 @@ A Flask-based learning workspace combining **quiz management**, **AI-assisted qu
 
 ---
 
+
+## Quick start (all platforms)
+
+```bash
+# Linux / macOS
+./scripts/run.sh
+```
+
+```powershell
+# Windows (PowerShell)
+.\scripts\run.ps1
+```
+
+```bat
+REM Windows (double-click)
+scripts\run.bat
+```
+
+Each launcher creates a virtual environment, installs `requirements.txt`, seeds `.env`
+from `.env.example` if missing, and starts the server on `http://127.0.0.1:5000`.
+
+
 ## Overview
 
 **Quiz Server** is a self-hostable study and content-management application. Instead of keeping quizzes, lesson notes, audio recordings, and video materials in separate tools, it provides one web interface backed by a Python/Flask server.
