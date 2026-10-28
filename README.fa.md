@@ -8,7 +8,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen?logo=pytest&logoColor=white)](#تست)
+[![Tests](https://img.shields.io/badge/tests-111%20passing-brightgreen?logo=pytest&logoColor=white)](#تست)
 [![API](https://img.shields.io/badge/API-REST%20%2F%20v1-2E8B57)](#مرجع-api)
 
 [🇬🇧 English](README.md) · [شروع سریع](#شروع-سریع) · [ویژگی‌ها](#ویژگی‌ها) · [مرجع API](#مرجع-api)
@@ -17,7 +17,7 @@
 
 ---
 
-## <span dir="rtl">معرفی</span>
+## معرفی
 
 **Quiz Server** یک برنامهٔ مطالعه و مدیریت محتوا است که روی کامپیوتر خودت اجرا می‌شود. به‌جای پخش‌شدن آزمون‌ها، درسنامه‌ها، فایل‌های صوتی و ویدیوها در ابزارهای مختلف، همه‌چیز در یک رابط وب مبتنی بر Python/Flask در دسترس است.
 
@@ -25,11 +25,11 @@
 
 ---
 
-## <span dir="rtl">شروع سریع</span>
+## شروع سریع
 
 اگر فقط می‌خواهی برنامه را اجرا کنی و شروع به استفاده کنی — بدون توسعه و تغییر — این مراحل را انجام بده.
 
-### <span dir="rtl">۱. نصب پیش‌نیازها</span>
+### ۱. نصب پیش‌نیازها
 
 به **Python 3.10+** و **FFmpeg** نیاز داری.
 
@@ -64,14 +64,14 @@ ffmpeg -version
 git --version
 ```
 
-### <span dir="rtl">۲. دریافت پروژه</span>
+### ۲. دریافت پروژه
 
 ```bash
 git clone https://github.com/bigZeroR/quiz-server.git
 cd quiz-server
 ```
 
-### <span dir="rtl">۳. ساخت virtual environment و نصب پکیج‌ها</span>
+### ۳. ساخت virtual environment و نصب پکیج‌ها
 
 **لینوکس / مک:**
 
@@ -91,13 +91,13 @@ pip install -r requirements.txt
 
 بعد از فعال‌سازی، باید `(.venv)` ابتدای خط ترمینال دیده شود.
 
-### <span dir="rtl">۴. اجرا</span>
+### ۴. اجرا
 
 ```bash
 python server.py
 ```
 
-### <span dir="rtl">۵. باز کردن برنامه</span>
+### ۵. باز کردن برنامه
 
 در مرورگر برو به: **http://127.0.0.1:5000**
 
@@ -110,11 +110,11 @@ python server.py
 
 > **نکتهٔ اولین اجرا:** اگر می‌خواهی صدای سیستم را در ویندوز ضبط کنی (مثلاً ویدیویی که در مرورگر پخش می‌شود)، **Stereo Mix** را فعال کن (تنظیمات صدا → تب Recording) یا [VB-Cable](https://vb-audio.com/Cable/) نصب کن، سپس آن دستگاه را در صفحهٔ `/audio` انتخاب کن.
 
-### <span dir="rtl">توقف سرور</span>
+### توقف سرور
 
 در ترمینالی که `python server.py` در آن اجرا می‌شود، `Ctrl+C` بزن.
 
-### <span dir="rtl">اجرای مجدد در آینده</span>
+### اجرای مجدد در آینده
 
 هر بار خواستی برنامه را بالا بیاوری:
 
@@ -136,7 +136,7 @@ python server.py
 
 ---
 
-## <span dir="rtl">ویژگی‌ها</span>
+## ویژگی‌ها
 
 | <span dir="rtl">بخش</span> | <span dir="rtl">قابلیت‌ها</span> |
 |------|-----------|
@@ -150,7 +150,7 @@ python server.py
 | **HTTP API** | دسترسی به همهٔ قابلیت‌ها از طریق `/api/v1` |
 | **ذخیره‌سازی لوکال** | آزمون‌ها و درسنامه‌ها به‌صورت JSON؛ فایل‌های تولیدشده در `storage/` |
 
-### <span dir="rtl">برای چه کسانی؟</span>
+### برای چه کسانی؟
 
 - **دانشجویان** که مطالب درسی را در آزمون و درسنامه سازمان می‌دهند.
 - **معلمان** که مجموعه‌سوالات قابل استفادهٔ مجدد می‌سازند.
@@ -158,7 +158,7 @@ python server.py
 
 ---
 
-## <span dir="rtl">تکنولوژی‌ها</span>
+## تکنولوژی‌ها
 
 | <span dir="rtl">بخش</span> | <span dir="rtl">تکنولوژی</span> |
 |------|-----------|
@@ -176,16 +176,16 @@ python server.py
 
 ---
 
-## <span dir="rtl">راه‌اندازی کامل</span>
+## راه‌اندازی کامل
 
-### <span dir="rtl">۱. کلون</span>
+### ۱. کلون
 
 ```bash
 git clone https://github.com/bigZeroR/quiz-server.git
 cd quiz-server
 ```
 
-### <span dir="rtl">۲. Virtual environment</span>
+### ۲. Virtual environment
 
 **لینوکس / مک:**
 
@@ -215,7 +215,7 @@ py -m venv .venv
 > Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 > ```
 
-### <span dir="rtl">۳. نصب وابستگی‌ها</span>
+### ۳. نصب وابستگی‌ها
 
 ```bash
 python -m pip install --upgrade pip
@@ -230,7 +230,7 @@ python -m pip install -r requirements.txt
 > pip install -e ../audio-recorder
 > ```
 
-### <span dir="rtl">۴. تنظیمات</span>
+### ۴. تنظیمات
 
 فایل نمونهٔ تنظیمات را کپی کن:
 
@@ -252,7 +252,7 @@ python -c "import secrets; print(secrets.token_hex(32))"
 QUIZ_SECRET_KEY=مقدار-تولید-شده
 ```
 
-### <span dir="rtl">۵. اجرا</span>
+### ۵. اجرا
 
 ```bash
 python server.py
@@ -264,7 +264,7 @@ python server.py
 
 ---
 
-## <span dir="rtl">تنظیمات</span>
+## تنظیمات
 
 تمام تنظیمات از `config.py` و متغیرهای محیطی خوانده می‌شوند.
 
@@ -288,7 +288,7 @@ python server.py
 | `QUIZ_AI_MODEL` | `gpt-4o-mini` | نام مدل |
 | `QUIZ_AI_TIMEOUT` | `60` | Timeout (ثانیه) |
 
-### <span dir="rtl">مثال: دسترسی از شبکهٔ لوکال</span>
+### مثال: دسترسی از شبکهٔ لوکال
 
 در `.env`:
 
@@ -302,7 +302,7 @@ QUIZ_HOST=0.0.0.0
 http://192.168.1.10:5000
 ```
 
-### <span dir="rtl">مثال: تنظیم AI</span>
+### مثال: تنظیم AI
 
 در `.env`:
 
@@ -315,7 +315,7 @@ QUIZ_AI_TIMEOUT=60
 
 هرگز کلید API، secret، یا محتوای شخصی را در ریپوی عمومی commit نکن.
 
-### <span dir="rtl">مثال: افزودن پوشه‌های ویدیویی</span>
+### مثال: افزودن پوشه‌های ویدیویی
 
 به‌طور پیش‌فرض، صفحهٔ ویدیو فقط از `storage/videos/` می‌خواند. برای افزودن مسیرهای دیگر:
 
@@ -327,9 +327,9 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
 
 ---
 
-## <span dir="rtl">استفاده از برنامه</span>
+## استفاده از برنامه
 
-### <span dir="rtl">ساخت و مدیریت آزمون</span>
+### ساخت و مدیریت آزمون
 
 1. برو به `/create`
 2. در تب **JSON**، ساختار آزمون را پیست کن و **پردازش و افزودن** بزن، **یا**
@@ -337,7 +337,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
 4. نام آزمون را وارد کن (فقط حروف کوچک انگلیسی، اعداد، `-` و `_`).
 5. **ذخیره و انتشار**.
 
-### <span dir="rtl">درسنامه</span>
+### درسنامه
 
 1. برو به `/lessons/new/edit`
 2. عنوان، توضیح، برچسب‌ها و بخش‌ها را وارد کن.
@@ -347,7 +347,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
 
 ادیتور یک بخش **تولید با AI** هم دارد: متن منبع را پیست کن، پرامپت را کپی کن، در LLM پیست کن، جواب JSON را برگردان — عنوان، توضیح، برچسب‌ها و بخش‌ها خودکار پر می‌شوند.
 
-### <span dir="rtl">ضبط صدا</span>
+### ضبط صدا
 
 `/audio` را باز کن.
 
@@ -366,7 +366,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
 
 **در لینوکس** دستگاهی که با `Monitor of ...` شروع می‌شود را انتخاب کن.
 
-### <span dir="rtl">استخراج صدا از ویدیو</span>
+### استخراج صدا از ویدیو
 
 `/video` را باز کن:
 
@@ -383,7 +383,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
 
 خروجی‌ها در `storage/audio/` ذخیره می‌شوند.
 
-### <span dir="rtl">دسترسی از موبایل</span>
+### دسترسی از موبایل
 
 اگر `QUIZ_HOST=0.0.0.0` باشد و گوشی روی همان شبکه باشد:
 
@@ -399,9 +399,9 @@ http://<ip-کامپیوتر>:5000/mobile
 
 ---
 
-## <span dir="rtl">مرجع API</span>
+## مرجع API
 
-### <span dir="rtl">آزمون‌ها</span>
+### آزمون‌ها
 
 | Method | Endpoint | کاربرد |
 | --- | --- | --- |
@@ -412,7 +412,7 @@ http://<ip-کامپیوتر>:5000/mobile
 | `DELETE` | `/api/v1/quizzes/<name>/questions/<id>` | حذف سوال |
 | `GET` | `/api/v1/search?q=<term>` | جستجو |
 
-### <span dir="rtl">AI و Sessionها</span>
+### AI و Sessionها
 
 | Method | Endpoint | کاربرد |
 | --- | --- | --- |
@@ -420,7 +420,7 @@ http://<ip-کامپیوتر>:5000/mobile
 | `POST` | `/api/v1/ai/generate` | تولید پیش‌نویس آزمون |
 | `POST` | `/api/v1/ai/validate` | اعتبارسنجی پیش‌نویس |
 
-### <span dir="rtl">درسنامه‌ها</span>
+### درسنامه‌ها
 
 | Method | Endpoint | کاربرد |
 | --- | --- | --- |
@@ -432,7 +432,7 @@ http://<ip-کامپیوتر>:5000/mobile
 | `GET` | `/api/v1/lessons/by-quiz/<quiz>` | درسنامهٔ متصل به آزمون |
 | `GET` | `/api/v1/lessons/search?q=<term>` | جستجو |
 
-### <span dir="rtl">صدا</span>
+### صدا
 
 | Method | Endpoint | کاربرد |
 | --- | --- | --- |
@@ -444,7 +444,7 @@ http://<ip-کامپیوتر>:5000/mobile
 | `GET` | `/api/v1/audio/files/<filename>` | دریافت فایل |
 | `DELETE` | `/api/v1/audio/files/<filename>` | حذف فایل |
 
-### <span dir="rtl">ویدیو → صدا</span>
+### ویدیو → صدا
 
 | Method | Endpoint | کاربرد |
 | --- | --- | --- |
@@ -475,9 +475,9 @@ http://<ip-کامپیوتر>:5000/mobile
 
 ---
 
-## <span dir="rtl">مدل داده</span>
+## مدل داده
 
-### <span dir="rtl">نمونهٔ JSON آزمون</span>
+### نمونهٔ JSON آزمون
 
 ```json
 {
@@ -501,7 +501,7 @@ http://<ip-کامپیوتر>:5000/mobile
 
 `correct` **اندیس صفر-مبنا** در آرایهٔ گزینه‌ها است.
 
-### <span dir="rtl">نمونهٔ JSON درسنامه</span>
+### نمونهٔ JSON درسنامه
 
 ```json
 {
@@ -523,7 +523,7 @@ http://<ip-کامپیوتر>:5000/mobile
 
 ---
 
-## <span dir="rtl">معماری</span>
+## معماری
 
 ```text
 مرورگر / کلاینت API
@@ -555,7 +555,7 @@ http://<ip-کامپیوتر>:5000/mobile
 - **`templates/` و `static/`** — رابط کاربری
 - **`tests/`** — تست‌ها
 
-### <span dir="rtl">ساختار پروژه</span>
+### ساختار پروژه
 
 ```text
 quiz-server/
@@ -591,7 +591,7 @@ quiz-server/
 
 ---
 
-## <span dir="rtl">صفحات</span>
+## صفحات
 
 | <span dir="rtl">صفحه</span> | <span dir="rtl">مسیر</span> |
 | --- | --- |
@@ -608,7 +608,7 @@ quiz-server/
 
 ---
 
-## <span dir="rtl">تست</span>
+## تست
 
 ```bash
 python -m pytest tests/ -v
@@ -627,7 +627,7 @@ python -m pytest tests/ -v
 
 ---
 
-## <span dir="rtl">امنیت و استقرار</span>
+## امنیت و استقرار
 
 پیش‌فرض‌های امن:
 
@@ -652,7 +652,7 @@ python -m pytest tests/ -v
 
 ---
 
-## <span dir="rtl">عیب‌یابی</span>
+## عیب‌یابی
 
 <details>
 <summary><strong>نصب وابستگی audio-recorder شکست می‌خورد</strong></summary>
@@ -750,7 +750,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads
 
 ---
 
-## <span dir="rtl">مشارکت</span>
+## مشارکت
 
 از مشارکت، گزارش باگ، و بهبود مستندات استقبال می‌شود.
 
@@ -764,7 +764,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads
 
 ---
 
-## <span dir="rtl">لینک‌ها</span>
+## لینک‌ها
 
 - **ریپو:** https://github.com/bigZeroR/quiz-server
 - **Issues:** https://github.com/bigZeroR/quiz-server/issues
@@ -776,7 +776,7 @@ QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads
 
 **Quiz Server** — یک فضای کاری برای آزمون، درسنامه، تولید محتوا با AI، و رسانه‌های آموزشی.
 
-[⬆ بازگشت به بالا](#-quiz-server)
+[⬆ بازگشت به بالا](#quiz-server)
 
 </div>
 

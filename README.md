@@ -1,1021 +1,313 @@
 <div align="center">
 
 # 🧠 Quiz Server
-> 🇮🇷 [نسخهٔ فارسی](README.fa.md)
-### Build quizzes, organize lessons, and turn learning materials into interactive study experiences.
 
-A Flask-based learning workspace combining **quiz management**, **AI-assisted question generation**, **Markdown lessons**, **audio recording**, and **local video-to-audio conversion**.
+**Build quizzes, organize lessons, and turn learning material into interactive study experiences.**
+
+A self-hostable Flask learning workspace: quiz management, AI-assisted question generation,
+Markdown lessons, audio recording, and local video-to-audio conversion — in one web UI.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen?logo=pytest&logoColor=white)](#testing)
-[![API](https://img.shields.io/badge/API-REST%20%2F%20v1-2E8B57)](#api-reference)
+[![Tests](https://img.shields.io/badge/tests-111%20passing-brightgreen?logo=pytest&logoColor=white)](#testing)
+[![License](https://img.shields.io/badge/license-not%20set-lightgrey)](#license)
 
-[Quick Start](#quick-start) · [Getting Started](#getting-started) · [Features](#features) · [API Reference](#api-reference) · [Architecture](#architecture) · [Contributing](#contributing)
+[English](README.md) · [فارسی](README.fa.md)
+
+[Quick Start](#quick-start) · [Features](#features) · [Configuration](#configuration) · [API](#api-reference) · [Testing](#testing) · [Contributing](#contributing)
 
 </div>
 
 ---
 
+## Why this exists
 
-## Quick start (all platforms)
-
-```bash
-# Linux / macOS
-./scripts/run.sh
-```
-
-```powershell
-# Windows (PowerShell)
-.\scripts\run.ps1
-```
-
-```bat
-REM Windows (double-click)
-scripts\run.bat
-```
-
-Each launcher creates a virtual environment, installs `requirements.txt`, seeds `.env`
-from `.env.example` if missing, and starts the server on `http://127.0.0.1:5000`.
-
-
-## Overview
-
-**Quiz Server** is a self-hostable study and content-management application. Instead of keeping quizzes, lesson notes, audio recordings, and video materials in separate tools, it provides one web interface backed by a Python/Flask server.
-
-Create and edit question banks, search existing quizzes, write structured Markdown lessons, generate quiz drafts using an AI provider, record audio, or extract audio tracks from locally available videos. Learning content is stored as JSON files, making it straightforward to inspect, back up, and version alongside your other project data.
-
-## Quick Start
-
-If you just want to run the app and start using it — no development, no customization — follow these steps.
-
-### 1. Install prerequisites
-
-You need **Python 3.10+** and **FFmpeg**.
-
-**Linux (Ubuntu / Debian):**
-
-```bash
-sudo apt update
-sudo apt install python3 python3-pip python3-venv ffmpeg git
-```
-
-**macOS** (with [Homebrew](https://brew.sh/)):
-
-```bash
-brew install python ffmpeg git
-```
-
-**Windows:**
-
-- Install **Python** from [python.org](https://www.python.org/downloads/) — download the latest **Python 3.x** installer, and on the first installer screen, check **"Add python.exe to PATH"**.
-- Install **Git** from [git-scm.com](https://git-scm.com/download/win).
-- Install **FFmpeg**:
-  1. Download `ffmpeg-release-essentials.zip` from [gyan.dev](https://www.gyan.dev/ffmpeg/builds/).
-  2. Extract it and move the inner folder to `C:\ffmpeg` (so that `C:\ffmpeg\bin\ffmpeg.exe` exists).
-  3. Press **Win**, type `Environment`, open **"Edit the system environment variables"** → **Environment Variables** → select **Path** under User variables → **Edit** → **New** → paste `C:\ffmpeg\bin` → OK.
-  4. **Close and reopen** Command Prompt.
-
-Verify everything works:
-
-```bash
-python --version       # or: python3 --version
-ffmpeg -version
-git --version
-```
-
-### 2. Get the project
-
-```bash
-git clone https://github.com/bigZeroR/quiz-server.git
-cd quiz-server
-```
-
-### 3. Create a virtual environment and install dependencies
-
-**Linux / macOS:**
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-**Windows:**
-
-```bat
-py -m venv .venv
-.venv\Scripts\activate.bat
-pip install -r requirements.txt
-```
-
-After activation you should see `(.venv)` at the start of your prompt.
-
-### 4. Run it
-
-```bash
-python server.py
-```
-
-### 5. Open the app
-
-Visit **http://127.0.0.1:5000** in your browser.
-
-That's it. You can now:
-
-- Browse and take quizzes from the home page.
-- Create a new quiz at `/create`.
-- Write lessons at `/lessons`.
-- Record or extract audio at `/audio` and `/video`.
-
-> **First-time tip:** If you want to record system audio on Windows, enable **Stereo Mix** (Sound settings → Recording tab) or install [VB-Cable](https://vb-audio.com/Cable/), then pick that device in the `/audio` page.
-
-### Stopping the server
-
-Press `Ctrl+C` in the terminal where `python server.py` is running.
-
-### Running it again later
-
-Every time you want to use the app:
-
-**Linux / macOS:**
-
-```bash
-cd quiz-server
-source .venv/bin/activate
-python server.py
-```
-
-**Windows:**
-
-```bat
-cd quiz-server
-.venv\Scripts\activate.bat
-python server.py
-```
-
-For the full setup guide, environment variables, and platform-specific notes, continue to [Getting Started](#getting-started).
+Study material usually ends up scattered: questions in one file, notes in another,
+recordings somewhere else. Quiz Server puts all of it behind a single local web app
+and keeps the data as plain JSON — inspectable, backup-friendly, and versionable.
 
 ## Features
 
-| Area | Capabilities |
-| --- | --- |
-| **Quiz management** | Create, view, edit, and search quizzes; update or remove individual questions. |
-| **AI-assisted authoring** | Create question drafts from source text through an OpenAI-compatible provider; validate generated drafts. |
-| **Lessons** | Create and edit independent lessons with Markdown content, sections, tags, and related question IDs. |
-| **Quiz–lesson linking** | Associate a lesson with a quiz and open its supporting learning material from the quiz interface. |
-| **Audio workspace** | Discover audio devices, start and stop recording, use presets, and manage recorded files. |
-| **Video → audio** | Scan local video files, inspect their metadata, and extract audio using FFmpeg. Batch selection and a processing queue are supported. |
-| **Mobile-oriented page** | Open a dedicated mobile text-entry interface. |
-| **HTTP API** | Access the quiz, lesson, AI, audio, and video functionality through `/api/v1` endpoints. |
-| **Local-first storage** | Store quiz and lesson documents as JSON; use a dedicated `storage/` tree for generated files. |
+- **Quiz management** — create, edit, search, delete quizzes and individual questions.
+- **AI-assisted drafting** — generate quiz drafts through any OpenAI-compatible endpoint.
+- **Markdown lessons** — structured, section-based lesson documents linked to quizzes.
+- **Audio recording** — record, post-process, and manage audio files (via `audio-recorder`).
+- **Video → audio** — extract audio tracks from local video files with `ffmpeg`.
+- **Persian-first UI** — RTL layout, Vazirmatn font, Persian numerals.
+- **Accessible** — WCAG AA contrast, visible focus states, 44 px touch targets.
+- **Cross-platform** — Linux, macOS, and Windows launchers included.
 
-### Who is it for?
+## Quick Start
 
-- **Students** organizing revision material into quizzes and lessons.
-- **Educators** building and maintaining reusable question collections.
-- **Developers** exploring a layered Flask application with a JSON-backed repository and modular services.
+Pick your platform. Each launcher creates a virtual environment, installs
+dependencies, seeds `.env` from `.env.example` if missing, and starts the server.
 
-## Tech Stack
-
-| Component | Technology |
-| --- | --- |
-| Runtime | Python 3.10+ |
-| Web server / routing | Flask 3.0 |
-| Templates | Jinja2 |
-| Frontend | Server-rendered HTML and JavaScript modules |
-| Data persistence | JSON files |
-| AI integration | OpenAI-compatible API configuration |
-| Media processing | FFmpeg / FFprobe |
-| Audio recording | [audio-recorder](https://github.com/bigZeroR/audio-recorder) (installed from git) |
-| Testing | pytest |
-
-The application does **not** require a relational database.
-
-## Getting Started
-
-This section covers the full setup with platform-specific details, configuration options, and notes for developers.
-
-### Prerequisites
-
-- Python **3.10 or newer**
-- `pip` and Python virtual environment support
-- Git (required — the audio-recorder dependency is installed from git)
-- **FFmpeg** (including `ffprobe`) for media functionality
-
-Choose the installation instructions for your operating system:
-
----
-
-#### 🐧 Linux (Ubuntu / Debian)
+### Linux / macOS
 
 ```bash
-sudo apt update
-sudo apt install python3 python3-pip python3-venv ffmpeg git
+./scripts/run.sh
 ```
 
-**Fedora:**
-
-```bash
-sudo dnf install python3 python3-pip ffmpeg git
-```
-
-**Arch:**
-
-```bash
-sudo pacman -S python python-pip ffmpeg git
-```
-
----
-
-#### 🍎 macOS
-
-Install [Homebrew](https://brew.sh/) if you don't have it:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Then install everything:
-
-```bash
-brew install python ffmpeg git
-```
-
----
-
-#### 🪟 Windows
-
-**Step 1 — Install Python**
-
-1. Go to [https://www.python.org/downloads/](https://www.python.org/downloads/)
-2. Click the yellow **Download Python 3.x** button for the latest stable release.
-3. Run the installer.
-4. **Important:** On the first screen, check the box **"Add python.exe to PATH"** at the bottom.
-5. Click **Install Now** and wait for it to finish.
-6. Click **Close**.
-
-Verify by opening **Command Prompt** (`Win` → type `cmd` → Enter) and running:
-
-```bat
-python --version
-```
-
-It should print `Python 3.x.x`.
-
-**Step 2 — Install Git**
-
-Download the installer from [https://git-scm.com/download/win](https://git-scm.com/download/win), run it with default options, and verify:
-
-```bat
-git --version
-```
-
-**Step 3 — Install FFmpeg**
-
-1. Go to [https://www.gyan.dev/ffmpeg/builds/](https://www.gyan.dev/ffmpeg/builds/)
-2. Under **release builds**, click **`ffmpeg-release-essentials.zip`**.
-3. Extract the downloaded ZIP (right-click → **Extract All**).
-4. Inside the extracted folder, you will find another folder like `ffmpeg-7.0-essentials_build`. Move that inner folder to:
-
-   ```text
-   C:\ffmpeg
-   ```
-
-   The final path should be `C:\ffmpeg\bin\ffmpeg.exe`.
-
-5. Add `C:\ffmpeg\bin` to your **PATH**:
-   - Press **Win**, type `Environment`, and open **"Edit the system environment variables"**.
-   - Click **Environment Variables**.
-   - Under **User variables**, select **Path** and click **Edit**.
-   - Click **New** and paste:
-
-     ```text
-     C:\ffmpeg\bin
-     ```
-
-   - Click **OK** → **OK** → **OK**.
-
-6. **Close and reopen** Command Prompt (important — environment changes only apply to new terminals).
-
-Verify:
-
-```bat
-ffmpeg -version
-ffprobe -version
-```
-
-Both should print version information.
-
----
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/bigZeroR/quiz-server.git
-cd quiz-server
-```
-
-On Windows, you can also use PowerShell or Git Bash for these commands.
-
-### 2. Set up a virtual environment
-
-**Linux / macOS:**
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-**Windows — Command Prompt (`cmd.exe`):**
-
-```bat
-py -m venv .venv
-.venv\Scripts\activate.bat
-```
-
-**Windows — PowerShell:**
+### Windows (PowerShell)
 
 ```powershell
-py -m venv .venv
-.venv\Scripts\Activate.ps1
+.\scripts\run.ps1
 ```
 
-> [!NOTE]
-> If PowerShell blocks the activation script, run this once in the same window:
->
-> ```powershell
-> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-> ```
->
-> Then try activating again.
+### Windows (double-click)
 
-After activation, you should see `(.venv)` at the start of your terminal prompt.
-
-### 3. Install Python dependencies
-
-```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+```bat
+scripts\run.bat
 ```
 
-> [!NOTE]
-> Installing `requirements.txt` pulls `audio-recorder` directly from GitHub via a git URL. **Git must be installed** and available on your `PATH`. If your network blocks GitHub, use a mirror or clone [audio-recorder](https://github.com/bigZeroR/audio-recorder) locally and install it with `pip install -e /path/to/audio-recorder`.
+Open <http://127.0.0.1:5000>.
 
-### 4. Configure the application
+### Manual install
 
-Copy the example environment file:
-
-**Linux / macOS:**
+**Prerequisites:** Python 3.10+, `git`, and `ffmpeg` (only for the video feature).
 
 ```bash
+python3 -m venv venv
+source venv/bin/activate          # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 cp .env.example .env
-```
-
-**Windows (Command Prompt):**
-
-```bat
-copy .env.example .env
-```
-
-**Windows (PowerShell):**
-
-```powershell
-Copy-Item .env.example .env
-```
-
-The app loads `.env` automatically (via `python-dotenv`). You can edit `.env` to override any of the defaults listed in [Configuration](#configuration).
-
-For a basic **local-only** run, the defaults are already safe — the server binds to `127.0.0.1` with debug disabled. If you want to change behavior, edit `.env` or export variables in your shell.
-
-Generate a random secret if you want stable sessions across restarts:
-
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-Then put it in `.env` as `QUIZ_SECRET_KEY=...`.
-
-An AI API key is optional for local operation; configure one if you want to use a remote compatible provider.
-
-### 5. Start the server
-
-```bash
 python server.py
 ```
 
-Open **http://127.0.0.1:5000** in your browser.
+## Usage
 
-> **Network access:** The default `QUIZ_HOST` is `127.0.0.1`, meaning the server is only reachable from this machine. To allow other devices on your **trusted local network** to connect, set `QUIZ_HOST=0.0.0.0` in `.env`. Do not expose the Flask development server directly to the public internet.
+### Create a quiz in the UI
 
-## Configuration
+1. Open `/create`.
+2. Fill in the title, then add questions (text, at least two options, correct index).
+3. Save — the quiz is written to `data/<slug>.json` and appears on the home page.
 
-The application reads configuration through the `Config` class in [`config.py`](config.py). Values are loaded from environment variables, with `.env` supported automatically.
+### The smallest API example
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `QUIZ_HOST` | `127.0.0.1` | Listen address (localhost-only by default) |
-| `QUIZ_PORT` | `5000` | HTTP port |
-| `QUIZ_DEBUG` | `0` | Flask debug mode (`1` to enable; never enable on shared networks) |
-| `QUIZ_SECRET_KEY` | random per start | Flask session secret. Set a stable value in `.env` to persist sessions across restarts. |
-| `QUIZ_DATA_DIR` | `./data` | Quiz JSON directory |
-| `QUIZ_LESSON_DIR` | `data/lessons` | Lesson JSON directory |
-| `QUIZ_STORAGE_DIR` | `./storage` | Generated file storage |
-| `QUIZ_VIDEO_DIR` | `storage/videos` | Default folder for the video page |
-| `QUIZ_VIDEO_ROOTS` | *(empty)* | Comma-separated list of extra directories the video API may read from. `storage/videos` is always allowed. |
-| `QUIZ_MAX_UPLOAD_MB` | `64` | Maximum request upload size in MB |
-| `QUIZ_MAX_AUDIO_SECONDS` | `600` | Audio duration setting |
-| `QUIZ_TEXT_MAX_CHARS` | `200000` | Maximum text input length |
-| `QUIZ_AI_PROVIDER` | `openai_compatible` | AI provider selection |
-| `QUIZ_AI_BASE_URL` | `https://api.openai.com/v1` | AI-compatible API base URL |
-| `QUIZ_AI_API_KEY` | *(empty)* | Provider API key |
-| `QUIZ_AI_MODEL` | `gpt-4o-mini` | Configured AI model name |
-| `QUIZ_AI_TIMEOUT` | `60` | AI timeout in seconds |
-
-The default model string is a **configuration default**, not a guarantee of model availability or free access. Use a model supported by your selected provider.
-
-### Example: enabling LAN access
-
-Edit `.env`:
-
-```ini
-QUIZ_HOST=0.0.0.0
-```
-
-Then reach the app from another device using your LAN IP:
-
-```text
-http://192.168.1.10:5000
-```
-
-### Example: configuring an AI provider
-
-**Linux / macOS:**
-
-```bash
-export QUIZ_AI_PROVIDER="openai_compatible"
-export QUIZ_AI_BASE_URL="https://api.openai.com/v1"
-export QUIZ_AI_MODEL="gpt-4o-mini"
-export QUIZ_AI_API_KEY="YOUR_API_KEY"
-```
-
-**Windows (Command Prompt):**
-
-```bat
-set QUIZ_AI_PROVIDER=openai_compatible
-set QUIZ_AI_BASE_URL=https://api.openai.com/v1
-set QUIZ_AI_MODEL=gpt-4o-mini
-set QUIZ_AI_API_KEY=YOUR_API_KEY
-```
-
-**Windows (PowerShell):**
-
-```powershell
-$env:QUIZ_AI_PROVIDER = "openai_compatible"
-$env:QUIZ_AI_BASE_URL = "https://api.openai.com/v1"
-$env:QUIZ_AI_MODEL = "gpt-4o-mini"
-$env:QUIZ_AI_API_KEY = "YOUR_API_KEY"
-```
-
-Or add them to `.env` — they will be loaded automatically on the next start.
-
-Never commit actual API keys, session secrets, or private learning materials to a public repository.
-
-### Example: allowing additional video folders
-
-By default, the video page can only read from `storage/videos/`. To scan other directories, list them in `.env`:
-
-```ini
-QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads,/mnt/media
-```
-
-Paths outside these roots are rejected by the API.
-
-## Using the Application
-
-### Create and manage quizzes
-
-1. Visit [`/create`](http://127.0.0.1:5000/create) to create a quiz using the available authoring options.
-2. Open the home page (`/`) to browse quizzes.
-3. Use `/quiz/<name>` to open an individual quiz.
-4. Edit or delete questions through the UI or the corresponding API routes.
-
-Quizzes are stored as JSON files inside the configured data directory.
-
-### Write structured lessons
-
-1. Open `/lessons/new/edit`.
-2. Enter a title, description, tags, and sections.
-3. Write lesson section bodies in Markdown.
-4. Optionally link the lesson to an existing quiz.
-5. Save it to the lesson JSON directory.
-
-The interface also supports an **AI prompt workflow**: copy a prepared prompt, send it to an LLM, paste the JSON response into the editor, and review it before saving. This manual workflow is distinct from the configured API integration.
-
-### Record and manage audio
-
-Open `/audio` to access the audio workspace, recording controls, formats/presets, and stored recordings.
-
-**On Windows**, the system audio is not exposed by default. To record what is playing through your speakers (for example, a video you are watching in a browser), you have two options:
-
-1. **Stereo Mix** (if your sound card supports it):
-   - Right-click the speaker icon in the taskbar → **Sounds**.
-   - Open the **Recording** tab.
-   - If `Stereo Mix` appears, right-click it and choose **Enable**.
-   - In the audio page, select `Stereo Mix` as the recording device.
-2. **VB-Cable** (if Stereo Mix is unavailable):
-   - Install [VB-Cable](https://vb-audio.com/Cable/).
-   - Restart the machine.
-   - In the audio page, select `CABLE Output` as the recording device.
-
-**On macOS**, use a virtual device such as [BlackHole](https://existential.audio/blackhole/) and select it as the input inside the application.
-
-**On Linux**, select the device whose name begins with `Monitor of ...` (PulseAudio / PipeWire expose these automatically).
-
-### Extract audio from a local video
-
-1. Open `/video`.
-2. Select a video file or scan a local directory.
-3. Inspect available video metadata.
-4. Choose an output name and supported audio format.
-5. Extract the audio track with FFmpeg.
-
-You can also **select multiple videos** and add them to a **processing queue**. The queue shows per-item status, a progress bar, elapsed time, and supports stopping after the current item completes.
-
-By default, the video page can only read from `storage/videos/`. To use a different directory, add it to `QUIZ_VIDEO_ROOTS` in `.env`.
-
-When entering paths on Windows, use backslashes or forward slashes, for example:
-
-```text
-C:\Users\YourName\Videos
-C:/Users/YourName/Videos
-```
-
-**Supported input extensions:** `mp4`, `mkv`, `mov`, `avi`, `webm`, `flv`, `wmv`, `m4v`, `ts`, `mpg`, `mpeg`.
-
-**Supported output formats:** `mp3`, `wav`, `flac`, `m4a`, `opus`, `aac`.
-
-Outputs are stored under `storage/audio/` by default. Name collisions are resolved automatically with numeric suffixes, and video duration is checked against the configured audio duration setting.
-
-### Mobile-oriented text entry
-
-With the server reachable from another device on your **trusted local network**, visit:
-
-```text
-http://<your-server-lan-ip>:5000/mobile
-```
-
-To find your LAN IP:
-
-**Linux:**
-
-```bash
-ip addr | grep "inet "
-```
-
-**macOS:**
-
-```bash
-ipconfig getifaddr en0
-```
-
-**Windows:**
-
-```bat
-ipconfig
-```
-
-Look for `IPv4 Address` under your active adapter (for example, `192.168.1.10`).
-
-Access from other devices requires `QUIZ_HOST=0.0.0.0` (or another reachable interface) and local firewall configuration. Avoid exposing this development interface on an untrusted network.
-
-## API Reference
-
-The application exposes an HTTP API under `/api/v1`.
-
-### Quizzes
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/v1/quizzes` | List quizzes |
-| `GET` | `/api/v1/quizzes/<name>` | Read a quiz |
-| `POST` | `/api/v1/quizzes/<name>` | Save a quiz |
-| `PUT` | `/api/v1/quizzes/<name>/questions/<id>` | Update a question |
-| `DELETE` | `/api/v1/quizzes/<name>/questions/<id>` | Delete a question |
-| `GET` | `/api/v1/search?q=<term>` | Search quizzes |
-
-**Example: list quizzes**
+List every quiz:
 
 ```bash
 curl http://127.0.0.1:5000/api/v1/quizzes
 ```
 
-**Example: search quizzes**
+Create one:
 
 ```bash
-curl --get \
-  --data-urlencode "q=linux" \
-  http://127.0.0.1:5000/api/v1/search
+curl -X POST http://127.0.0.1:5000/api/v1/quizzes/my-quiz \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "title": "My Quiz",
+        "questions": [
+          {"text": "2 + 2?", "options": ["3", "4"], "correct": 1}
+        ]
+      }'
 ```
 
-On Windows PowerShell, `curl` is an alias for `Invoke-WebRequest`. Use `curl.exe` explicitly to get the real curl behavior:
+### Extract audio from a local video
 
-```powershell
-curl.exe http://127.0.0.1:5000/api/v1/quizzes
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/video/extract \
+  -H 'Content-Type: application/json' \
+  -d '{"path": "/absolute/path/lecture.mp4", "name": "lecture", "format": "mp3"}'
 ```
 
-### AI and text sessions
+The source path must live under `storage/videos` or a directory listed in
+`QUIZ_VIDEO_ROOTS`.
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `POST` | `/api/v1/sessions` | Create a text session |
-| `POST` | `/api/v1/ai/generate` | Generate an AI quiz draft |
-| `POST` | `/api/v1/ai/validate` | Validate an AI draft |
+## Configuration
 
-Request body fields and response formats should be checked in [`routes/ai_routes.py`](routes/ai_routes.py) before integrating an external client.
+All settings are environment variables, read once at startup. Put them in `.env`
+(never commit that file). Every key below is also documented in `.env.example`.
 
-### Lessons
+| Variable | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `QUIZ_HOST` | str | `127.0.0.1` | no | Bind address. Use `0.0.0.0` only on a trusted network. |
+| `QUIZ_PORT` | int | `5000` | no | HTTP port. |
+| `QUIZ_DEBUG` | bool | `0` | no | Werkzeug debugger. **Never enable on a shared network.** |
+| `QUIZ_SECRET_KEY` | str | random | no | Session key. Set a stable value to survive restarts. |
+| `QUIZ_DATA_DIR` | path | `data` | no | Where quiz JSON files live. |
+| `QUIZ_LESSON_DIR` | path | `data/lessons` | no | Where lesson JSON files live. |
+| `QUIZ_STORAGE_DIR` | path | `storage` | no | Root for audio, video, uploads, logs. |
+| `QUIZ_VIDEO_DIR` | path | `storage/videos` | no | Default directory for the video API. |
+| `QUIZ_VIDEO_ROOTS` | csv paths | *(empty)* | no | Extra directories `/api/v1/video/*` may read from. |
+| `QUIZ_AUDIO_IMPORT_ROOTS` | csv paths | *(empty)* | no | Directories the audio-import endpoint may copy from. System dirs are always blocked. |
+| `QUIZ_MAX_UPLOAD_MB` | int | `64` | no | Maximum request body size. |
+| `QUIZ_MAX_AUDIO_SECONDS` | int | `600` | no | Recording length cap. |
+| `QUIZ_TEXT_MAX_CHARS` | int | `200000` | no | Cap for AI/session text input. |
+| `QUIZ_RATE_LIMIT_PER_MIN` | int | `120` | no | Mutating API requests per minute per IP. `0` disables. |
+| `QUIZ_AI_PROVIDER` | str | `openai_compatible` | no | AI backend selector. |
+| `QUIZ_AI_BASE_URL` | url | `https://api.openai.com/v1` | no | Any OpenAI-compatible base URL. |
+| `QUIZ_AI_API_KEY` | str | *(empty)* | no | Required only if you use the AI endpoints. |
+| `QUIZ_AI_MODEL` | str | `gpt-4o-mini` | no | Model name passed to the provider. |
+| `QUIZ_AI_TIMEOUT` | int | `60` | no | AI request timeout, seconds. |
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/v1/lessons` | List lessons |
-| `GET` | `/api/v1/lessons/<name>` | Read a lesson |
-| `POST` | `/api/v1/lessons/<name>` | Create a lesson |
-| `PUT` | `/api/v1/lessons/<name>` | Update a lesson |
-| `DELETE` | `/api/v1/lessons/<name>` | Delete a lesson |
-| `GET` | `/api/v1/lessons/by-quiz/<quiz>` | Get lesson associated with a quiz |
-| `GET` | `/api/v1/lessons/search?q=<term>` | Search lessons |
+**Secrets:** `QUIZ_SECRET_KEY` and `QUIZ_AI_API_KEY` must never be committed.
+Generate a key with:
 
-### Audio
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/v1/audio/devices` | List recording devices |
-| `POST` | `/api/v1/audio/record/start` | Start a recording |
-| `POST` | `/api/v1/audio/record/stop` | Stop a recording |
-| `GET` | `/api/v1/audio/presets` | Get presets and formats |
-| `GET` | `/api/v1/audio/files` | List audio files |
-| `GET` | `/api/v1/audio/files/<filename>` | Retrieve an audio file |
-| `DELETE` | `/api/v1/audio/files/<filename>` | Delete an audio file |
-
-### Video-to-audio
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `POST` | `/api/v1/video/scan` | Scan a directory or video file |
-| `POST` | `/api/v1/video/probe` | Inspect video metadata |
-| `POST` | `/api/v1/video/extract` | Extract audio from video |
-| `GET` | `/api/v1/video/formats` | List supported formats and default folder |
-
-**Request body examples:**
-
-```json
-{"dir": "storage/videos"}
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-```json
-{"path": "storage/videos/lesson.mp4"}
-```
+## API Reference
+
+Base URL: `http://127.0.0.1:5000`. All endpoints return JSON with a `success`
+boolean. Errors carry a `code` and a human-readable `error`.
+
+### Quizzes — `/api/v1`
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/quizzes` | List quizzes (metadata only). |
+| GET | `/quizzes/<name>` | Fetch one quiz with questions. |
+| POST | `/quizzes/<name>` | Create or replace a quiz. |
+| DELETE | `/quizzes/<name>` | Delete a quiz. |
+| GET | `/quizzes/<name>/categories` | Distinct categories in a quiz. |
+| POST | `/quizzes/<name>/questions` | Append questions. |
+| PUT | `/quizzes/<name>/questions/<question_id>` | Update one question. |
+| DELETE | `/quizzes/<name>/questions/<question_id>` | Delete one question. |
+| GET | `/search?q=` | Full-text search across quizzes. |
+| GET | `/reload` | Invalidate the in-memory cache. |
+
+### Lessons — `/api/v1/lessons`
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/` | List lessons. |
+| GET | `/<name>` | Fetch one lesson. |
+| POST | `/<name>` | Create or replace a lesson. |
+| PUT | `/<name>` | Update a lesson. |
+| DELETE | `/<name>` | Delete a lesson. |
+| GET | `/by-quiz/<quiz_name>` | Lessons linked to a quiz. |
+| GET | `/search?q=` | Search lessons. |
+
+### Audio — `/api/v1/audio`
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/devices` | List audio input devices. |
+| POST | `/record/start` | Start a recording. |
+| POST | `/record/stop` | Stop and post-process. |
+| GET | `/presets` | Available presets and output formats. |
+| GET | `/files` | List recorded files. |
+| GET | `/files/<filename>` | Download a file. |
+| DELETE | `/files/<filename>` | Delete a file. |
+| POST | `/files/import` | Copy an external audio file in. |
+
+### Video — `/api/v1/video`
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/scan` | List videos in a directory. |
+| POST | `/probe` | Metadata for one video file. |
+| POST | `/extract` | Extract audio from a video. |
+| GET | `/formats` | Supported video and audio formats. |
+
+### AI — `/api/v1`
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/ai/generate` | Generate a quiz draft from text. |
+| POST | `/ai/validate` | Validate a quiz payload without saving. |
+| POST | `/sessions` | Create a text-analysis session. |
+| GET | `/sessions/<sid>` | Read a session. |
+| DELETE | `/sessions/<sid>` | Delete a session. |
+
+### Health
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/healthz` | Liveness probe. Always `200` when the app is up. |
+
+### Error format
 
 ```json
 {
-  "path": "storage/videos/lesson.mp4",
-  "name": "lesson-audio",
-  "format": "mp3"
+  "success": false,
+  "code": "validation_error",
+  "error": "متن سوال الزامی است",
+  "details": {}
 }
 ```
 
-On Windows, forward slashes in paths are accepted, for example:
-
-```json
-{"path": "C:/Users/YourName/Videos/lesson.mp4"}
-```
-
-**Security note:** The video API only accepts paths under `QUIZ_VIDEO_DIR` or any directory listed in `QUIZ_VIDEO_ROOTS`. Paths outside these roots are rejected with a `ValidationError`. Files are read from the **server's** filesystem, not a remote browser's device.
-
-### Legacy endpoints
-
-`server.py` also registers routes retained for backward compatibility:
-
-| Method | Endpoint |
-| --- | --- |
-| `POST` | `/api/save_quiz` |
-| `POST` | `/api/save_quiz_with_name` |
-| `POST` | `/api/edit_question` |
-| `POST` | `/api/delete_question` |
-| `GET` | `/api/search` |
-| `GET` | `/api/reload` |
-
-For new integrations, prefer the versioned API where possible.
-
-## Data Models
-
-### Example quiz JSON
-
-```json
-{
-  "title": "Linux Essentials",
-  "description": "Basic command-line concepts",
-  "type": "linux",
-  "level": 1,
-  "questions": [
-    {
-      "id": "q_1",
-      "text": "What does the ls command do?",
-      "options": ["Lists files", "Deletes files", "Copies files", "Moves files"],
-      "correct": 0,
-      "category": "Commands",
-      "level": 1,
-      "explanation": "ls displays directory entries."
-    }
-  ]
-}
-```
-
-`correct` is represented as a **zero-based option index**.
-
-### Example lesson JSON
-
-```json
-{
-  "title": "Introduction to Storage",
-  "description": "Disk and partition basics",
-  "quiz_name": "linux-essentials",
-  "level": 1,
-  "tags": ["storage", "partitions"],
-  "sections": [
-    {
-      "id": "s1",
-      "title": "Understanding partitions",
-      "content": "## Partitions\nA partition is a logical region of a disk.",
-      "question_ids": ["q_1"]
-    }
-  ]
-}
-```
-
-These examples illustrate the data models; they are not a complete validation schema.
+Status codes used: `404` not found, `409` conflict, `422` validation,
+`429` rate limited (with `Retry-After`), `500` internal error.
 
 ## Architecture
 
-The server follows a modular structure that separates HTTP handling from content operations:
-
-```text
-Browser / API client
-        │
-        ▼
-     Flask app
-     server.py
-        │
-        ▼
- Route blueprints (routes/)
-        │
-        ▼
-  Domain services (core/services/)
-        │
-        ├── Quiz and lesson operations ──► JSON repository ──► data/
-        ├── AI operations ───────────────► Provider abstraction / API
-        └── Audio / video operations ────► FFmpeg and storage/
+```
+server.py            Flask app factory, HTML routes, legacy API aliases
+config.py            All tunables, env-overridable
+core/
+  repository.py      Only module that touches JSON files (atomic writes)
+  schema.py          Question / quiz / lesson normalization
+  security.py        Name sanitization and path-traversal guards
+  rate_limit.py      In-memory sliding-window limiter
+  logging_setup.py   Logging with home-path redaction
+  services/          quiz, lesson, audio, video, AI, text-session logic
+routes/              One Flask blueprint per feature area
+static/              Design system (style.css, dashboard.css) and JS
+  js/                Per-page controllers, Persian digits, sanitizer
+templates/           Jinja2 pages (RTL, Persian)
+tests/               111 tests: config, schema, security, repo, migration,
+                     rate limiting, contrast, env guards
+scripts/             Cross-platform launchers
 ```
 
-Key responsibilities:
-
-- **`server.py`** — Flask application setup, page routes, blueprint registration, error handlers, and legacy API routes.
-- **`config.py`** — Centralized configuration, `.env` loading, and storage paths.
-- **`routes/`** — HTTP endpoints organized by feature.
-- **`core/services/`** — Business operations for quizzes, lessons, AI, audio, video, and text sessions.
-- **`core/repository.py`** — JSON-backed persistence and caching with atomic writes and per-quiz locking.
-- **`core/security.py`** — Name sanitization and path-traversal protection.
-- **`core/ai/`** — Provider abstraction.
-- **`templates/` and `static/`** — User interface.
-- **`tests/`** — Test suite.
-
-### Repository layout
-
-```text
-quiz-server/
-├── server.py
-├── config.py
-├── requirements.txt
-├── .env.example
-├── core/
-│   ├── errors.py
-│   ├── security.py
-│   ├── schema.py
-│   ├── repository.py
-│   ├── ai/
-│   └── services/
-├── routes/
-│   ├── quiz_routes.py
-│   ├── ai_routes.py
-│   ├── audio_routes.py
-│   ├── video_routes.py
-│   └── lesson_routes.py
-├── data/
-│   └── lessons/
-├── storage/
-│   ├── audio/
-│   ├── videos/
-│   ├── tmp/
-│   ├── uploads/
-│   └── logs/
-├── templates/
-├── static/
-└── tests/
-```
-
-The audio recording backend lives in a separate repository, [bigZeroR/audio-recorder](https://github.com/bigZeroR/audio-recorder), and is installed via `requirements.txt` as a git dependency.
-
-## Web Pages
-
-| Page | Route |
-| --- | --- |
-| Quiz library / home | `/` |
-| View quiz | `/quiz/<name>` |
-| Create quiz | `/create` |
-| Dashboard | `/dashboard` |
-| Audio workspace | `/audio` |
-| Video-to-audio workspace | `/video` |
-| Mobile text-entry page | `/mobile` |
-| Lesson library | `/lessons` |
-| View lesson | `/lessons/<name>` |
-| Edit lesson | `/lessons/<name>/edit` |
+Data flow: browser → Flask blueprint → service → repository → `data/*.json`.
+Writes are atomic (temp file + `os.replace`) and guarded by a per-quiz lock.
 
 ## Testing
 
-The project ships with a pytest-based test suite covering configuration, security, schema, repository, video path restrictions, and lesson service behavior.
+```bash
+python -m pytest -q
+```
+
+Expected: **111 passed**. Test coverage spans configuration defaults, path
+traversal, schema normalization, atomic writes and concurrency, rate limiting,
+migration of legacy files, WCAG AA contrast, and `.env.example` hygiene.
+
+## Security notes
+
+- Default bind is `127.0.0.1` and debug is off. Change both deliberately.
+- All quiz and lesson names are sanitized; `../` is rejected, not stripped.
+- Audio import and video APIs resolve paths and enforce directory allowlists.
+- System directories (`/etc`, `/proc`, `/sys`, `/dev`, `/boot`, `/root`) are
+  always blocked for audio import, even when no allowlist is configured.
+- Logs redact `/home/<user>` and `/Users/<user>` paths.
+- Mutating API calls are rate limited; `429` responses include `Retry-After`.
+- HTML output is escaped in the client via `static/js/sanitize.js`.
+
+## Docker
 
 ```bash
-python -m pytest tests/ -v
+docker build -t quiz-server .
+docker run --rm -p 5000:5000 \
+  -v "$PWD/data:/app/data" \
+  -v "$PWD/storage:/app/storage" \
+  quiz-server
 ```
 
-All 78 tests currently pass on Python 3.10.
-
-The suite includes checks for:
-
-- Config defaults (safe host, debug off, secret-key generation, `VIDEO_ROOTS` parsing)
-- Name sanitization and path-traversal protection (including symlink escape)
-- Schema normalization for questions, quizzes, and lessons
-- Atomic JSON writes, per-quiz locking, and concurrent writes from 20 threads
-- Video path restriction against `VIDEO_DIR` and `VIDEO_ROOTS`
-- Lesson CRUD and quiz linking
-
-## Security & Deployment Notes
-
-Quiz Server is convenient for local development, but **development defaults are not production security settings**.
-
-Safe defaults shipped with this project:
-
-- The server binds to `127.0.0.1` and is not reachable from other machines unless you set `QUIZ_HOST=0.0.0.0`.
-- Flask debug mode is **off** by default.
-- `SECRET_KEY` is randomly generated per process if not provided.
-- The video API restricts file access to `VIDEO_DIR` and any directory listed in `VIDEO_ROOTS`.
-- `sanitize_quiz_name` rejects path separators before any normalization.
-
-Before any public or shared deployment:
-
-1. Set a strong, unique `QUIZ_SECRET_KEY` in `.env`.
-2. Put the application behind a properly configured production WSGI server and, where appropriate, a reverse proxy with HTTPS.
-3. Review access controls and authorization for endpoints that change quizzes, lessons, or local media files. This application does **not** ship with authentication.
-4. Review server-side file path restrictions, input validation, upload limits, and exposed storage directories.
-5. Keep API keys in environment variables or a secrets manager; never publish them.
-6. Back up `data/` and any media you need to preserve in `storage/`.
-7. Confirm OS-level recording permissions and FFmpeg availability.
-
-> [!WARNING]
-> Do **not** assume that the current application provides production-ready authentication, multi-user isolation, rate limiting, or public-internet protection without reviewing and testing those controls separately.
-
-## Troubleshooting
-
-<details>
-<summary><strong>Dependency installation fails on audio-recorder</strong></summary>
-
-`requirements.txt` installs `audio-recorder` from GitHub via a git URL. If installation fails:
-
-- Confirm `git` is installed and on your `PATH`.
-- Check that your network allows access to `github.com`.
-- Try installing the dependency manually:
-
-  ```bash
-  pip install "git+https://github.com/bigZeroR/audio-recorder.git"
-  ```
-
-- As a workaround, clone the repository locally and install it editable:
-
-  ```bash
-  git clone https://github.com/bigZeroR/audio-recorder.git ../audio-recorder
-  pip install -e ../audio-recorder
-  ```
-
-</details>
-
-<details>
-<summary><strong>FFmpeg or FFprobe cannot be found</strong></summary>
-
-Install FFmpeg using your operating system package manager, then confirm that `ffmpeg -version` and `ffprobe -version` work in the same environment where the server runs.
-
-**On Windows**, this usually means `C:\ffmpeg\bin` is not on your PATH. Add it through **Environment Variables** and then **close and reopen** Command Prompt before testing.
-
-</details>
-
-<details>
-<summary><strong><code>python</code> is not recognized (Windows)</strong></summary>
-
-Python is not on your PATH. Re-run the installer, choose **Modify**, and make sure **"Add Python to environment variables"** is enabled. Alternatively, use the `py` launcher instead of `python`:
-
-```bat
-py server.py
-```
-
-</details>
-
-<details>
-<summary><strong>PowerShell refuses to activate the virtual environment</strong></summary>
-
-Run the following once, then try again:
-
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-```
-
-</details>
-
-<details>
-<summary><strong>My AI requests are not working</strong></summary>
-
-Check `QUIZ_AI_API_KEY`, `QUIZ_AI_BASE_URL`, `QUIZ_AI_MODEL`, and whether the selected provider supports the requested model. Confirm that these values are present in the running server process (either through `.env` or exported in the shell).
-
-On Windows, environment variables set with `set` apply only to the current terminal session. Use `.env` instead for persistent configuration.
-
-</details>
-
-<details>
-<summary><strong>I cannot reach the app from my phone</strong></summary>
-
-The default `QUIZ_HOST` is `127.0.0.1`, which is only reachable from the same machine. To allow other devices:
-
-1. Set `QUIZ_HOST=0.0.0.0` in `.env`.
-2. Ensure both devices are on a trusted network.
-3. Allow the port through your host firewall.
-4. From the phone, use the server's LAN IP (not `127.0.0.1`).
-
-On Windows, the first time the server listens on a public interface, Windows Firewall prompts for permission. Allow it **only** for the "Private networks" profile.
-
-</details>
-
-<details>
-<summary><strong>Video extraction fails with "این مسیر مجاز نیست" (path not allowed)</strong></summary>
-
-The video API only reads files under `QUIZ_VIDEO_DIR` (`storage/videos/` by default) or any directory listed in `QUIZ_VIDEO_ROOTS`. Add the folder you want to scan to `.env`:
-
-```ini
-QUIZ_VIDEO_ROOTS=~/Videos,~/Downloads
-```
-
-Then restart the server.
-
-</details>
-
-<details>
-<summary><strong>Video extraction fails or produces empty output</strong></summary>
-
-Confirm that the video file is not corrupted, the duration is within the configured limit, and FFmpeg has read access to the source path. Review the server logs under `storage/logs/` for the FFmpeg error output.
-
-On Windows, avoid paths with unusual characters, and prefer `C:/Users/...` style forward slashes inside the web interface.
-
-</details>
-
-<details>
-<summary><strong>Audio recording produces silence</strong></summary>
-
-You are probably recording the default microphone instead of the system audio. On Windows, enable **Stereo Mix** or install **VB-Cable** as described in the audio section above, and select that device in the application.
-
-</details>
+The image bundles `ffmpeg` and `git` (needed for the `audio-recorder` dependency)
+and exposes a `HEALTHCHECK` against `/healthz`.
 
 ## Contributing
 
-Contributions, bug reports, and documentation improvements are welcome.
+1. Fork the repository and create a branch: `git checkout -b fix/short-name`.
+2. Make the change and add a regression test under `tests/`.
+3. Run `python -m pytest -q` — the suite must stay green.
+4. Keep changes focused; do not reformat unrelated files.
+5. Open a pull request describing the problem and the fix.
 
-1. Fork this repository.
-2. Create a feature branch.
-3. Make a focused change with appropriate tests.
-4. Run `python -m pytest tests/ -v` before opening a pull request.
-5. Open a pull request explaining the change and how it was tested.
+## License
 
-For bugs or proposals, use [GitHub Issues](https://github.com/bigZeroR/quiz-server/issues).
+**No license file is present in this repository yet.** Until one is added, the
+default copyright rules apply: the code may be viewed, but redistribution and
+reuse are not explicitly granted. If you intend to publish this project, add a
+`LICENSE` file (MIT or Apache-2.0 are common choices) and update this section.
 
-## Project Links
+## Acknowledgements
 
-- **Repository:** https://github.com/bigZeroR/quiz-server
-- **Issues:** https://github.com/bigZeroR/quiz-server/issues
-- **Audio recorder backend:** https://github.com/bigZeroR/audio-recorder
-
----
-
-<div align="center">
-
-**Quiz Server** — One workspace for quizzes, lessons, AI-assisted authoring, and study media.
-
-[⬆ Back to top](#-quiz-server)
-
-</div>
+- [Flask](https://flask.palletsprojects.com/)
+- [Vazirmatn](https://github.com/rastikerdar/vazirmatn) typeface
+- [audio-recorder](https://github.com/bigZeroR/audio-recorder) backend
+- [ffmpeg](https://ffmpeg.org/)
