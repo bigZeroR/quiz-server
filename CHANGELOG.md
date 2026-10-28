@@ -51,4 +51,36 @@ Versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 ### Changed
 - `--text-tertiary` lightened `#5e6b7a` → `#7a8796` (3.67:1 → 5.45:1, now AA body).
 
+## [2.0.0] - 2026-10-28
+
+### Added
+- `scripts/run.sh`, `scripts/run.ps1`, `scripts/run.bat`: one-command launchers for
+  Linux, macOS, and Windows (auto-create venv, install deps, seed `.env`, start server).
+- Dashboard: mobile bottom navigation (<900px), per-quiz progress bars, weak-areas panel
+  driven by per-question category, accuracy computed from actual answers.
+- New dual-accent design system (`--accent` + `--accent-2`), layered radial page glow.
+- Cross-OS font stacks (`Segoe UI`/`SF Pro`/`system-ui` fallback chain) and mono stacks
+  (`Cascadia Code`/`SF Mono`/`Consolas`).
+- `prefers-reduced-motion` and `forced-colors` support.
+- `viewport-fit=cover`, `theme-color` meta.
+
+### Changed
+- `static/style.css` rewritten as a design system (741 lines) keeping all existing class
+  names, so no template or JS breakage.
+- `static/dashboard.css` rewritten (RTL flex layout, sticky right sidebar, v3 stat cards).
+- `templates/dashboard.html` restructured (sidebar nav icons, brand subtitle, mobile nav).
+- `static/js/dashboard_page.js` rewritten: safe JSON parsing, real accuracy math,
+  progress bars, per-category weak-area aggregation.
+- Layout migrated from physical to logical properties (`inset-inline`, `border-inline-start`).
+
+### Fixed
+- Sidebar rendered on the wrong side under some browsers; now pinned right with
+  explicit `direction: rtl`.
+- Mobile bottom nav not visible: added solid `background` fallback before `color-mix`
+  and explicit `bottom/left/right` offsets.
+
+### Notes
+- No API, schema, route, or storage-key changes; fully backward compatible at the
+  data layer.
+
 ## [Unreleased]
