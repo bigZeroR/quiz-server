@@ -367,3 +367,19 @@ body {
     .questions-wrapper { padding-bottom: 80px; }
     .modal-body { padding: 16px; }
 }
+
+/* ── a11y: focus-visible (WCAG 2.4.7) ─────────────────── */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent, #00d4ff);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+/* ── a11y: touch targets >= 44px (WCAG 2.5.8 / mobile) ── */
+button, .btn, .nav-btn, .option, .chip, .tab {
+    min-height: 44px;
+}
+input, select, textarea { min-height: 44px; }
+
+/* Persian numerals in marked spans (set by fa_digits.js) */
+.fa-num, .stat-value, .stat-item .value { font-feature-settings: "ss01"; }

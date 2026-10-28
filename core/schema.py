@@ -22,6 +22,7 @@ FIELD_MAP: dict[str, tuple[str, ...]] = {
 DEFAULT_CATEGORY = "عمومی"
 DEFAULT_LEVEL = 1
 DEFAULT_EXPLANATION = ""
+SCHEMA_VERSION = 1
 
 
 def _pick(d: dict, canonical: str, default: Any = None) -> Any:
@@ -99,6 +100,15 @@ def normalize_question(raw: dict, *, salt: str = "", fallback_id: str | None = N
     return q
 
 
+def _schema_version(raw: dict) -> int:
+    """Return a forward-compatible schema version; missing = 1."""
+    try:
+        v = int(raw.get("schema_version", SCHEMA_VERSION))
+    except (TypeError, ValueError):
+        return SCHEMA_VERSION
+    return v if v >= 1 else SCHEMA_VERSION
+
+
 def normalize_quiz(raw: dict, *, quiz_name: str = "") -> dict:
     if not isinstance(raw, dict):
         raise ValidationError("ساختار آزمون نامعتبر است")
@@ -127,6 +137,7 @@ def normalize_quiz(raw: dict, *, quiz_name: str = "") -> dict:
         level = 1
 
     return {
+        "schema_version": _schema_version(raw),
         "title": title,
         "description": description,
         "type": qtype,
@@ -263,6 +274,7 @@ def normalize_lesson(raw: dict, *, lesson_name: str = "") -> dict:
         tags = []
 
     return {
+        "schema_version": _schema_version(raw),
         "title": title,
         "description": description,
         "quiz_name": quiz_name,

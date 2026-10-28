@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import shutil
 import threading
 import time
 from pathlib import Path
@@ -61,6 +62,7 @@ class QuizRepository:
         )
 
         with _lock_for(safe_name):
+            self._backup_if_unversioned(path)
             self._atomic_write(path, quiz)
             with self._cache_lock:
                 self._cache[safe_name] = quiz
@@ -176,6 +178,25 @@ class QuizRepository:
             "type": quiz.get("type", "general"),
             "level": quiz.get("level", 1),
         }
+
+    def _backup_if_unversioned(self, path: Path) -> None:
+        """One-time .bak of a legacy file that lacks schema_version."""
+        if not path.exists():
+            return
+        bak = path.with_suffix(path.suffix + ".bak")
+        if bak.exists():
+            return
+        try:
+            with path.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:  # noqa: BLE001
+            return
+        if isinstance(data, dict) and "schema_version" not in data:
+            try:
+                shutil.copy2(path, bak)
+                log.info("Backed up legacy file before migration: %s", path.name)
+            except OSError as e:
+                log.warning("Backup failed for %s: %s", path.name, e)
 
     @staticmethod
     def _atomic_write(path: Path, payload: dict) -> None:
