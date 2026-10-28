@@ -42,4 +42,13 @@ Versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 - `:focus-visible` outlines and `min-height: 44px` touch targets.
 - `tests/test_rate_limit.py` (11 tests) and `tests/test_migration.py` (6 tests).
 
+## [1.2.0] - 2026-10-28
+
+### Added
+- `Dockerfile` + `.dockerignore` (python:3.10-slim, ffmpeg, healthcheck on /healthz).
+- `tests/test_contrast.py`: WCAG AA contrast guard over the design tokens.
+
+### Changed
+- `--text-tertiary` lightened `#5e6b7a` → `#7a8796` (3.67:1 → 5.45:1, now AA body).
+
 ## [Unreleased]

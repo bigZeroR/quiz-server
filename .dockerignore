@@ -1,0 +1,15 @@
+.git
+.github
+venv
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.env
+storage/audio
+storage/uploads
+storage/tmp
+storage/logs
+data
+vendor
+*.bak
